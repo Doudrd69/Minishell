@@ -24,12 +24,7 @@ int	string_size(const char *s, char c)
 
 char	**free_tab(char **tab, int i)
 {
-	// if (i == 0)
-	// {
-	// 	while (tab[i])
-	// 		i++;
-	// }
-	// i--;
+	printf("==== SIZE TO FREE : %d\n", i);
 	while (i >= 0)
 	{
 		free(tab[i]);

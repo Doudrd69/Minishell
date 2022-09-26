@@ -96,16 +96,20 @@ int main(int argc, char *argv[], char *envp[])
 					}
 					if (i == 4)
 					{
-						//envp = mini_data.new_env;
 						if (mini_data.unset_env)
-							free_tab(mini_data.unset_env, mini_data.envp_size - 2);//ce tableau la vaut toujours 1 de mois
+						{
+							printf("SIZE :  %d\n", mini_data.envp_size);
+							free_tab(mini_data.unset_env, mini_data.envp_size - 2);
+						}
 						mini_data.env = mini_data.new_env;
 					}
 					if (i == 5)
 					{
-						//envp = mini_data.unset_env;
 						if (mini_data.new_env)
-							free_tab(mini_data.new_env, mini_data.envp_size - 1);
+						{
+							printf("IN FREE NEW : %d\n", mini_data.envp_size);
+							free_tab(mini_data.new_env, mini_data.envp_size);
+						}
 						mini_data.env = mini_data.unset_env;
 					}
 					check = 1;
@@ -118,10 +122,6 @@ int main(int argc, char *argv[], char *envp[])
 			cmd_exec(&data, envp, argv);
 		free(input);
 	}
-	// if (i == 4)
-	// 	free_tab(mini_data.new_env, mini_data.envp_size - 1);
-	// if (i == 5)
-	// 	free_tab(mini_data.unset_env, mini_data.envp_size - 1);
 }
 //pas oublier de free apres un appel a mini_env
 

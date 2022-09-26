@@ -64,6 +64,7 @@ char	**new_tab_malloc(t_mini_data *data, int old_tab_size, char *envp[], char *n
 char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_tab_size);
 char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
+int		malloc_and_cpy(t_mini_data *data, int i, int j, int index);
 void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 int		write_and_check_signs(int i, t_mini_data *data);
 char	**new_tab_with_existing_var(t_mini_data *data);

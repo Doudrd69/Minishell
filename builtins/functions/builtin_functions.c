@@ -129,18 +129,16 @@ int	mini_unset(t_mini_data *data)
 	int	index;
 
 	index = 0;
-	data->unset_env = malloc(sizeof(char *) * (data->envp_size - 1));
-	if (!data->unset_env)
-		return (1);
 	while (index < data->envp_size)
 	{
 		if (ft_strnstr(data->env[index], data->var_name, ft_strlen(data->var_name)))
 		{
 			if (unset_var(index, data) == 1)
 			{
-				*data->p_status = 0;
-				return (0);
+				*data->p_status = 1;
+				return (1);
 			}
+			return (0);
 		}
 		index++;
 	}
