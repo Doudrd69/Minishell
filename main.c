@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 15:15:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 16:03:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,19 +134,11 @@ int main(int argc, char *argv[], char *envp[])
 	}
 }
 //pas oublier de free apres un appel a mini_env
-//pb de leaks quand je lance une chaine aleatoire (pas un builtin) pour lancer le test des cmd
 
 void	cmd_exec(t_data *data, char **envp, char **argv)
 {
 
 	/* --- INIT DES VARIABLES D'EXECUTION ---*/
-	// data->envp_size = 0;
-	// while (data->envp[data->envp_size])
-	// {
-	// 	//printf("** %d ** == %s\n", data->envp_size, data->envp[data->envp_size]);
-	// 	data->envp_size++;
-	// }
-	
 	data->input_fd = STDIN_FILENO;
 	data->output_fd = STDOUT_FILENO;
 
@@ -160,7 +152,6 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
-	//data->envp = envp;
 
 	data->exec.infile_fd = "infile.txt";
 	data->exec.outfile_fd = "outfile.txt";
@@ -208,4 +199,5 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	return ;
 }
 
+//si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec
