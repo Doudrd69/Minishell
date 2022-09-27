@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/19 13:28:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 13:24:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ int main(int argc, char *argv[], char *envp[])
 
 	int	i;
 	int	check;
+	int	unset_env_check;
+	int	new_env_check;
 
+	unset_env_check = 0;
+	new_env_check = 0;
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
 		input = readline("minishell$ ");
@@ -96,14 +100,22 @@ int main(int argc, char *argv[], char *envp[])
 					}
 					if (i == 4)
 					{
-						if (mini_data.unset_env)
+						new_env_check = 1;
+						if (mini_data.unset_env && unset_env_check == 1)
+						{
 							free_tab(mini_data.unset_env, mini_data.envp_size - 2);
+							unset_env_check = 0;
+						}
 						mini_data.env = mini_data.new_env;
 					}
 					if (i == 5)
 					{
+						unset_env_check = 1;
 						if (mini_data.new_env)
+						{
 							free_tab(mini_data.new_env, mini_data.envp_size);
+							new_env_check = 0;
+						}
 						mini_data.env = mini_data.unset_env;
 					}
 					check = 1;
