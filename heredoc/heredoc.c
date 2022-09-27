@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/07/21 16:34:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 14:50:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ void heredoc(t_data *data)
 				if (check_delimiter(str, "test") == 0)//si cat, je return (0), sinon je return le print heredoc qui aura ecrit dans le fichier d'output
 				{
 					free(str);
+					free(data->home_path);
 					close(output_fd);
 					close(data->hd_pipefd[data->hd_pipe_id][READ]);
 					exit(0);
-					//dprintf(2, "|____ KILL HD PID : %d\n", getpid());
-					//kill(getpid(), SIGKILL);
-					//return ;
 				}
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 14:26:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 15:15:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ int main(int argc, char *argv[], char *envp[])
 	
 	mini_data.name = "PTDR";
 	mini_data.value = "issou";
-	mini_data.path = "issou";
+	mini_data.path = "..";
 	mini_data.str = "$USER $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.envp_size = envpsize;
 	mini_data.env = envp;
+	data.envp = envp;
 	printf("ENVP SIZE BEGINING : %d\n", mini_data.envp_size);
 
 	int	i;
@@ -86,6 +87,7 @@ int main(int argc, char *argv[], char *envp[])
 		input = readline("minishell$ ");
 		check = 0;
 		i = 0;
+		data.envp_size = mini_data.envp_size;
 		while (i < builtin_cmd_nb)
 		{
 			if (input)
@@ -107,6 +109,7 @@ int main(int argc, char *argv[], char *envp[])
 							unset_env_check = 0;
 						}
 						mini_data.env = mini_data.new_env;
+						data.envp = mini_data.new_env;
 					}
 					if (i == 5)
 					{
@@ -117,6 +120,7 @@ int main(int argc, char *argv[], char *envp[])
 							new_env_check = 0;
 						}
 						mini_data.env = mini_data.unset_env;
+						data.envp = mini_data.unset_env;
 					}
 					check = 1;
 					break;
@@ -136,9 +140,12 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 {
 
 	/* --- INIT DES VARIABLES D'EXECUTION ---*/
-	data->envp_size = 0;
-	while (envp[data->envp_size])
-		data->envp_size++;
+	// data->envp_size = 0;
+	// while (data->envp[data->envp_size])
+	// {
+	// 	//printf("** %d ** == %s\n", data->envp_size, data->envp[data->envp_size]);
+	// 	data->envp_size++;
+	// }
 	
 	data->input_fd = STDIN_FILENO;
 	data->output_fd = STDOUT_FILENO;
@@ -149,11 +156,11 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 3;
-	data->heredoc_nb = 2;
+	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
-	data->envp = envp;
+	//data->envp = envp;
 
 	data->exec.infile_fd = "infile.txt";
 	data->exec.outfile_fd = "outfile.txt";

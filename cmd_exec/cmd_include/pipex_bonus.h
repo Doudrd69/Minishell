@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/12 13:24:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 14:50:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct heredoc
 	int		var_length;
 	int		delimiter_quotes;
 	int		hd_pid;
+	char	**envp;
 }	t_heredoc;
 
 typedef struct exec
