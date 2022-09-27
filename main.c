@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 13:24:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 14:26:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[1] = &mini_echo;		//OK
 	builtins[2] = &mini_env;		//OK
 	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
-	builtins[4] = &mini_export;		//OK + si PT$MDR=issou --> on export PT=issou + gerer plusieurs declaration
+	builtins[4] = &mini_export;		//OK (+ si PT$MDR=issou --> on export PT=issou (gestion dans le parsing) + gerer plusieurs declarations)
 	builtins[5] = &mini_unset;		//OK
 	builtins[6] = &mini_exit;		//OK mais à vérifier
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.name = "PTDR";
 	mini_data.value = "issou";
 	mini_data.path = "issou";
-	mini_data.str = "$LOGN$AME on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "$USER $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";
@@ -130,7 +130,7 @@ int main(int argc, char *argv[], char *envp[])
 	}
 }
 //pas oublier de free apres un appel a mini_env
-//probleme avec export --> a chaque export, je creer un nouveau tableau que je peux pas free
+//pb de leaks quand je lance une chaine aleatoire (pas un builtin) pour lancer le test des cmd
 
 void	cmd_exec(t_data *data, char **envp, char **argv)
 {
@@ -195,12 +195,10 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)					//on attend les process
 		;
-	//printf("p_status : %d === p_id : %d\n", *data->p_status, getpid());
 	if (data->check_hd > 0)
 		free(data->hd_pid);
 	//free(data->home_path);
 	return ;
 }
-
 
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec

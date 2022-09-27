@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:24:36 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/05/09 09:08:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 14:20:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	string_size(const char *s, char c)
 
 char	**free_tab(char **tab, int i)
 {
-	printf("==== SIZE TO FREE : %d\n", i);
 	while (i >= 0)
 	{
 		free(tab[i]);

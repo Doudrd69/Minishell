@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/12 12:48:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/27 14:25:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ int	check_and_print_var(int i, t_mini_data *data)
 
 	j = 0;
 	size = 0;
-	if (data->str[i +1] == '?')
+	if (data->str[i + 1] == '?')
 	{
 		ft_printf("%d", *data->p_status);
 		return (i + 2);
 	}
+	if (data->str[i + 1] <= '9' && data->str[i + 1] >= '0')
+		return (i + 2);
 	position = &data->str[i];//position du $
 	while (position[size] != '\0' && position[size] != ' ')
 	{
