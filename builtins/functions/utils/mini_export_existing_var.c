@@ -25,7 +25,7 @@ char	**malloc_tab_with_existing_var(t_mini_data *data)
 	int	i;
 
 	i = 0;
-	while (data->env[i])
+	while (i < data->envp_size)
 	{
 		if (i == data->var_position)
 		{
@@ -45,6 +45,7 @@ char	**malloc_tab_with_existing_var(t_mini_data *data)
 				return (0);
 			}
 		}
+		//printf("= %d\n", i);
 		i++;
 	}
 	return (data->new_env);

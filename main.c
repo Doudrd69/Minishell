@@ -97,19 +97,13 @@ int main(int argc, char *argv[], char *envp[])
 					if (i == 4)
 					{
 						if (mini_data.unset_env)
-						{
-							printf("SIZE :  %d\n", mini_data.envp_size);
 							free_tab(mini_data.unset_env, mini_data.envp_size - 2);
-						}
 						mini_data.env = mini_data.new_env;
 					}
 					if (i == 5)
 					{
 						if (mini_data.new_env)
-						{
-							printf("IN FREE NEW : %d\n", mini_data.envp_size);
 							free_tab(mini_data.new_env, mini_data.envp_size);
-						}
 						mini_data.env = mini_data.unset_env;
 					}
 					check = 1;
@@ -124,6 +118,7 @@ int main(int argc, char *argv[], char *envp[])
 	}
 }
 //pas oublier de free apres un appel a mini_env
+//probleme avec export --> a chaque export, je creer un nouveau tableau que je peux pas free
 
 void	cmd_exec(t_data *data, char **envp, char **argv)
 {
