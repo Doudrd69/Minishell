@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 14:50:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 10:31:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 		free(data->hd.env_var);
 		return (0);
 	}
+	free(data->hd.env_var);
 	return (1);
 }
 
@@ -92,31 +93,4 @@ void heredoc(t_data *data)
 	return ;
 }
 //si on fait un ctrl D il faut supprimer le fichier
-
-void	print_heredoc(int output_fd)//fonction appelée si j'ai une redirection dans un fichier
-{
-	char *str = NULL;
-
-	// close(output_fd);
-	// output_fd = open("tmp.txt", O_RDONLY);
-	// if (output_fd < 0)
-	// 	return (0);
-	while (1)
-	{
-		str = get_next_line(output_fd);
-		if (ft_strncmp(str, "test", 4) == 0)
-		{
-			if ((check_delimiter(str, "test") == 0))
-				break ;
-		}
-		write(1, str, ft_strlen(str));//write dans le output donné si redirection
-		free(str);
-	}
-	free(str);
-	close(output_fd);
-	//unlink("tmp.txt");
-	return ;
-}
-
-
-//utiliser readline dans le heredoc
+//leaks auqnd on lance plusieurs HD

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 16:14:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 10:11:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 		j++;
 	}
 	data->hd.env_var[i] = '\0';
-	check_var_exists(j, data, output_fd);
-	return (1);
+	if (check_var_exists(j, data, output_fd) == 1)
+		return (1);
+	return (0);
 }
 
 int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
@@ -44,13 +45,13 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 
 	i = 0;
 	var_size = 0;
+	if ((ft_strncmp(str, "test", 4) == 0))
+	{
+		if (check_delimiter(str, "test") == 0)
+			return (0);
+	}
 	while (str[i])
 	{
-		if ((ft_strncmp(str, "test", 4) == 0))
-		{
-			if (check_delimiter(str, "test") == 0)
-				return (0);
-		}
 		if (data->hd.delimiter_quotes == 0)
 		{
 			if (str[i] == '$' && str[i + 1] != '\0')
@@ -125,3 +126,5 @@ void	close_hd_pipe(t_data *data, int i)
 	}
 	return ;
 }
+
+//free data->home_path

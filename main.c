@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 16:03:51 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 10:38:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,14 +188,16 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 		}
 	}
 	if (data->hd_pipefd)						//on close les pipes des Heredocs
+	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
+		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+	}
 	if (data->exec.pipe_check > 0)				//on close les pipes des process
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)					//on attend les process
 		;
 	if (data->check_hd > 0)
 		free(data->hd_pid);
-	//free(data->home_path);
 	return ;
 }
 

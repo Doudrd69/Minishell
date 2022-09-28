@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/19 13:26:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 09:47:49 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ int	copy_var_before_index(int i, int j, t_mini_data *data)
 int	unset_var(int index, t_mini_data *data)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	if (check_var(data->env[index], data->var_name))
 	{
-		if (malloc_and_cpy(data, i, j, index) == 1)
+		if (malloc_and_cpy(data, i, index) == 1)
 			return (1);
 		data->envp_size--;
 		return (0);
@@ -56,8 +55,10 @@ int	unset_var(int index, t_mini_data *data)
 	return (0);
 }
 
-int	malloc_and_cpy(t_mini_data *data, int i, int j, int index)
+int	malloc_and_cpy(t_mini_data *data, int i, int index)
 {
+	int j;
+	
 	data->unset_env = malloc(sizeof(char *) * (data->envp_size - 1));
 	if (!data->unset_env)
 		return (1);
