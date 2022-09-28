@@ -1,8 +1,11 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ./ft_printf/
+
+RL_LIB_DIR    := -L $(shell brew --prefix readline)/lib
+RL_INC_DIR    := -I $(shell brew --prefix readline)/include
 
 SRCS =	cmd_exec/cmd_main.c									\
 		cmd_exec/cmd_srcs/main_utils_bonus.c				\
@@ -32,14 +35,14 @@ INCS = 	cmd_exec/cmd_include/pipex_bonus.h					\
 OBJS = $(SRCS:.c=.o)
 
 %.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(INCS)
-		$(CC) $(FLAGS) -c $< -o $@
+		$(CC) $(FLAGS) $(RL_INC_DIR) -c $< -o $@
 
 NAME = minishell
 
 all : ft_printf $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(FLAGS) -L $(PRINTF_PATH) -lftprintf -lreadline -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -lftprintf -lreadline -o $(NAME) $(OBJS)
 
 ft_printf :
 	make -C $(PRINTF_PATH)

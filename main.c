@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/28 10:38:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/28 13:15:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 void	cmd_exec(t_data *data, char **envp, char **argv);
 
 int		p_status = 0;
+
+void	sighandler()
+{
+	write(2, "\n", 1);
+	rl_replace_line("", 0);//on remplace le buffer de readline (rl_line_buffer)
+	rl_on_new_line();
+	rl_redisplay();
+}
+//rl_line_buffer = vide quand on C-c
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -67,7 +76,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.value = "issou";
 	mini_data.path = "..";
 	mini_data.str = "$USER $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
-	mini_data.echo_arg = 0;
+	mini_data.echo_arg = 1;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.envp_size = envpsize;
@@ -82,6 +91,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	unset_env_check = 0;
 	new_env_check = 0;
+
+	//signal(SIGINT, &sighandler);
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
 		input = readline("minishell$ ");
