@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/28 13:15:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 17:19:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.value = "issou";
 	mini_data.path = "..";
 	mini_data.str = "$USER $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
-	mini_data.echo_arg = 1;
+	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.envp_size = envpsize;
 	mini_data.env = envp;
 	data.envp = envp;
-	printf("ENVP SIZE BEGINING : %d\n", mini_data.envp_size);
+	//printf("ENVP SIZE BEGINING : %d\n", mini_data.envp_size);
 
 	int	i;
 	int	check;

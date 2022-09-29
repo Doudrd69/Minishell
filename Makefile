@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall
+FLAGS = -Werror -Wextra -Wall -g
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ./ft_printf/

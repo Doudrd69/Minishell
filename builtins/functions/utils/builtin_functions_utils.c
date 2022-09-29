@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/07/01 10:17:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 14:32:25 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)//enlever
 		{
 			if (check_var(envp[i], var_name))
 			{
-				mini_data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]));
+				mini_data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
 				if (!mini_data->home_path)
 					return (NULL);
 				while (envp[i][++j])

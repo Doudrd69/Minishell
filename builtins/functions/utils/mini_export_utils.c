@@ -55,7 +55,6 @@ char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value)
 		k++;
 		j++;
 	}
-	j++;
 	data->new_env[i][j] = '\0';
 	return (data->new_env);
 }

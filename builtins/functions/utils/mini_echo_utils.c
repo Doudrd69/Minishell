@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 14:25:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 12:57:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	print_var(int j, t_mini_data *data)
 	{
 		j = 0;
 		data->echo_var = mini_getenv(data->env, data, data->var_search);
+		printf("== %s\n", data->echo_var);
 		free(data->home_path);
 		while (data->echo_var[j] != '=')
 			j++;
@@ -71,7 +72,7 @@ int	check_and_print_var(int i, t_mini_data *data)
 	}
 	data->var_search = malloc(sizeof(char) * size);//pas de +1 car le '\0' prend la place du $
 	if (!data->var_search)
-		return (0);
+		return (1);
 	i++;
 	while (data->str[i] != ' ' && data->str[i] != '\0')
 	{

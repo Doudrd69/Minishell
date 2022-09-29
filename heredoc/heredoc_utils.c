@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/28 10:11:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 16:57:30 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 	data->hd.env_var = malloc(sizeof(char) * var_size);
 	if (!data->hd.env_var)
 		return (1);
-	while (var[j] != ' ' && var[j + 1] != '\0')
+	while (var[j] != ' ' && var[j] != '\0')
 	{
 		data->hd.env_var[i] = var[j];
 		i++;
@@ -45,13 +45,13 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 
 	i = 0;
 	var_size = 0;
-	if ((ft_strncmp(str, "test", 4) == 0))
-	{
-		if (check_delimiter(str, "test") == 0)
-			return (0);
-	}
 	while (str[i])
 	{
+		if ((ft_strncmp(str, "test", 4) == 0))
+		{
+			if (check_delimiter(str, "test") == 0)
+				return (0);
+		}
 		if (data->hd.delimiter_quotes == 0)
 		{
 			if (str[i] == '$' && str[i + 1] != '\0')
@@ -65,6 +65,8 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 			write(output_fd, &str[i], 1);
 		i++;
 	}
+	write(output_fd, "\n", 1);
+	//ici str[i] == \0
 	return (0);
 }
 

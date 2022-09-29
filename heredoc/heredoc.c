@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/28 10:31:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/09/29 16:33:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_delimiter(char *str, char *delimiter)
 	size = 0;//pour pas prendre le >
 	while (str[size])
 		size++;
-	if ((size - 1) == ft_strlen(delimiter))
+	if (size == ft_strlen(delimiter))
 		return (0);
 	return (1);
 }
@@ -67,13 +67,12 @@ void heredoc(t_data *data)
 {
 	char *str = NULL;
 	int output_fd;
-
+	
 	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	while (1)
 	{
-		write(1, "> ", 2);
-		str = get_next_line(data->input_fd);
+		str = readline("> ");
 		if (check_and_print_var_hd(str, data, output_fd) == 0)
 		{
 			if ((ft_strncmp(str, "test", 4) == 0))
