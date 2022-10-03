@@ -27,6 +27,7 @@ SRCS =	cmd_exec/cmd_main.c									\
 		heredoc/heredoc.c									\
 		heredoc/heredoc_utils.c								\
 		heredoc/heredoc_execution.c							\
+		main_loop_utils.c									\
 		main.c											
 
 INCS = 	cmd_exec/cmd_include/pipex_bonus.h					\

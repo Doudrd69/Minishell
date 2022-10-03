@@ -32,6 +32,7 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 		j++;
 	}
 	data->hd.env_var[i] = '\0';
+	printf("== %s\n", data->hd.env_var);
 	if (check_var_exists(j, data, output_fd) == 1)
 		return (1);
 	return (0);
@@ -57,16 +58,18 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 			if (str[i] == '$' && str[i + 1] != '\0')
 			{
 				var = &str[i];
-				print_var_hd(data, var_size, var, output_fd);
-				i += data->hd.var_length;
+				if (print_var_hd(data, var_size, var, output_fd) == 1)
+					i += data->hd.var_length + 1;
+				else
+					i += data->hd.var_length;
 			}
 		}
 		//if (output_fd != 0 && output_fd != 1)
+		if (str[i] != '\0')
 			write(output_fd, &str[i], 1);
 		i++;
 	}
 	write(output_fd, "\n", 1);
-	//ici str[i] == \0
 	return (0);
 }
 

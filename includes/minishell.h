@@ -48,6 +48,8 @@ typedef struct mini_data
 	char		*hd_limit;
 	int			check_print_var;
 	int			*p_status;
+	int			new_env_check;
+	int			unset_env_check;
 }	t_mini_data;
 
 /* BUILTIN FUNCTIONS */
@@ -80,5 +82,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(char *s);
+
+/* MAIN UTILS FUNCTIONS */
 
 #endif

@@ -15,7 +15,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	cmd_exec(t_data *data, char **envp, char **argv);
+int export_exec(t_mini_data *mini_data, t_data *data);
+int	unset_exec(t_mini_data *mini_data, t_data *data);
+void cmd_exec(t_data *data, char **envp, char **argv);
 
 int		p_status = 0;
 
@@ -86,12 +88,9 @@ int main(int argc, char *argv[], char *envp[])
 
 	int	i;
 	int	check;
-	int	unset_env_check;
-	int	new_env_check;
 
-	unset_env_check = 0;
-	new_env_check = 0;
-
+	mini_data.unset_env_check = 0;
+	mini_data.new_env_check = 0;
 	//signal(SIGINT, &sighandler);
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
@@ -112,27 +111,9 @@ int main(int argc, char *argv[], char *envp[])
 						break ;
 					}
 					if (i == 4)
-					{
-						new_env_check = 1;
-						if (mini_data.unset_env && unset_env_check == 1)
-						{
-							free_tab(mini_data.unset_env, mini_data.envp_size - 2);
-							unset_env_check = 0;
-						}
-						mini_data.env = mini_data.new_env;
-						data.envp = mini_data.new_env;
-					}
+						export_exec(&mini_data, &data);
 					if (i == 5)
-					{
-						unset_env_check = 1;
-						if (mini_data.new_env)
-						{
-							free_tab(mini_data.new_env, mini_data.envp_size);
-							new_env_check = 0;
-						}
-						mini_data.env = mini_data.unset_env;
-						data.envp = mini_data.unset_env;
-					}
+						unset_exec(&mini_data, &data);
 					check = 1;
 					break;
 				}
