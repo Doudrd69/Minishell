@@ -23,6 +23,7 @@ SRCS =	cmd_exec/cmd_main.c									\
 		builtins/functions/utils/mini_unset_utils.c			\
 		builtins/functions/utils/mini_echo_utils.c			\
 		builtins/functions/utils/mini_export_existing_var.c	\
+		builtins/functions/utils/mini_cd_utils.c			\
 		heredoc/gnl.c										\
 		heredoc/heredoc.c									\
 		heredoc/heredoc_utils.c								\

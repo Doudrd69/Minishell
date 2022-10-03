@@ -74,12 +74,14 @@ int 	check_var_exists_export(t_mini_data *data);
 int		unset_var(int index, t_mini_data *data);
 int		check_signs(int i, t_mini_data *data);
 int		check_var(char *str, char *var_name);
+int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
 int		check_remains(char *str);
 
 /* LIBFT FUNCTIONS */
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t size);
+int		ft_strlcpy(char *dst, const char *src, size_t size, int check);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(char *s);
 

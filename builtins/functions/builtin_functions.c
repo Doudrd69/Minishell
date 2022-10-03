@@ -37,6 +37,8 @@ int	mini_cd(t_mini_data *data)//penser a enelver les printf
 		}
 		ft_printf("Current : %s\n", getcwd(data->buff, BUF_SIZE));
 	}
+	//update $PWD
+	update_pwd(data);
 	return (0);
 }
 

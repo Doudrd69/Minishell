@@ -32,7 +32,6 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 		j++;
 	}
 	data->hd.env_var[i] = '\0';
-	printf("== %s\n", data->hd.env_var);
 	if (check_var_exists(j, data, output_fd) == 1)
 		return (1);
 	return (0);
