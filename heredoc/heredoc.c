@@ -74,13 +74,17 @@ void heredoc(t_data *data)
 {
 	char *str = NULL;
 	int output_fd;
+	int	size;
 	
 	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	while (1)
 	{
+		size = 0;
 		str = readline("> ");
-		if (check_and_print_var_hd(str, data, output_fd) == 0)
+		while (str[size])
+			size++;
+		if (check_and_print_var_hd(str, data, output_fd, size) == 0)
 		{
 			if ((ft_strncmp(str, "test", 4) == 0))
 			{

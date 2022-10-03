@@ -37,12 +37,12 @@ void	print_var(int j, t_mini_data *data)
 		j = 0;
 		data->echo_var = mini_getenv(data->env, data, data->var_search);
 		printf("== %s\n", data->echo_var);
-		free(data->home_path);
 		while (data->echo_var[j] != '=')
 			j++;
 		while (data->echo_var[++j])
 			write(1, &data->echo_var[j], 1);
 		data->check_print_var = 1;
+		free(data->home_path);
 	}
 	free(data->var_search);
 	return ;

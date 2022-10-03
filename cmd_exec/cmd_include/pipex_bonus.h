@@ -93,7 +93,7 @@ typedef struct data
 
 /* HEREDOC */
 int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
-int		check_and_print_var_hd(char *str, t_data *data, int output_fd);
+int		check_and_print_var_hd(char *str, t_data *data, int output_fd, int size);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 int		check_var_exists(int j, t_data *data, int output_fd);
 int		check_delimiter(char *str, char *delimiter);

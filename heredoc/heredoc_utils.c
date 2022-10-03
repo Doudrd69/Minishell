@@ -37,7 +37,7 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 	return (0);
 }
 
-int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
+int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 {
 	int		i;
 	int		var_size;
@@ -45,7 +45,7 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 
 	i = 0;
 	var_size = 0;
-	while (str[i])
+	while (i < size)
 	{
 		if ((ft_strncmp(str, "test", 4) == 0))
 		{
@@ -90,7 +90,7 @@ char	*getenv_hd(char *envp[], t_data *data, char *var_name)
 		{
 			if (check_var(envp[i], var_name))
 			{
-				data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]));
+				data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
 				if (!data->home_path)
 					return (NULL);
 				while (envp[i][++j])
