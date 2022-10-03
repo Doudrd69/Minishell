@@ -19,7 +19,7 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 
 	i = 0;
 	j = 1;
-	while (var[var_size] != ' ' && var[var_size + 1] != '\0')
+	while (var[var_size] != ' ' && var[var_size] != '\0')
 		var_size++;
 	data->hd.var_length = var_size;
 	data->hd.env_var = malloc(sizeof(char) * var_size);
@@ -57,10 +57,8 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd)
 			if (str[i] == '$' && str[i + 1] != '\0')
 			{
 				var = &str[i];
-				if (print_var_hd(data, var_size, var, output_fd) == 1)
-					i += data->hd.var_length + 1;
-				else
-					i += data->hd.var_length;
+				print_var_hd(data, var_size, var, output_fd);
+				i += data->hd.var_length;
 			}
 		}
 		//if (output_fd != 0 && output_fd != 1)

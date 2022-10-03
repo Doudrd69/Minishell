@@ -45,16 +45,23 @@ int	var_exists_hd(char *var, char *envp[])
 
 int	check_var_exists(int j, t_data *data, int output_fd)
 {
+	int	size;
+	int	i;
+
+	i = 0;
 	if (var_exists_hd(data->hd.env_var, data->envp) == 0)
 	{
 		j = 0;
 		data->hd.env_var_value = getenv_hd(data->envp, data, data->hd.env_var);
 		while (data->hd.env_var_value[j] != '=')
 			j++;
-		while (data->hd.env_var_value[++j])
+		size = ft_strlen(&data->hd.env_var_value[j]);
+		//printf("=== %s ----> %d\n", &data->hd.env_var_value[j + 1], size);
+		while (i < size - 1)
 		{
 			if (output_fd != 0 && output_fd != 1)
-				write(output_fd, &data->hd.env_var_value[j], 1);
+				write(output_fd, &data->hd.env_var_value[++j], 1);
+			i++;
 		}
 		free(data->hd.env_var);
 		return (0);

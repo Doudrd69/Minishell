@@ -16,8 +16,10 @@
 #include <readline/history.h>
 
 int export_exec(t_mini_data *mini_data, t_data *data);
-int	unset_exec(t_mini_data *mini_data, t_data *data);
 void cmd_exec(t_data *data, char **envp, char **argv);
+int	unset_exec(t_mini_data *mini_data, t_data *data);
+void exec_main(t_data *data, char *envp[], char **argv);
+void heredoc_main(t_data *data);
 
 int		p_status = 0;
 
@@ -33,7 +35,7 @@ void	sighandler()
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
-	(void)argv;
+	//(void)argv;
 	t_mini_data	mini_data;
 	t_data		data;
 	//(void)envp;
@@ -139,7 +141,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 3;
+	data->cmd_nb = 1;
 	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
@@ -154,31 +156,13 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 1;
+	data->exec.pipe_check = 0;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;
-	int j = 0;
-	int	ptr;
-	if (data->heredoc_nb > 0)					//on s'occupe d'abord des Heredocs
-	{
-		heredoc_exec(data);
-		while (j < data->heredoc_nb)			//on attend les process des HD
-		{
-			waitpid(data->hd_pid[j], &ptr, 0);
-			j++;
-		}
-	}
+	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe
-	if (data->cmd_nb > 0)						//En fonction du nombre de commande, on execute
-	{
-		first_command(envp, data);
-		if (data->cmd_nb > 1)
-		{
-			commands(data, argv, envp);
-			last_command(envp, data);
-		}
-	}
+	exec_main(data, envp, argv);				//exec des commandes
 	if (data->hd_pipefd)						//on close les pipes des Heredocs
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);

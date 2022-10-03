@@ -26,3 +26,35 @@ int	unset_exec(t_mini_data *mini_data, t_data *data)
 	data->envp = mini_data->unset_env;
 	return (0);
 }
+
+void	heredoc_main(t_data *data)
+{
+	int	j;
+	int	ptr;
+
+	j = 0;
+	if (data->heredoc_nb > 0)					//on s'occupe d'abord des Heredocs
+	{
+		heredoc_exec(data);
+		while (j < data->heredoc_nb)			//on attend les process des HD
+		{
+			waitpid(data->hd_pid[j], &ptr, 0);
+			j++;
+		}
+	}
+	return ;
+}
+
+void	exec_main(t_data *data, char *envp[], char **argv)
+{
+	if (data->cmd_nb > 0)						//En fonction du nombre de commande, on execute
+	{
+		first_command(envp, data);
+		if (data->cmd_nb > 1)
+		{
+			commands(data, argv, envp);
+			last_command(envp, data);
+		}
+	}
+	return ;
+}
