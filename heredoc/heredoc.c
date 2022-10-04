@@ -29,9 +29,13 @@ int	check_delimiter(char *str, char *delimiter)
 int	var_exists_hd(char *var, char *envp[])
 {
 	int	i;
+	int	size;
 
 	i = 0;
-	while (envp[i])
+	size = 0;
+	while (envp[size])
+		size++;
+	while (i < size)
 	{
 		if (ft_strnstr(envp[i], var, ft_strlen(var)))
 		{
