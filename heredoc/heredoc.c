@@ -91,7 +91,8 @@ void heredoc(t_data *data)
 				if (check_delimiter(str, "test") == 0)//si cat, je return (0), sinon je return le print heredoc qui aura ecrit dans le fichier d'output
 				{
 					free(str);
-					free(data->home_path);
+					// if (data->home_path)
+					// 	free(data->home_path);
 					close(output_fd);
 					close(data->hd_pipefd[data->hd_pipe_id][READ]);
 					exit(0);

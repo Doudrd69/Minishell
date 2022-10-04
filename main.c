@@ -93,7 +93,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
-	//signal(SIGINT, &sighandler);
+	signal(SIGINT, &sighandler);
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
 		input = readline("minishell$ ");
@@ -141,8 +141,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 1;
-	data->heredoc_nb = 1;
+	data->cmd_nb = 3;
+	data->heredoc_nb = 2;
 	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
@@ -156,14 +156,14 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 0;
+	data->exec.pipe_check = 1;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe
 	exec_main(data, envp, argv);				//exec des commandes
-	if (data->hd_pipefd)						//on close les pipes des Heredocs
+	if (data->check_hd == 1)						//on close les pipes des Heredocs
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);

@@ -17,9 +17,12 @@ int	pipe_creation(t_data *data)
 	int	i;
 
 	i = 0;
-	data->pipefd = malloc(sizeof(int *) * (data->cmd_nb - 1));
-	if (!data->pipefd)
-		return (0);
+	if (data->cmd_nb > 1)
+	{
+		data->pipefd = malloc(sizeof(int *) * (data->cmd_nb - 1));
+		if (!data->pipefd)
+			return (0);
+	}
 	while (i < data->cmd_nb - 1)
 	{
 		data->pipefd[i] = malloc(sizeof(int) * 2);

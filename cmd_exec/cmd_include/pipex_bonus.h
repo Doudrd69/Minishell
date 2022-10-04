@@ -106,7 +106,7 @@ void	heredoc(t_data *data);
 char	*get_next_line(int fd);
 
 /* COMMAND UTILS */
-int		check_outfile(t_data *data, char *envp[]);
+int		check_outfile(t_data *data);
 int		check_outfile_last_cmd(t_data *data);
 int		check_inputfile(t_data *data);
 

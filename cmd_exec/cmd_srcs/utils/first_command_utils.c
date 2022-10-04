@@ -1,9 +1,10 @@
 #include "../../cmd_include/pipex_bonus.h"
 
-int	check_pipe_and_exec(t_data *data, char *envp[])
+int	check_pipe_and_exec(t_data *data)
 {
 	if (data->exec.pipe_check == 0)
-			first_cmd_execution(data, envp);
+			return (0);
+			//first_cmd_execution(data, envp);
 	else
 	{
 		if (dup2(data->pipefd[0][WRITE], STDOUT_FILENO) == -1)//que si pipe ou redirection vers un autre fichier (a ce moment il faudra open avant)
@@ -45,7 +46,7 @@ int	check_inputfile(t_data *data)
 	return (0);
 }
 
-int	check_outfile(t_data *data, char *envp[])
+int	check_outfile(t_data *data)
 {
 	if (data->exec.outfile_check == 1)//fonction pour l'ecriture sur fichier de sortie
 	{
@@ -69,5 +70,5 @@ int	check_outfile(t_data *data, char *envp[])
 		return (0);
 	}
 	else
-		return (check_pipe_and_exec(data, envp));
+		return (check_pipe_and_exec(data));
 }

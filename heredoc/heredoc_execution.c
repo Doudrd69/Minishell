@@ -17,23 +17,26 @@ int	hd_pipe_creation(t_data *data)
 	int	i;
 
 	i = 0;
-	data->hd_pipefd = malloc(sizeof(int *) * data->heredoc_nb);
-	if (!data->hd_pipefd)
-		return (0);
-	while (i < data->heredoc_nb)
+	if (data->check_hd == 1)
 	{
-		data->hd_pipefd[i] = malloc(sizeof(int) * 2);
-		if (!data->hd_pipefd[i])
-		{
-			free_inttab(data->hd_pipefd, i);
+		data->hd_pipefd = malloc(sizeof(int *) * data->heredoc_nb);
+		if (!data->hd_pipefd)
 			return (0);
-		}
-		if (pipe(data->hd_pipefd[i]) == -1)
+		while (i < data->heredoc_nb)
 		{
-			perror("pipe");
-			return (0);
+			data->hd_pipefd[i] = malloc(sizeof(int) * 2);
+			if (!data->hd_pipefd[i])
+			{
+				free_inttab(data->hd_pipefd, i);
+				return (0);
+			}
+			if (pipe(data->hd_pipefd[i]) == -1)
+			{
+				perror("pipe");
+				return (0);
+			}
+			i++;
 		}
-		i++;
 	}
 	return (i);
 }

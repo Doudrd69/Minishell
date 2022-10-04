@@ -33,11 +33,8 @@ void	first_command(char *envp[], t_data *data)
 			return ;
 		data->index = 2;//ici on fera correcpondre le bon ID du bon bloc de la liste chainee
 		data->env.tab1 = get_path(envp, data, data->env.tab1);//remplacer par getenv + je recup ici un tableau 2d avec tout mes chemins d'exec
-		if (data->exec.first_cmd_squotes_check == 1 && check_sq_cmd(data->exec.first_cmd_test))
-			data->env.param_tab1 = &data->exec.first_cmd_test;
-		else
- 			data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');//on split la commande pour distinguer la cmd et ses arguments (ls -la)
-		check_outfile(data, envp);
+ 		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');//on split la commande pour distinguer la cmd et ses arguments (ls -la)
+		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}
 }
