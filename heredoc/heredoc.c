@@ -86,6 +86,7 @@ void heredoc(t_data *data)
 	{
 		size = 0;
 		str = readline("> ");
+		eof_handler(str);
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)

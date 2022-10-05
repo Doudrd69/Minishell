@@ -109,7 +109,6 @@ char	*get_next_line(int fd);
 int		check_outfile(t_data *data);
 int		check_outfile_last_cmd(t_data *data);
 int		check_inputfile(t_data *data);
-
 void	command_exec(t_data *data, char *envp[], int cmd_id);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	last_command(char *envp[], t_data *data);
@@ -129,7 +128,9 @@ int		**free_inttab(int **tab, int i);
 void	close_pipe(t_data *data, int i);
 char	**free_tab(char **tab, int i);
 int		pipe_creation(t_data *data);
+void	eof_handler(char *input);
 int		check_sq_cmd(char *cmd);
 size_t	ft_strlen(char *s);
+void	sighandler();
 
 #endif

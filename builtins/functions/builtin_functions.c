@@ -149,9 +149,5 @@ int	mini_unset(t_mini_data *data)
 
 int	mini_exit()
 {
-	// int	pid;
-
-	// pid = getpid();
-	// return (kill(pid, 9));
 	return (0);
 }

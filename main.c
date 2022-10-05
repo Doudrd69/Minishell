@@ -15,13 +15,23 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int export_exec(t_mini_data *mini_data, t_data *data);
-void cmd_exec(t_data *data, char **envp, char **argv);
-int	unset_exec(t_mini_data *mini_data, t_data *data);
-void exec_main(t_data *data, char *envp[], char **argv);
-void heredoc_main(t_data *data);
+void	exec_main(t_data *data, char *envp[], char **argv);
+int		export_exec(t_mini_data *mini_data, t_data *data);
+void	cmd_exec(t_data *data, char **envp, char **argv);
+int		unset_exec(t_mini_data *mini_data, t_data *data);
+void	heredoc_main(t_data *data);
 
 int		p_status = 0;
+
+void	eof_handler(char *input)//si dans HD, ou un sleep ---> attendre fin des processus? free?
+{
+	if (input == NULL)
+	{
+		write(2, "exit\n", 5);
+		exit(0);
+	}
+	return ;
+}
 
 void	sighandler()
 {
@@ -49,8 +59,8 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.p_status = &p_status;
 	mini_data.echo_sq_check = 0;
 	p_status = 0;
-
 	char	*input;
+
 	int		envpsize = 0;
 	int		(*builtins[7])(t_mini_data *data);
 	int		builtin_cmd_nb = 7;
@@ -71,7 +81,7 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
 	builtins[4] = &mini_export;		//OK (+ si PT$MDR=issou --> on export PT=issou (gestion dans le parsing) + gerer plusieurs declarations)
 	builtins[5] = &mini_unset;		//OK
-	builtins[6] = &mini_exit;		//OK mais à vérifier
+	builtins[6] = &mini_exit;		//A FAIRE
 
 	while (envp[envpsize])
 		envpsize++;
@@ -97,6 +107,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
 		input = readline("minishell$ ");
+		eof_handler(input);
 		check = 0;
 		i = 0;
 		data.envp_size = mini_data.envp_size;
@@ -141,8 +152,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 3;
-	data->heredoc_nb = 2;
+	data->cmd_nb = 1;
+	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
@@ -156,7 +167,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 1;
+	data->exec.pipe_check = 0;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;
