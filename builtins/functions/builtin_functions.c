@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 13:18:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 11:11:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	mini_cd(t_mini_data *data)//penser a enelver les printf
 		}
 		ft_printf("Current : %s\n", getcwd(data->buff, BUF_SIZE));
 	}
-	//update $PWD
 	update_pwd(data);
 	return (0);
 }

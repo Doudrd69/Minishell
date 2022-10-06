@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/28 09:48:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 11:21:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct mini_data
 	int			*p_status;
 	int			new_env_check;
 	int			unset_env_check;
+	char		*oldpwd;
 }	t_mini_data;
 
 /* BUILTIN FUNCTIONS */

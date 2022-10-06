@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/29 16:27:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 10:29:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		check_and_print_var_hd(char *str, t_data *data, int output_fd, int size);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 int		check_var_exists(int j, t_data *data, int output_fd);
 int		check_delimiter(char *str, char *delimiter);
-int		var_exists_hd(char *var, char *envp[]);
+int		var_exists_hd(t_data *data);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);

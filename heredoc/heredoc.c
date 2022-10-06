@@ -6,12 +6,18 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/29 16:33:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/06 11:09:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 #include <readline/readline.h>
+
+void	sighandler_hd()
+{
+	//il faut quitter le process du HD et ne pas executer
+	exit(0);
+}
 
 int	check_delimiter(char *str, char *delimiter)
 {
@@ -26,20 +32,16 @@ int	check_delimiter(char *str, char *delimiter)
 }
 
 
-int	var_exists_hd(char *var, char *envp[])
+int	var_exists_hd(t_data *data)
 {
 	int	i;
-	int	size;
 
 	i = 0;
-	size = 0;
-	while (envp[size])
-		size++;
-	while (i < size)
+	while (i < data->envp_size)
 	{
-		if (ft_strnstr(envp[i], var, ft_strlen(var)))
+		if (ft_strnstr(data->envp[i], data->hd.env_var, ft_strlen(data->hd.env_var)))
 		{
-			if (check_var(envp[i], var))
+			if (check_var(data->envp[i], data->hd.env_var))
 				return (0);
 		}
 		i++;
@@ -53,14 +55,13 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 	int	i;
 
 	i = 0;
-	if (var_exists_hd(data->hd.env_var, data->envp) == 0)
+	if (var_exists_hd(data) == 0)
 	{
 		j = 0;
 		data->hd.env_var_value = getenv_hd(data->envp, data, data->hd.env_var);
 		while (data->hd.env_var_value[j] != '=')
 			j++;
 		size = ft_strlen(&data->hd.env_var_value[j]);
-		//printf("=== %s ----> %d\n", &data->hd.env_var_value[j + 1], size);
 		while (i < size - 1)
 		{
 			if (output_fd != 0 && output_fd != 1)
@@ -80,6 +81,7 @@ void heredoc(t_data *data)
 	int output_fd;
 	int	size;
 	
+	signal(SIGINT, &sighandler_hd);
 	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	while (1)
