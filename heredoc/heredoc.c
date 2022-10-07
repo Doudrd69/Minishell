@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 11:20:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 12:41:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,5 @@ void	heredoc(t_data *data)
 }
 //si on fait un ctrl D il faut supprimer le fichier
 //attention si "$ISSOU$" --> on affiche "$$"
-//attention si "$PATH$"  --> on affiche value$
+//attention si "$HOME$PWD" --> on affiche "valuevalue"
+//pb avec $TERM

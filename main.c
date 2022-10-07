@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 10:57:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 12:34:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.name = "PTDR";
 	mini_data.value = "issou";
 	mini_data.path = "..";
-	mini_data.str = "$USER $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "$TERM $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";

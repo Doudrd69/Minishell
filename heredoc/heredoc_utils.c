@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 11:31:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 12:37:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 	i = 0;
 	j = 1;
 	while (var[var_size] != ' ' && var[var_size] != '\0')
+	{
+		if (var[var_size] == '$' && var_size != 0)
+			break ;
 		var_size++;
-	if (var[var_size - 1] == '$')
-		var_size--;
+	}
 	data->hd.var_length = var_size;
 	data->hd.env_var = malloc(sizeof(char) * var_size);
 	if (!data->hd.env_var)
@@ -72,6 +74,8 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 			else
 				i = print_var_util(data, str, i, output_fd);
 		}
+		if (str[i] == '$')
+			i = print_var_util(data, str, i, output_fd);
 		if (str[i] != '\0')
 			write(output_fd, &str[i], 1);
 		i++;
