@@ -29,6 +29,7 @@
 typedef struct mini_data
 {
 	char		buff[BUF_SIZE];
+	char		buff_oldpwd[BUF_SIZE];
 	char		*home_path;
 	char		**new_env;
 	char		**unset_env;
@@ -51,6 +52,7 @@ typedef struct mini_data
 	int			new_env_check;
 	int			unset_env_check;
 	char		*oldpwd;
+	char		*cwd;
 }	t_mini_data;
 
 /* BUILTIN FUNCTIONS */
@@ -75,6 +77,7 @@ int 	check_var_exists_export(t_mini_data *data);
 int		unset_var(int index, t_mini_data *data);
 int		check_signs(int i, t_mini_data *data);
 int		check_var(char *str, char *var_name);
+int		update_old_pwd(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
 int		check_remains(char *str);

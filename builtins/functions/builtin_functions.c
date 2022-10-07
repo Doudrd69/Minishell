@@ -14,6 +14,7 @@
 
 int	mini_cd(t_mini_data *data)//penser a enelver les printf
 {
+	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 	printf("Before  : %s\n", getcwd(data->buff, BUF_SIZE));
 	if (data->path[0] == '\0')
 	{
@@ -35,9 +36,13 @@ int	mini_cd(t_mini_data *data)//penser a enelver les printf
 			ft_printf("minishell: cd: %s: No such file or directory\n", data->path);
 			return (1);
 		}
+		data->cwd = getcwd(data->buff, BUF_SIZE);
 		ft_printf("Current : %s\n", getcwd(data->buff, BUF_SIZE));
 	}
-	update_pwd(data);
+	if (update_pwd(data) == 1)
+		return (1);
+	if (update_old_pwd(data) == 1)
+		return (1);
 	return (0);
 }
 
@@ -65,7 +70,7 @@ int	mini_env(t_mini_data *data)
 	}
 	while (i < data->envp_size)
 	{
-		printf("%s\n", data->env[i]);
+		printf("== %d --> %s\n", i, data->env[i]);
 		i++;
 	}
 	*data->p_status = 0;
