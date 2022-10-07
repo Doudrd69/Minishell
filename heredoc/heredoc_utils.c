@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/29 16:57:30 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 11:31:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;
 	j = 1;
 	while (var[var_size] != ' ' && var[var_size] != '\0')
 		var_size++;
+	if (var[var_size - 1] == '$')
+		var_size--;
 	data->hd.var_length = var_size;
 	data->hd.env_var = malloc(sizeof(char) * var_size);
 	if (!data->hd.env_var)
 		return (1);
 	while (var[j] != ' ' && var[j] != '\0')
 	{
+		if (var[j] == '$')
+			break ;
 		data->hd.env_var[i] = var[j];
 		i++;
 		j++;
@@ -37,31 +41,37 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 	return (0);
 }
 
-int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
+int	print_var_util(t_data *data, char *str, int i, int output_fd)
 {
-	int		i;
 	int		var_size;
 	char	*var;
 
-	i = 0;
 	var_size = 0;
+	var = &str[i];
+	print_var_hd(data, var_size, var, output_fd);
+	i += data->hd.var_length;
+	return (i);
+}
+
+int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
+{
+	int		i;
+
+	i = 0;
 	while (i < size)
 	{
-		if ((ft_strncmp(str, "test", 4) == 0))
+		if (check_eof(str) == 0)
+			return (0);
+		if (str[i] == '$' && str[i + 1] != '\0')
 		{
-			if (check_delimiter(str, "test") == 0)
-				return (0);
-		}
-		if (data->hd.delimiter_quotes == 0)
-		{
-			if (str[i] == '$' && str[i + 1] != '\0')
+			if (str[i + 1] == ' ')
 			{
-				var = &str[i];
-				print_var_hd(data, var_size, var, output_fd);
-				i += data->hd.var_length;
+				write(output_fd, &str[i], 1);
+				i++;
 			}
+			else
+				i = print_var_util(data, str, i, output_fd);
 		}
-		//if (output_fd != 0 && output_fd != 1)
 		if (str[i] != '\0')
 			write(output_fd, &str[i], 1);
 		i++;
@@ -70,15 +80,34 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 	return (0);
 }
 
-char	*getenv_hd(char *envp[], t_data *data, char *var_name)
+char	*var_found(t_data *data, char *envp[], char *var_name, int i)
 {
-	int	i;
 	int	j;
 	int	k;
 
-	i = 0;
 	j = -1;
 	k = 0;
+	if (check_var(envp[i], var_name))
+	{
+		data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
+		if (!data->home_path)
+			return (NULL);
+		while (envp[i][++j])
+		{
+			data->home_path[k] = envp[i][j];
+			k++;
+		}
+		data->home_path[k] = '\0';
+		return (data->home_path);
+	}
+	return (NULL);
+}
+
+char	*getenv_hd(char *envp[], t_data *data, char *var_name)
+{
+	int	i;
+
+	i = 0;
 	while (envp[i])
 	{
 		if (i == data->envp_size)
@@ -87,46 +116,10 @@ char	*getenv_hd(char *envp[], t_data *data, char *var_name)
 			return (NULL);
 		}
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
-		{
-			if (check_var(envp[i], var_name))
-			{
-				data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
-				if (!data->home_path)
-					return (NULL);
-				while (envp[i][++j])
-				{
-					data->home_path[k] = envp[i][j];
-					k++;
-				}
-				data->home_path[k] = '\0';
-				return (data->home_path);
-			}
-		}
+			return (var_found(data, envp, var_name, i));
 		i++;
 	}
 	printf("Cannot find %s\n", var_name);
 	return (NULL);
 }
-
-void	output_redirection(t_data *data)
-{
-	if (dup2(data->hd_pipefd[data->hd_pipe_id][WRITE], STDOUT_FILENO == -1))
-	{
-		perror("dup2");
-		return ;
-	}
-	return ;
-}
-
-void	close_hd_pipe(t_data *data, int i)
-{
-	while (i >= 0)
-	{
-		close(data->hd_pipefd[i][READ]);
-		close(data->hd_pipefd[i][WRITE]);
-		i--;
-	}
-	return ;
-}
-
 //free data->home_path

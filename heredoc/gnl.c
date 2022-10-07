@@ -1,31 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/07 10:19:56 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/07 10:22:52 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-
-size_t	ft_strlen_gnl(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strnlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && (s[i] != '\n'))
-		i++;
-	if (s[i] == '\n')
-		i++;
-	return (i);
-}
 
 char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*tab;
 
 	i = 0;
@@ -106,13 +96,12 @@ char	*get_next_line(int fd)
 
 	index = 1;
 	line = NULL;
-
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	line = buffer_separator(buffer, line);
 	while (index > 0 && check_newline(buffer))
 	{
-		index = read(fd, buffer, BUFFER_SIZE);//return -1
+		index = read(fd, buffer, BUFFER_SIZE);
 		if (index <= 0)
 			return (NULL);
 		buffer[index] = '\0';

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/06 11:21:27 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 10:22:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ int		update_old_pwd(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
 int		check_remains(char *str);
+
+/* GNL FUNCTIONS */
+size_t	ft_strlen_gnl(char *s);
+size_t	ft_strnlen(char *s);
 
 /* LIBFT FUNCTIONS */
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);

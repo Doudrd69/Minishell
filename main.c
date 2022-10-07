@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/06 10:38:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 10:57:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ int		unset_exec(t_mini_data *mini_data, t_data *data);
 void	heredoc_main(t_data *data);
 
 int		p_status = 0;
+
+int	check_eof(char *str)
+{
+	if ((ft_strncmp(str, "test", 4) == 0))
+	{
+		if (check_delimiter(str, "test") == 0)
+			return (0);
+	}
+	return (1);
+}
 
 void	eof_handler(char *input)//si dans HD, ou un sleep ---> attendre fin des processus? free?
 {
@@ -190,3 +200,4 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 
 //si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec
+//dans HD --> regarder "$$$$$$$$"

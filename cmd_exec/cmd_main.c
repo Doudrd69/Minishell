@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   cmd_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/12 13:07:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 11:19:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	first_command(char *envp[], t_data *data)
 			return ;
 		data->index = 2;//ici on fera correcpondre le bon ID du bon bloc de la liste chainee
 		data->env.tab1 = get_path(envp, data, data->env.tab1);//remplacer par getenv + je recup ici un tableau 2d avec tout mes chemins d'exec
- 		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');//on split la commande pour distinguer la cmd et ses arguments (ls -la)
+		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');//on split la commande pour distinguer la cmd et ses arguments (ls -la)
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}

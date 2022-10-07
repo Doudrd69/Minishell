@@ -6,11 +6,39 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 15:02:27 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/07 10:44:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
+
+void	sighandler_hd(int signum)
+{
+	(void)signum;
+	//il faut quitter le process du HD et ne pas executer
+	exit(0);
+}
+
+void	output_redirection(t_data *data)
+{
+	if (dup2(data->hd_pipefd[data->hd_pipe_id][WRITE], STDOUT_FILENO == -1))
+	{
+		perror("dup2");
+		return ;
+	}
+	return ;
+}
+
+void	close_hd_pipe(t_data *data, int i)
+{
+	while (i >= 0)
+	{
+		close(data->hd_pipefd[i][READ]);
+		close(data->hd_pipefd[i][WRITE]);
+		i--;
+	}
+	return ;
+}
 
 int	hd_pipe_creation(t_data *data)
 {
@@ -41,7 +69,7 @@ int	hd_pipe_creation(t_data *data)
 	return (i);
 }
 
-int	heredoc_exec(t_data *data)//probleme car alterne entre les differents hd
+int	heredoc_exec(t_data *data)
 {
 	int	i;
 	int	ptr;
@@ -49,7 +77,6 @@ int	heredoc_exec(t_data *data)//probleme car alterne entre les differents hd
 
 	i = 0;
 	pipe_nb = hd_pipe_creation(data);
-	(void)pipe_nb;
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
