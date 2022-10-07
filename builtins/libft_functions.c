@@ -40,3 +40,50 @@ int	ft_strlcpy(char *dst, const char *src, size_t size, int check)
 		dst[i] = '\0';
 	return (src_lenght);
 }
+
+char	*recursive_conversion(long int nbr, char *tab, int length)
+{
+	if (nbr >= 10)
+		recursive_conversion(nbr / 10, tab, length - 1);
+	tab[length - 1] = (nbr % 10 + 48);
+	return (tab);
+}
+
+int	digit_count(long int n)
+{
+	int	i;
+
+	i = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		i++;
+	}
+	while (n >= 10)
+	{
+		n /= 10;
+		i++;
+	}
+	return (i + 1);
+}
+
+char	*ft_itoa(int n)
+{
+	int			i;
+	long int	nb;
+	char		*tab;
+
+	nb = n;
+	i = digit_count(n);
+	tab = malloc(sizeof(char) * (i + 1));
+	if (!tab)
+		return (NULL);
+	if (nb < 0)
+	{
+		tab[0] = '-';
+		nb *= -1;
+	}
+	tab[i] = 0;
+	recursive_conversion(nb, tab, i);
+	return (tab);
+}

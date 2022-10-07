@@ -112,3 +112,4 @@ void	heredoc(t_data *data)
 //attention si "$ISSOU$" --> on affiche "$$"
 //attention si "$HOME$PWD" --> on affiche "valuevalue"
 //pb avec $TERM
+//$$ == pid

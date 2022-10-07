@@ -47,10 +47,22 @@ int	print_var_util(t_data *data, char *str, int i, int output_fd)
 {
 	int		var_size;
 	char	*var;
+	char	*pid;
 
 	var_size = 0;
 	var = &str[i];
-	print_var_hd(data, var_size, var, output_fd);
+	if (str[i] == '$' && str[i + 1] == '$')
+	{
+		pid = ft_itoa(getpid());
+		write(output_fd, pid, ft_strlen(pid));
+		return (i += 2);
+	}
+	if (print_var_hd(data, var_size, var, output_fd) == 1)
+	{
+		// if (str[i + (data->hd.var_length + 1)] != '\0')
+		// write(output_fd, "$", 1);
+		// return (i += data->hd.var_length + 1);
+	}
 	i += data->hd.var_length;
 	return (i);
 }
@@ -73,9 +85,13 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 			}
 			else
 				i = print_var_util(data, str, i, output_fd);
+			while (str[i] == '$')
+			{
+				if (str[i + 1] == '\0')
+					break ;
+				i = print_var_util(data, str, i, output_fd);
+			}
 		}
-		if (str[i] == '$')
-			i = print_var_util(data, str, i, output_fd);
 		if (str[i] != '\0')
 			write(output_fd, &str[i], 1);
 		i++;

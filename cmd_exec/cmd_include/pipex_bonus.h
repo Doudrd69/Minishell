@@ -106,6 +106,7 @@ void	sighandler_hd(int signum);
 char	*get_next_line(int fd);
 void	heredoc(t_data *data);
 int		check_eof(char *str);
+char	*ft_itoa(int n);
 
 /* COMMAND UTILS */
 int		check_outfile(t_data *data);

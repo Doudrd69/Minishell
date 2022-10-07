@@ -77,6 +77,7 @@ int	heredoc_exec(t_data *data)
 
 	i = 0;
 	pipe_nb = hd_pipe_creation(data);
+	(void)pipe_nb;
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
