@@ -96,7 +96,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (envp[envpsize])
 		envpsize++;
 	
-	mini_data.name = "PTDR";
+	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
 	mini_data.path = "..";
 	mini_data.str = "$TERM $9999USER $8888USER $7777USER $1PWD";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?

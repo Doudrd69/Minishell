@@ -35,6 +35,7 @@ typedef struct heredoc
 	int		var_length;
 	int		delimiter_quotes;
 	int		hd_pid;
+	int		position;
 	char	**envp;
 }	t_heredoc;
 

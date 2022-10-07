@@ -37,7 +37,10 @@ int	var_exists_hd(t_data *data)
 		if (ft_strnstr(data->envp[i], data->hd.env_var, size))
 		{
 			if (check_var(data->envp[i], data->hd.env_var))
-				return (0);
+			{
+				data->hd.position = i;
+				return (0);//faudrait return i
+			}
 		}
 		i++;
 	}
@@ -50,10 +53,15 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 	int	i;
 
 	i = 0;
+	j = 0;
 	if (var_exists_hd(data) == 0)
 	{
-		j = 0;
 		data->hd.env_var_value = getenv_hd(data->envp, data, data->hd.env_var);
+		if (data->hd.env_var_value == NULL)
+		{
+			free(data->hd.env_var);
+			return (1);
+		}
 		while (data->hd.env_var_value[j] != '=')
 			j++;
 		size = ft_strlen(&data->hd.env_var_value[j]);
@@ -109,5 +117,4 @@ void	heredoc(t_data *data)
 	return ;
 }
 //si on fait un ctrl D il faut supprimer le fichier
-//attention "$HOME$" --> doit afficher "value$" (le tout entre "")
 //pb avec $TERM

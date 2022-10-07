@@ -133,20 +133,8 @@ char	*var_found(t_data *data, char *envp[], char *var_name, int i)
 
 char	*getenv_hd(char *envp[], t_data *data, char *var_name)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (i == data->envp_size)
-		{
-			printf("Cannot find %s\n", var_name);
-			return (NULL);
-		}
-		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
-			return (var_found(data, envp, var_name, i));
-		i++;
-	}
+	if (ft_strnstr(envp[data->hd.position], var_name, ft_strlen(var_name)))
+		return (var_found(data, envp, var_name, data->hd.position));
 	printf("Cannot find %s\n", var_name);
 	return (NULL);
 }
