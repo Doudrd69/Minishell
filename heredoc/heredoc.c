@@ -109,7 +109,5 @@ void	heredoc(t_data *data)
 	return ;
 }
 //si on fait un ctrl D il faut supprimer le fichier
-//attention si "$ISSOU$" --> on affiche "$$"
-//attention si "$HOME$PWD" --> on affiche "valuevalue"
+//attention "$HOME$" --> doit afficher "value$" (le tout entre "")
 //pb avec $TERM
-//$$ == pid
