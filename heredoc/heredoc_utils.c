@@ -12,17 +12,6 @@
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 
-int	check_special_char(char c, int size)
-{
-	if (c == '$' && size != 0)
-		return (1);
-	if (c == '"' && size != 0)
-		return (1);
-	if (c == '\'' && size != 0)
-		return (1);
-	return (0);
-}
-
 int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 {
 	int	i;
@@ -36,6 +25,8 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 			break ;
 		var_size++;
 	}
+	if (var_size <= 1)//on que un $
+		return (2);
 	data->hd.var_length = var_size;
 	data->hd.env_var = malloc(sizeof(char) * var_size);
 	if (!data->hd.env_var)
@@ -68,7 +59,10 @@ int	print_var_util(t_data *data, char *str, int i, int output_fd)
 		write(output_fd, pid, ft_strlen(pid));
 		return (i += 2);
 	}
-	print_var_hd(data, var_size, var, output_fd);
+	if (str[i + 1] <= '9' && str[i + 1] >= '0')
+		return (i + 2);
+	if (print_var_hd(data, var_size, var, output_fd) == 2)
+		return (i);
 	i += data->hd.var_length;
 	return (i);
 }
@@ -82,6 +76,8 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 	{
 		if (check_eof(str) == 0)
 			return (0);
+		if (str[i] == '\\' && str[i + 1] == '\\')
+			i++;
 		if (str[i] == '$' && str[i + 1] != '\0')
 		{
 			if (str[i + 1] == ' ')
@@ -93,9 +89,7 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 				i = print_var_util(data, str, i, output_fd);
 			while (str[i] == '$')
 			{
-				if (str[i + 1] == '\0')
-					break ;
-				if (str[i + 1] == '"' || str[i + 1] == '\'')
+				if (check_special_char_second_loop(str[i + 1]) == 1)
 					break ;
 				i = print_var_util(data, str, i, output_fd);
 			}

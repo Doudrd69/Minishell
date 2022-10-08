@@ -24,18 +24,6 @@ int	check_var(char *str, char *var_name)
 	return (0);
 }
 
-// int	check_var(char *str, char *var_name)
-// {
-// 	size_t	size;
-
-// 	size = 0;
-// 	while (str[size] != '=')
-// 		size++;
-// 	if (size == ft_strlen(var_name))
-// 		return (1);
-// 	return (0);
-// }
-
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)//enlever le \n du printf
 {
 	int	i;

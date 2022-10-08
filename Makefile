@@ -29,6 +29,7 @@ SRCS =	cmd_exec/cmd_main.c									\
 		heredoc/heredoc.c									\
 		heredoc/heredoc_utils.c								\
 		heredoc/heredoc_execution.c							\
+		heredoc/heredoc_env_var_handling_utils.c			\
 		main_loop_utils.c									\
 		main.c											
 

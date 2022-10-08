@@ -56,5 +56,3 @@ int	update_old_pwd(t_mini_data *data)
 	free(str);
 	return (0);
 }
-
-//on remplace HOMEBREW_PREFIX sans faire expres dans ENV
