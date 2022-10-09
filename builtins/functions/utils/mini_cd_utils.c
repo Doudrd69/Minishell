@@ -51,7 +51,7 @@ int	update_old_pwd(t_mini_data *data)
 	if (!str)
 		return (1);
 	ft_strlcpy(str, "OLDPWD=", 8, 0);
-	ft_strlcpy(&str[7], data->oldpwd, size, 1);\
+	ft_strlcpy(&str[7], data->oldpwd, size, 1);
 	ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
 	free(str);
 	return (0);
