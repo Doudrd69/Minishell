@@ -23,3 +23,15 @@ int	check_special_char_second_loop(char c)
 		return (1);
 	return (0);
 }
+
+int	backslash_check(t_data *data, char *str, int i)
+{
+	if (str[i] == '\\' && str[i + 1] == '$')
+	{
+		data->hd.bkslash_check = 1;
+		i++;
+	}
+	if (str[i] == '\\' && str[i + 1] == '\\')
+		i++;
+	return (i);
+}

@@ -117,4 +117,5 @@ void	heredoc(t_data *data)
 	return ;
 }
 //si on fait un ctrl D il faut supprimer le fichier
-//pb avec $TERM
+//si "\$USER"  --> on interprete pas la variable
+//si "\\$USER" --> on interprete la variable

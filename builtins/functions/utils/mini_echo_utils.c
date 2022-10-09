@@ -65,17 +65,17 @@ int	check_and_print_var(int i, t_mini_data *data)
 	position = &data->str[i];//position du $
 	while (position[size] != '\0' && position[size] != ' ')
 	{
-		if (position[size] == '$' && size != 0)
+		if (check_special_char(position[size], size) == 1)
 			break ;
 		size++;
 	}
 	data->var_search = malloc(sizeof(char) * size);//pas de +1 car le '\0' prend la place du $
 	if (!data->var_search)
 		return (1);
-	i++;
+	i++;//on incremente i pour demarrer sur la premiere lettre de la variable
 	while (data->str[i] != ' ' && data->str[i] != '\0')
 	{
-		if (data->str[i] == '$' && i != 0)
+		if (check_special_char(data->str[i], size) == 1)
 			break ;
 		data->var_search[j] = data->str[i];
 		i++;
@@ -88,9 +88,24 @@ int	check_and_print_var(int i, t_mini_data *data)
 	return (i);
 }
 
+int	pid_display(t_mini_data *data, int i)
+{
+	char *pid;
+
+	if (data->str[i] == '$' && data->str[i + 1] == '$')
+	{
+		pid = ft_itoa(getpid());
+		write(1, pid, ft_strlen(pid));
+		return (i += 2);
+	}
+	return (i);
+}
+
 int	check_signs(int i, t_mini_data *data)
 {
-	if (data->str[i] == '$' && data->str[i + 1] != '\0' && data->echo_sq_check == 0)
+	while (data->str[i] == '$' && data->str[i + 1] == '$')
+		i = pid_display(data, i);
+	if (data->str[i] == '$' && data->str[i + 1] != '\0')
 	{
 		i = check_and_print_var(i, data);
 		if (data->check_print_var == 1)
@@ -98,8 +113,14 @@ int	check_signs(int i, t_mini_data *data)
 			if (data->str[i] == '\0')
 				return (i);
 		}
-		if (data->str[i] == '$')//plusieurs $ dans le meme mot
+		while (data->str[i] == '$')//plusieurs $ dans le meme mot
 			i = check_and_print_var(i, data);
+		if (data->str[i] == '\\' && data->str[i + 1] == '$')
+		{
+			i++;
+			write(1, &data->str[i], 1);
+			i++;
+		}
 		if (data->str[i + 1] == '\0')
 		{
 			if (data->echo_arg == 0)
@@ -116,10 +137,17 @@ int	check_signs(int i, t_mini_data *data)
 
 int	write_and_check_signs(int i, t_mini_data *data)
 {
+
 	while (data->str[i])
 	{
 		data->check_print_var = 0;
-		if (data->str[i] == '\\')
+		if (data->str[i] == '\\' && data->str[i + 1] == '$')
+		{
+			i++;
+			write(1, &data->str[i], 1);
+			i++;
+		}
+		if (data->str[i] == '\\' && data->str[i + 1] == '\\')
 			i++;
 		i = check_signs(i, data);
 		if (data->str[i] == '\0')

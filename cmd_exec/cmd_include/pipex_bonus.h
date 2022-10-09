@@ -36,6 +36,7 @@ typedef struct heredoc
 	int		delimiter_quotes;
 	int		hd_pid;
 	int		position;
+	int		bkslash_check;
 	char	**envp;
 }	t_heredoc;
 
@@ -101,6 +102,7 @@ int		check_delimiter(char *str, char *delimiter);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
 void	close_hd_pipe(t_data *data, int i);
+int		backslash_check(t_data *data, char *str, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
 int		var_exists_hd(t_data *data);

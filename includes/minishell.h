@@ -77,6 +77,7 @@ int 	check_var_exists_export(t_mini_data *data);
 int		unset_var(int index, t_mini_data *data);
 int		check_signs(int i, t_mini_data *data);
 int		check_var(char *str, char *var_name);
+int		check_special_char(char c, int size);
 int		update_old_pwd(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);

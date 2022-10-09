@@ -69,16 +69,16 @@ int	print_var_util(t_data *data, char *str, int i, int output_fd)
 
 int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < size)
 	{
+		data->hd.bkslash_check = 0;
 		if (check_eof(str) == 0)
 			return (0);
-		if (str[i] == '\\' && str[i + 1] == '\\')
-			i++;
-		if (str[i] == '$' && str[i + 1] != '\0')
+		i = backslash_check(data, str, i);
+		if (str[i] == '$' && str[i + 1] != '\0' && data->hd.bkslash_check == 0)
 		{
 			if (str[i + 1] == ' ')
 			{
