@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/10 15:04:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/10 15:26:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
 	mini_data.path = "..";
-	mini_data.str = "$LOGNAME$HOME$USER$SHLVL$TERM \\$555USER";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "defnwenvue$cewcne$$DedWD$Wdw$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";
@@ -201,4 +201,4 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 //si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//dans echo je pete sur "$USER99999" par exemple ---> on se return rien car pas de var trouve
+//echo pete avec ca "defnwenvue$cewcne$$DedWD$Wdw$"
