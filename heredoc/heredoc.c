@@ -6,12 +6,24 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 12:41:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/10 13:26:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 #include <readline/readline.h>
+
+void	eof_handler_hd(char *input)
+{
+	if (input == NULL)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		exit (0);
+	}
+	return ;
+}
 
 int	check_delimiter(char *str, char *delimiter)
 {
@@ -107,7 +119,7 @@ void	heredoc(t_data *data)
 	{
 		size = 0;
 		str = readline("> ");
-		eof_handler(str);
+		eof_handler_hd(str);
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)

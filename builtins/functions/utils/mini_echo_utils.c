@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/29 12:57:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/10 15:00:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	check_and_print_var(int i, t_mini_data *data)
 	}
 	data->var_search[j] = '\0';
 	print_var(j, data);
-	if (data->check_print_var != 1 && data->str[i] == ' ' && data->str[i + 1] != '$')
-		i++;
+	// if (data->check_print_var != 1 && data->str[i] == ' ' && data->str[i + 1] != '$')
+	// 	i++;
 	return (i);
 }
 
@@ -129,7 +129,7 @@ int	check_signs(int i, t_mini_data *data)
 				return (1);
 			}
 			else
-				return (1);
+				exit (0);
 		}
 	}
 	return (i);
@@ -149,6 +149,11 @@ int	write_and_check_signs(int i, t_mini_data *data)
 		}
 		if (data->str[i] == '\\' && data->str[i + 1] == '\\')
 			i++;
+		if (data->str[i] == '$' && data->str[i + 1] == '\\')
+		{
+			write(1, &data->str[i], 1);
+			i += 2;
+		}
 		i = check_signs(i, data);
 		if (data->str[i] == '\0')
 			return (i);

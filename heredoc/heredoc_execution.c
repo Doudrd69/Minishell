@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 10:44:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/10 11:40:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	sighandler_hd(int signum)
 {
 	(void)signum;
-	//il faut quitter le process du HD et ne pas executer
+
+	kill(getpid(), SIGTERM);
 	exit(0);
 }
 

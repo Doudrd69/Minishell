@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/07/21 14:04:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/10 13:34:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	command_exec(t_data *data, char *envp[], int cmd_id)
 		return ;
 	}
 	data->env.tab3 = get_path(envp, data, data->env.tab3);
-	data->env.param_tab3 = ft_split("grep if", ' ');//donner un tableau à incrementer avec cmd_id
+	data->env.param_tab3 = ft_split("cat", ' ');//donner un tableau à incrementer avec cmd_id
 	if (dup2(data->pipefd[data->pipe_id][WRITE], STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
