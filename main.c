@@ -99,7 +99,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
 	mini_data.path = "..";
-	mini_data.str = "defnwenvue$cewcne$$DedWD$Wdw$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "PTDR";
 	mini_data.hd_limit = "on est la hein";

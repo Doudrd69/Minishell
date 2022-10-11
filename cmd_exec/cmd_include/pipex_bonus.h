@@ -94,15 +94,15 @@ typedef struct data
 }	t_data;
 
 /* HEREDOC */
-int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
 int		check_and_print_var_hd(char *str, t_data *data, int output_fd, int size);
+int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 int		check_var_exists(int j, t_data *data, int output_fd);
+int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
 void	close_hd_pipe(t_data *data, int i);
-int		backslash_check(t_data *data, char *str, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
 int		var_exists_hd(t_data *data);
