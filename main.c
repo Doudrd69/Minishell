@@ -54,7 +54,9 @@ void	sighandler(int signum)
 	}
 	if (signum == 3)
 	{
-		printf("MAIN\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 //rl_line_buffer = vide quand on C-c
@@ -120,11 +122,12 @@ int main(int argc, char *argv[], char *envp[])
 
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
-	signal(SIGQUIT, &sighandler);
-	signal(SIGINT, &sighandler);
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
+		signal(SIGINT, &sighandler);
+		signal(SIGQUIT, &sighandler);
 		input = readline("minishell$ ");
+		add_history(input);
 		eof_handler(input);
 		check = 0;
 		i = 0;
@@ -171,8 +174,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 1;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
+	data->heredoc_nb = 1;
+	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -209,4 +212,3 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 //si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//echo pete avec ca "defnwenvue$cewcne$$DedWD$Wdw$"

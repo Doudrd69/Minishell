@@ -113,6 +113,7 @@ void	heredoc(t_data *data)
 	str = NULL;
 	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
+	signal(SIGQUIT, &sighandler);
 	signal(SIGINT, &sighandler_hd);
 	while (1)
 	{
