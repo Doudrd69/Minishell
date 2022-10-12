@@ -13,6 +13,11 @@
 #include "cmd_include/pipex_bonus.h"
 #include "../includes/minishell.h"
 
+void	sigtest()
+{
+	write(1, "Quit : 3\n", 9);
+}
+
 int	fork_creation(int pid)
 {
 	pid = fork();
@@ -26,6 +31,7 @@ int	fork_creation(int pid)
 
 void	first_command(char *envp[], t_data *data)
 {
+	signal(SIGQUIT, &sigtest);
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{

@@ -68,12 +68,12 @@ int		mini_exit();
 /* BUILTIN FUNCTIONS UTILS */
 char	**new_tab_malloc(t_mini_data *data, int old_tab_size, char *envp[], char *name, char *value);
 char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_tab_size);
-int		var_search_copy(t_mini_data *data, int size, int i, int j);
 char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
 int		specific_cases_with_special_char(t_mini_data *data, int i);
-int		malloc_and_cpy(t_mini_data *data, int i, int index);
+int		var_search_copy(t_mini_data *data, int size, int i, int j);
 void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
+int		malloc_and_cpy(t_mini_data *data, int i, int index);
 int		write_and_check_signs(int i, t_mini_data *data);
 char	**new_tab_with_existing_var(t_mini_data *data);
 int 	check_var_exists_export(t_mini_data *data);
@@ -84,8 +84,11 @@ int		check_var(char *str, char *var_name);
 int		check_special_char(char c, int size);
 void	print_var(int j, t_mini_data *data);
 int		update_old_pwd(t_mini_data *data);
+int		path_exists(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
+void	copy_loop(t_mini_data *data);
+int		no_path(t_mini_data *data);
 int		check_remains(char *str);
 
 /* GNL FUNCTIONS */

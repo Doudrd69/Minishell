@@ -15,8 +15,8 @@
 void	sighandler_hd(int signum)
 {
 	(void)signum;
-
-	kill(getpid(), SIGTERM);
+	//si on doit ecrire dans un document, on le unlink?
+	kill(getpid(), SIGINT);
 	exit(0);
 }
 

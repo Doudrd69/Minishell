@@ -40,7 +40,7 @@ int	var_exists(t_mini_data *data)//a modifier pour etre utilisable partout
 	int	i;
 
 	i = 0;
-	while (data->env[i])
+	while (i < data->envp_size)
 	{
 		if (ft_strnstr(data->env[i], data->var_search, ft_strlen(data->var_search)))
 		{

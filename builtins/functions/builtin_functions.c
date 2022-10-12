@@ -15,29 +15,15 @@
 int	mini_cd(t_mini_data *data)//penser a enelver les printf
 {
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
-	printf("Before  : %s\n", getcwd(data->buff, BUF_SIZE));
 	if (data->path[0] == '\0')
 	{
-		data->home_path = getenv("HOME");
-		if (data->home_path)
-		{
-			chdir(data->home_path);
-			printf("Current : %s\n", getcwd(data->buff, BUF_SIZE));
-			*data->p_status = 0;
-			return (0);
-		}
-		return (0);
+		if (no_path(data) == 1)
+			return (1);
 	}
 	else
 	{
-		if (chdir(data->path) != 0)
-		{
-			*data->p_status = 1;
-			ft_printf("minishell: cd: %s: No such file or directory\n", data->path);
+		if (path_exists(data) == 1)
 			return (1);
-		}
-		data->cwd = getcwd(data->buff, BUF_SIZE);
-		ft_printf("Current : %s\n", getcwd(data->buff, BUF_SIZE));
 	}
 	if (update_pwd(data) == 1)
 		return (1);
@@ -99,9 +85,6 @@ int	mini_echo(t_mini_data *data)//a modifier pour ecrire dans le bon FD (si redi
 
 int	mini_export(t_mini_data *data)
 {
-	int		i;
-
-	i = 0;
 	if (check_var_exists_export(data))
 	{
 		data->new_env = new_tab_with_existing_var(data);
@@ -112,19 +95,7 @@ int	mini_export(t_mini_data *data)
 	if (!data->new_env)
 		return (1);
 	data->new_env = new_tab_malloc(data, data->envp_size, data->env, data->name, data->value);
-	while (i < (data->envp_size + 1))
-	{
-		if (i == data->envp_size - 1)
-		{
-			data->new_env = new_var_tab_copy(data, i, data->name, data->value);
-			i++;
-		}
-		else
-		{
-			data->new_env = new_tab_copy(data, data->env, i, data->envp_size);
-			i++;
-		}
-	}
+	copy_loop(data);
 	data->envp_size++;
 	*data->p_status = 0;
 	return (0);

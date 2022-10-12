@@ -17,7 +17,6 @@ void	eof_handler_hd(char *input)
 {
 	if (input == NULL)
 	{
-		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		exit (0);
@@ -128,6 +127,6 @@ void	heredoc(t_data *data)
 	}
 	return ;
 }
-//si on fait un ctrl D il faut supprimer le fichier
+//si on fait un CRTL-C ou CTRL-D ---> ne pas ecrire dans le fichier (donc pas le creer)
 //si "\$USER"  --> on interprete pas la variable
 //si "\\$USER" --> on interprete la variable

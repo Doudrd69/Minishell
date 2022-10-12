@@ -43,12 +43,19 @@ void	eof_handler(char *input)//si dans HD, ou un sleep ---> attendre fin des pro
 	return ;
 }
 
-void	sighandler()
+void	sighandler(int signum)
 {
-	write(2, "\n", 1);
-	rl_replace_line("", 0);//on remplace le buffer de readline (rl_line_buffer)
-	rl_on_new_line();
-	rl_redisplay();
+	if (signum == 2)
+	{
+		write(2, "\n", 1);
+		rl_replace_line("", 0);//on remplace le buffer de readline (rl_line_buffer)
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (signum == 3)
+	{
+		printf("MAIN\n");
+	}
 }
 //rl_line_buffer = vide quand on C-c
 
@@ -99,9 +106,9 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
 	mini_data.path = "..";
-	mini_data.str = "defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "$HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
-	mini_data.var_name = "PTDR";
+	mini_data.var_name = "SHELLISSOU";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.envp_size = envpsize;
 	mini_data.env = envp;
@@ -113,6 +120,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
+	signal(SIGQUIT, &sighandler);
 	signal(SIGINT, &sighandler);
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
@@ -163,8 +171,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 1;
-	data->heredoc_nb = 1;
-	data->check_hd = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 

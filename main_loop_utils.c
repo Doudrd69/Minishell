@@ -11,6 +11,7 @@ int export_exec(t_mini_data *mini_data, t_data *data)
 	}
 	mini_data->env = mini_data->new_env;
 	data->envp = mini_data->new_env;
+	//printf("Address of ENVP (main): %p\n", mini_data->env);
 	return (0);
 }
 
