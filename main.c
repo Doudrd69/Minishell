@@ -52,12 +52,6 @@ void	sighandler(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (signum == 3)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
 }
 //rl_line_buffer = vide quand on C-c
 
@@ -122,12 +116,16 @@ int main(int argc, char *argv[], char *envp[])
 
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
+	struct sigaction sa;
+
+	sa.sa_handler = SIG_IGN;
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
 		signal(SIGINT, &sighandler);
-		signal(SIGQUIT, &sighandler);
+		sigaction(SIGQUIT, &sa, NULL);
 		input = readline("minishell$ ");
-		add_history(input);
+		if (input && *input)
+			add_history (input);
 		eof_handler(input);
 		check = 0;
 		i = 0;
@@ -174,8 +172,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 1;
-	data->heredoc_nb = 1;
-	data->check_hd = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 

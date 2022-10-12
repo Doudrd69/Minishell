@@ -14,10 +14,18 @@
 
 void	sighandler_hd(int signum)
 {
-	(void)signum;
+	if (signum == SIGQUIT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+	{
+		kill(getpid(), SIGINT);
+		exit(0);
+	}
 	//si on doit ecrire dans un document, on le unlink?
-	kill(getpid(), SIGINT);
-	exit(0);
 }
 
 void	output_redirection(t_data *data)
