@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/10 15:26:27 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 16:16:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,63 +21,26 @@ void	cmd_exec(t_data *data, char **envp, char **argv);
 int		unset_exec(t_mini_data *mini_data, t_data *data);
 void	heredoc_main(t_data *data);
 
-int		p_status = 0;
-
-int	check_eof(char *str)
-{
-	if ((ft_strncmp(str, "test", 4) == 0))
-	{
-		if (check_delimiter(str, "test") == 0)
-			return (0);
-	}
-	return (1);
-}
-
-void	eof_handler(char *input)//si dans HD, ou un sleep ---> attendre fin des processus? free?
-{
-	if (input == NULL)
-	{
-		write(2, "exit\n", 5);
-		exit(0);
-	}
-	return ;
-}
-
-void	sighandler(int signum)
-{
-	if (signum == 2)
-	{
-		//c'est degueulasse
-		write(2, "minishell$                                       \n", 50);
-		rl_replace_line("", 0);//on remplace le buffer de readline (rl_line_buffer)
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-//rl_line_buffer = vide quand on C-c
+int		p_status;
 
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
-	//(void)argv;
 	t_mini_data	mini_data;
 	t_data		data;
-	//(void)envp;
-	// struct dirent *pdir;
-	// DIR		*dir;
 
-	// dir = NULL;
-	// pdir = NULL;
-
-	/*============================================================================*/
 	mini_data.p_status = &p_status;
 	mini_data.echo_sq_check = 0;
+	mini_data.no_env_check = 0;
 	p_status = 0;
-	char	*input;
 
+	char	*input;
 	int		envpsize = 0;
 	int		(*builtins[7])(t_mini_data *data);
 	int		builtin_cmd_nb = 7;
+	int		i;
+	int		check;
+	struct	sigaction sa;
 	
 	char	*builtins_name[] = {
 		"cd",
@@ -97,8 +60,6 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[5] = &mini_unset;		//OK
 	builtins[6] = &mini_exit;		//A FAIRE
 
-	while (envp[envpsize])
-		envpsize++;
 	
 	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
@@ -107,18 +68,26 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "SHELLISSOU";
 	mini_data.hd_limit = "on est la hein";
-	mini_data.envp_size = envpsize;
 	mini_data.env = envp;
 	data.envp = envp;
 	//printf("ENVP SIZE BEGINING : %d\n", mini_data.envp_size);
 
-	int	i;
-	int	check;
+	while (envp[envpsize])
+		envpsize++;
+	mini_data.envp_size = envpsize;
 
+	if (mini_data.no_env_check == 1)//on export que PWD, SHLVL et _=
+	{
+		if (export_no_env(&mini_data, envp) > 0)
+			free_tab(mini_data.no_env, 3);
+		envp = mini_data.no_env;
+		mini_data.env = envp;
+		data.envp = envp;
+		envpsize = 3;
+		mini_data.envp_size = envpsize;
+	}
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
-	struct sigaction sa;
-
 	sa.sa_handler = SIG_IGN;
 	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
 	{
@@ -173,8 +142,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 1;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
+	data->heredoc_nb = 1;
+	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -192,6 +161,13 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
+	if (p_status == 2)
+	{
+		close_hd_pipe(data, data->heredoc_nb - 1);
+		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+		free(data->hd_pid);
+		return ;
+	}
 	pipe_nb = pipe_creation(data);				//On cree les pipe
 	exec_main(data, envp, argv);				//exec des commandes
 	if (data->check_hd == 1)						//on close les pipes des Heredocs

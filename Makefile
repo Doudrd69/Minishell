@@ -32,6 +32,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		heredoc/heredoc_execution.c								\
 		heredoc/heredoc_env_var_handling_utils.c				\
 		main_loop_utils.c										\
+		no_env.c												\
+		signal.c												\
 		main.c											
 
 INCS = 	cmd_exec/cmd_include/pipex_bonus.h					\

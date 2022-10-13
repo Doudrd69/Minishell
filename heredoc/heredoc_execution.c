@@ -6,27 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/10 11:40:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 14:19:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
-
-void	sighandler_hd(int signum)
-{
-	if (signum == SIGQUIT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else
-	{
-		kill(getpid(), SIGINT);
-		exit(0);
-	}
-	//si on doit ecrire dans un document, on le unlink?
-}
 
 void	output_redirection(t_data *data)
 {

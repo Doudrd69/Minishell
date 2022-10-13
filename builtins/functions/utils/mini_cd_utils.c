@@ -68,8 +68,10 @@ int	update_old_pwd(t_mini_data *data)
 	char	*str;
 
 	position = find_position(data, "OLDPWD");
-	if (position == data->envp_size)
+	if (position == data->envp_size && data->new_env_check == 0)
 		return (1);
+	// if (data->new_env_check == 1)//il faut creer oldpwd
+	// 	create_oldpwd(data);
 	size = ft_strlen(data->oldpwd);
 	str = malloc(sizeof(char) * (size + 8));//8 pour OLDPWD= et le \0
 	if (!str)

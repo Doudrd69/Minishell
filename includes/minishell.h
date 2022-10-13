@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/07 10:22:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/13 15:42:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct mini_data
 	char		*home_path;
 	char		**new_env;
 	char		**unset_env;
+	char		**no_env;
 	char		**builtin_name;
 	int			envp_size;
 	int			echo_arg;
@@ -54,6 +55,7 @@ typedef struct mini_data
 	char		*oldpwd;
 	char		*cwd;
 	int			tmp_count;
+	int			no_env_check;
 }	t_mini_data;
 
 /* BUILTIN FUNCTIONS */
@@ -90,6 +92,7 @@ char	**free_tab(char **tab, int i);
 void	copy_loop(t_mini_data *data);
 int		no_path(t_mini_data *data);
 int		check_remains(char *str);
+void	sighandler(int signum);
 
 /* GNL FUNCTIONS */
 size_t	ft_strlen_gnl(char *s);
@@ -103,5 +106,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
+int		export_no_env(t_mini_data *data, char **envp);
 
 #endif
