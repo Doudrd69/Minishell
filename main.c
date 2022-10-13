@@ -47,7 +47,8 @@ void	sighandler(int signum)
 {
 	if (signum == 2)
 	{
-		write(2, "\n", 1);
+		//c'est degueulasse
+		write(2, "minishell$                                       \n", 50);
 		rl_replace_line("", 0);//on remplace le buffer de readline (rl_line_buffer)
 		rl_on_new_line();
 		rl_redisplay();
