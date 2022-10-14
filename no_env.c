@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/13 16:12:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 10:13:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,26 @@ int	export_no_env(t_mini_data *data, char **envp)
 	prog = mini_getenv(envp, data, "_");
 	data->no_env[0] = malloc(sizeof(char) * ft_strlen(cwd) + 5);
 	if (!data->no_env[0])
+	{
+		free_tab(data->no_env, 0);
 		return (1);
+	}
 	ft_strlcpy(data->no_env[0], "PWD=", 4, 0);
 	ft_strlcpy(&data->no_env[0][4], cwd, ft_strlen(cwd), 1);
 	data->no_env[1] = malloc(sizeof(char) * ft_strlen(shlvl) + 1);
 	if (!data->no_env[1])
-		return (2);
+	{
+		free_tab(data->no_env, 1);
+		return (1);
+	}
 	ft_strlcpy(data->no_env[1], shlvl, ft_strlen(shlvl), 1);
 	data->no_env[2] = malloc(sizeof(char) * ft_strlen(prog) + 1);
 	if (!data->no_env[2])
-		return (3);
+	{
+		free_tab(data->no_env, 2);
+		return (1);
+	}
 	ft_strlcpy(data->no_env[2], prog, ft_strlen(prog), 1);
 	return (0);
 }
+//free comme il faut si pb de malloc

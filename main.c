@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/13 16:16:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 10:51:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,14 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	t_mini_data	mini_data;
 	t_data		data;
-
-	mini_data.p_status = &p_status;
-	mini_data.echo_sq_check = 0;
-	mini_data.no_env_check = 0;
-	p_status = 0;
-
-	char	*input;
-	int		envpsize = 0;
-	int		(*builtins[7])(t_mini_data *data);
-	int		builtin_cmd_nb = 7;
-	int		i;
-	int		check;
-	struct	sigaction sa;
-	
-	char	*builtins_name[] = {
+	char		*input;
+	int			envpsize = 0;
+	int			(*builtins[7])(t_mini_data *data);
+	int			builtin_cmd_nb = 7;
+	int			i;
+	int			check;
+	struct		sigaction sa;
+	char		*builtins_name[] = {
 		"cd",
 		"echo",
 		"env",
@@ -60,36 +53,42 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[5] = &mini_unset;		//OK
 	builtins[6] = &mini_exit;		//A FAIRE
 
-	
+	/* INIT ===== */
 	mini_data.name = "SHELLISSOU";
 	mini_data.value = "issou";
 	mini_data.path = "..";
-	mini_data.str = "$HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data.str = "P_STATUS : $? == $HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
 	mini_data.var_name = "SHELLISSOU";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.env = envp;
 	data.envp = envp;
-	//printf("ENVP SIZE BEGINING : %d\n", mini_data.envp_size);
+	mini_data.unset_env_check = 0;
+	mini_data.new_env_check = 0;
+	mini_data.p_status = &p_status;
+	mini_data.echo_sq_check = 0;
+	mini_data.no_env_check = 1;		//no_env
+	p_status = 0;
+	sa.sa_handler = SIG_IGN;
+	/* ========= */
 
 	while (envp[envpsize])
 		envpsize++;
 	mini_data.envp_size = envpsize;
 
-	if (mini_data.no_env_check == 1)//on export que PWD, SHLVL et _=
+	//si on lance le minishell avec env -i, on export que PWD, SHLVL et _=
+	if (mini_data.no_env_check == 1)
 	{
-		if (export_no_env(&mini_data, envp) > 0)
-			free_tab(mini_data.no_env, 3);
-		envp = mini_data.no_env;
-		mini_data.env = envp;
-		data.envp = envp;
+		if (export_no_env(&mini_data, envp) == 1)
+			exit(1);//si pb pour creer no_env, on le free
+		envp = mini_data.no_env;	//on fait pointer
+		mini_data.env = envp;		//on fait pointer
+		data.envp = envp;			//on fait pointer
 		envpsize = 3;
-		mini_data.envp_size = envpsize;
+		mini_data.envp_size = envpsize;	//on init cette var car envp_size est utilisee dans les differentes fonctions builtins
 	}
-	mini_data.unset_env_check = 0;
-	mini_data.new_env_check = 0;
-	sa.sa_handler = SIG_IGN;
-	while (1)									//mini_data.env = envp; ou data->env dans les fonctions builitins
+	//une fois que l'env est en place, on peut commencer a utiliser le shell
+	while (1)
 	{
 		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
@@ -141,7 +140,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 1;
+	data->cmd_nb = 3;
 	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
@@ -156,7 +155,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 0;
+	data->exec.pipe_check = 1;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;

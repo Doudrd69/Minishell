@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/12 13:24:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 10:42:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	last_cmd_execution(t_data *data, char *envp[])
 	}
 	else
 	{
-		data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
+		if (data->env.tab2 != NULL)
+			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
 		if (data->exec.outfile_check == 1)
@@ -74,7 +75,8 @@ void	cmd_execution(t_data *data, char *envp[], int pipe_id)
 	}
 	else
 	{
-		data->env.tab3 = join_arg(data->env.param_tab3, data->env.tab3);
+		if (data->env.tab3 != NULL)
+			data->env.tab3 = join_arg(data->env.param_tab3, data->env.tab3);
 		if (pipe_id != (data->cmd_nb - 2))
 			close_pipe(data, pipe_id + 1);
 		else

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/14 10:41:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 10:58:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 {
 	int	i;
 
+	(void)data;
 	i = 0;
+	if (tab == NULL)
+	{
+		write(2, "PATH not found : can't execute command\n", 39);
+		exit(1);
+	}
 	while (tab[i])
 	{
 		if (access(tab[i], X_OK) == 0)
@@ -48,7 +54,7 @@ char	**get_path(char *env[], t_data *data, char **args)//gerer le cas ou pas d'e
 
 	i = 0;
 	j = -1;
-	while (env[i])
+	while (i < data->envp_size)
 	{
 		if (ft_strnstr(env[i], "PATH", 4))
 		{
