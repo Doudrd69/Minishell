@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 10:42:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 11:05:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	first_cmd_execution(t_data *data, char *envp[])
 	}
 	else
 	{
-		data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
+		if (data->env.tab1 != NULL)
+			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));//close de pipe s'il y en a
 		if (data->exec.infile_check == 1)
