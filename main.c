@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 11:05:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 14:53:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int main(int argc, char *argv[], char *envp[])
 	t_data		data;
 	char		*input;
 	int			envpsize = 0;
-	int			(*builtins[7])(t_mini_data *data);
-	int			builtin_cmd_nb = 7;
+	int			(*builtins[6])(t_mini_data *data);
+	int			builtin_cmd_nb = 6;
 	int			i;
 	int			check;
 	struct		sigaction sa;
@@ -40,7 +40,6 @@ int main(int argc, char *argv[], char *envp[])
 		"echo",
 		"env",
 		"pwd",
-		"export",
 		"unset",
 		"exit"
 	};
@@ -49,17 +48,17 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[1] = &mini_echo;		//OK
 	builtins[2] = &mini_env;		//OK
 	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
-	builtins[4] = &mini_export;		//OK (+ si PT$MDR=issou --> on export PT=issou (gestion dans le parsing) + gerer plusieurs declarations)
-	builtins[5] = &mini_unset;		//OK
-	builtins[6] = &mini_exit;		//A FAIRE
+	builtins[4] = &mini_unset;		//OK
+	builtins[5] = &mini_exit;		//A FAIRE
 
 	/* INIT ===== */
-	mini_data.name = "SHELLISSOU";
+	mini_data.name = "TEST";		//on recup ca dans le parsing
 	mini_data.value = "issou";
+	mini_data.var_export = "TEST=onestlahein";
 	mini_data.path = "..";
 	mini_data.str = "P_STATUS : $? == $HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data.echo_arg = 0;
-	mini_data.var_name = "SHELLISSOU";
+	mini_data.var_name = "";
 	mini_data.hd_limit = "on est la hein";
 	mini_data.env = envp;
 	data.envp = envp;
@@ -69,6 +68,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.echo_sq_check = 0;
 	mini_data.no_env_check = 1;		//no_env
 	p_status = 0;
+	mini_data.oldpwd_if = 0;
 	sa.sa_handler = SIG_IGN;
 	/* ========= */
 
@@ -111,8 +111,6 @@ int main(int argc, char *argv[], char *envp[])
 						check = 1;
 						break ;
 					}
-					if (i == 4)
-						export_exec(&mini_data, &data);
 					if (i == 5)
 						unset_exec(&mini_data, &data);
 					check = 1;
@@ -120,6 +118,11 @@ int main(int argc, char *argv[], char *envp[])
 				}
 			}
 			i++;
+		}
+		if (ft_strcmp(input, "export") == 0)
+		{
+			export_exec(&mini_data, &data);
+			check = 1;
 		}
 		if (check == 0)
 			cmd_exec(&data, envp, argv);

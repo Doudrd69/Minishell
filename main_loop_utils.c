@@ -3,6 +3,7 @@
 
 int export_exec(t_mini_data *mini_data, t_data *data)
 {
+	mini_export(mini_data, "TEST=issou");
 	mini_data->new_env_check = 1;
 	if (mini_data->unset_env && mini_data->unset_env_check == 1)
 	{
@@ -11,7 +12,6 @@ int export_exec(t_mini_data *mini_data, t_data *data)
 	}
 	mini_data->env = mini_data->new_env;
 	data->envp = mini_data->new_env;
-	//printf("Address of ENVP (main): %p\n", mini_data->env);
 	return (0);
 }
 

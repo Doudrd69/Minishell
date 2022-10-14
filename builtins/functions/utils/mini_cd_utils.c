@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_cd_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/14 16:13:00 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 int	no_path(t_mini_data *data)
@@ -24,7 +36,7 @@ int	path_exists(t_mini_data *data)
 	return (0);
 }
 
-int find_position(t_mini_data *data, char *var)
+int	find_position(t_mini_data *data, char *var)
 {
 	int	i;
 
@@ -50,8 +62,8 @@ int	update_pwd(t_mini_data *data)
 	position = find_position(data, "PWD");
 	if (position == data->envp_size)
 		return (1);
-	size = ft_strlen(data->cwd);//taille de VALUE
-	str = malloc(sizeof(char) * (size + 5));//4 pour PWD= et le \0
+	size = ft_strlen(data->cwd);
+	str = malloc(sizeof(char) * (size + 5));
 	if (!str)
 		return (1);
 	ft_strlcpy(str, "PWD=", 4, 0);
@@ -67,21 +79,24 @@ int	update_old_pwd(t_mini_data *data)
 	int		size;
 	char	*str;
 
-	position = find_position(data, "OLDPWD");
-	if (position == data->envp_size && data->new_env_check == 0)
-		return (1);
-	// if (data->new_env_check == 1)//il faut creer oldpwd
-	// 	create_oldpwd(data);
-	size = ft_strlen(data->oldpwd);
-	str = malloc(sizeof(char) * (size + 8));//8 pour OLDPWD= et le \0
-	if (!str)
-		return (1);
-	ft_strlcpy(str, "OLDPWD=", 7, 0);
-	ft_strlcpy(&str[7], data->oldpwd, size, 1);
-	data->env[position] = malloc(sizeof(char) * ft_strlen(str) + 1);
-	if (!data->env[position])
-		return (1);//free dans le main_utils_loop
-	ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
-	free(str);
+	if(find_position(data, "OLDPWD") == data->envp_size) 
+		check_oldpwd(data);
+	else
+	{
+		position = find_position(data, "OLDPWD");
+		if (position == data->envp_size)
+			return (1);
+		size = ft_strlen(data->oldpwd);
+		str = malloc(sizeof(char) * (size + 8));
+		if (!str)
+			return (1);
+		ft_strlcpy(str, "OLDPWD=", 7, 0);
+		ft_strlcpy(&str[7], data->oldpwd, size, 1);
+		data->env[position] = malloc(sizeof(char) * ft_strlen(str) + 1);
+		if (!data->env[position])
+			return (1);
+		ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
+		free(str);
+	}
 	return (0);
 }

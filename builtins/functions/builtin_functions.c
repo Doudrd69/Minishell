@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 10:55:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/14 13:07:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,19 @@ int	mini_echo(t_mini_data *data)//a modifier pour ecrire dans le bon FD (si redi
 	return (0);
 }
 
-int	mini_export(t_mini_data *data)
+int	mini_export(t_mini_data *data, char *var_export)
 {
-	if (check_var_exists_export(data))
+	if (check_var_exists_export(data))//il faut recuper le NAME de la variable avant
 	{
-		data->new_env = new_tab_with_existing_var(data);
+		data->new_env = new_tab_with_existing_var(data, var_export);
 		*data->p_status = 0;
 		return (0);
 	}
 	data->new_env = malloc(sizeof(char *) * (data->envp_size + 1));
 	if (!data->new_env)
 		return (1);
-	data->new_env = new_tab_malloc(data, data->envp_size, data->env, data->name, data->value);
-	copy_loop(data);
+	data->new_env = new_tab_malloc(data, data->envp_size, data->env, var_export);
+	copy_loop(data, var_export);
 	data->envp_size++;
 	*data->p_status = 0;
 	return (0);

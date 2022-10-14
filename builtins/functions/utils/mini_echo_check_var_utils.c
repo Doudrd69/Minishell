@@ -8,6 +8,7 @@ int	pid_display(t_mini_data *data, int i)
 	{
 		pid = ft_itoa(getpid());
 		write(1, pid, ft_strlen(pid));
+		free(pid);
 		return (i += 2);
 	}
 	return (i);
