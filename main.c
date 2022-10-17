@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 15:22:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 16:03:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.hd_limit = "on est la hein";
 	mini_data.env = envp;
 	data.envp = envp;
+	mini_data.no_env_check = 1;	//utils epour la creation du oldpwd
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
 	mini_data.p_status = &p_status;
@@ -151,7 +152,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 1;
+	data->cmd_nb = 3;
 	data->heredoc_nb = 0;
 	data->check_hd = 0;
 
@@ -159,14 +160,14 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 
 	data->exec.infile_fd = "infile.txt";
 	data->exec.outfile_fd = "outfile.txt";
-	data->exec.first_cmd_test = "rev";
+	data->exec.first_cmd_test = "/bin/cat -e";
 	data->exec.last_cmd_test = "rev";
 
 	data->exec.first_cmd_squotes_check = 0;
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 0;
+	data->exec.pipe_check = 1;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;
@@ -197,4 +198,4 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 //si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
 //attention a la gestion d'erreur si j'unset des variables utiles a l'exec
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//attention car j'ai NULL termine le env (gestion env -i) et ducoupje peux pas modifier le envp car NULL en [3]
+//attention car j'ai NULL termine le env (gestion env -i) et ducoupje peux pas modifier le envp car NULL en [3] ? 
