@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 10:58:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:06:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 {
 	int	i;
 
-	(void)data;
 	i = 0;
 	if (tab == NULL)
 	{

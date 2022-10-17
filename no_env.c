@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 16:23:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 14:11:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,27 @@ int	check_malloc(t_mini_data *data, int i)
 	return (0);
 }
 
-int	export_no_env(t_mini_data *data, char **envp)
+int	export_no_env(t_mini_data *data)
 {
 	char	*cwd;
-	char	*shlvl;
-	char	*prog;
 
-	data->no_env = malloc(sizeof(char *) * 3);
+	data->no_env = malloc(sizeof(char *) * 4);
 	if (!data->no_env)
 		return (1);
 	cwd = getcwd(data->buff, BUF_SIZE);
-	shlvl = mini_getenv(envp, data, "SHLVL");
-	prog = mini_getenv(envp, data, "_");
 	data->no_env[0] = malloc(sizeof(char) * ft_strlen(cwd) + 5);
 	if (check_malloc(data, 0) == 1)
 		return (1);
 	ft_strlcpy(data->no_env[0], "PWD=", 4, 0);
 	ft_strlcpy(&data->no_env[0][4], cwd, ft_strlen(cwd), 1);
-	data->no_env[1] = malloc(sizeof(char) * ft_strlen(shlvl) + 1);
+	data->no_env[1] = malloc(sizeof(char) * ft_strlen("SHLVL=1") + 1);
 	if (check_malloc(data, 1) == 1)
 		return (1);
-	ft_strlcpy(data->no_env[1], shlvl, ft_strlen(shlvl), 1);
-	data->no_env[2] = malloc(sizeof(char) * ft_strlen(prog) + 1);
+	ft_strlcpy(data->no_env[1], "SHLVL=1", ft_strlen("SHLVL=1"), 1);
+	data->no_env[2] = malloc(sizeof(char) * ft_strlen("_=/usr/bin/env") + 1);
 	if (check_malloc(data, 2) == 1)
 		return (1);
-	ft_strlcpy(data->no_env[2], prog, ft_strlen(prog), 1);
-	free(shlvl);
+	ft_strlcpy(data->no_env[2], "_=/usr/bin/env", ft_strlen("_=/usr/bin/env"), 1);
+	data->no_env[3] = NULL;
 	return (0);
 }

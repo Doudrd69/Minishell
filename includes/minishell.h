@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 14:51:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 13:28:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
-int		export_no_env(t_mini_data *data, char **envp);
+int		export_no_env(t_mini_data *data);
 
 #endif

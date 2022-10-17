@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 14:53:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:11:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,29 @@ int		unset_exec(t_mini_data *mini_data, t_data *data);
 void	heredoc_main(t_data *data);
 
 int		p_status;
+
+void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
+{
+	if (envp[0] != NULL)
+	{
+		while (envp[envpsize])
+			envpsize++;
+		mini_data->envp_size = envpsize;
+		data->envp_size = envpsize;
+	}
+	else
+	{
+		if (export_no_env(mini_data) == 1)
+			exit(1);//si pb pour creer no_env, on le free
+		envp = mini_data->no_env;	//on fait pointer
+		mini_data->env = envp;		//on fait pointer
+		data->envp = envp;			//on fait pointer
+		envpsize = 3;
+		mini_data->envp_size = envpsize;	//on init cette var car envp_size est utilisee dans les differentes fonctions builtins
+		data->envp_size = envpsize;
+	}
+	return ;
+}
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -66,27 +89,12 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.new_env_check = 0;
 	mini_data.p_status = &p_status;
 	mini_data.echo_sq_check = 0;
-	mini_data.no_env_check = 1;		//no_env
 	p_status = 0;
 	mini_data.oldpwd_if = 0;
 	sa.sa_handler = SIG_IGN;
 	/* ========= */
 
-	while (envp[envpsize])
-		envpsize++;
-	mini_data.envp_size = envpsize;
-
-	//si on lance le minishell avec env -i, on export que PWD, SHLVL et _=
-	if (mini_data.no_env_check == 1)
-	{
-		if (export_no_env(&mini_data, envp) == 1)
-			exit(1);//si pb pour creer no_env, on le free
-		envp = mini_data.no_env;	//on fait pointer
-		mini_data.env = envp;		//on fait pointer
-		data.envp = envp;			//on fait pointer
-		envpsize = 3;
-		mini_data.envp_size = envpsize;	//on init cette var car envp_size est utilisee dans les differentes fonctions builtins
-	}
+	envp_check(&mini_data, &data, envp, envpsize);
 	//une fois que l'env est en place, on peut commencer a utiliser le shell
 	while (1)
 	{
@@ -125,7 +133,7 @@ int main(int argc, char *argv[], char *envp[])
 			check = 1;
 		}
 		if (check == 0)
-			cmd_exec(&data, envp, argv);
+			cmd_exec(&data, data.envp, argv);
 		free(input);
 	}
 }
@@ -143,7 +151,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 3;
+	data->cmd_nb = 2;
 	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
@@ -151,7 +159,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 
 	data->exec.infile_fd = "infile.txt";
 	data->exec.outfile_fd = "outfile.txt";
-	data->exec.first_cmd_test = "/bin/cat -e";
+	data->exec.first_cmd_test = "cat -e";
 	data->exec.last_cmd_test = "rev";
 
 	data->exec.first_cmd_squotes_check = 0;
