@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 14:11:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/17 15:16:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ int	export_no_env(t_mini_data *data)
 	if (check_malloc(data, 2) == 1)
 		return (1);
 	ft_strlcpy(data->no_env[2], "_=/usr/bin/env", ft_strlen("_=/usr/bin/env"), 1);
-	data->no_env[3] = NULL;
+	//data->no_env[3] = NULL;
 	return (0);
 }
