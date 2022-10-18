@@ -40,12 +40,12 @@ int	copy_var_before_index(int i, int j, t_mini_data *data)
 	return (1);
 }
 
-int	unset_var(int index, t_mini_data *data)
+int	unset_var(int index, t_mini_data *data, char *var_unset)
 {
 	int	i;
 
 	i = 0;
-	if (check_var(data->env[index], data->var_name))
+	if (check_var(data->env[index], var_unset))
 	{
 		if (malloc_and_cpy(data, i, index) == 1)
 			return (1);

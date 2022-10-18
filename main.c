@@ -53,8 +53,8 @@ int main(int argc, char *argv[], char *envp[])
 	t_data		data;
 	char		*input;
 	int			envpsize = 0;
-	int			(*builtins[6])(t_mini_data *data);
-	int			builtin_cmd_nb = 6;
+	int			(*builtins[5])(t_mini_data *data);
+	int			builtin_cmd_nb = 5;
 	int			i;
 	int			check;
 	struct		sigaction sa;
@@ -63,7 +63,6 @@ int main(int argc, char *argv[], char *envp[])
 		"echo",
 		"env",
 		"pwd",
-		"unset",
 		"exit"
 	};
 
@@ -71,8 +70,7 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[1] = &mini_echo;		//OK
 	builtins[2] = &mini_env;		//OK
 	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
-	builtins[4] = &mini_unset;		//OK
-	builtins[5] = &mini_exit;		//A FAIRE
+	builtins[4] = &mini_exit;		//A FAIRE
 
 	/* INIT ===== */
 	mini_data.name = "TEST";		//on recup ca dans le parsing
@@ -86,6 +84,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.env = envp;
 	data.envp = envp;
 	mini_data.no_env_check = 1;	//utils epour la creation du oldpwd
+	mini_data.first_cd_check = 0;
 	mini_data.unset_env_check = 0;
 	mini_data.new_env_check = 0;
 	mini_data.p_status = &p_status;
@@ -94,7 +93,6 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.oldpwd_if = 0;
 	sa.sa_handler = SIG_IGN;
 	/* ========= */
-
 	envp_check(&mini_data, &data, envp, envpsize);
 	//une fois que l'env est en place, on peut commencer a utiliser le shell
 	while (1)
@@ -120,8 +118,6 @@ int main(int argc, char *argv[], char *envp[])
 						check = 1;
 						break ;
 					}
-					if (i == 5)
-						unset_exec(&mini_data, &data);
 					check = 1;
 					break;
 				}
@@ -131,6 +127,11 @@ int main(int argc, char *argv[], char *envp[])
 		if (ft_strcmp(input, "export") == 0)
 		{
 			export_exec(&mini_data, &data);
+			check = 1;
+		}
+		if (ft_strcmp(input, "unset") == 0)
+		{
+			unset_exec(&mini_data, &data);
 			check = 1;
 		}
 		if (check == 0)
@@ -153,8 +154,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 3;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
+	data->heredoc_nb = 1;
+	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -195,7 +196,4 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	return ;
 }
 
-//si UNSET --> pb quand j'essaye d'afficher la var unset dans un HD
-//attention a la gestion d'erreur si j'unset des variables utiles a l'exec
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//attention car j'ai NULL termine le env (gestion env -i) et ducoupje peux pas modifier le envp car NULL en [3] ? 

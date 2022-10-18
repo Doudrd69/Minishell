@@ -76,7 +76,7 @@ int	update_pwd(t_mini_data *data)
 int	update_old_pwd(t_mini_data *data)
 {
 	int		position;
-	int		size;
+	size_t	size;
 	char	*str;
 
 	if(find_position(data, "OLDPWD") == data->envp_size) 
@@ -92,11 +92,16 @@ int	update_old_pwd(t_mini_data *data)
 			return (1);
 		ft_strlcpy(str, "OLDPWD=", 7, 0);
 		ft_strlcpy(&str[7], data->oldpwd, size, 1);
-		data->env[position] = malloc(sizeof(char) * ft_strlen(str) + 1);
-		if (!data->env[position])
-			return (1);
+		if (size > ft_strlen(data->env[position]))
+		{
+			data->env[position] = str;
+			return (0);
+		}
 		ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
 		free(str);
 	}
 	return (0);
 }
+
+//probleme quand update de OLDPWD (quand deja present) car env[position] < str_oldpwd
+	//ducoup pb d'affichage

@@ -101,16 +101,16 @@ int	mini_export(t_mini_data *data, char *var_export)
 	return (0);
 }
 
-int	mini_unset(t_mini_data *data)
+int	mini_unset(t_mini_data *data, char *var_unset)
 {
 	int	index;
 
 	index = 0;
 	while (index < data->envp_size)
 	{
-		if (ft_strnstr(data->env[index], data->var_name, ft_strlen(data->var_name)))
+		if (ft_strnstr(data->env[index], var_unset, ft_strlen(var_unset)))
 		{
-			if (unset_var(index, data) == 1)
+			if (unset_var(index, data, var_unset) == 1)
 			{
 				*data->p_status = 1;
 				return (1);

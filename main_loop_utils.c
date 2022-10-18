@@ -17,6 +17,7 @@ int export_exec(t_mini_data *mini_data, t_data *data)
 
 int	unset_exec(t_mini_data *mini_data, t_data *data)
 {
+	mini_unset(mini_data, "TEST");
 	mini_data->unset_env_check = 1;
 	if (mini_data->new_env)
 	{

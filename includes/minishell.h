@@ -63,7 +63,7 @@ typedef struct mini_data
 
 /* BUILTIN FUNCTIONS */
 int		mini_export(t_mini_data *data, char *var_export);
-int		mini_unset(t_mini_data *data);
+int		mini_unset(t_mini_data *data, char *var_unset);
 int		mini_cd(t_mini_data *data);
 int		mini_pwd(t_mini_data *data);
 int		mini_echo(t_mini_data *data);
@@ -78,12 +78,12 @@ char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
 char	**new_tab_with_existing_var(t_mini_data *data, char *var_export);
 int		specific_cases_with_special_char(t_mini_data *data, int i);
 int		var_search_copy(t_mini_data *data, int size, int i, int j);
+int		unset_var(int index, t_mini_data *data, char *var_unset);
 void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 int		malloc_and_cpy(t_mini_data *data, int i, int index);
 int		write_and_check_signs(int i, t_mini_data *data);
 void	copy_loop(t_mini_data *data, char *var_export);
 int 	check_var_exists_export(t_mini_data *data);
-int		unset_var(int index, t_mini_data *data);
 int		pid_display(t_mini_data *data, int i);
 int		check_signs(int i, t_mini_data *data);
 int		check_var(char *str, char *var_name);

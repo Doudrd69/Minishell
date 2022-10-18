@@ -21,7 +21,7 @@ int	create_oldpwd(t_mini_data *data)
 		return (1);
 	ft_strlcpy(str, "OLDPWD=", 7, 0);
 	ft_strlcpy(&str[7], data->oldpwd, ft_strlen(data->oldpwd), 1);
-	mini_export(data, str);
+	mini_export(data, str);//gerer le multiple export
 	data->env = data->new_env;
 	data->first_cd_check = 1;
 	free(str);
