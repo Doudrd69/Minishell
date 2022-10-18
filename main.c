@@ -93,6 +93,7 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.oldpwd_if = 0;
 	sa.sa_handler = SIG_IGN;
 	/* ========= */
+	
 	envp_check(&mini_data, &data, envp, envpsize);
 	//une fois que l'env est en place, on peut commencer a utiliser le shell
 	while (1)
@@ -153,7 +154,7 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 3;
+	data->cmd_nb = 1;
 	data->heredoc_nb = 1;
 	data->check_hd = 1;
 
@@ -161,19 +162,19 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 
 	data->exec.infile_fd = "infile.txt";
 	data->exec.outfile_fd = "outfile.txt";
-	data->exec.first_cmd_test = "/bin/cat -e";
+	data->exec.first_cmd_test = "cat -e";
 	data->exec.last_cmd_test = "rev";
 
 	data->exec.first_cmd_squotes_check = 0;
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 1;
+	data->exec.pipe_check = 0;
 	/* --- FIN DE L'INIT ---*/
 
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
-	if (p_status == 2)
+	if (*data->p_status == 2)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
