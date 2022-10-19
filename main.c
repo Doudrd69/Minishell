@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 15:28:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:48:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 	mini_data->value = "issou";
 	mini_data->var_export = "TEST=onestlahein";
 	mini_data->path = "..";
-	mini_data->str = "P_STATUS : $? == $HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data->str = "P_STATUS : $? == $HOME et $TERM issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
 	mini_data->echo_arg = 0;
 	mini_data->var_name = "";
 	mini_data->hd_limit = "on est la hein";
@@ -70,7 +70,7 @@ void	cmd_exec_init(t_data *data)
 	data->exec.first_cmd_squotes_check = 0;
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
-	data->exec.last_cmd_outfile_check = 1;
+	data->exec.last_cmd_outfile_check = 0;
 	data->exec.pipe_check = 1;
 	return ;
 }
@@ -180,6 +180,7 @@ void	cmd_exec(t_data *data, char **envp)
 	heredoc_main(data);							//exec des HD
 	if (*data->p_status == 2)
 	{
+		printf("CA MARCHE AHAHAHA\n");
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		free(data->hd_pid);

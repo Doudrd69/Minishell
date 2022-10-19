@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:50:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:28:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	heredoc_exec(t_data *data)
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
+	printf("PID in exec : %d\n", getpid());
+	//signal(SIGINT, &sighandler_hd);
 	while (++i < data->heredoc_nb)
 	{
 		data->hd_pid[i] = fork();
@@ -98,3 +100,4 @@ int	heredoc_exec(t_data *data)
 	}
 	return (0);
 }
+//pour quitter un HD --> on recoit SIGINT qui appelle sighandler_hd

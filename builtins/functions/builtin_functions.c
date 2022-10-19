@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:07:31 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:16:56 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,9 @@ int	mini_echo(t_mini_data *data)
 	return (0);
 }
 
-int	mini_exit(int status, t_mini_data *data)
+int	mini_exit()
 {
-	printf("STATUS : %d\n", status);
-	data->p_status = &status;
-	printf("EXIT STATUS : %d\n", *data->p_status);
-	exit (status);
+	// *data->p_status = 2;
+	// exit (*data->p_status);
+	exit(0);
 }

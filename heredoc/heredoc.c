@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:56:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:42:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,3 @@ void	heredoc(t_data *data)
 	return ;
 }
 //si on fait un CRTL-C ou CTRL-D ---> ne pas ecrire dans le fichier (donc pas le creer)
-//si "\$USER"  --> on interprete pas la variable
-//si "\\$USER" --> on interprete la variable

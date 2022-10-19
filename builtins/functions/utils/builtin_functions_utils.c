@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:26:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 17:10:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
 	char	*str;
 
 	i = 0;
+	str = NULL;
 	while (envp[i])
 	{
 		if (i == mini_data->envp_size)

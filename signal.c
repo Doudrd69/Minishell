@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:37:26 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:44:17 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	sighandler(int signum)
 
 void	sighandler_hd(int signum)
 {
-	if (signum == SIGINT)
-	{
-		mini_exit(2);
-	}
+	(void)signum;
+	exit(1);
+	//si plusieurs HD, on quitte TOUT
+	//mini_exit(2);
 }
