@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:04:26 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 15:28:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,58 @@ void	heredoc_main(t_data *data);
 
 int		p_status;
 
+void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
+{
+	mini_data->name = "TEST";		//on recup ca dans le parsing
+	mini_data->value = "issou";
+	mini_data->var_export = "TEST=onestlahein";
+	mini_data->path = "..";
+	mini_data->str = "P_STATUS : $? == $HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data->echo_arg = 0;
+	mini_data->var_name = "";
+	mini_data->hd_limit = "on est la hein";
+	mini_data->env = envp;
+	mini_data->no_env_check = 0;	//utils epour la creation du oldpwd
+	mini_data->first_cd_check = 0;
+	mini_data->unset_env_check = 0;
+	mini_data->new_env_check = 0;
+	mini_data->p_status = &p_status;
+	mini_data->echo_sq_check = 0;
+	mini_data->oldpwd_if = 0;
+	data->envp = envp;
+	p_status = 0;
+	return ;
+}
+
+void	cmd_exec_init(t_data *data)
+{
+	data->input_fd = STDIN_FILENO;
+	data->output_fd = STDOUT_FILENO;
+
+	data->p_status = &p_status;
+
+	data->hd_pipe_id = 0;
+	data->hd_id = 0;
+
+	data->cmd_nb = 3;
+	data->heredoc_nb = 2;
+	data->check_hd = 1;
+
+	data->hd.delimiter_quotes = 0;
+
+	data->exec.infile_fd = "infile.txt";
+	data->exec.outfile_fd = "outfile.txt";
+	data->exec.first_cmd_test = "cat -e";
+	data->exec.last_cmd_test = "rev";
+
+	data->exec.first_cmd_squotes_check = 0;
+	data->exec.infile_check = 0;
+	data->exec.outfile_check = 0;
+	data->exec.last_cmd_outfile_check = 1;
+	data->exec.pipe_check = 1;
+	return ;
+}
+
 void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 {
 	if (envp[0] != NULL)
@@ -35,12 +87,12 @@ void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 	else
 	{
 		if (export_no_env(mini_data) == 1)
-			exit(1);//si pb pour creer no_env, on le free
-		envp = mini_data->no_env;	//on fait pointer
-		mini_data->env = envp;		//on fait pointer
-		data->envp = envp;			//on fait pointer
+			exit(1);
+		envp = mini_data->no_env;
+		mini_data->env = envp;
+		data->envp = envp;
 		envpsize = 3;
-		mini_data->envp_size = envpsize;	//on init cette var car envp_size est utilisee dans les differentes fonctions builtins
+		mini_data->envp_size = envpsize;
 		data->envp_size = envpsize;
 	}
 	return ;
@@ -50,15 +102,14 @@ int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
+	struct		sigaction sa;
 	t_mini_data	mini_data;
 	t_data		data;
-	char		*input;
-	int			envpsize = 0;
-	int			(*builtins[5])(t_mini_data *data);
 	int			builtin_cmd_nb = 5;
-	int			i;
+	int			envpsize = 0;
 	int			check;
-	struct		sigaction sa;
+	int			i;
+	int			(*builtins[5])(t_mini_data *data);
 	char		*builtins_name[] = {
 		"cd",
 		"echo",
@@ -66,6 +117,7 @@ int main(int argc, char *argv[], char *envp[])
 		"pwd",
 		"exit"
 	};
+	char		*input;
 
 	builtins[0] = &mini_cd;			//OK + penser a enlever les printf
 	builtins[1] = &mini_echo;		//OK
@@ -73,30 +125,9 @@ int main(int argc, char *argv[], char *envp[])
 	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
 	builtins[4] = &mini_exit;		//A FAIRE
 
-	/* INIT ===== */
-	mini_data.name = "TEST";		//on recup ca dans le parsing
-	mini_data.value = "issou";
-	mini_data.var_export = "TEST=onestlahein";
-	mini_data.path = "..";
-	mini_data.str = "P_STATUS : $? == $HOME et $TERM defnwenvue$cewcne$$DedWD$Wdw$jj$   issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
-	mini_data.echo_arg = 0;
-	mini_data.var_name = "";
-	mini_data.hd_limit = "on est la hein";
-	mini_data.env = envp;
-	data.envp = envp;
-	mini_data.no_env_check = 1;	//utils epour la creation du oldpwd
-	mini_data.first_cd_check = 0;
-	mini_data.unset_env_check = 0;
-	mini_data.new_env_check = 0;
-	mini_data.p_status = &p_status;
-	mini_data.echo_sq_check = 0;
-	p_status = 0;
-	mini_data.oldpwd_if = 0;
+	init_main(&mini_data, &data, envp);
 	sa.sa_handler = SIG_IGN;
-	/* ========= */
-	
 	envp_check(&mini_data, &data, envp, envpsize);
-	//une fois que l'env est en place, on peut commencer a utiliser le shell
 	while (1)
 	{
 		signal(SIGINT, &sighandler);
@@ -141,38 +172,10 @@ int main(int argc, char *argv[], char *envp[])
 		free(input);
 	}
 }
-//pas oublier de free apres un appel a mini_env
 
 void	cmd_exec(t_data *data, char **envp)
 {
-
-	/* --- INIT DES VARIABLES D'EXECUTION ---*/
-	data->input_fd = STDIN_FILENO;
-	data->output_fd = STDOUT_FILENO;
-
-	data->p_status = &p_status;
-
-	data->hd_pipe_id = 0;
-	data->hd_id = 0;
-
-	data->cmd_nb = 1;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
-
-	data->hd.delimiter_quotes = 0;
-
-	data->exec.infile_fd = "infile.txt";
-	data->exec.outfile_fd = "outfile.txt";
-	data->exec.first_cmd_test = "cat -e";
-	data->exec.last_cmd_test = "rev";
-
-	data->exec.first_cmd_squotes_check = 0;
-	data->exec.infile_check = 0;
-	data->exec.outfile_check = 0;
-	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 0;
-	/* --- FIN DE L'INIT ---*/
-
+	cmd_exec_init(data);
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	if (*data->p_status == 2)
@@ -197,5 +200,4 @@ void	cmd_exec(t_data *data, char **envp)
 		free(data->hd_pid);
 	return ;
 }
-
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
