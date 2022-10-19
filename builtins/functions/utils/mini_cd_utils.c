@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 16:35:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 11:16:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	update_old_pwd(t_mini_data *data)
 	size_t	size;
 	char	*str;
 
-	if(find_position(data, "OLDPWD") == data->envp_size) 
+	if (find_position(data, "OLDPWD") == data->envp_size)
 		check_oldpwd(data);
 	else
 	{
 		position = find_position(data, "OLDPWD");
-		if (position == data->envp_size)
-			return (1);
 		size = ft_strlen(data->oldpwd);
 		str = malloc(sizeof(char) * (size + 8));
 		if (!str)
@@ -103,6 +101,3 @@ int	update_old_pwd(t_mini_data *data)
 	}
 	return (0);
 }
-
-//probleme quand update de OLDPWD (quand deja present) car env[position] < str_oldpwd
-	//ducoup pb d'affichage

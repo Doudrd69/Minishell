@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 13:07:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:07:31 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	mini_cd(t_mini_data *data)//penser a enelver les printf
+int	mini_cd(t_mini_data *data)
 {
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 	if (data->path[0] == '\0')
@@ -49,9 +49,9 @@ int	mini_env(t_mini_data *data)
 	int	i;
 
 	i = 0;
-	if (data->env[0] == NULL)//bash semble renvoyer 0 dans ce cas
+	if (data->env[0] == NULL)
 	{
-		*data->p_status= 1;
+		*data->p_status = 1;
 		return (1);
 	}
 	while (i < data->envp_size)
@@ -63,7 +63,7 @@ int	mini_env(t_mini_data *data)
 	return (0);
 }
 
-int	mini_echo(t_mini_data *data)//a modifier pour ecrire dans le bon FD (si redirection) 
+int	mini_echo(t_mini_data *data)
 {
 	int	i;
 
@@ -81,45 +81,6 @@ int	mini_echo(t_mini_data *data)//a modifier pour ecrire dans le bon FD (si redi
 		write(1, "\n", 1);
 	*data->p_status = 0;
 	return (0);
-}
-
-int	mini_export(t_mini_data *data, char *var_export)
-{
-	if (check_var_exists_export(data))//il faut recuper le NAME de la variable avant
-	{
-		data->new_env = new_tab_with_existing_var(data, var_export);
-		*data->p_status = 0;
-		return (0);
-	}
-	data->new_env = malloc(sizeof(char *) * (data->envp_size + 1));
-	if (!data->new_env)
-		return (1);
-	data->new_env = new_tab_malloc(data, data->envp_size, data->env, var_export);
-	copy_loop(data, var_export);
-	data->envp_size++;
-	*data->p_status = 0;
-	return (0);
-}
-
-int	mini_unset(t_mini_data *data, char *var_unset)
-{
-	int	index;
-
-	index = 0;
-	while (index < data->envp_size)
-	{
-		if (ft_strnstr(data->env[index], var_unset, ft_strlen(var_unset)))
-		{
-			if (unset_var(index, data, var_unset) == 1)
-			{
-				*data->p_status = 1;
-				return (1);
-			}
-			return (0);
-		}
-		index++;
-	}
-	return (1);
 }
 
 int	mini_exit(int status, t_mini_data *data)

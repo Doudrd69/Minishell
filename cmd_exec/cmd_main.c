@@ -6,15 +6,16 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 16:41:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 11:43:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmd_include/pipex_bonus.h"
 #include "../includes/minishell.h"
 
-void	sigtest()
+void	sigtest(int signum)
 {
+	(void)signum;
 	write(1, "Quit : 3\n", 9);
 }
 
@@ -37,9 +38,9 @@ void	first_command(char *envp[], t_data *data)
 	{
 		if (check_inputfile(data) != 0)
 			return ;
-		data->index = 2;//ici on fera correcpondre le bon ID du bon bloc de la liste chainee
-		data->env.tab1 = get_path(envp, data, data->env.tab1);//remplacer par getenv + je recup ici un tableau 2d avec tout mes chemins d'exec
-		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');//on split la commande pour distinguer la cmd et ses arguments (ls -la)
+		data->index = 2;
+		data->env.tab1 = get_path(envp, data, data->env.tab1);
+		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}
@@ -50,7 +51,7 @@ void	last_command(char *envp[], t_data *data)
 	data->last_cmd_pid = fork_creation(data->last_cmd_pid);
 	if (data->last_cmd_pid == 0)
 	{
-		if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)//modifier l'id du pipe
+		if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)
 		{
 			perror("dup2");
 			return ;
@@ -62,20 +63,19 @@ void	last_command(char *envp[], t_data *data)
 	}
 }
 
-void	commands(t_data *data, char *argv[], char *envp[])//que si plusieurs commandes (PIPE)
+void	commands(t_data *data, char *envp[])
 {
 	int	i;
 	int	cmd_id;
 	int	*pid;
-	(void)argv;
 
-	i = 0;
+	i = -1;
 	cmd_id = 3;
 	data->pipe_id = 1;
-	pid = malloc(sizeof(int) * (data->cmd_nb - 2));//soustraire le nb de heredoc
+	pid = malloc(sizeof(int) * (data->cmd_nb - 2));
 	if (!pid)
 		return ;
-	while (i < (data->cmd_nb - 2))
+	while (++i < (data->cmd_nb - 2))
 	{
 		pid[i] = fork();
 		if (pid[i] == -1)
@@ -87,28 +87,7 @@ void	commands(t_data *data, char *argv[], char *envp[])//que si plusieurs comman
 			command_exec(data, envp, cmd_id);
 		data->pipe_id++;
 		cmd_id++;
-		i++;
 	}
 	free(pid);
 	return ;
 }
-
-// int	main(int argc, char *argv[], char *envp[])
-// {
-//  	t_data	data;
-// // 	int		i;
-
-// // 	i = 0;
-// // 	data.cmd_nb = argc - 3;
-// // 	i = pipe_creation(&data);
-// 	first_command(argv, envp, &data);
-// // 	commands(&data, argv, envp);
-// // 	last_command(argv, envp, argc, &data);
-// // 	close_pipe(&data, (i - 1));
-// 	while (wait(NULL) != -1)
-// 		;
-// }
-
-
-//exemple :
-	//ls -la | cat -e > outfile

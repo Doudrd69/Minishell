@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_loop_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/19 13:38:21 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/minishell.h"
 #include "cmd_exec/cmd_include/pipex_bonus.h"
 
-int export_exec(t_mini_data *mini_data, t_data *data)
+int	export_exec(t_mini_data *mini_data, t_data *data)
 {
 	mini_export(mini_data, "TEST=issou");
 	mini_data->new_env_check = 1;
@@ -35,10 +47,10 @@ void	heredoc_main(t_data *data)
 	int	ptr;
 
 	j = 0;
-	if (data->heredoc_nb > 0)					//on s'occupe d'abord des Heredocs
+	if (data->heredoc_nb > 0)
 	{
 		heredoc_exec(data);
-		while (j < data->heredoc_nb)			//on attend les process des HD
+		while (j < data->heredoc_nb)
 		{
 			waitpid(data->hd_pid[j], &ptr, 0);
 			j++;
@@ -47,14 +59,14 @@ void	heredoc_main(t_data *data)
 	return ;
 }
 
-void	exec_main(t_data *data, char *envp[], char **argv)
+void	exec_main(t_data *data, char *envp[])
 {
-	if (data->cmd_nb > 0)						//En fonction du nombre de commande, on execute
+	if (data->cmd_nb > 0)
 	{
 		first_command(envp, data);
 		if (data->cmd_nb > 1)
 		{
-			commands(data, argv, envp);
+			commands(data, envp);
 			last_command(envp, data);
 		}
 	}

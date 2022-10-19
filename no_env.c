@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 16:41:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:35:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	create_oldpwd(t_mini_data *data)
 		return (1);
 	ft_strlcpy(str, "OLDPWD=", 7, 0);
 	ft_strlcpy(&str[7], data->oldpwd, ft_strlen(data->oldpwd), 1);
-	mini_export(data, str);//gerer le multiple export
+	mini_export(data, str);
 	data->env = data->new_env;
 	data->first_cd_check = 1;
 	free(str);
@@ -51,7 +51,9 @@ int	check_malloc(t_mini_data *data, int i)
 int	export_no_env(t_mini_data *data)
 {
 	char	*cwd;
+	char	*prog;
 
+	prog = "_=/usr/bin/env";
 	data->no_env = malloc(sizeof(char *) * 4);
 	if (!data->no_env)
 		return (1);
@@ -68,7 +70,7 @@ int	export_no_env(t_mini_data *data)
 	data->no_env[2] = malloc(sizeof(char) * ft_strlen("_=/usr/bin/env") + 1);
 	if (check_malloc(data, 2) == 1)
 		return (1);
-	ft_strlcpy(data->no_env[2], "_=/usr/bin/env", ft_strlen("_=/usr/bin/env"), 1);
+	ft_strlcpy(data->no_env[2], prog, ft_strlen(prog), 1);
 	data->no_env[3] = NULL;
 	return (0);
 }

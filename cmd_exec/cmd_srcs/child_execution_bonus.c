@@ -6,37 +6,40 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 16:30:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 11:47:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_include/pipex_bonus.h"
 
+void	exec_cmd_path(t_data *data, char *envp[])
+{
+	if (data->exec.pipe_check == 1)
+		close_pipe(data, (data->cmd_nb - 2));
+	if (data->exec.infile_check == 1)
+		close(data->input_fd);
+	if (data->exec.outfile_check == 1)
+		close(data->output_fd);
+	if (data->hd_pipefd)
+		close_hd_pipe(data, data->heredoc_nb - 1);
+	if (execve(data->env.param_tab1[0], data->env.param_tab1, envp) == -1)
+		perror("execve");
+}
+
 void	first_cmd_execution(t_data *data, char *envp[])
 {
-	if (access(data->env.param_tab1[0], X_OK) == 0)//on verifie l'acces au cas ou on recup directement un chemin
-	{
-		if (data->exec.pipe_check == 1)
-			close_pipe(data, (data->cmd_nb - 2));//close de pipe s'il y en a
-		if (data->exec.infile_check == 1)
-			close(data->input_fd);//on le close que s'il existe (INFILE)
-		if (data->exec.outfile_check == 1)
-			close(data->output_fd);//on le close que s'il existe (OUTFILE)
-		if (data->hd_pipefd)
-			close_hd_pipe(data, data->heredoc_nb - 1);
-		if (execve(data->env.param_tab1[0], data->env.param_tab1, envp) == -1)
-			perror("execve");
-	}
+	if (access(data->env.param_tab1[0], X_OK) == 0)
+		exec_cmd_path(data, envp);
 	else
 	{
 		if (data->env.tab1 != NULL)
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
-			close_pipe(data, (data->cmd_nb - 2));//close de pipe s'il y en a
+			close_pipe(data, (data->cmd_nb - 2));
 		if (data->exec.infile_check == 1)
-			close(data->input_fd);//on le close que s'il existe (INFILE)
+			close(data->input_fd);
 		if (data->exec.outfile_check == 1)
-			close(data->output_fd);//on le close que s'il existe (OUTFILE)
+			close(data->output_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		exec_cmd(data->env.tab1, data->env.param_tab1, envp, data);

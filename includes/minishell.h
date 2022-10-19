@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 13:28:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:35:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct mini_data
 {
 	int			envp_size;
 	int			echo_arg;
-	int			var_position;		//pour le mini_export quand la var existe deja
+	int			var_position;
 	int			echo_sq_check;
 	int			check_print_var;
 	int			*p_status;
@@ -71,11 +71,13 @@ int		mini_env(t_mini_data *data);
 int		mini_exit();
 
 /* BUILTIN FUNCTIONS UTILS */
-char	**new_tab_malloc(t_mini_data *data, int old_tab_size, char *envp[], char *var_export);
-char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_tab_size);
+char	**newtab_malloc(t_mini_data *data, int old_size, char **env, char *var);
+char	*check_and_return_var(t_mini_data *data, char **envp, char *var, int i);
 char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
+char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_size);
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
 char	**new_tab_with_existing_var(t_mini_data *data, char *var_export);
+int		check_var_exists_export(t_mini_data *data, char *var_export);
 int		specific_cases_with_special_char(t_mini_data *data, int i);
 int		var_search_copy(t_mini_data *data, int size, int i, int j);
 int		unset_var(int index, t_mini_data *data, char *var_unset);
@@ -83,7 +85,6 @@ void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 int		malloc_and_cpy(t_mini_data *data, int i, int index);
 int		write_and_check_signs(int i, t_mini_data *data);
 void	copy_loop(t_mini_data *data, char *var_export);
-int 	check_var_exists_export(t_mini_data *data);
 int		pid_display(t_mini_data *data, int i);
 int		check_signs(int i, t_mini_data *data);
 int		check_var(char *str, char *var_name);
@@ -96,6 +97,7 @@ int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
 int		no_path(t_mini_data *data);
 int		check_remains(char *str);
+char	*get_var_name(char *var);
 void	sighandler(int signum);
 
 /* GNL FUNCTIONS */
@@ -104,9 +106,11 @@ size_t	ft_strnlen(char *s);
 
 /* LIBFT FUNCTIONS */
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-int		ft_strncmp(const char *s1, const char *s2, size_t size);
 int		ft_strlcpy(char *dst, const char *src, size_t size, int check);
+char	*recursive_conversion(long int nbr, char *tab, int length);
+int		ft_strncmp(const char *s1, const char *s2, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
+int		digit_count(long int n);
 size_t	ft_strlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */

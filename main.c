@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 17:07:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:04:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	exec_main(t_data *data, char *envp[], char **argv);
 int		export_exec(t_mini_data *mini_data, t_data *data);
-void	cmd_exec(t_data *data, char **envp, char **argv);
 int		unset_exec(t_mini_data *mini_data, t_data *data);
+void	exec_main(t_data *data, char *envp[]);
+void	cmd_exec(t_data *data, char **envp);
 void	heredoc_main(t_data *data);
 
 int		p_status;
@@ -49,6 +49,7 @@ void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
+	(void)argv;
 	t_mini_data	mini_data;
 	t_data		data;
 	char		*input;
@@ -136,13 +137,13 @@ int main(int argc, char *argv[], char *envp[])
 			check = 1;
 		}
 		if (check == 0)
-			cmd_exec(&data, data.envp, argv);
+			cmd_exec(&data, data.envp);
 		free(input);
 	}
 }
 //pas oublier de free apres un appel a mini_env
 
-void	cmd_exec(t_data *data, char **envp, char **argv)
+void	cmd_exec(t_data *data, char **envp)
 {
 
 	/* --- INIT DES VARIABLES D'EXECUTION ---*/
@@ -155,8 +156,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 	data->hd_id = 0;
 
 	data->cmd_nb = 1;
-	data->heredoc_nb = 1;
-	data->check_hd = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -182,8 +183,8 @@ void	cmd_exec(t_data *data, char **envp, char **argv)
 		return ;
 	}
 	pipe_nb = pipe_creation(data);				//On cree les pipe
-	exec_main(data, envp, argv);				//exec des commandes
-	if (data->check_hd == 1)						//on close les pipes des Heredocs
+	exec_main(data, envp);						//exec des commandes
+	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);

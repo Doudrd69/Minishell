@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   last_command_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/19 13:28:43 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cmd_include/pipex_bonus.h"
 
 int	check_outfile_last_cmd(t_data *data)
@@ -13,7 +25,7 @@ int	check_outfile_last_cmd(t_data *data)
 		}
 		if (data->output_fd < 0)
 		{
-			ft_printf("Error : can't open file : %s\n");//afficher le bon fichier
+			ft_printf("Error : can't open file : %s\n");
 			return (0);
 		}
 		if (dup2(data->output_fd, STDOUT_FILENO) == -1)

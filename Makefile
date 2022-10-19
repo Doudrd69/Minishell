@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g
+FLAGS = -Werror -Wextra -Wall -g
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ./ft_printf/
@@ -16,8 +16,10 @@ SRCS =	cmd_exec/cmd_main.c										\
 		cmd_exec/cmd_srcs/utils/first_command_utils.c			\
 		cmd_exec/cmd_srcs/utils/last_command_utils.c			\
 		cmd_exec/cmd_srcs/utils/single_quote_exec.c				\
-		builtins/libft_functions.c								\
+		builtins/libft_functions/libft_functions.c				\
+		builtins/libft_functions/itoa_utils.c					\
 		builtins/functions/builtin_functions.c					\
+		builtins/functions/builtin_export_unset.c				\
 		builtins/functions/utils/builtin_functions_utils.c		\
 		builtins/functions/utils/mini_export_utils.c			\
 		builtins/functions/utils/mini_unset_utils.c				\
@@ -25,11 +27,11 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/utils/mini_export_existing_var.c		\
 		builtins/functions/utils/mini_cd_utils.c				\
 		builtins/functions/utils/mini_echo_check_var_utils.c	\
-		heredoc/gnl.c											\
-		heredoc/gnl_utils.c										\
+		builtins/functions/utils/mini_getenv_utils.c			\
 		heredoc/heredoc.c										\
 		heredoc/heredoc_utils.c									\
 		heredoc/heredoc_execution.c								\
+		heredoc/heredoc_functions.c								\
 		heredoc/heredoc_env_var_handling_utils.c				\
 		main_loop_utils.c										\
 		no_env.c												\

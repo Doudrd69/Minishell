@@ -6,35 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/13 13:15:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:56:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 #include <readline/readline.h>
-
-void	eof_handler_hd(char *input)
-{
-	if (input == NULL)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		exit (0);
-	}
-	return ;
-}
-
-int	check_delimiter(char *str, char *delimiter)
-{
-	size_t	size;
-
-	size = 0;
-	while (str[size])
-		size++;
-	if (size == ft_strlen(delimiter))
-		return (0);
-	return (1);
-}
 
 int	var_exists_hd(t_data *data)
 {
@@ -50,12 +27,26 @@ int	var_exists_hd(t_data *data)
 			if (check_var(data->envp[i], data->hd.env_var))
 			{
 				data->hd.position = i;
-				return (0);//faudrait return i
+				return (0);
 			}
 		}
 		i++;
 	}
 	return (1);
+}
+
+void	write_var_value(t_data *data, int output_fd, int j, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (output_fd != 0 && output_fd != 1)
+			write(output_fd, &data->hd.env_var_value[++j], 1);
+		i++;
+	}
+	return ;
 }
 
 int	check_var_exists(int j, t_data *data, int output_fd)
@@ -76,12 +67,7 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 		while (data->hd.env_var_value[j] != '=')
 			j++;
 		size = ft_strlen(&data->hd.env_var_value[j]);
-		while (i < size - 1)
-		{
-			if (output_fd != 0 && output_fd != 1)
-				write(output_fd, &data->hd.env_var_value[++j], 1);
-			i++;
-		}
+		write_var_value(data, output_fd, j, size);
 		free(data->hd.env_var);
 		return (0);
 	}
@@ -106,10 +92,10 @@ void	heredoc_exit(char *str, int output_fd, t_data *data)
 
 void	heredoc(t_data *data)
 {
-	struct	sigaction sa_hd;
-	int		output_fd;
-	char	*str;
-	int		size;
+	struct sigaction	sa_hd;
+	int					output_fd;
+	char				*str;
+	int					size;
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;

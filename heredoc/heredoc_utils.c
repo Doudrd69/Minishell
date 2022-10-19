@@ -6,31 +6,17 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/14 10:02:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:50:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 
-int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
+int	copy_var_hd(t_data *data, char *var, int j)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 1;
-	while (var[var_size] != ' ' && var[var_size] != '\0')
-	{
-		if (check_special_char(var[var_size], var_size) == 1)
-			break ;
-		var_size++;
-	}
-	if (var_size <= 1)//on que un $
-		return (2);
-	data->hd.var_length = var_size;
-	data->hd.env_var = malloc(sizeof(char) * var_size);
-	if (!data->hd.env_var)
-		return (1);
 	while (var[j] != ' ' && var[j] != '\0')
 	{
 		if (check_special_char(var[j], 1))
@@ -40,6 +26,27 @@ int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 		j++;
 	}
 	data->hd.env_var[i] = '\0';
+	return (j);
+}
+
+int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
+{
+	int	j;
+
+	j = 1;
+	while (var[var_size] != ' ' && var[var_size] != '\0')
+	{
+		if (check_special_char(var[var_size], var_size) == 1)
+			break ;
+		var_size++;
+	}
+	if (var_size <= 1)
+		return (2);
+	data->hd.var_length = var_size;
+	data->hd.env_var = malloc(sizeof(char) * var_size);
+	if (!data->hd.env_var)
+		return (1);
+	j = copy_var_hd(data, var, j);
 	if (check_var_exists(j, data, output_fd) == 1)
 		return (1);
 	return (0);
@@ -79,21 +86,7 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 			return (0);
 		i = backslash_check(data, str, i);
 		if (str[i] == '$' && str[i + 1] != '\0' && data->hd.bkslash_check == 0)
-		{
-			if (str[i + 1] == ' ')
-			{
-				write(output_fd, &str[i], 1);
-				i++;
-			}
-			else
-				i = print_var_util(data, str, i, output_fd);
-			while (str[i] == '$')
-			{
-				if (check_special_char_second_loop(str[i + 1]) == 1)
-					break ;
-				i = print_var_util(data, str, i, output_fd);
-			}
-		}
+			i = cpvhd_specific_cases(data, str, i, output_fd);
 		if (str[i] != '\0')
 			write(output_fd, &str[i], 1);
 		i++;
@@ -124,12 +117,3 @@ char	*var_found(t_data *data, char *envp[], char *var_name, int i)
 	}
 	return (NULL);
 }
-
-char	*getenv_hd(char *envp[], t_data *data, char *var_name)
-{
-	if (ft_strnstr(envp[data->hd.position], var_name, ft_strlen(var_name)))
-		return (var_found(data, envp, var_name, data->hd.position));
-	printf("Cannot find %s\n", var_name);
-	return (NULL);
-}
-//free data->home_path

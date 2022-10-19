@@ -1,15 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_export_existing_var.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:26:30 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/19 11:32:29 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
-int check_var_exists_export(t_mini_data *data)
+int	check_var_exists_export(t_mini_data *data, char *var_export)
 {
 	int		i;
+	char	*str;
 
 	i = 0;
+	str = get_var_name(var_export);
 	while (i < data->envp_size)
 	{
-		if (ft_strnstr(data->env[i], data->name, ft_strlen(data->name)))
+		if (ft_strnstr(data->env[i], str, ft_strlen(str)))
 		{
-			if (check_var(data->env[i], data->name))
+			if (check_var(data->env[i], str))
 			{
 				data->var_position = i;
 				return (1);
@@ -20,7 +34,18 @@ int check_var_exists_export(t_mini_data *data)
 	return (0);
 }
 
-char	**malloc_tab_with_existing_var(t_mini_data *data, char *var_export)
+int	malloc_new_env(t_mini_data *data, int i)
+{
+	data->new_env[i] = malloc(sizeof(char) * ft_strlen(data->env[i]) + 1);
+	if (!data->new_env[i])
+	{
+		free_tab(data->new_env, data->envp_size);
+		return (1);
+	}
+	return (0);
+}
+
+char	**malloc_tab_with_existing_var(t_mini_data *data, char *var)
 {
 	int	i;
 
@@ -29,7 +54,7 @@ char	**malloc_tab_with_existing_var(t_mini_data *data, char *var_export)
 	{
 		if (i == data->var_position)
 		{
-			data->new_env[i] = malloc(sizeof(char) * (ft_strlen(var_export) + 2));
+			data->new_env[i] = malloc(sizeof(char) * (ft_strlen(var) + 2));
 			if (!data->new_env[i])
 			{
 				free_tab(data->new_env, data->envp_size);
@@ -38,14 +63,9 @@ char	**malloc_tab_with_existing_var(t_mini_data *data, char *var_export)
 		}
 		else
 		{
-			data->new_env[i] = malloc(sizeof(char) * ft_strlen(data->env[i]) + 1);
-			if (!data->new_env[i])
-			{
-				free_tab(data->new_env, data->envp_size);
-				return (0);
-			}
+			if (malloc_new_env(data, i) == 1)
+				return (NULL);
 		}
-		//printf("= %d\n", i);
 		i++;
 	}
 	return (data->new_env);
@@ -65,7 +85,7 @@ char	**copy_value(t_mini_data *data, int i)
 	return (data->new_env);
 }
 
-char	**new_tab_with_existing_var(t_mini_data *data, char *var_export)
+char	**new_tab_with_existing_var(t_mini_data *data, char *var)
 {
 	int	i;
 
@@ -76,11 +96,11 @@ char	**new_tab_with_existing_var(t_mini_data *data, char *var_export)
 		free_tab(data->new_env, data->envp_size);
 		return (0);
 	}
-	data->new_env = malloc_tab_with_existing_var(data, var_export);//je recup le tableau malloc pour accueillir les copies
+	data->new_env = malloc_tab_with_existing_var(data, var);
 	while (i < data->envp_size)
 	{
 		if (i == data->var_position)
-			ft_strlcpy(data->new_env[i], var_export, ft_strlen(var_export), 1);
+			ft_strlcpy(data->new_env[i], var, ft_strlen(var), 1);
 		else
 			data->new_env = copy_value(data, i);
 		i++;

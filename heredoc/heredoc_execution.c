@@ -6,11 +6,19 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/13 14:19:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 13:50:46 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
+
+char	*getenv_hd(char *envp[], t_data *data, char *var_name)
+{
+	if (ft_strnstr(envp[data->hd.position], var_name, ft_strlen(var_name)))
+		return (var_found(data, envp, var_name, data->hd.position));
+	printf("Cannot find %s\n", var_name);
+	return (NULL);
+}
 
 void	output_redirection(t_data *data)
 {
@@ -68,13 +76,13 @@ int	heredoc_exec(t_data *data)
 	int	ptr;
 	int	pipe_nb;
 
-	i = 0;
+	i = -1;
 	pipe_nb = hd_pipe_creation(data);
 	(void)pipe_nb;
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
-	while (i < data->heredoc_nb)
+	while (++i < data->heredoc_nb)
 	{
 		data->hd_pid[i] = fork();
 		if (data->hd_pid[i] == -1)
@@ -87,7 +95,6 @@ int	heredoc_exec(t_data *data)
 		waitpid(data->hd_pid[i], &ptr, 0);
 		data->hd_pipe_id++;
 		data->hd_id++;
-		i++;
 	}
 	return (0);
 }

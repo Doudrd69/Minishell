@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_echo_check_var_utils.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:16:32 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/19 13:23:49 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 int	pid_display(t_mini_data *data, int i)
 {
-	char *pid;
+	char	*pid;
 
 	if (data->str[i] == '$' && data->str[i + 1] == '$')
 	{
@@ -36,14 +48,15 @@ int	specific_cases_with_special_char(t_mini_data *data, int i)
 	return (i);
 }
 
-int	var_exists(t_mini_data *data)//a modifier pour etre utilisable partout
+int	var_exists(t_mini_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->envp_size)
 	{
-		if (ft_strnstr(data->env[i], data->var_search, ft_strlen(data->var_search)))
+		if (ft_strnstr(data->env[i],
+				data->var_search, ft_strlen(data->var_search)))
 		{
 			if (check_var(data->env[i], data->var_search))
 				return (1);
@@ -55,10 +68,10 @@ int	var_exists(t_mini_data *data)//a modifier pour etre utilisable partout
 
 int	var_search_copy(t_mini_data *data, int size, int i, int j)
 {
-	data->var_search = malloc(sizeof(char) * size);//pas de +1 car le '\0' prend la place du $
+	data->var_search = malloc(sizeof(char) * size);
 	if (!data->var_search)
 		return (1);
-	i++;//on incremente i pour demarrer sur la premiere lettre de la variable
+	i++;
 	while (data->str[i] != ' ' && data->str[i] != '\0')
 	{
 		if (check_special_char(data->str[i], size) == 1)
@@ -88,4 +101,3 @@ void	print_var(int j, t_mini_data *data)
 	free(data->var_search);
 	return ;
 }
-

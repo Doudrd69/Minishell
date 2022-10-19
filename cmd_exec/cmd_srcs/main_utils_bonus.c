@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/17 17:11:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 11:49:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 	exit(127);
 }
 
-char	**join_arg(char **tab, char **args)//je recup les chenins et je colle ma commande a la fin pour l'exec
+char	**join_arg(char **tab, char **args)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ char	**join_arg(char **tab, char **args)//je recup les chenins et je colle ma co
 	return (args);
 }
 
-char	**get_path(char *env[], t_data *data, char **args)//gerer le cas ou pas d'env
+char	**get_path(char *env[], t_data *data, char **args)
 {
 	int	i;
 	int	j;

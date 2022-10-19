@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_env_var_handling_utils.c                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 13:39:04 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/19 13:49:45 by ebrodeur         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 
 int	check_special_char(char c, int size)
@@ -33,5 +45,23 @@ int	backslash_check(t_data *data, char *str, int i)
 	}
 	if (str[i] == '\\' && str[i + 1] == '\\')
 		i++;
+	return (i);
+}
+
+int	cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd)
+{
+	if (str[i + 1] == ' ')
+	{
+		write(output_fd, &str[i], 1);
+		i++;
+	}
+	else
+		i = print_var_util(data, str, i, output_fd);
+	while (str[i] == '$')
+	{
+		if (check_special_char_second_loop(str[i + 1]) == 1)
+			break ;
+		i = print_var_util(data, str, i, output_fd);
+	}
 	return (i);
 }
