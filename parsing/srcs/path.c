@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 // void	get_path(char **av, char **env, t_shell *minishell)
 // {

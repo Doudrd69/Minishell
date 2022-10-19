@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlstadd_front.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:10:08 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/10/18 13:26:25 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 18:30:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../parsing.h"
 
 int	ft_dlstadd_front(t_shell **alst, t_node *new)
 {

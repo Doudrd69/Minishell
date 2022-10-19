@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	exit_strerror(t_shell *minishell, char *error)
 {

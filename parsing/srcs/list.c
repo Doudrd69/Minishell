@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 int	empty_list(t_shell *minishell)
 {

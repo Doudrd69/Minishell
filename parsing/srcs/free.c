@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	free_all(t_shell *minishell)
 {

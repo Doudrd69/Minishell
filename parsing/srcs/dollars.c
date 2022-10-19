@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	parse_dollars(t_shell *minishell)
 {

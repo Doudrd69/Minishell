@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 int	check_and_print_var(t_shell *minishell, char *str)
 {
@@ -25,7 +25,7 @@ int	check_and_print_var(t_shell *minishell, char *str)
 		j++;
 	}
 	minishell->var_search[j] = '\0';
-	print_var(minishell);
+	print_var_parsing(minishell);
 	return (0);
 }
 
@@ -58,7 +58,7 @@ static void	ft_find_dollars(t_shell *minishell, char *var, int *size, int *i)
 		(*i)++;
 }
 
-void	print_var(t_shell *minishell)
+void	print_var_parsing(t_shell *minishell)
 {
 	int		size;
 	int		i;

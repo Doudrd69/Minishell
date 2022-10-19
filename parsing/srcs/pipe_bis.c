@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 char	*cmd_cpy(char *dest, char *src, int size)
 {

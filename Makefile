@@ -4,6 +4,9 @@ FLAGS = -Werror -Wextra -Wall -fsanitize=address -g
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ./ft_printf/
 
+PARSING_NAME = parsing.a
+PARSING_PATH = ./parsing/
+
 RL_LIB_DIR    := -L $(shell brew --prefix readline)/lib
 RL_INC_DIR    := -I $(shell brew --prefix readline)/include
 
@@ -43,7 +46,7 @@ INCS = 	cmd_exec/cmd_include/pipex_bonus.h					\
 
 OBJS = $(SRCS:.c=.o)
 
-%.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(INCS)
+%.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(PARSING_PATH)$(PARSING_NAME) $(INCS)
 		$(CC) $(FLAGS) $(RL_INC_DIR) -c $< -o $@
 
 NAME = minishell
@@ -51,12 +54,17 @@ NAME = minishell
 all : ft_printf $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -lftprintf -lreadline -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(PARSING_PATH) -lftprintf -lparsing -lreadline -o $(NAME) $(OBJS)
 
 ft_printf :
 	make -C $(PRINTF_PATH)
 
+parsing :
+	make -C $(PARSING_PATH)
+
 $(PRINTF_PATH)$(PRINTF_NAME) : ft_printf
+
+$(PARSING_PATH)$(PARSING_NAME) : parsing
 
 clean : 
 	rm -f $(OBJS)

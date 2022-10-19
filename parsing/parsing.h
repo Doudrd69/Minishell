@@ -1,5 +1,5 @@
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -67,7 +67,7 @@ void	parse_dollars(t_shell *minishell);
 int		dollars_specific(t_shell *minishell);
 int		check_quote_dollars(char *str);
 int		check_and_print_var(t_shell *minishell, char *str);
-void	print_var(t_shell *minishell);
+void	print_var_parsing(t_shell *minishell);
 int		var_exists(t_shell *minishell);
 int		check_var(char *str, char *var_name);
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list);
@@ -82,14 +82,12 @@ int		check_quote_in_quote_dollars(char *str);
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, char **env);
-void	get_path(char **av, char **env, t_shell *minishell);
 void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_space(t_shell *minishell);
 void	list_nospace(t_shell *minishell, t_node **list, char *tmp);
 
 /*PATH*/
-void	get_path(char **av, char **env, t_shell *minishell);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);

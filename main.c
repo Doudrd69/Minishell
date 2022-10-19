@@ -6,11 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 16:48:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 18:33:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include "parsing/parsing.h"
 #include "cmd_exec/cmd_include/pipex_bonus.h"
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -22,6 +23,30 @@ void	cmd_exec(t_data *data, char **envp);
 void	heredoc_main(t_data *data);
 
 int		p_status;
+
+void	free_all(t_shell *minishell)
+{
+	t_node	*tmp;
+
+	while (minishell->head && minishell->head != NULL)
+	{
+		tmp = minishell->head;
+		minishell->head = minishell->head->next;
+		free(tmp);
+	}
+	free(minishell->value);
+	free(minishell->var_search);
+	free(minishell);
+}
+
+void	sighandler_hd(int signum)
+{
+	(void)signum;
+	p_status = 1;
+	exit(1);
+	//si plusieurs HD, on quitte TOUT
+	//mini_exit(2);
+}
 
 void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 {
@@ -105,6 +130,7 @@ int main(int argc, char *argv[], char *envp[])
 	struct		sigaction sa;
 	t_mini_data	mini_data;
 	t_data		data;
+	t_shell		*minishell;
 	int			builtin_cmd_nb = 5;
 	int			envpsize = 0;
 	int			check;
@@ -130,11 +156,15 @@ int main(int argc, char *argv[], char *envp[])
 	envp_check(&mini_data, &data, envp, envpsize);
 	while (1)
 	{
+		minishell = malloc(sizeof(t_shell));
+		init_variable(minishell, envp);
 		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
 		input = readline("minishell$ ");
 		if (input && *input)
 			add_history (input);
+		parsing(envp, minishell);
+		free_all(minishell);
 		eof_handler(input);
 		check = 0;
 		i = 0;
@@ -178,14 +208,6 @@ void	cmd_exec(t_data *data, char **envp)
 	cmd_exec_init(data);
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
-	if (*data->p_status == 2)
-	{
-		printf("CA MARCHE AHAHAHA\n");
-		close_hd_pipe(data, data->heredoc_nb - 1);
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
-		free(data->hd_pid);
-		return ;
-	}
 	pipe_nb = pipe_creation(data);				//On cree les pipe
 	exec_main(data, envp);						//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
