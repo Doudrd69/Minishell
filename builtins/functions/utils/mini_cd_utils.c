@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 11:16:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 17:18:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int	no_path(t_mini_data *data)
 	return (1);
 }
 
-int	path_exists(t_mini_data *data)
+int	path_exists(t_mini_data *data, t_node *node)
 {
-	if (chdir(data->path) != 0)
+	printf("PATH ---> %s\n", node->content);
+	if (chdir(node->content) != 0)
 	{
 		*data->p_status = 1;
-		ft_printf("minishell: cd: %s: No such file or directory\n", data->path);
+		ft_printf("minishell: cd: %s: No such file or directory\n", node->content);
 		return (1);
 	}
 	data->cwd = getcwd(data->buff, BUF_SIZE);
@@ -68,7 +69,11 @@ int	update_pwd(t_mini_data *data)
 		return (1);
 	ft_strlcpy(str, "PWD=", 4, 0);
 	ft_strlcpy(&str[4], data->cwd, size, 1);
+	printf("Before : %s\n", data->env[position]);
+	printf("Before : %s\n", data->env[position + 1]);
 	ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
+	printf("After : %s\n", data->env[position]);
+	printf("Before : %s\n", data->env[position + 1]);
 	free(str);
 	return (0);
 }

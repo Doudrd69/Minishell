@@ -1,6 +1,6 @@
 #include "../parsing.h"
 
-int	var_exists(t_shell *minishell)
+int	var_exists_parsing(t_shell *minishell)
 {
 	int	i;
 
@@ -10,7 +10,7 @@ int	var_exists(t_shell *minishell)
 		if (ft_strnstr(minishell->envp[i], minishell->var_search,
 				ft_strlen(minishell->var_search)))
 		{
-			if (check_var(minishell->envp[i], minishell->var_search))
+			if (check_var_parsing(minishell->envp[i], minishell->var_search))
 				return (1);
 		}
 		i++;
@@ -18,7 +18,7 @@ int	var_exists(t_shell *minishell)
 	return (0);
 }
 
-int	check_var(char *str, char *var_name)
+int	check_var_parsing(char *str, char *var_name)
 {
 	size_t	size;
 

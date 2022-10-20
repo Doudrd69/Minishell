@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing.h"
 
 void	print_dlist(t_node **list)
 {

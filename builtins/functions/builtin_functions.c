@@ -6,23 +6,24 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 16:16:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 17:01:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	mini_cd(t_mini_data *data)
+int	mini_cd(t_mini_data *data, t_node *node)
 {
+	printf("CONTENT IN CD : * %s *\n", node->content);
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
-	if (data->path[0] == '\0')
+	if (node->content == NULL)
 	{
 		if (no_path(data) == 1)
 			return (1);
 	}
 	else
 	{
-		if (path_exists(data) == 1)
+		if (path_exists(data, node) == 1)
 			return (1);
 	}
 	if (update_pwd(data) == 1)
@@ -32,8 +33,9 @@ int	mini_cd(t_mini_data *data)
 	return (0);
 }
 
-int	mini_pwd(t_mini_data *data)
+int	mini_pwd(t_mini_data *data, t_node *node)
 {
+	(void)node;
 	if (getcwd(data->buff, BUF_SIZE) == NULL)
 	{
 		*data->p_status = 1;
@@ -44,8 +46,9 @@ int	mini_pwd(t_mini_data *data)
 	return (0);
 }
 
-int	mini_env(t_mini_data *data)
+int	mini_env(t_mini_data *data, t_node *node)
 {
+	(void)node;
 	int	i;
 
 	i = 0;
@@ -56,15 +59,16 @@ int	mini_env(t_mini_data *data)
 	}
 	while (i < data->envp_size)
 	{
-		printf("%s\n", data->env[i]);
+		printf("[%d] --> %s\n", i, data->env[i]);
 		i++;
 	}
 	*data->p_status = 0;
 	return (0);
 }
 
-int	mini_echo(t_mini_data *data)
+int	mini_echo(t_mini_data *data, t_node *node)
 {
+	(void)node;
 	int	i;
 
 	i = 0;

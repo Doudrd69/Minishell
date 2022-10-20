@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 15:16:32 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/10/11 17:10:11 by will             ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 17:20:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ char				*ft_strrchr(const char *str, int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr( char const *s, unsigned int start, size_t len);
 
+unsigned int		ft_strlcpy(char *dest, const char *src, size_t size, int check);
 unsigned int		ft_strlcat(char *dest, const char *src, unsigned int size);
-unsigned int		ft_strlcpy(char *dest, const char *src, unsigned int size);
 
 size_t				ft_strlen(const char *string);
 t_list				*ft_lstnew(void *content);

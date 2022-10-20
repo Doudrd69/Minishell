@@ -66,10 +66,10 @@ void	parse_redirections(char *str, t_shell *minishell);
 void	parse_dollars(t_shell *minishell);
 int		dollars_specific(t_shell *minishell);
 int		check_quote_dollars(char *str);
-int		check_and_print_var(t_shell *minishell, char *str);
+int		check_and_print_var_parsing(t_shell *minishell, char *str);
 void	print_var_parsing(t_shell *minishell);
-int		var_exists(t_shell *minishell);
-int		check_var(char *str, char *var_name);
+int		var_exists_parsing(t_shell *minishell);
+int		check_var_parsing(char *str, char *var_name);
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list);
 void	change_var_to_value(char *str, int i,
 			t_shell *minishell, t_node **list);
@@ -85,7 +85,7 @@ void	init_variable(t_shell *minishell, char **env);
 void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_space(t_shell *minishell);
-void	list_nospace(t_shell *minishell, t_node **list, char *tmp);
+void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j);
 
 /*PATH*/
 

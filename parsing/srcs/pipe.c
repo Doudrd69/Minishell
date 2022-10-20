@@ -14,7 +14,7 @@ static void	ft_tmp(char **tmp, char *str, int j, int i)
 {
 	*tmp = malloc(sizeof(char) * (i + 1));
 	*tmp = cmd_cpy(*tmp, str + j, i + 1);
-	*(tmp)[i] = '\0';
+	*(tmp)[i - 1] = '\0';
 }
 
 static void	ft_prev(char **tmp, char *str, int j, int i)

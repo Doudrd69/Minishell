@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 18:33:16 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/20 15:51:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,12 @@ int main(int argc, char *argv[], char *envp[])
 	t_mini_data	mini_data;
 	t_data		data;
 	t_shell		*minishell;
+	t_node		*node;
 	int			builtin_cmd_nb = 5;
 	int			envpsize = 0;
 	int			check;
 	int			i;
-	int			(*builtins[5])(t_mini_data *data);
+	int			(*builtins[5])(t_mini_data *data, t_node *node);
 	char		*builtins_name[] = {
 		"cd",
 		"echo",
@@ -143,7 +144,6 @@ int main(int argc, char *argv[], char *envp[])
 		"pwd",
 		"exit"
 	};
-	char		*input;
 
 	builtins[0] = &mini_cd;			//OK + penser a enlever les printf
 	builtins[1] = &mini_echo;		//OK
@@ -156,26 +156,30 @@ int main(int argc, char *argv[], char *envp[])
 	envp_check(&mini_data, &data, envp, envpsize);
 	while (1)
 	{
-		minishell = malloc(sizeof(t_shell));
-		init_variable(minishell, envp);
 		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
-		input = readline("minishell$ ");
-		if (input && *input)
-			add_history (input);
+		minishell = malloc(sizeof(t_shell));
+		init_variable(minishell, envp);
+		minishell->cmd = readline("minishell$ ");
+		if (minishell->cmd && *minishell->cmd)
+			add_history (minishell->cmd);
+		eof_handler(minishell->cmd);
 		parsing(envp, minishell);
-		free_all(minishell);
-		eof_handler(input);
+		node = minishell->head;
 		check = 0;
-		i = 0;
 		data.envp_size = mini_data.envp_size;
-		while (i < builtin_cmd_nb)
+		while (node && node != NULL)//ou boucler avce list_size
 		{
-			if (input)
+			i = 0;
+			while (i < builtin_cmd_nb)
 			{
-				if (ft_strcmp(builtins_name[i], input) == 0)
+				printf("i : %d --> content : %s\n", i, node->content);
+				if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
 				{
-					if ((*builtins[i])(&mini_data) == 1)
+					printf("CMD : %s*\n", node->content);
+					if (node->next != NULL)
+						node = node->next;
+					if ((*builtins[i])(&mini_data, node) == 1)
 					{
 						printf("P_STATUS fail : %d\n", *mini_data.p_status);
 						check = 1;
@@ -184,22 +188,23 @@ int main(int argc, char *argv[], char *envp[])
 					check = 1;
 					break;
 				}
+				i++;
 			}
-			i++;
+			node = node->next;
 		}
-		if (ft_strcmp(input, "export") == 0)
-		{
-			export_exec(&mini_data, &data);
-			check = 1;
-		}
-		if (ft_strcmp(input, "unset") == 0)
-		{
-			unset_exec(&mini_data, &data);
-			check = 1;
-		}
-		if (check == 0)
-			cmd_exec(&data, data.envp);
-		free(input);
+		free_all(minishell);
+		// if (ft_strncmp(input, "export", 6) == 0)
+		// {
+		// 	export_exec(&mini_data, &data);
+		// 	check = 1;
+		// }
+		// if (ft_strncmp(input, "unset", 5) == 0)
+		// {
+		// 	unset_exec(&mini_data, &data);
+		// 	check = 1;
+		// }
+		// if (check == 0)
+		// 	cmd_exec(&data, data.envp);
 	}
 }
 
@@ -224,3 +229,9 @@ void	cmd_exec(t_data *data, char **envp)
 	return ;
 }
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
+//modifier le nom de mom ft_strlcpy et le garder
+//pour le moment la liste est inversé --> "cd .." = ".." + "cd"
+	//donc dans la boucle des BUILTINS on passe d'abord ".."
+	//on trouve rien donc on passe au node suivant (="cd")
+	//on execute le cd --> dans la fonction je fais node = shell->head qui vaut ".."
+	//mais qui est le "HEAD" ducoup
