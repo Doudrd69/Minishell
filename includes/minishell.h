@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/20 17:12:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 13:06:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "../parsing/parsing.h"
 # include "../parsing/libft/libft.h"
 
-# define BUF_SIZE 50
+# define BUF_SIZE 100
 # define BUFFER_SIZE 1
 
 typedef struct mini_data
@@ -85,7 +85,7 @@ int		var_search_copy(t_mini_data *data, int size, int i, int j);
 int		unset_var(int index, t_mini_data *data, char *var_unset);
 void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 int		malloc_and_cpy(t_mini_data *data, int i, int index);
-int		write_and_check_signs(int i, t_mini_data *data);
+int		write_and_check_signs(int i, t_mini_data *data );
 void	copy_loop(t_mini_data *data, char *var_export);
 int		path_exists(t_mini_data *data, t_node *node);
 int		pid_display(t_mini_data *data, int i);
@@ -108,5 +108,6 @@ size_t	ft_strnlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
 int		export_no_env(t_mini_data *data);
+void	free_all(t_shell *minishell);
 
 #endif

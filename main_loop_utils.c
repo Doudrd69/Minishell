@@ -6,16 +6,18 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:38:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 14:13:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "cmd_exec/cmd_include/pipex_bonus.h"
 
-int	export_exec(t_mini_data *mini_data, t_data *data)
+int	export_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
-	mini_export(mini_data, "TEST=issou");
+	if (node->next != NULL)
+		node = node->next;
+	mini_export(mini_data, node->content);
 	mini_data->new_env_check = 1;
 	if (mini_data->unset_env && mini_data->unset_env_check == 1)
 	{
@@ -27,9 +29,11 @@ int	export_exec(t_mini_data *mini_data, t_data *data)
 	return (0);
 }
 
-int	unset_exec(t_mini_data *mini_data, t_data *data)
+int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
-	mini_unset(mini_data, "TEST");
+	if (node->next != NULL)
+		node = node->next;
+	mini_unset(mini_data, node->content);
 	mini_data->unset_env_check = 1;
 	if (mini_data->new_env)
 	{
@@ -59,11 +63,11 @@ void	heredoc_main(t_data *data)
 	return ;
 }
 
-void	exec_main(t_data *data, char *envp[])
+void	exec_main(t_data *data, char *envp[], t_node *node)
 {
 	if (data->cmd_nb > 0)
 	{
-		first_command(envp, data);
+		first_command(envp, data, node);
 		if (data->cmd_nb > 1)
 		{
 			commands(data, envp);

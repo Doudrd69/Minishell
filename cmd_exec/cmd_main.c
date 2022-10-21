@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 11:43:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 14:46:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,31 @@ int	fork_creation(int pid)
 	return (pid);
 }
 
-void	first_command(char *envp[], t_data *data)
+char **fill_param_tab(t_node *node, char **tab)
+{
+	tab = malloc(sizeof(char *) * 3);
+	if (!tab)
+		return (NULL);
+	printf("size : %zu\n", ft_strlen(node->content));
+	tab[0] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+	if (!tab[0])
+		return (free_tab(tab, 0));
+	ft_strlcpy(tab[0], node->content, ft_strlen(node->content), 1);
+	if (node->next != NULL)
+	{
+		node = node->next;
+		tab[1] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+		if (!tab[1])
+			return (free_tab(tab, 1));
+		ft_strlcpy(tab[1], node->content, ft_strlen(node->content), 1);	
+		tab[2] = NULL;
+	}
+	else
+		tab[1] = NULL;
+	return (tab);
+}
+
+void	first_command(char *envp[], t_data *data, t_node *node)
 {
 	signal(SIGQUIT, &sigtest);
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
@@ -38,9 +62,8 @@ void	first_command(char *envp[], t_data *data)
 	{
 		if (check_inputfile(data) != 0)
 			return ;
-		data->index = 2;
 		data->env.tab1 = get_path(envp, data, data->env.tab1);
-		data->env.param_tab1 = ft_split(data->exec.first_cmd_test, ' ');
+		data->env.param_tab1 = fill_param_tab(node, data->env.param_tab1);
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}

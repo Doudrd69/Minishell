@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/20 17:01:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 13:10:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	mini_cd(t_mini_data *data, t_node *node)
 {
-	printf("CONTENT IN CD : * %s *\n", node->content);
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 	if (node->content == NULL)
 	{
@@ -68,10 +67,10 @@ int	mini_env(t_mini_data *data, t_node *node)
 
 int	mini_echo(t_mini_data *data, t_node *node)
 {
-	(void)node;
 	int	i;
 
 	i = 0;
+	data->str = node->content;
 	if (!data->str || (data->str[0] == '$' && data->str[1] == '\0'))
 	{
 		write(1, "\n", 1);

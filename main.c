@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/20 15:51:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 14:45:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int		export_exec(t_mini_data *mini_data, t_data *data);
-int		unset_exec(t_mini_data *mini_data, t_data *data);
-void	exec_main(t_data *data, char *envp[]);
-void	cmd_exec(t_data *data, char **envp);
+int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
+int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
+void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
+void	exec_main(t_data *data, char *envp[], t_node *node);
 void	heredoc_main(t_data *data);
 
 int		p_status;
@@ -32,6 +32,8 @@ void	free_all(t_shell *minishell)
 	{
 		tmp = minishell->head;
 		minishell->head = minishell->head->next;
+		if (ft_strncmp(tmp->content, "|", 1) != 0)
+			free(tmp->content);
 		free(tmp);
 	}
 	free(minishell->value);
@@ -52,9 +54,9 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 {
 	mini_data->name = "TEST";		//on recup ca dans le parsing
 	mini_data->value = "issou";
-	mini_data->var_export = "TEST=onestlahein";
+	mini_data->var_export = NULL;
 	mini_data->path = "..";
-	mini_data->str = "P_STATUS : $? == $HOME et $TERM issou$";//$LOGNAM on est $HOM$?E la $ISS$?OU hein cha$kal $TERM $?
+	mini_data->str = NULL;
 	mini_data->echo_arg = 0;
 	mini_data->var_name = "";
 	mini_data->hd_limit = "on est la hein";
@@ -81,9 +83,9 @@ void	cmd_exec_init(t_data *data)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 3;
-	data->heredoc_nb = 2;
-	data->check_hd = 1;
+	data->cmd_nb = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -96,7 +98,7 @@ void	cmd_exec_init(t_data *data)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 1;
+	data->exec.pipe_check = 0;
 	return ;
 }
 
@@ -163,58 +165,58 @@ int main(int argc, char *argv[], char *envp[])
 		minishell->cmd = readline("minishell$ ");
 		if (minishell->cmd && *minishell->cmd)
 			add_history (minishell->cmd);
-		eof_handler(minishell->cmd);
+		eof_handler(minishell->cmd, minishell);
 		parsing(envp, minishell);
 		node = minishell->head;
+		print_dlist(&node);
 		check = 0;
 		data.envp_size = mini_data.envp_size;
-		while (node && node != NULL)//ou boucler avce list_size
+		i = 0;
+		while (i < builtin_cmd_nb)
 		{
-			i = 0;
-			while (i < builtin_cmd_nb)
+			if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
 			{
-				printf("i : %d --> content : %s\n", i, node->content);
-				if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
+				printf("CMD : %s*\n", node->content);
+				if (node->next != NULL)
+					node = node->next;
+				if ((*builtins[i])(&mini_data, node) == 1)
 				{
-					printf("CMD : %s*\n", node->content);
-					if (node->next != NULL)
-						node = node->next;
-					if ((*builtins[i])(&mini_data, node) == 1)
-					{
-						printf("P_STATUS fail : %d\n", *mini_data.p_status);
-						check = 1;
-						break ;
-					}
+					printf("P_STATUS fail : %d\n", *mini_data.p_status);
 					check = 1;
-					break;
+					break ;
 				}
-				i++;
+				check = 1;
+				break;
 			}
-			node = node->next;
+			i++;
 		}
+		if (ft_strncmp(node->content, "export", 6) == 0)
+		{
+			export_exec(&mini_data, &data, node);
+			check = 1;
+		}
+		if (ft_strncmp(node->content, "unset", 5) == 0)
+		{
+			unset_exec(&mini_data, &data, node);
+			check = 1;
+		}
+		if (check == 0)
+			cmd_exec(&data, data.envp, minishell);
+		free(minishell->cmd);
 		free_all(minishell);
-		// if (ft_strncmp(input, "export", 6) == 0)
-		// {
-		// 	export_exec(&mini_data, &data);
-		// 	check = 1;
-		// }
-		// if (ft_strncmp(input, "unset", 5) == 0)
-		// {
-		// 	unset_exec(&mini_data, &data);
-		// 	check = 1;
-		// }
-		// if (check == 0)
-		// 	cmd_exec(&data, data.envp);
 	}
 }
 
-void	cmd_exec(t_data *data, char **envp)
+void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 {
+	t_node *node;
+
+	node = minishell->head;//la on est sur la commande
 	cmd_exec_init(data);
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
-	pipe_nb = pipe_creation(data);				//On cree les pipe
-	exec_main(data, envp);						//exec des commandes
+	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	exec_main(data, envp, node);						//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
@@ -229,9 +231,4 @@ void	cmd_exec(t_data *data, char **envp)
 	return ;
 }
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//modifier le nom de mom ft_strlcpy et le garder
-//pour le moment la liste est inversé --> "cd .." = ".." + "cd"
-	//donc dans la boucle des BUILTINS on passe d'abord ".."
-	//on trouve rien donc on passe au node suivant (="cd")
-	//on execute le cd --> dans la fonction je fais node = shell->head qui vaut ".."
-	//mais qui est le "HEAD" ducoup
+//demander le parsing du export

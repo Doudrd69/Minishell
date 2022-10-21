@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 11:49:26 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 14:45:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,42 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 	exit(127);
 }
 
+char *strjoin_arg(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	if (!(s1) || !(s2))
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	if (!(str))
+		return (0);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i++] = '/';
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		j++;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
 char	**join_arg(char **tab, char **args)
 {
 	int	i;
 
 	i = -1;
 	while (args[++i])
-		args[i] = ft_strjoin(args[i], tab[0]);
+		args[i] = strjoin_arg(args[i], tab[0]);
 	return (args);
 }
 

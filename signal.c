@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 17:14:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 10:50:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	check_eof(char *str)
 	return (1);
 }
 
-void	eof_handler(char *input)
+void	eof_handler(char *input, t_shell *minishell)
 {
 	if (input == NULL)
 	{
+		free_all(minishell);
 		write(2, "exit\n", 5);
 		exit(0);
 	}
