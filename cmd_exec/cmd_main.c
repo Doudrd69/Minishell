@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 17:44:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 18:39:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	last_command(char *envp[], t_data *data, t_node *node)
 			perror("dup2");
 			return ;
 		}
-		printf("Last command = %s\n", node->content);
 		check_outfile_last_cmd(data);
 		data->env.tab2 = get_path(envp, data, data->env.tab2);
 		data->env.param_tab2 = fill_param_tab(node, data->env.param_tab2);
@@ -127,8 +126,8 @@ void	commands(t_data *data, t_node *node, char *envp[])
 		}
 		if (pid[i] == 0)
 			command_exec(data, node, envp, cmd_id);
-		data->pipe_id++;
 		node = node->next->next;
+		data->pipe_id++;
 	}
 	free(pid);
 	return ;

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 17:42:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 19:04:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 	return ;
 }
 
-void	cmd_exec_init(t_data *data)
+void	cmd_exec_init(t_data *data, t_shell *parse_data)
 {
 	data->input_fd = STDIN_FILENO;
 	data->output_fd = STDOUT_FILENO;
@@ -86,7 +86,7 @@ void	cmd_exec_init(t_data *data)
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 4;
+	data->cmd_nb = parse_data->nbr_pipe + 1;
 	data->heredoc_nb = 0;
 	data->check_hd = 0;
 
@@ -101,7 +101,10 @@ void	cmd_exec_init(t_data *data)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 1;
+	if (data->cmd_nb > 1)
+		data->exec.pipe_check = 1;
+	else
+		data->exec.pipe_check = 0;
 	return ;
 }
 
@@ -164,14 +167,15 @@ int main(int argc, char *argv[], char *envp[])
 		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
 		minishell = malloc(sizeof(t_shell));
-		init_variable(minishell, envp);
+		init_variable(minishell, data.envp);
 		minishell->cmd = readline("minishell$ ");
 		if (minishell->cmd && *minishell->cmd)
 			add_history (minishell->cmd);
 		eof_handler(minishell->cmd, minishell);
-		parsing(envp, minishell);
+		parsing(data.envp, minishell);
 		node = minishell->head;
 		print_dlist(&node);
+		// printf("PIPE NUMBER = %d\n", minishell->nbr_pipe);
 		check = 0;
 		data.envp_size = mini_data.envp_size;
 		i = 0;
@@ -179,7 +183,7 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
 			{
-				printf("CMD : %s*\n", node->content);
+				//printf("CMD : %s*\n", node->content);
 				if (node->next != NULL)
 					node = node->next;
 				if ((*builtins[i])(&mini_data, node) == 1)
@@ -215,7 +219,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	t_node *node;
 
 	node = minishell->head;//la on est sur la commande
-	cmd_exec_init(data);
+	cmd_exec_init(data, minishell);
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans

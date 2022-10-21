@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 17:48:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 19:35:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@ int	export_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
 	if (node->next != NULL)
 		node = node->next;
-	mini_export(mini_data, node->content);
+	while (node != NULL)
+	{
+		mini_export(mini_data, node->content);
+		if (node->next == NULL)
+			break ;
+		mini_data->env = mini_data->new_env;
+		data->envp = mini_data->new_env;
+		node = node->next;
+	}
 	mini_data->new_env_check = 1;
 	if (mini_data->unset_env && mini_data->unset_env_check == 1)
 	{
@@ -33,7 +41,14 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
 	if (node->next != NULL)
 		node = node->next;
-	mini_unset(mini_data, node->content);
+	// while (node != NULL)
+	// {
+	// 	printf("== %s\n", node->content);
+	// 	mini_unset(mini_data, node->content);
+	// 	if (node->next == NULL)
+	// 		break ;
+	// 	node = node->next;
+	// }
 	mini_data->unset_env_check = 1;
 	if (mini_data->new_env)
 	{

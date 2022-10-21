@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 13:10:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 18:02:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	mini_env(t_mini_data *data, t_node *node)
 	}
 	while (i < data->envp_size)
 	{
-		printf("[%d] --> %s\n", i, data->env[i]);
+		printf("%s\n", data->env[i]);
 		i++;
 	}
 	*data->p_status = 0;
