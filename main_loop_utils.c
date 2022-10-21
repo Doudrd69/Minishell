@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 19:35:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 19:38:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
 	if (node->next != NULL)
 		node = node->next;
-	// while (node != NULL)
-	// {
-	// 	printf("== %s\n", node->content);
-	// 	mini_unset(mini_data, node->content);
-	// 	if (node->next == NULL)
-	// 		break ;
-	// 	node = node->next;
-	// }
+	while (node != NULL)
+	{
+		mini_unset(mini_data, node->content);
+		if (node->next == NULL)
+			break ;
+		mini_data->env = mini_data->new_env;
+		data->envp = mini_data->new_env;
+		node = node->next;
+	}
 	mini_data->unset_env_check = 1;
-	if (mini_data->new_env)
+	if (mini_data->new_env && mini_data->new_env_check == 1)
 	{
 		free_tab(mini_data->new_env, mini_data->envp_size);
 		mini_data->new_env_check = 0;
