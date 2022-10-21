@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote)
 {

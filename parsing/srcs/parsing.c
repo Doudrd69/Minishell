@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 int	check_arg(int ac)
 {

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 static void	ft_next(t_shell *minishell, t_node *tmp_list, t_node **list)
 {

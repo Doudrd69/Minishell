@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 static void	ft_next(t_shell *minishell)
 {
@@ -10,12 +10,12 @@ static void	ft_next(t_shell *minishell)
 	free (list_cpy);
 }
 
-static void	ft_tmp(char **tmp, char *str, int j, int i)
-{
-	*tmp = malloc(sizeof(char) * (i + 1));
-	*tmp = cmd_cpy(*tmp, str + j, i + 1);
-	*(tmp)[i] = '\0';
-}
+// static void	ft_tmp(char **tmp, char *str, int j, int i)
+// {
+// 	*tmp = malloc(sizeof(char) * (i + 1));
+// 	*tmp = cmd_cpy(*tmp, str + j, i + 1);
+// 	*(tmp)[i] = '\0';
+// }
 
 static void	ft_prev(char **tmp, char *str, int j, int i)
 {
@@ -44,7 +44,12 @@ void	parse_pipe(t_shell *minishell, int j, int i)
 		if (str[i + j] == '|'
 			&& check_quote_pipe(minishell, str + i + j, i + j, &pipe) == 1)
 		{
-			ft_tmp(&tmp, str, j, i);
+			printf("DEBUG\n");
+			// ft_tmp(&tmp, str, j, i);
+			tmp = malloc(sizeof(char) * (i + 1));
+			tmp = cmd_cpy(tmp, str + j, i + 1);
+			(tmp)[i - 1] = '\0';
+			printf("DEBUG\n");
 			ft_gagne_place(minishell, tmp, &i);
 			if (pipe == 0 && str[i + j] != '\0')
 			{

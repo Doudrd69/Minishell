@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 static void	ft_prev(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 {
@@ -39,6 +39,7 @@ void	parse_space(t_shell *minishell)
 	char	**tab;
 	int		j;
 
+	printf("DEBUG\n");
 	list_cpy = minishell->head;
 	while (list_cpy && list_cpy != NULL)
 	{
@@ -46,7 +47,7 @@ void	parse_space(t_shell *minishell)
 		tab = ft_split(str, ' ');
 		j = -1;
 		while (tab[++j] != NULL)
-			list_nospace(minishell, &list_cpy, tab[j]);
+			list_nospace(minishell, &list_cpy, tab[j], j);
 		tmp = list_cpy;
 		list_cpy = list_cpy->next;
 		if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
@@ -58,27 +59,36 @@ void	parse_space(t_shell *minishell)
 		while (j-- >= 0 && list_cpy && list_cpy != NULL)
 			list_cpy = list_cpy->next;
 	}
+	print_dlist(&minishell->head);
 }
 
-void	list_nospace(t_shell *minishell, t_node **list, char *tmp)
+void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j)
 {
 	t_node	*tmp_list;
 	t_node	*new_node;
+	t_node	*list_cpy;
 
 	minishell += 0;
-	if ((*list) && (*list)->next == NULL)
+	tmp_list = (*list);
+	while (j > 0)
+	{
+		tmp_list = tmp_list->next;
+		j--;
+	}
+	if (tmp_list && tmp_list->next == NULL)
 	{
 		ft_dlstadd_back(&minishell, ft_dlstnew((void *)(tmp)));
 		tmp_list = (*list);
 	}
 	else
 	{
+		list_cpy = tmp_list;
 		new_node = ft_dlstnew((void *)(tmp));
 		tmp_list = new_node;
-		tmp_list->next = (*list)->next;
-		tmp_list->prev = (*list);
+		tmp_list->next = list_cpy->next;
+		tmp_list->prev = list_cpy;
 		tmp_list->next->prev = new_node;
 		tmp_list->prev->next = new_node;
-		(*list)->next = tmp_list;
+		list_cpy->next = tmp_list;
 	}
 }

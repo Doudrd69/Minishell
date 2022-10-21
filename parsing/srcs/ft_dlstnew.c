@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlstnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 18:23:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/10/11 17:19:50 by will             ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 12:59:50 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../parsing.h"
 
 t_node	*ft_dlstnew(void *content)
 {

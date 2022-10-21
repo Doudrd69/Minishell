@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 int	var_exists(t_shell *minishell)
 {

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 int	check_and_print_var(t_shell *minishell, char *str)
 {

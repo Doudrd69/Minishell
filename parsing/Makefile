@@ -42,7 +42,7 @@ libs:
 $(NAME): $(OBJ) $(LIBSDIR)libft.a
 	$(CC) $(SFLAGS) $(OBJ) -lreadline $(LIBSDIR)libft.a -o $(NAME)
 	
-$(OBJS_DIR)/%.o:		%.c minishell.h ${LIBSDIR}libft.h ${LIBSDIR}libft.a Makefile
+$(OBJS_DIR)/%.o:		%.c parsing.h ${LIBSDIR}libft.h ${LIBSDIR}libft.a Makefile
 				mkdir -p $(dir $@)
 				${CC} ${CFLAGS} -I$(LIBSDIR) -c $< -o $@
 

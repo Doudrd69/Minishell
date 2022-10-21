@@ -1,5 +1,5 @@
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -86,7 +86,7 @@ void	get_path(char **av, char **env, t_shell *minishell);
 void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_space(t_shell *minishell);
-void	list_nospace(t_shell *minishell, t_node **list, char *tmp);
+void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j);
 
 /*PATH*/
 void	get_path(char **av, char **env, t_shell *minishell);

@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing.h"
 
 void	count_ope(t_shell *minishell)
 {

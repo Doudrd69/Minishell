@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	init_variable(t_shell *minishell, char **envp)
 {

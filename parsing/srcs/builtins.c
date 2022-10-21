@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../parsing.h"
 
 void	parse_builtins(char *str, t_shell *minishell)
 {
