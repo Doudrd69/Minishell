@@ -33,6 +33,7 @@ FILES = srcs/main.c								\
 		srcs/ft_dlstadd_back.c					\
 		srcs/space.c							\
 		srcs/check_quote_dollars.c				\
+		srcs/new_value_dollars.c				\
 
 all: libs $(NAME)
 

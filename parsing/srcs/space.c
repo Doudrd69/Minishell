@@ -6,14 +6,16 @@ static void	ft_prev(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	list_cpy->prev = NULL;
 	minishell->head = list_cpy;
 	free(tmp);
+	minishell->list_size -= 1;
 }
 
-static void	ft_mid(t_node *list_cpy, t_node *tmp)
+static void	ft_mid(t_node *list_cpy, t_node *tmp, t_shell *minishell)
 {
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = tmp->prev;
 	list_cpy->prev->next = list_cpy;
 	free(tmp);
+	minishell->list_size -= 1;
 }
 
 static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
@@ -29,6 +31,7 @@ static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 		minishell->head = list_cpy;
 	}
 	free(tmp);
+	minishell->list_size -= 1;
 }
 
 void	parse_space(t_shell *minishell)
@@ -51,7 +54,7 @@ void	parse_space(t_shell *minishell)
 		tmp = list_cpy;
 		list_cpy = list_cpy->next;
 		if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
-			ft_mid(list_cpy, tmp);
+			ft_mid(list_cpy, tmp, minishell);
 		else if (tmp->prev == NULL && tmp->next->next != NULL)
 			ft_prev(list_cpy, minishell, tmp);
 		else
@@ -59,7 +62,7 @@ void	parse_space(t_shell *minishell)
 		while (j-- >= 0 && list_cpy && list_cpy != NULL)
 			list_cpy = list_cpy->next;
 	}
-	print_dlist(&minishell->head);
+	print_dlist(&minishell->head, minishell);
 }
 
 void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j)
@@ -68,7 +71,6 @@ void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j)
 	t_node	*new_node;
 	t_node	*list_cpy;
 
-	minishell += 0;
 	tmp_list = (*list);
 	while (j > 0)
 	{
@@ -90,5 +92,6 @@ void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j)
 		tmp_list->next->prev = new_node;
 		tmp_list->prev->next = new_node;
 		list_cpy->next = tmp_list;
+		minishell->list_size += 1;
 	}
 }

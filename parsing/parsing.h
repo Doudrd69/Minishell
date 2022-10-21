@@ -38,7 +38,7 @@ typedef struct s_shell
 void	init_dlist_var(t_shell *minishell);
 
 /*DEBUG*/
-void	print_dlist(t_node **list);
+void	print_dlist(t_node **list, t_shell *minishell);
 
 /*----*PARSING*----*/
 void	parsing(char **env, t_shell *minishell);
@@ -79,6 +79,7 @@ void	find_position_of_dollars(char *position, int i, int *size);
 void	replace_value_and_after(t_shell *minishell, int *j, char **tmp);
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote);
 int		check_quote_in_quote_dollars(char *str);
+void	write_newvalue(t_shell *minishell, char *str, int mod);
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, char **env);

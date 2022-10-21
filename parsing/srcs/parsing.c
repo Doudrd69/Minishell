@@ -35,6 +35,7 @@ void	first_parse(t_shell *minishell, char *str)
 		minishell->head->next = NULL;
 		minishell->tail->next = NULL;
 		minishell->tail->prev = NULL;
+		minishell->list_size += 1;
 	}
 	else
 	{
