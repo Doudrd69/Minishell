@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 14:46:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 17:44:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,45 @@ int	fork_creation(int pid)
 	return (pid);
 }
 
+int	check_pipe(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char **fill_param_tab(t_node *node, char **tab)
 {
 	tab = malloc(sizeof(char *) * 3);
 	if (!tab)
 		return (NULL);
-	printf("size : %zu\n", ft_strlen(node->content));
 	tab[0] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
 	if (!tab[0])
 		return (free_tab(tab, 0));
 	ft_strlcpy(tab[0], node->content, ft_strlen(node->content), 1);
-	if (node->next != NULL)
+	if (node->next != NULL)//empecher de rentrer si content == '|'
 	{
 		node = node->next;
-		tab[1] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
-		if (!tab[1])
-			return (free_tab(tab, 1));
-		ft_strlcpy(tab[1], node->content, ft_strlen(node->content), 1);	
-		tab[2] = NULL;
-	}
-	else
+		if (check_pipe(node->content) == 0)
+		{
+			tab[1] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+			if (!tab[1])
+				return (free_tab(tab, 1));
+			ft_strlcpy(tab[1], node->content, ft_strlen(node->content), 1);	
+			tab[2] = NULL;
+			return (tab);
+		}
 		tab[1] = NULL;
+		return (tab);
+	}
+	tab[1] = NULL;
 	return (tab);
 }
 
@@ -69,7 +87,7 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 	}
 }
 
-void	last_command(char *envp[], t_data *data)
+void	last_command(char *envp[], t_data *data, t_node *node)
 {
 	data->last_cmd_pid = fork_creation(data->last_cmd_pid);
 	if (data->last_cmd_pid == 0)
@@ -79,14 +97,15 @@ void	last_command(char *envp[], t_data *data)
 			perror("dup2");
 			return ;
 		}
+		printf("Last command = %s\n", node->content);
 		check_outfile_last_cmd(data);
 		data->env.tab2 = get_path(envp, data, data->env.tab2);
-		data->env.param_tab2 = ft_split(data->exec.last_cmd_test, ' ');
+		data->env.param_tab2 = fill_param_tab(node, data->env.param_tab2);
 		last_cmd_execution(data, envp);
 	}
 }
 
-void	commands(t_data *data, char *envp[])
+void	commands(t_data *data, t_node *node, char *envp[])
 {
 	int	i;
 	int	cmd_id;
@@ -107,9 +126,9 @@ void	commands(t_data *data, char *envp[])
 			return ;
 		}
 		if (pid[i] == 0)
-			command_exec(data, envp, cmd_id);
+			command_exec(data, node, envp, cmd_id);
 		data->pipe_id++;
-		cmd_id++;
+		node = node->next->next;
 	}
 	free(pid);
 	return ;

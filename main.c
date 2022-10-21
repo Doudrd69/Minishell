@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 14:45:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 17:42:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,16 @@ void	cmd_exec_init(t_data *data)
 {
 	data->input_fd = STDIN_FILENO;
 	data->output_fd = STDOUT_FILENO;
+	data->env.param_tab1 = NULL;
+	data->env.param_tab2 = NULL;
+	data->env.param_tab3 = NULL;
 
 	data->p_status = &p_status;
 
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
-	data->cmd_nb = 1;
+	data->cmd_nb = 4;
 	data->heredoc_nb = 0;
 	data->check_hd = 0;
 
@@ -98,7 +101,7 @@ void	cmd_exec_init(t_data *data)
 	data->exec.infile_check = 0;
 	data->exec.outfile_check = 0;
 	data->exec.last_cmd_outfile_check = 0;
-	data->exec.pipe_check = 0;
+	data->exec.pipe_check = 1;
 	return ;
 }
 
@@ -216,7 +219,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
-	exec_main(data, envp, node);						//exec des commandes
+	exec_main(data, envp, node);				//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
@@ -226,6 +229,12 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)					//on attend les process
 		;
+	if (data->env.param_tab1 != NULL)
+		free_tab(data->env.param_tab1, 3);
+	if (data->env.param_tab2 != NULL)
+		free_tab(data->env.param_tab2, 3);
+	if (data->env.param_tab3 != NULL)
+		free_tab(data->env.param_tab3, 3);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
 	return ;

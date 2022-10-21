@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 13:33:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 17:02:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,19 +120,20 @@ int		check_eof(char *str);
 char	*ft_itoa(int n);
 
 /* COMMAND UTILS */
+void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data);
 void	first_command(char *envp[], t_data *data, t_node *node);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
-void	command_exec(t_data *data, char *envp[], int cmd_id);
+void	last_command(char *envp[], t_data *data, t_node *node);
 char	**get_path(char *env[], t_data *data, char **args);
+void	commands(t_data *data, t_node *node, char *envp[]);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
 void	eof_handler(char *input, t_shell *minishell);
-void	last_command(char *envp[], t_data *data);
+char 	**fill_param_tab(t_node *node, char **tab);
 int		check_outfile_last_cmd(t_data *data);
-void	commands(t_data *data, char *envp[]);
 char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
 int		ft_printf(const char *flags, ...);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 11:48:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 17:41:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ int	pipe_creation(t_data *data)
 	return (i);
 }
 
-void	command_exec(t_data *data, char *envp[], int cmd_id)
+void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
 {
 	(void)cmd_id;
+	printf("COMMAND --> %s *** PID : %d\n", node->content, getpid());
 	if (dup2(data->pipefd[data->pipe_id - 1][READ], STDIN_FILENO) == -1)
 	{
 		perror("dup2");
 		return ;
 	}
 	data->env.tab3 = get_path(envp, data, data->env.tab3);
-	data->env.param_tab3 = ft_split("grep e", ' ');
+	data->env.param_tab3 = fill_param_tab(node, data->env.param_tab3);
 	if (dup2(data->pipefd[data->pipe_id][WRITE], STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
