@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 17:59:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 16:58:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
 		return ;
 	}
 	data->env.tab3 = get_path(envp, data, data->env.tab3);
-	data->env.param_tab3 = fill_param_tab(node, data->env.param_tab3);
+	data->env.param_tab3 = fill_param_tab(node, data, data->env.param_tab3);
 	if (dup2(data->pipefd[data->pipe_id][WRITE], STDOUT_FILENO) == -1)
 	{
 		perror("dup2");

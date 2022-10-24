@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 09:41:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 12:32:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	mini_echo(t_mini_data *data, t_node *node)
 
 int	mini_exit()
 {
+	printf("PID when call exit : %d\n", getpid());
 	// *data->p_status = 2;
 	// exit (*data->p_status);
 	exit(0);

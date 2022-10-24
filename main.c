@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 18:08:45 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 18:26:06 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,16 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->env.param_tab2 = NULL;
 	data->env.param_tab3 = NULL;
 
+	data->lst_size = parse_data->list_size;
+
 	data->p_status = &p_status;
 
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 
 	data->cmd_nb = parse_data->nbr_pipe + 1;
-	data->heredoc_nb = 1;
-	data->check_hd = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -150,7 +152,7 @@ int main(int argc, char *argv[], char *envp[])
 		"echo",
 		"env",
 		"pwd",
-		"exit"
+		"exit",
 	};
 
 	builtins[0] = &mini_cd;			//OK + penser a enlever les printf
@@ -245,3 +247,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 }
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
 //demander le parsing du export
+//le exit va casser les couilles
