@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 09:30:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 09:52:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 		first_command(envp, data, node);
 		if (data->cmd_nb > 1)
 		{
-			//si pipe --> on le saute pour aller sur la cmd suivante
 			node = node->next->next;
 			commands(data, node, envp);
 			if (data->cmd_nb > 2)

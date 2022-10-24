@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 19:04:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 09:53:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->hd_id = 0;
 
 	data->cmd_nb = parse_data->nbr_pipe + 1;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
+	data->heredoc_nb = 1;
+	data->check_hd = 1;
 
 	data->hd.delimiter_quotes = 0;
 
