@@ -24,8 +24,10 @@ typedef struct s_shell
 	t_node			*tail;
 	int				quote;
 	int				nbr_pipe;
-	int				nbr_redirr;
-	int				nbr_redirg;
+	int				nbr_infile;
+	int				nbr_outfile;
+	int				nbr_heredocin;
+	int				nbr_heredocout;
 	int				nbr_dollars;
 	int				nbr_dquote;
 	int				nbr_squote;
@@ -107,7 +109,7 @@ void	exit_strerror(t_shell *minishell, char *error);
 
 void	free_all(t_shell *minishell);
 void	count_ope(t_shell *minishell);
-void	nbr_ope(t_shell *minishell, char c);
+void	nbr_ope(t_shell *minishell, char *str, int *i);
 
 void	free_all(t_shell *minishell);
 t_node	*ft_dlstnew(void *content);

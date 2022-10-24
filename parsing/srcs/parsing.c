@@ -21,7 +21,8 @@ void	tokenizers_arg(t_shell *minishell)
 		parse_pipe(minishell, 0, -1);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
-	if (minishell->nbr_redirr > 0 || minishell->nbr_redirg > 0)
+	if (minishell->nbr_infile > 0 || minishell->nbr_outfile > 0
+		|| minishell->nbr_heredocin > 0 || minishell->nbr_heredocout > 0)
 		parse_redirections(minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space(minishell);
