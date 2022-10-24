@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 13:26:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 16:45:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->env.param_tab1 = NULL;
 	data->env.param_tab2 = NULL;
 	data->env.param_tab3 = NULL;
+
+	data->lst_size = parse_data->list_size;
 
 	data->p_status = &p_status;
 
@@ -179,7 +181,6 @@ int main(int argc, char *argv[], char *envp[])
 		check = 0;
 		data.envp_size = mini_data.envp_size;
 		i = 0;
-		printf("Main : %d\n", getpid());
 		while (i < builtin_cmd_nb)
 		{
 			if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
