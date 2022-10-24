@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 18:39:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 17:21:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,68 @@ int	check_pipe(char *str)
 	return (0);
 }
 
-char **fill_param_tab(t_node *node, char **tab)
+void	*count_nb_of_args(t_node *node, t_data *data, int i)
 {
-	tab = malloc(sizeof(char *) * 3);
+	data->nb_of_args = 0;
+	node = node->next;
+	while(i < data->lst_size)
+	{
+		data->nb_of_args++;
+		i++;
+		if (node->next == NULL || ft_strncmp(node->next->content, "|", 4) == 0)
+			break ;
+		node = node->next;
+	}
+	while (--i >= 0)
+		node = node->prev;
+	return (node);
+}
+
+int	copy_args_in_param_tab(t_node *node, t_data *data, char **tab, int i, int j)
+{
+	if (data->nb_of_args > 0)
+		node = node->next;
+	while (i < data->nb_of_args && data->nb_of_args > 0)
+	{
+		tab[j] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+		if (!tab[j])
+		{
+			free_tab(tab, j - 1);
+			return (0);
+		}
+		ft_strlcpy(tab[j], node->content, ft_strlen(node->content), 1);
+		node = node->next;
+		j++;
+		i++;
+	}
+	return (j);
+}
+
+char **fill_param_tab(t_node *node, t_data *data, char **tab)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	if (node->next == NULL)
+		data->nb_of_args = 0;
+	else if (ft_strncmp(node->next->content, "|", 1) == 0 && node->next != NULL)
+		data->nb_of_args = 0;
+	else if ((ft_strncmp(node->next->content, "|", 1) != 0) || node->next != NULL)
+		node = count_nb_of_args(node, data, i);
+	else
+		printf("Error : impossible to create PARAM TAB\n");
+	tab = malloc(sizeof(char *) * (data->nb_of_args + 2));//cmd + NULL
 	if (!tab)
 		return (NULL);
 	tab[0] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
 	if (!tab[0])
 		return (free_tab(tab, 0));
 	ft_strlcpy(tab[0], node->content, ft_strlen(node->content), 1);
-	if (node->next != NULL)//empecher de rentrer si content == '|'
-	{
-		node = node->next;
-		if (check_pipe(node->content) == 0)
-		{
-			tab[1] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
-			if (!tab[1])
-				return (free_tab(tab, 1));
-			ft_strlcpy(tab[1], node->content, ft_strlen(node->content), 1);	
-			tab[2] = NULL;
-			return (tab);
-		}
-		tab[1] = NULL;
-		return (tab);
-	}
-	tab[1] = NULL;
+	i = 0;
+	j = copy_args_in_param_tab(node, data, tab, i, j);
+	tab[j] = NULL;
 	return (tab);
 }
 
@@ -81,7 +118,7 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 		if (check_inputfile(data) != 0)
 			return ;
 		data->env.tab1 = get_path(envp, data, data->env.tab1);
-		data->env.param_tab1 = fill_param_tab(node, data->env.param_tab1);
+		data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}
@@ -99,7 +136,7 @@ void	last_command(char *envp[], t_data *data, t_node *node)
 		}
 		check_outfile_last_cmd(data);
 		data->env.tab2 = get_path(envp, data, data->env.tab2);
-		data->env.param_tab2 = fill_param_tab(node, data->env.param_tab2);
+		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		last_cmd_execution(data, envp);
 	}
 }
@@ -132,3 +169,6 @@ void	commands(t_data *data, t_node *node, char *envp[])
 	free(pid);
 	return ;
 }
+
+
+//cat -e -n | grep e | rev marche pas
