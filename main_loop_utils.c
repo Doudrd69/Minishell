@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 09:52:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 14:13:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,17 @@ void	heredoc_main(t_data *data)
 	return ;
 }
 
+void	*node_rotation(t_node *node)
+{
+	if (ft_strncmp(node->next->type, "PIPE", 4) == 0)
+		node = node->next->next;
+	else if (ft_strncmp(node->next->type, "NULL", 4) == 0)
+		node = node->next->next->next;
+	else
+		printf("CONTENT : %s\n", node->content);
+	return (node);
+}
+
 void	exec_main(t_data *data, char *envp[], t_node *node)
 {
 	if (data->cmd_nb > 0)
@@ -86,12 +97,14 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 		first_command(envp, data, node);
 		if (data->cmd_nb > 1)
 		{
-			node = node->next->next;
+			node = node_rotation(node);
 			commands(data, node, envp);
 			if (data->cmd_nb > 2)
-				node = node->next->next;
+				node = node_rotation(node);
 			last_command(envp, data, node);
 		}
 	}
 	return ;
 }
+//si on a un argument apres la commande --> on saute l'argument (tant qu'il y en a) + le pipe
+//si on a une commande sans argument --> on saute le pipe

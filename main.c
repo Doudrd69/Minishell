@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 09:53:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 13:26:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->hd_id = 0;
 
 	data->cmd_nb = parse_data->nbr_pipe + 1;
-	data->heredoc_nb = 1;
-	data->check_hd = 1;
+	data->heredoc_nb = 0;
+	data->check_hd = 0;
 
 	data->hd.delimiter_quotes = 0;
 
@@ -150,7 +150,7 @@ int main(int argc, char *argv[], char *envp[])
 		"echo",
 		"env",
 		"pwd",
-		"exit"
+		"exit",
 	};
 
 	builtins[0] = &mini_cd;			//OK + penser a enlever les printf
@@ -174,11 +174,12 @@ int main(int argc, char *argv[], char *envp[])
 		eof_handler(minishell->cmd, minishell);
 		parsing(data.envp, minishell);
 		node = minishell->head;
-		print_dlist(&node);
+		print_dlist(&node, minishell);
 		// printf("PIPE NUMBER = %d\n", minishell->nbr_pipe);
 		check = 0;
 		data.envp_size = mini_data.envp_size;
 		i = 0;
+		printf("Main : %d\n", getpid());
 		while (i < builtin_cmd_nb)
 		{
 			if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
@@ -245,3 +246,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 }
 //dans HD ---> CTRL-C retourne au prompt sans executer le HD
 //demander le parsing du export
+//le exit va casser les couilles
