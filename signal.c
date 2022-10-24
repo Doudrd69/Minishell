@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 10:50:51 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 13:36:07 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	sighandler(int signum)
 {
 	if (signum == 2)
 	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// write(1, "\n", 1);
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 }

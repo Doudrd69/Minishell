@@ -53,6 +53,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/ft_dlstadd_back.c							\
 		parsing/srcs/space.c									\
 		parsing/srcs/check_quote_dollars.c						\
+		parsing/srcs/new_value_dollars.c						\
 		main_loop_utils.c										\
 		no_env.c												\
 		signal.c												\

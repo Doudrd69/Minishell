@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 09:53:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 13:36:36 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int main(int argc, char *argv[], char *envp[])
 		eof_handler(minishell->cmd, minishell);
 		parsing(data.envp, minishell);
 		node = minishell->head;
-		print_dlist(&node);
+		print_dlist(&node, minishell);
 		// printf("PIPE NUMBER = %d\n", minishell->nbr_pipe);
 		check = 0;
 		data.envp_size = mini_data.envp_size;
