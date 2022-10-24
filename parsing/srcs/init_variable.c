@@ -1,8 +1,11 @@
 #include "../parsing.h"
 
-void	init_variable(t_shell *minishell, char **envp)
+void	init_variable(t_shell *minishell, int env_size, char **envp)
 {
 	minishell->cmd = NULL;
+	minishell->env_search = envp;
+	minishell->env_size = env_size;
+	minishell->home_path = NULL;
 	minishell->quote = 0;
 	minishell->nbr_pipe = 0;
 	minishell->nbr_redirr = 0;

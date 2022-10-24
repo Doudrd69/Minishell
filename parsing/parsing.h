@@ -7,6 +7,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
+# include "../ft_printf/includes/ft_printf.h"
 
 typedef struct s_node
 {
@@ -33,6 +34,9 @@ typedef struct s_shell
 	char			*var_search;
 	char			*value;
 	unsigned int	list_size;
+	char			**env_search;
+	int				env_size;
+	char			*home_path;
 }	t_shell;
 
 void	init_dlist_var(t_shell *minishell);
@@ -60,7 +64,7 @@ void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 
 /*REDIRECTIONS*/
-void	parse_redirections(char *str, t_shell *minishell);
+void	parse_redirections(t_shell *minishell);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
@@ -80,9 +84,11 @@ void	replace_value_and_after(t_shell *minishell, int *j, char **tmp);
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote);
 int		check_quote_in_quote_dollars(char *str);
 void	write_newvalue(t_shell *minishell, char *str, int mod);
+char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name, t_shell *minishell);
+char	*check_and_return_var_parsing(char *home_path, char **envp, char *var, int i);
 
 /*MINISHELL*/
-void	init_variable(t_shell *minishell, char **env);
+void	init_variable(t_shell *minishell, int envp_size, char **env);
 void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_space(t_shell *minishell);
