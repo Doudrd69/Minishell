@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 19:38:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 09:30:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 		mini_unset(mini_data, node->content);
 		if (node->next == NULL)
 			break ;
-		mini_data->env = mini_data->new_env;
-		data->envp = mini_data->new_env;
+		mini_data->env = mini_data->unset_env;
+		data->envp = mini_data->unset_env;
 		node = node->next;
 	}
 	mini_data->unset_env_check = 1;
