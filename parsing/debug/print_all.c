@@ -7,17 +7,16 @@ void	print_dlist(t_node **list, t_shell *minishell)
 
 	i = 1;
 	tmp = (*list);
-	printf("DEBUG\n");
 	while (tmp && tmp != NULL)
 	{
 		if (tmp->type != NULL)
 		{
-			printf("list[%d] =%s\ntype = %s\n", i, (char *)tmp->content, tmp->type);
+			printf("list[%d] =%s\ntype = %s\n\n", i, (char *)tmp->content, tmp->type);
 		}
 		else
-			printf("list[%d] =%s\ntype = No Type\n", i, (char *)tmp->content);
+			printf("list[%d] =%s\ntype = No Type\n\n", i, (char *)tmp->content);
 		tmp = tmp->next;
 		i++;
 	}
-	printf("list_size = %d\n", minishell->list_size);
+	printf("list_size = %d\n\n", minishell->list_size);
 }
