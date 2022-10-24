@@ -9,6 +9,7 @@ int	check_arg(int ac)
 
 void	parsing(char **env, t_shell *minishell)
 {
+	minishell->envp = env;
 	tokenizers_arg(minishell);
 	env += 0;
 }

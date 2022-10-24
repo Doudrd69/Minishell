@@ -1,6 +1,6 @@
 #include "../parsing.h"
 
-int	check_and_print_var(t_shell *minishell, char *str)
+int	check_and_print_var_parsing(t_shell *minishell, char *str)
 {
 	int		size;
 	int		i;
@@ -25,7 +25,7 @@ int	check_and_print_var(t_shell *minishell, char *str)
 		j++;
 	}
 	minishell->var_search[j] = '\0';
-	print_var(minishell);
+	print_var_parsing(minishell);
 	return (0);
 }
 
@@ -58,7 +58,7 @@ static void	ft_find_dollars(t_shell *minishell, char *var, int *size, int *i)
 		(*i)++;
 }
 
-void	print_var(t_shell *minishell)
+void	print_var_parsing(t_shell *minishell)
 {
 	int		size;
 	int		i;
@@ -67,7 +67,7 @@ void	print_var(t_shell *minishell)
 
 	size = 0;
 	i = 0;
-	if (var_exists(minishell))
+	if (var_exists_parsing(minishell))
 	{
 		var = getenv(minishell->var_search);
 		ft_find_dollars(minishell, var, &size, &i);

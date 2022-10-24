@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 16:42:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 18:42:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include "../../ft_printf/includes/ft_printf.h"
 # include "../../ft_printf/includes/ft_sort_params.h"
 # include "../../includes/minishell.h"
+# include "../../parsing/parsing.h"
+# include "../../parsing/libft/libft.h"
 
 typedef struct heredoc
 {
@@ -118,31 +120,31 @@ int		check_eof(char *str);
 char	*ft_itoa(int n);
 
 /* COMMAND UTILS */
+void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data);
+void	first_command(char *envp[], t_data *data, t_node *node);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
-void	command_exec(t_data *data, char *envp[], int cmd_id);
+void	last_command(char *envp[], t_data *data, t_node *node);
 char	**get_path(char *env[], t_data *data, char **args);
+void	commands(t_data *data, t_node *node, char *envp[]);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
-void	first_command(char *envp[], t_data *data);
-void	last_command(char *envp[], t_data *data);
+void	eof_handler(char *input, t_shell *minishell);
+char 	**fill_param_tab(t_node *node, char **tab);
 int		check_outfile_last_cmd(t_data *data);
-void	commands(t_data *data, char *envp[]);
 char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
 int		ft_printf(const char *flags, ...);
-char	*ft_strjoin(char *s1, char *s2);
 int		**free_inttab(int **tab, int i);
 void	close_pipe(t_data *data, int i);
 char	**free_tab(char **tab, int i);
 int		check_inputfile(t_data *data);
 int		check_outfile(t_data *data);
 int		pipe_creation(t_data *data);
-void	eof_handler(char *input);
 int		check_sq_cmd(char *cmd);
 void	sighandler(int signum);
-size_t	ft_strlen(char *s);
+int		check_pipe(char *str);
 
 #endif

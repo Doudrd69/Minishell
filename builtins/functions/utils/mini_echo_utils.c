@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:09:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 09:37:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int	write_and_check_signs(int i, t_mini_data *data)
 	while (data->str[i])
 	{
 		data->check_print_var = 0;
-		i = backslash_specific_cases(data, i);
-		i = check_signs(i, data);
+		//i = backslash_specific_cases(data, i);
+		//i = check_signs(i, data);
 		if (data->str[i] == '\0')
 			return (i);
 		if (data->str[i] == ' ' && data->str[i + 1] == ' ')

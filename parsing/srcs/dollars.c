@@ -60,7 +60,7 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	if (minishell->mod == 0 || minishell->mod == 2
 		|| minishell->mod == 4 || minishell->mod == 3)
 	{
-		check_and_print_var(minishell, str + i);
+		check_and_print_var_parsing(minishell, str + i);
 		if (minishell->value)
 			change_var_to_value(str, i, minishell, list);
 		else

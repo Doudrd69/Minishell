@@ -42,7 +42,6 @@ void	parse_space(t_shell *minishell)
 	char	**tab;
 	int		j;
 
-	printf("DEBUG\n");
 	list_cpy = minishell->head;
 	while (list_cpy && list_cpy != NULL)
 	{
