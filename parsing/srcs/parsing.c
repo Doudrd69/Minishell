@@ -10,18 +10,19 @@ int	check_arg(int ac)
 void	parsing(char **env, t_shell *minishell)
 {
 	minishell->envp = env;
+	first_parse(minishell, minishell->cmd);
+	count_ope(minishell);
 	tokenizers_arg(minishell);
-	env += 0;
 }
 
 void	tokenizers_arg(t_shell *minishell)
 {
-	first_parse(minishell, minishell->cmd);
-	count_ope(minishell);
 	if (minishell->nbr_pipe > 0)
 		parse_pipe(minishell, 0, -1);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
+	if (minishell->nbr_redirr > 0 || minishell->nbr_redirg > 0)
+		parse_redirections(minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space(minishell);
 }

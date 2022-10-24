@@ -93,11 +93,16 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 		{
 			check = check_dollars_mod(str + i);
 			write_newvalue(minishell, str + i, check);
-			printf("VALUE = %s\n", minishell->value);
 			change_var_to_value(str, i, minishell, list);
 			print_dlist(&minishell->head, minishell);
 		}
-		return (str);
+	}
+	else
+	{
+		check = check_dollars_mod(str + i);
+		write_newvalue(minishell, str + i, check);
+		change_var_to_value(str, i, minishell, list);
+		print_dlist(&minishell->head, minishell);
 	}
 	return (str);
 }

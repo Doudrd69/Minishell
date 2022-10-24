@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 17:23:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 18:08:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int main(int argc, char *argv[], char *envp[])
 		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
 		minishell = malloc(sizeof(t_shell));
-		init_variable(minishell, data.envp);
+		init_variable(minishell, data.envp_size, data.envp);
 		minishell->cmd = readline("minishell$ ");
 		if (minishell->cmd && *minishell->cmd)
 			add_history (minishell->cmd);
