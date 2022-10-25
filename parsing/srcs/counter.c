@@ -29,7 +29,7 @@ void	nbr_ope(t_shell *minishell, char *str, int *i)
 	else if (str[*i] == '<' && str[*i + 1] == '<')
 	{
 		*i += 1;
-		minishell->nbr_heredocin++;
+		minishell->nbr_appendin++;
 		return ;
 	}
 	if (str[*i] == '>' && str[*i + 1] != '>')
@@ -37,7 +37,7 @@ void	nbr_ope(t_shell *minishell, char *str, int *i)
 	else if (str[*i] == '>' && str[*i + 1] == '>')
 	{
 		*i += 1;
-		minishell->nbr_heredocout++;
+		minishell->nbr_appendout++;
 		return ;
 	}
 	if (str[*i] == '$')

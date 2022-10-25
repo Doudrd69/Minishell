@@ -22,12 +22,14 @@ typedef struct s_shell
 	char			*cmd;
 	t_node			*head;
 	t_node			*tail;
+	t_node			**tab_infile;
+	t_node			**tab_outfile;
 	int				quote;
 	int				nbr_pipe;
 	int				nbr_infile;
 	int				nbr_outfile;
-	int				nbr_heredocin;
-	int				nbr_heredocout;
+	int				nbr_appendin;
+	int				nbr_appendout;
 	int				nbr_dollars;
 	int				nbr_dquote;
 	int				nbr_squote;
