@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 17:07:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:23:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 				return (1);
 			}
 			if (status == 2)
-			{
-				printf("ca marche\n");
 				return (check = 0);
-			}
 			return (check = 1);
 		}
 		i++;
