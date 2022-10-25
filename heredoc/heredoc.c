@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 17:48:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 22:18:48 by will             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ void	write_var_value(t_data *data, int output_fd, int j, int size)
 int	check_var_exists(int j, t_data *data, int output_fd)
 {
 	int	size;
-	int	i;
 
-	i = 0;
 	j = 0;
 	if (var_exists_hd(data) == 0)
 	{

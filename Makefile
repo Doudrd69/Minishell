@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Werror -Wextra -Wall -g
 
 PRINTF_NAME = libftprintf.a
-PRINTF_PATH = ./ft_printf/
+PRINTF_PATH = ft_printf/
 
 LIBFT_NAME = libft.a
 LIBFT_PATH = parsing/libft/
@@ -54,11 +54,10 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/space.c									\
 		parsing/srcs/check_quote_dollars.c						\
 		parsing/srcs/new_value_dollars.c						\
-		parsing/srcs/new_value_export_dollars.c					\
 		main_loop_utils.c										\
 		no_env.c												\
 		signal.c												\
-		main.c											
+		main.c													\
 
 INCS = 	cmd_exec/cmd_include/pipex_bonus.h						\
 		parsing/parsing.h										\
