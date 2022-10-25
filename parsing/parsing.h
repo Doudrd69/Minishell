@@ -90,6 +90,7 @@ int		check_quote_in_quote_dollars(char *str);
 void	write_newvalue(t_shell *minishell, char *str, int mod);
 char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name, t_shell *minishell);
 char	*check_and_return_var_parsing(char *home_path, char **envp, char *var, int i);
+void	write_newvalue_export(t_shell *minishell, char *str, int mod);
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);

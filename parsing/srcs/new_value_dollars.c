@@ -61,7 +61,7 @@ void	write_newvalue(t_shell *minishell, char *str, int mod)
 		new_value1(minishell, str);
 	if (mod == 1)
 		new_value2(minishell, str);
-	if (mod == 2)
+	if (mod == 2 || mod == 5)
 		new_value3(minishell);
 	if (mod == 3)
 		new_value4(minishell, str);
