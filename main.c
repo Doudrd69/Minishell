@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 14:14:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 15:00:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,21 @@ int main(int argc, char *argv[], char *envp[])
 		minishell = malloc(sizeof(t_shell));
 		init_variable(minishell, data.envp_size, data.envp);
 		minishell->cmd = readline("minishell$ ");
-		if (minishell->cmd && *minishell->cmd)
-			add_history (minishell->cmd);
 		eof_handler(minishell->cmd, minishell);
-		parsing(data.envp, minishell);
-		node = minishell->head;
-		//print_dlist(&node, minishell);
-		check = 0;
-		data.envp_size = mini_data.envp_size;
-		check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
-		check = export_and_unset(&mini_data, &data, node, check);
-		if (check == 0)
-			cmd_exec(&data, data.envp, minishell);
+		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
+		{
+			if (minishell->cmd && *minishell->cmd)
+				add_history (minishell->cmd);
+			parsing(data.envp, minishell);
+			node = minishell->head;
+			//print_dlist(&node, minishell);
+			check = 0;
+			data.envp_size = mini_data.envp_size;
+			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
+			check = export_and_unset(&mini_data, &data, node, check);
+			if (check == 0)
+				cmd_exec(&data, data.envp, minishell);
+		}
 		free(minishell->cmd);
 		free_all(minishell);
 	}
