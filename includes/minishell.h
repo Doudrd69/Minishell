@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 16:40:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:48:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct mini_data
 	int			new_env_check;
 	int			unset_env_check;
 	int			tmp_count;
-	int			no_env_check;
 	int			first_cd_check;
 	int			oldpwd_if;
 	int			main_pid;

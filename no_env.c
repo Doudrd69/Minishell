@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/20 13:37:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:47:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	create_oldpwd(t_mini_data *data)
 
 int	check_oldpwd(t_mini_data *data)
 {
-	if (data->no_env_check == 1 && data->first_cd_check == 0)
+	if (data->first_cd_check == 0)
 	{
 		if (create_oldpwd(data) == 1)
 			return (1);
