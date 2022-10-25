@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 15:00:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:07:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,27 @@ int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int ch
 int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *), t_node *node, t_mini_data *data, int builtin_cmd_nb, int check)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content, ft_strlen(node->content)) == 0)
 		{
 			if (node->next != NULL)
 				node = node->next;
-			if ((*builtins[i])(data, node) == 1)
+			status = (*builtins[i])(data, node);
+			if (status == 1)
+			{
 				printf("P_STATUS fail : %d\n", *data->p_status);
+				return (1);
+			}
+			if (status == 2)
+			{
+				printf("ca marche\n");
+				return (check = 0);
+			}
 			return (check = 1);
 		}
 		i++;
@@ -107,6 +118,7 @@ int main(int argc, char *argv[], char *envp[])
 	sa.sa_handler = SIG_IGN;
 	init_main(&mini_data, &data, envp);
 	envp_check(&mini_data, &data, envp, envpsize);
+	mini_data.main_pid = getpid();
 	while (1)
 	{
 		signal(SIGINT, &sighandler);
@@ -120,6 +132,10 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
+			if (minishell->list_size > 1)
+				mini_data.pipe_check = 1;
+			else
+				mini_data.pipe_check = 0;
 			node = minishell->head;
 			//print_dlist(&node, minishell);
 			check = 0;

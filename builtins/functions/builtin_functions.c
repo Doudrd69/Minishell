@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 14:00:30 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 16:52:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,17 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	return (0);
 }
 
-int	mini_exit()
+int	mini_exit(t_mini_data *data, t_node *node)
 {
-	printf("PID when call exit : %d\n", getpid());
-	// *data->p_status = 2;
-	// exit (*data->p_status);
-	exit(0);
+	(void)node;
+	printf("VALUE : %d\n", data->pipe_check);
+	if (data->main_pid == getpid() && data->pipe_check == 0)
+	{
+		printf("PID when call exit : %d\n", getpid());
+		*data->p_status = 1;
+		// exit (*data->p_status);
+		exit(0);
+	}
+	else
+		return (2);
 }
