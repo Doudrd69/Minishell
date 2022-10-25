@@ -56,6 +56,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/new_value_dollars.c						\
 		main_loop_utils.c										\
 		no_env.c												\
+		main_utils.c											\
 		signal.c												\
 		main.c											
 

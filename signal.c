@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 17:41:46 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 14:14:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,12 @@ void	sighandler(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+}
+
+void	sighandler_hd(int signum)
+{
+	(void)signum;
+	exit(1);
+	//si plusieurs HD, on quitte TOUT
+	//mini_exit(2);
 }

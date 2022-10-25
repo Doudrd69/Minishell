@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 13:06:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 14:14:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ size_t	ft_strlen_gnl(char *s);
 size_t	ft_strnlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
+void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_mini_data *, t_node *));
 int		export_no_env(t_mini_data *data);
 void	free_all(t_shell *minishell);
 

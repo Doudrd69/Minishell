@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 18:32:03 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 14:14:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,98 +17,14 @@
 #include <readline/history.h>
 
 int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
+void	init_main(t_mini_data *mini_data, t_data *data, char **envp);
+void	cmd_exec_init(t_data *data, t_shell *parse_data);
 int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	exec_main(t_data *data, char *envp[], t_node *node);
 void	heredoc_main(t_data *data);
 
 int		p_status;
-
-void	free_all(t_shell *minishell)
-{
-	t_node	*tmp;
-
-	while (minishell->head && minishell->head != NULL)
-	{
-		tmp = minishell->head;
-		minishell->head = minishell->head->next;
-		if (ft_strncmp(tmp->content, "|", 1) != 0)
-			free(tmp->content);
-		free(tmp);
-	}
-	free(minishell->value);
-	free(minishell->var_search);
-	free(minishell);
-}
-
-void	sighandler_hd(int signum)
-{
-	(void)signum;
-	p_status = 1;
-	exit(1);
-	//si plusieurs HD, on quitte TOUT
-	//mini_exit(2);
-}
-
-void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
-{
-	mini_data->name = "TEST";		//on recup ca dans le parsing
-	mini_data->value = "issou";
-	mini_data->var_export = NULL;
-	mini_data->path = "..";
-	mini_data->str = NULL;
-	mini_data->echo_arg = 0;
-	mini_data->var_name = "";
-	mini_data->hd_limit = "on est la hein";
-	mini_data->env = envp;
-	mini_data->no_env_check = 0;	//utils epour la creation du oldpwd
-	mini_data->first_cd_check = 0;
-	mini_data->unset_env_check = 0;
-	mini_data->new_env_check = 0;
-	mini_data->p_status = &p_status;
-	mini_data->echo_sq_check = 0;
-	mini_data->oldpwd_if = 0;
-	data->envp = envp;
-	p_status = 0;
-	return ;
-}
-
-void	cmd_exec_init(t_data *data, t_shell *parse_data)
-{
-	data->input_fd = STDIN_FILENO;
-	data->output_fd = STDOUT_FILENO;
-	data->env.param_tab1 = NULL;
-	data->env.param_tab2 = NULL;
-	data->env.param_tab3 = NULL;
-
-	data->lst_size = parse_data->list_size;
-
-	data->p_status = &p_status;
-
-	data->hd_pipe_id = 0;
-	data->hd_id = 0;
-
-	data->cmd_nb = parse_data->nbr_pipe + 1;
-	data->heredoc_nb = 0;
-	data->check_hd = 0;
-
-	data->hd.delimiter_quotes = 0;
-
-	data->exec.infile_fd = "infile.txt";
-	data->exec.outfile_fd = "outfile.txt";
-	data->exec.first_cmd_test = "cat -e";
-	data->exec.last_cmd_test = "rev";
-
-	data->exec.first_cmd_squotes_check = 0;
-	data->exec.infile_check = 0;
-	data->exec.outfile_check = 0;
-	data->exec.last_cmd_outfile_check = 0;
-	if (data->cmd_nb > 1)
-		data->exec.pipe_check = 1;
-	else
-		data->exec.pipe_check = 0;
-	return ;
-}
 
 void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 {
@@ -133,36 +49,63 @@ void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 	return ;
 }
 
+int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int check)
+{
+	if (ft_strncmp(node->content, "export", 6) == 0)
+	{
+		export_exec(mini_data, data, node);
+		check = 1;
+	}
+	if (ft_strncmp(node->content, "unset", 5) == 0)
+	{
+		unset_exec(mini_data, data, node);
+		check = 1;
+	}
+	return (check);
+}
+
+int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *), t_node *node, t_mini_data *data, int builtin_cmd_nb, int check)
+{
+	int	i;
+
+	i = 0;
+	while (i < builtin_cmd_nb)
+	{
+		if (ft_strncmp(tab_name[i], node->content, ft_strlen(node->content)) == 0)
+		{
+			if (node->next != NULL)
+				node = node->next;
+			if ((*builtins[i])(data, node) == 1)
+				printf("P_STATUS fail : %d\n", *data->p_status);
+			return (check = 1);
+		}
+		i++;
+	}
+	return (check);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
-	struct		sigaction sa;
-	t_mini_data	mini_data;
-	t_data		data;
-	t_shell		*minishell;
-	t_node		*node;
-	int			builtin_cmd_nb = 5;
-	int			envpsize = 0;
-	int			check;
-	int			i;
-	int			(*builtins[5])(t_mini_data *data, t_node *node);
-	char		*builtins_name[] = {
-		"cd",
-		"echo",
-		"env",
-		"pwd",
-		"exit",
-	};
+	struct sigaction	sa;
+	t_mini_data			mini_data;
+	t_data				data;
+	t_shell				*minishell;
+	t_node				*node;
+	int					builtin_cmd_nb;
+	int					envpsize;
+	int					check;
+	char				*builtins_name[5];
+	int					(*builtins[5])(t_mini_data *data, t_node *node);
 
-	builtins[0] = &mini_cd;			//OK + penser a enlever les printf
-	builtins[1] = &mini_echo;		//OK
-	builtins[2] = &mini_env;		//OK
-	builtins[3] = &mini_pwd;		//OK mais probleme avec buff
-	builtins[4] = &mini_exit;		//A FAIRE
-
-	init_main(&mini_data, &data, envp);
+	envpsize = 0;
+	builtin_cmd_nb = 5;
+	mini_data.p_status = &p_status;
+	data.p_status = &p_status;
+	init_builtins_tab(builtins_name, builtins);
 	sa.sa_handler = SIG_IGN;
+	init_main(&mini_data, &data, envp);
 	envp_check(&mini_data, &data, envp, envpsize);
 	while (1)
 	{
@@ -176,39 +119,11 @@ int main(int argc, char *argv[], char *envp[])
 		eof_handler(minishell->cmd, minishell);
 		parsing(data.envp, minishell);
 		node = minishell->head;
-		print_dlist(&node, minishell);
-		// printf("PIPE NUMBER = %d\n", minishell->nbr_pipe);
+		//print_dlist(&node, minishell);
 		check = 0;
 		data.envp_size = mini_data.envp_size;
-		i = 0;
-		while (i < builtin_cmd_nb)
-		{
-			if (ft_strncmp(builtins_name[i], node->content, ft_strlen(node->content)) == 0)
-			{
-				//printf("CMD : %s*\n", node->content);
-				if (node->next != NULL)
-					node = node->next;
-				if ((*builtins[i])(&mini_data, node) == 1)
-				{
-					printf("P_STATUS fail : %d\n", *mini_data.p_status);
-					check = 1;
-					break ;
-				}
-				check = 1;
-				break;
-			}
-			i++;
-		}
-		if (ft_strncmp(node->content, "export", 6) == 0)
-		{
-			export_exec(&mini_data, &data, node);
-			check = 1;
-		}
-		if (ft_strncmp(node->content, "unset", 5) == 0)
-		{
-			unset_exec(&mini_data, &data, node);
-			check = 1;
-		}
+		check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
+		check = export_and_unset(&mini_data, &data, node, check);
 		if (check == 0)
 			cmd_exec(&data, data.envp, minishell);
 		free(minishell->cmd);
@@ -220,7 +135,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 {
 	t_node *node;
 
-	node = minishell->head;//la on est sur la commande
+	node = minishell->head;						//la on est sur la commande
 	cmd_exec_init(data, minishell);
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
@@ -235,12 +150,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)					//on attend les process
 		;
-	if (data->env.param_tab1 != NULL)
-		free_tab(data->env.param_tab1, 3);
-	if (data->env.param_tab2 != NULL)
-		free_tab(data->env.param_tab2, 3);
-	if (data->env.param_tab3 != NULL)
-		free_tab(data->env.param_tab3, 3);
+	free_param_tab(data);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
 	return ;
