@@ -68,6 +68,7 @@ static void	new_value3(t_shell *minishell, char *str, int mod)
 			i++;
 			cpy++;
 		}
+		minishell->value[i] = '\0';
 	}
 }
 

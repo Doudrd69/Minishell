@@ -80,7 +80,9 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	{
 		check_and_print_var_parsing(minishell, str + i);
 		if (minishell->value)
+		{
 			change_var_to_value(str, i, minishell, list);
+		}
 		else
 		{
 			check = check_dollars_mod(str + i);

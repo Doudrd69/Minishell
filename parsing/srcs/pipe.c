@@ -35,7 +35,7 @@ static void	ft_gagne_place(t_shell *minishell, char *tmp
 	*list_cpy = (*list_cpy)->next;
 	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)"|\0"));
 	*list_cpy = (*list_cpy)->next;
-	(*list_cpy)->type = "P";
+	(*list_cpy)->type = 'P';
 	(*i)++;
 }
 
