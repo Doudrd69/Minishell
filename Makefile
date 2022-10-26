@@ -66,7 +66,7 @@ INCS = 	cmd_exec/cmd_include/pipex_bonus.h						\
 
 OBJS = $(SRCS:.c=.o)
 
-%.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(LIBFT_PATH)$(LIBFT_NAME) $(INCS)
+%.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(LIBFT_PATH)$(LIBFT_NAME) $(INCS) Makefile
 		$(CC) $(FLAGS) $(RL_INC_DIR) -c $< -o $@
 
 NAME = minishell
