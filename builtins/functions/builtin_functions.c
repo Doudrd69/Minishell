@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 19:08:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 11:22:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,18 @@ int	mini_cd(t_mini_data *data, t_node *node)
 int	mini_pwd(t_mini_data *data, t_node *node)
 {
 	(void)node;
-	if (getcwd(data->buff, BUF_SIZE) == NULL)
+	if (data->main_pid == getpid() && data->pipe_check == 0)
 	{
-		*data->p_status = 1;
-		return (1);
+		if (getcwd(data->buff, BUF_SIZE) == NULL)
+		{
+			*data->p_status = 1;
+			return (1);
+		}
+		ft_printf("%s\n", data->buff);
+		*data->p_status = 0;
+		return (0);
 	}
-	ft_printf("%s\n", data->buff);
-	*data->p_status = 0;
-	return (0);
+	return (2);
 }
 
 int	mini_env(t_mini_data *data, t_node *node)

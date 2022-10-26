@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 18:41:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 11:26:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char **fill_param_tab(t_node *node, t_data *data, char **tab)
 		node = count_nb_of_args(node, data, i);
 	else
 		printf("Error : impossible to create PARAM TAB\n");
-	tab = malloc(sizeof(char *) * (data->nb_of_args + 2));//cmd + NULL
+	tab = malloc(sizeof(char *) * (data->nb_of_args + 2));
 	if (!tab)
 		return (NULL);
 	tab[0] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
@@ -121,7 +121,6 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 		data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
 		while (data->env.param_tab1[data->size_ptab1])
 			data->size_ptab1++;
-		//printf("in function PTAB1  : %d --> %p\n", data->size_ptab1,  data->env.param_tab1);
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}
@@ -142,8 +141,6 @@ void	last_command(char *envp[], t_data *data, t_node *node)
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		while (data->env.param_tab2[data->size_ptab2])
 			data->size_ptab2++;
-		printf("Last CMD --> %s\n", node->content);
-		//printf("in function PTAB2  : %d --> %p\n", data->size_ptab2,  data->env.param_tab2);
 		last_cmd_execution(data, envp);
 	}
 }
@@ -168,12 +165,8 @@ void	*commands(t_data *data, t_node *node, char *envp[])
 			ft_printf("Error while creating processes\n");
 			return (0);
 		}
-		//printf("\n[%d] CMD --> %s\n", i, node->content);
 		if (pid[i] == 0)
 			command_exec(data, node, envp, cmd_id);
-		//faut incrementer jusqu'apres le prochain pipe
-		//pour passer les args + le pipe et tomber sur la cmd suivante
-		//node = node->next->next;
 		node = node_rotation(node);
 		data->pipe_id++;
 	}
