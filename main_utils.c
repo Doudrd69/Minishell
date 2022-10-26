@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 16:46:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:54:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 	mini_data->first_cd_check = 0;
 	mini_data->new_env_check = 0;
 	mini_data->echo_sq_check = 0;
-	mini_data->no_env_check = 0;			//utils epour la creation du oldpwd
 	mini_data->oldpwd_if = 0;
 	mini_data->echo_arg = 0;
 	mini_data->env = envp;

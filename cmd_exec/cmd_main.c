@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 17:02:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:41:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 		data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
 		while (data->env.param_tab1[data->size_ptab1])
 			data->size_ptab1++;
-		printf("in function PTAB1  : %d --> %p\n", data->size_ptab1,  data->env.param_tab1);
+		//printf("in function PTAB1  : %d --> %p\n", data->size_ptab1,  data->env.param_tab1);
 		check_outfile(data);
 		first_cmd_execution(data, envp);
 	}
@@ -142,12 +142,13 @@ void	last_command(char *envp[], t_data *data, t_node *node)
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		while (data->env.param_tab2[data->size_ptab2])
 			data->size_ptab2++;
-		printf("in function PTAB2  : %d --> %p\n", data->size_ptab2,  data->env.param_tab2);
+		printf("Last CMD --> %s\n", node->content);
+		//printf("in function PTAB2  : %d --> %p\n", data->size_ptab2,  data->env.param_tab2);
 		last_cmd_execution(data, envp);
 	}
 }
 
-void	commands(t_data *data, t_node *node, char *envp[])
+void	*commands(t_data *data, t_node *node, char *envp[])
 {
 	int	i;
 	int	cmd_id;
@@ -158,23 +159,24 @@ void	commands(t_data *data, t_node *node, char *envp[])
 	data->pipe_id = 1;
 	pid = malloc(sizeof(int) * (data->cmd_nb - 2));
 	if (!pid)
-		return ;
+		return (0);
 	while (++i < (data->cmd_nb - 2))
 	{
 		pid[i] = fork();
 		if (pid[i] == -1)
 		{
 			ft_printf("Error while creating processes\n");
-			return ;
+			return (0);
 		}
+		//printf("\n[%d] CMD --> %s\n", i, node->content);
 		if (pid[i] == 0)
 			command_exec(data, node, envp, cmd_id);
-		node = node->next->next;
+		//faut incrementer jusqu'apres le prochain pipe
+		//pour passer les args + le pipe et tomber sur la cmd suivante
+		//node = node->next->next;
+		node = node_rotation(node);
 		data->pipe_id++;
 	}
 	free(pid);
-	return ;
+	return (node);
 }
-
-
-//cat -e -n | grep e | rev marche pas
