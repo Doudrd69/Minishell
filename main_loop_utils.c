@@ -6,7 +6,11 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/10/26 15:12:02 by ebrodeur         ###   ########lyon.fr   */
+=======
 /*   Updated: 2022/10/26 14:56:40 by wmonacho         ###   ########lyon.fr   */
+>>>>>>> 555a853cbac7569c4ec8d1fd1efc621619a91e10
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +110,3 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 	}
 	return ;
 }
-//si on a un argument apres la commande --> on saute l'argument (tant qu'il y en a) + le pipe
-//si on a une commande sans argument --> on saute le pipe
