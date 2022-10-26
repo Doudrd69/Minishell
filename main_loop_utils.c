@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/25 22:21:00 by will             ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/10/25 18:32:39 by ebrodeur         ###   ########lyon.fr   */
->>>>>>> 8d4f9d39e58c8424b856500b4919eff6e995f75a
+/*   Updated: 2022/10/26 11:19:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +86,7 @@ void	*node_rotation(t_node *node)
 	else if (ft_strncmp(node->next->type, "NULL", 4) == 0)
 		node = node->next->next->next;
 	else
-		printf("CONTENT : %s\n", (char *)(node->content));
+		node = node->next;
 	if (ft_strncmp(node->content, "|", 1) == 0)
 		node = node->next;
 	return (node);
