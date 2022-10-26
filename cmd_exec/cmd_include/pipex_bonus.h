@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:42:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:02:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,10 @@ void	close_pipe(t_data *data, int i);
 void	*node_rotation(t_node *node);
 void	free_param_tab(t_data *data);
 void	sighandler(int signum);
+void	sigtest(int signum);
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char 	**fill_param_tab(t_node *node, t_data *data, char **tab);
+char	**fill_param_tab(t_node *node, t_data *data, char **tab);
 char	**get_path(char *env[], t_data *data, char **args);
 char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
@@ -156,6 +157,7 @@ int		check_inputfile(t_data *data);
 int		check_outfile(t_data *data);
 int		pipe_creation(t_data *data);
 int		check_sq_cmd(char *cmd);
+int		fork_creation(int pid);
 int		check_pipe(char *str);
 
 #endif

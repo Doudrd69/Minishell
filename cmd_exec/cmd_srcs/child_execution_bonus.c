@@ -6,11 +6,40 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 18:05:26 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:09:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_include/pipex_bonus.h"
+
+void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
+{
+	int	i;
+
+	i = -1;
+	if (tab == NULL)
+	{
+		write(2, "PATH not found : can't execute command : ", 41);
+		write(2, param[0], ft_strlen(param[0]));
+		write(2, "\n", 1);
+		exit(1);
+	}
+	while (tab[++i])
+	{
+		if (access(tab[i], X_OK) == 0)
+		{
+			if (execve(tab[i], param, env) == -1)
+				perror("execve");
+		}
+	}
+	if (ft_strncmp(param[0], "exit", 4) == 0)
+		exit(0);
+	write(2, "minishell: ", 11);
+	write(2, param[0], ft_strlen(param[0]));
+	write(2, ": command not found\n", 20);
+	*data->p_status = 127;
+	exit(127);
+}
 
 void	exec_cmd_path(t_data *data, char *envp[])
 {

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:16:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 14:57:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	check_loop(char *str, int j)
 	return (0);
 }
 
-void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loop)
+void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check,
+int loop)
 {
 	int	j;
-	
+
 	while (ft_strncmp(data->str, "-n", 2) == 0 && loop == 0)
 	{
 		j = 0;

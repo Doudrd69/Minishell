@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:27:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:10:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	input_file_opening(t_data *data)
 	data->input_fd = open(data->exec.infile_fd, O_RDONLY);
 	if (data->input_fd < 0)
 	{
-		ft_printf("minishell: %s: No such file or directory\n", data->exec.infile_fd);
+		ft_printf("minishell: %s: No such file or directory\n",
+			data->exec.infile_fd);
 		return (1);
 	}
 	if (dup2(data->input_fd, STDIN_FILENO) == -1)
@@ -47,7 +48,8 @@ int	check_inputfile(t_data *data)
 {
 	if (data->check_hd == 1 && data->exec.infile_check == 0)
 	{
-		if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ], STDIN_FILENO) == -1)
+		if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ],
+			STDIN_FILENO) == -1)
 		{
 			perror("dup2");
 			return (1);
@@ -65,7 +67,8 @@ int	check_outfile(t_data *data)
 	if (data->exec.outfile_check == 1)
 	{
 		if (data->exec.append_check == 1)
-			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_CREAT, 0666);
+			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_CREAT,
+					0666);
 		else
 		{
 			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_TRUNC

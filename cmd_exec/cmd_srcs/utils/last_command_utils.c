@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:28:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:10:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	check_outfile_last_cmd(t_data *data)
 	if (data->exec.last_cmd_outfile_check == 1)
 	{
 		if (data->exec.append_check == 1)
-			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_CREAT, 0666);
+			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_CREAT,
+					0666);
 		else
 		{
 			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_TRUNC
