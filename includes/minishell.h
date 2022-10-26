@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 17:48:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 14:14:25 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		mini_cd(t_mini_data *data, t_node *node);
 int		mini_exit();
 
 /* BUILTIN FUNCTIONS UTILS */
+void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loop);
 char	**newtab_malloc(t_mini_data *data, int old_size, char **env, char *var);
 char	*check_and_return_var(t_mini_data *data, char **envp, char *var, int i);
 char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
@@ -95,6 +96,7 @@ int		check_var(char *str, char *var_name);
 int		check_special_char(char c, int size);
 void	print_var(int j, t_mini_data *data);
 int		update_old_pwd(t_mini_data *data);
+int		check_if_empty(t_mini_data *data);
 int		check_oldpwd(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 char	**free_tab(char **tab, int i);
