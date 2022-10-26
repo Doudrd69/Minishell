@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/25 22:21:00 by will             ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/10/25 18:32:39 by ebrodeur         ###   ########lyon.fr   */
->>>>>>> 8d4f9d39e58c8424b856500b4919eff6e995f75a
+/*   Updated: 2022/10/26 13:10:51 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +81,9 @@ void	heredoc_main(t_data *data)
 
 void	*node_rotation(t_node *node)
 {
-	if (ft_strncmp(node->next->type, "PIPE", 4) == 0)
+	if (node->next->type == 'P')
 		node = node->next->next;
-	else if (ft_strncmp(node->next->type, "NULL", 4) == 0)
+	else if (node->next->type == 'N')
 		node = node->next->next->next;
 	else
 		printf("CONTENT : %s\n", (char *)(node->content));

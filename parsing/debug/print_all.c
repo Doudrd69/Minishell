@@ -9,9 +9,9 @@ void	print_dlist(t_node **list, t_shell *minishell)
 	tmp = (*list);
 	while (tmp && tmp != NULL)
 	{
-		if (tmp->type != NULL)
+		if (tmp->type != 'N')
 		{
-			printf("list[%d] =%s\ntype = %s\n\n", i, (char *)tmp->content, tmp->type);
+			printf("list[%d] =%s\ntype = %c\n\n", i, (char *)tmp->content, tmp->type);
 		}
 		else
 			printf("list[%d] =%s\ntype = No Type\n\n", i, (char *)tmp->content);
