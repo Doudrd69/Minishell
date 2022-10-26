@@ -69,6 +69,7 @@ char	*ft_copy_string_without_quote(char *str, char quote);
 
 /*REDIRECTIONS*/
 void	parse_redirections(t_shell *minishell);
+void	search_infile(t_shell *minishell, char *str, int tab);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);

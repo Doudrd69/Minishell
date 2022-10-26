@@ -6,17 +6,23 @@ static void	init_var_redirection(t_shell *minishell, int size)
 	minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
 }
 
-static void	classic_infile(char *str, int tab, int i)
+static void	classic_infile(char *str, int tab, t_shell *minishell)
 {
-	tab += 0;
+	int	i;
+
+	i = minishell->mod;
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] != '<')
 	{
+		search_infile(minishell, str, tab);
 		printf("classic infile\n");
 	}
 }
 
-static void	append_infile(char *str, int tab, int i)
+static void	append_infile(char *str, int tab, t_shell *minishell)
 {
+	int	i;
+
+	i = minishell->mod;
 	tab += 0;
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] == '<')
 	{
@@ -25,15 +31,21 @@ static void	append_infile(char *str, int tab, int i)
 	}
 }
 
-static void	classic_outfile(char *str, int tab, int i)
+static void	classic_outfile(char *str, int tab, t_shell *minishell)
 {
+	int	i;
+
+	i = minishell->mod;
 	tab += 0;
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] != '>')
 		printf("classic outfile\n");
 }
 
-static void	append_outfile(char *str, int tab, int i)
+static void	append_outfile(char *str, int tab, t_shell *minishell)
 {
+	int	i;
+
+	i = minishell->mod;
 	tab += 0;
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] == '>')
 	{
@@ -59,12 +71,12 @@ void	parse_redirections(t_shell *minishell)
 			j++;
 		str = (char *)(list_cpy->content);
 		minishell->mod = -1;
-		while (str[++minishell->mod] != '\0')
+		while (str[++(minishell->mod)] != '\0')
 		{
-			classic_infile(str, j, i);
-			append_infile(str, j, i);
-			classic_outfile(str, j, i);
-			append_outfile(str, j, i);
+			classic_infile(str, j, minishell);
+			append_infile(str, j, minishell);
+			classic_outfile(str, j, minishell);
+			append_outfile(str, j, minishell);
 		}
 		list_cpy = list_cpy->next;
 	}
