@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 19:08:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 14:14:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,18 @@ int	mini_cd(t_mini_data *data, t_node *node)
 int	mini_pwd(t_mini_data *data, t_node *node)
 {
 	(void)node;
-	if (getcwd(data->buff, BUF_SIZE) == NULL)
+	if (data->main_pid == getpid() && data->pipe_check == 0)
 	{
-		*data->p_status = 1;
-		return (1);
+		if (getcwd(data->buff, BUF_SIZE) == NULL)
+		{
+			*data->p_status = 1;
+			return (1);
+		}
+		ft_printf("%s\n", data->buff);
+		*data->p_status = 0;
+		return (0);
 	}
-	ft_printf("%s\n", data->buff);
-	*data->p_status = 0;
-	return (0);
+	return (2);
 }
 
 int	mini_env(t_mini_data *data, t_node *node)
@@ -72,21 +76,24 @@ int	mini_env(t_mini_data *data, t_node *node)
 int	mini_echo(t_mini_data *data, t_node *node)
 {
 	int	i;
+	int	check;
+	int	loop;
 
+	loop = 0;
 	while (node != NULL)
 	{
 		i = 0;
+		check = 0;
 		data->str = node->content;
-		if (!data->str || (data->str[0] == '$' && data->str[1] == '\0'))
-		{
-			write(1, "\n", 1);
-			*data->p_status = 0;
+		node = echo_arg_newline_check(data, node, check, loop);
+		loop = 1;
+		if (check_if_empty(data) == 0)
 			return (0);
-		}
 		i = write_and_check_signs(i, data);
 		if (data->str[i] == '$' && data->str[i + 1] == '\0')
 			write(1, &data->str[i], 1);
-		write(1, " ", 1);
+		if (node->next != NULL)
+			write(1, " ", 1);
 		node = node->next;
 	}
 	if (data->echo_arg == 0)

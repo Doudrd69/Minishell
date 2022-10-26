@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 13:10:51 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 14:56:40 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	*node_rotation(t_node *node)
 	else if (node->next->type == 'N')
 		node = node->next->next->next;
 	else
-		printf("CONTENT : %s\n", (char *)(node->content));
+		node = node->next;
 	if (ft_strncmp(node->content, "|", 1) == 0)
 		node = node->next;
 	return (node);

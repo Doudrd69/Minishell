@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 18:53:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 11:15:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 	{
 		if (access(tab[i], X_OK) == 0)
 		{
-			printf("TAB[i] ==> %s ----> Param = %s\n", tab[i], param[1]);
 			if (execve(tab[i], param, env) == -1)
 				perror("execve");
 		}
