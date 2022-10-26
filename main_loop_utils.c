@@ -6,7 +6,11 @@
 /*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/25 22:21:00 by will             ###   ########lyon.fr   */
+=======
+/*   Updated: 2022/10/25 18:32:39 by ebrodeur         ###   ########lyon.fr   */
+>>>>>>> 8d4f9d39e58c8424b856500b4919eff6e995f75a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +104,7 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
-			commands(data, node, envp);
-			if (data->cmd_nb > 2)
-				node = node_rotation(node);
+			node = commands(data, node, envp);
 			last_command(envp, data, node);
 		}
 	}

@@ -5,7 +5,7 @@ int	var_exists_parsing(t_shell *minishell)
 	int	i;
 
 	i = 0;
-	while (minishell->envp[i])
+	while (minishell->env_size)
 	{
 		if (ft_strnstr(minishell->envp[i], minishell->var_search,
 				ft_strlen(minishell->var_search)))

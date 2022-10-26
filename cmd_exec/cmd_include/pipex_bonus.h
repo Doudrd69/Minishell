@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 17:05:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:30:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ typedef struct data
 	int			*p_status;
 	int			lst_size;
 	int			nb_of_args;
+	int			size_ptab1;
+	int			size_ptab2;
+	int			size_ptab3;
 	char		**envp;
 	char		*home_path;
 	t_heredoc	hd;
@@ -130,7 +133,7 @@ void	first_command(char *envp[], t_data *data, t_node *node);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
 void	last_command(char *envp[], t_data *data, t_node *node);
 char	**get_path(char *env[], t_data *data, char **args);
-void	commands(t_data *data, t_node *node, char *envp[]);
+void	*commands(t_data *data, t_node *node, char *envp[]);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
@@ -143,6 +146,8 @@ int		**free_inttab(int **tab, int i);
 void	close_pipe(t_data *data, int i);
 char	**free_tab(char **tab, int i);
 int		check_inputfile(t_data *data);
+void	*node_rotation(t_node *node);
+void	free_param_tab(t_data *data);
 int		check_outfile(t_data *data);
 int		pipe_creation(t_data *data);
 int		check_sq_cmd(char *cmd);

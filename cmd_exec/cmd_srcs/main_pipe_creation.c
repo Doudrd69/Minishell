@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 16:58:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:40:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	pipe_creation(t_data *data)
 void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
 {
 	(void)cmd_id;
-	//printf("COMMAND --> %s *** PID : %d\n", node->content, getpid());
 	if (dup2(data->pipefd[data->pipe_id - 1][READ], STDIN_FILENO) == -1)
 	{
 		perror("dup2");
@@ -52,6 +51,13 @@ void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
 	}
 	data->env.tab3 = get_path(envp, data, data->env.tab3);
 	data->env.param_tab3 = fill_param_tab(node, data, data->env.param_tab3);
+	while (data->env.param_tab3[data->size_ptab3])
+		data->size_ptab3++;
+	int a = -1;
+	printf("Command to exec --> %s\n", node->content);
+	while (data->env.param_tab3[++a])
+		printf("== %s\n", data->env.param_tab3[a]);
+	//printf("in function PTAB3 : %d --> %p\n", data->size_ptab3,  data->env.param_tab3);
 	if (dup2(data->pipefd[data->pipe_id][WRITE], STDOUT_FILENO) == -1)
 	{
 		perror("dup2");

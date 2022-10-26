@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 13:06:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:48:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef struct mini_data
 	int			new_env_check;
 	int			unset_env_check;
 	int			tmp_count;
-	int			no_env_check;
 	int			first_cd_check;
 	int			oldpwd_if;
+	int			main_pid;
+	int			pipe_check;
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
 	char		*home_path;
@@ -107,6 +108,7 @@ size_t	ft_strlen_gnl(char *s);
 size_t	ft_strnlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
+void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_mini_data *, t_node *));
 int		export_no_env(t_mini_data *data);
 void	free_all(t_shell *minishell);
 

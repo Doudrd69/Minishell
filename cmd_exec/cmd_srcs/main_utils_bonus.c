@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/24 16:51:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:53:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (tab == NULL)
 	{
 		write(2, "PATH not found : can't execute command : ", 41);
@@ -24,16 +24,20 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 		write(2, "\n", 1);
 		exit(1);
 	}
-	while (tab[i])
+	while (tab[++i])
 	{
 		if (access(tab[i], X_OK) == 0)
 		{
+			printf("TAB[i] ==> %s ----> Param = %s\n", tab[i], param[1]);
 			if (execve(tab[i], param, env) == -1)
 				perror("execve");
 		}
-		i++;
 	}
-	write(2, "minishell : command not found\n", 30);
+	if (ft_strncmp(param[0], "exit", 4) == 0)
+		exit(0);
+	write(2, "minishell: ", 11);
+	write(2, param[0], ft_strlen(param[0]));
+	write(2, ": command not found\n", 20);
 	*data->p_status = 127;
 	exit(127);
 }
