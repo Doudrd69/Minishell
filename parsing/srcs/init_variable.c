@@ -8,8 +8,10 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 	minishell->home_path = NULL;
 	minishell->quote = 0;
 	minishell->nbr_pipe = 0;
-	minishell->nbr_redirr = 0;
-	minishell->nbr_redirg = 0;
+	minishell->nbr_infile = 0;
+	minishell->nbr_outfile = 0;
+	minishell->nbr_appendin = 0;
+	minishell->nbr_appendout = 0;
 	minishell->nbr_dollars = 0;
 	minishell->nbr_dquote = 0;
 	minishell->nbr_squote = 0;
@@ -22,6 +24,8 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 void	init_dlist_var(t_shell *minishell)
 {
 	minishell->head = NULL;
+	minishell->tab_infile = NULL;
+	minishell->tab_outfile = NULL;
 	minishell->tail = NULL;
 	minishell->list_size = 0;
 }

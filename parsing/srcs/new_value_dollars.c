@@ -34,9 +34,41 @@ static void	new_value2(t_shell *minishell, char *str)
 	printf("VALUE = %s\n", minishell->value);
 }
 
-static void	new_value3(t_shell *minishell)
+static void	new_value3(t_shell *minishell, char *str, int mod)
 {
-	minishell->value = NULL;
+	int	size;
+	int	i;
+	int	cpy;
+
+	size = 1;
+	i = 0;
+	if (mod == 2)
+		minishell->value = NULL;
+	else
+	{
+		while (str[i] != '\0' && str[i] != '=')
+			i++;
+		if (str[i] == '\0')
+		{
+			minishell->value = NULL;
+			return ;
+		}
+		cpy = i;
+		i++;
+		while (str[i] != '\0' && str[i] != ' ')
+		{
+			size++;
+			i++;
+		}
+		i = 0;
+		minishell->value = malloc(sizeof(char) * (size + 1));
+		while (str[cpy] != '\0' && str[cpy] != ' ')
+		{
+			minishell->value[i] = str[cpy];
+			i++;
+			cpy++;
+		}
+	}
 }
 
 static void	new_value4(t_shell *minishell, char *str)
@@ -61,8 +93,8 @@ void	write_newvalue(t_shell *minishell, char *str, int mod)
 		new_value1(minishell, str);
 	if (mod == 1)
 		new_value2(minishell, str);
-	if (mod == 2)
-		new_value3(minishell);
+	if (mod == 2 || mod == 5)
+		new_value3(minishell, str, mod);
 	if (mod == 3)
 		new_value4(minishell, str);
 }
