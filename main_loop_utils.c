@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/26 15:12:02 by ebrodeur         ###   ########lyon.fr   */
+=======
+/*   Updated: 2022/10/26 14:56:40 by wmonacho         ###   ########lyon.fr   */
+>>>>>>> 555a853cbac7569c4ec8d1fd1efc621619a91e10
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +85,9 @@ void	heredoc_main(t_data *data)
 
 void	*node_rotation(t_node *node)
 {
-	if (ft_strncmp(node->next->type, "PIPE", 4) == 0)
+	if (node->next->type == 'P')
 		node = node->next->next;
-	else if (ft_strncmp(node->next->type, "NULL", 4) == 0)
+	else if (node->next->type == 'N')
 		node = node->next->next->next;
 	else
 		node = node->next;

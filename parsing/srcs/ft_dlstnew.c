@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 18:23:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/10/24 12:53:16 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 13:08:05 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_node	*ft_dlstnew(void *content)
 	if (!new_node)
 		return (NULL);
 	new_node->content = content;
-	new_node->type = "NULL";
+	new_node->type = 'N';
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);

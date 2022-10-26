@@ -12,7 +12,7 @@
 typedef struct s_node
 {
 	void			*content;
-	char			*type;
+	char			type;
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_node;
