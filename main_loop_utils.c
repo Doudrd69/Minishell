@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/26 15:12:02 by ebrodeur         ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/10/26 14:56:40 by wmonacho         ###   ########lyon.fr   */
->>>>>>> 555a853cbac7569c4ec8d1fd1efc621619a91e10
+/*   Updated: 2022/10/26 16:03:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

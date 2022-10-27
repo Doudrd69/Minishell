@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:11:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 19:13:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	heredoc_exit(char *str, int output_fd, t_data *data)
 			free(str);
 			close(output_fd);
 			close(data->hd_pipefd[data->hd_pipe_id][READ]);
+			data->p_status = 0;
 			exit(0);
 		}
 	}
@@ -105,7 +106,9 @@ void	heredoc(t_data *data)
 	{
 		size = 0;
 		str = readline("> ");
-		eof_handler_hd(str);
+		if (*data->p_status == 1)
+			dprintf(2, "Catch in while(1)\n");
+		eof_handler_hd(data, str, output_fd);
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)
@@ -114,3 +117,8 @@ void	heredoc(t_data *data)
 	}
 	return ;
 }
+
+//CTRL-D = On exec les commandes et on affiche un nouveau prompt
+	//j'affiche une ligne de trop (dans le HD? le '>' du readline s'affiche)
+//CTRL-C = on exit le(s) processus HD (pas d'exec des commandes) et on affiche un nouveau prompt
+	//j'affiche le nouveau prompt mais j'exec

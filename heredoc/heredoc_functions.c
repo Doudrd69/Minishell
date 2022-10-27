@@ -6,18 +6,19 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:56:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:44:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_exec/cmd_include/pipex_bonus.h"
 
-void	eof_handler_hd(char *input)
+void	eof_handler_hd(t_data *data, char *input, int output_fd)
 {
 	if (input == NULL)
 	{
-		rl_on_new_line();
-		rl_redisplay();
+		close(output_fd);
+		close(data->hd_pipefd[data->hd_pipe_id][READ]);
+		data->p_status = 0;
 		exit (0);
 	}
 	return ;

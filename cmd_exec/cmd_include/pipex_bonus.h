@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:02:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 17:43:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ typedef struct data
 }	t_data;
 
 /* HEREDOC */
+void	eof_handler_hd(t_data *data, char *input, int output_fd);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
-void	eof_handler_hd(char *input);
 void	sighandler_hd(int signum);
 void	heredoc(t_data *data);
 

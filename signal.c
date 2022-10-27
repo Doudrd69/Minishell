@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:12:25 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 15:54:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,3 @@ void	sighandler(int signum)
 	}
 }
 
-void	sighandler_hd(int signum)
-{
-	(void)signum;
-	exit(1);
-}

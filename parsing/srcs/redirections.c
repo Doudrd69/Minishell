@@ -45,11 +45,13 @@ static void	append_outfile(char *str, int tab, int i)
 void	parse_redirections(t_shell *minishell)
 {
 	int		size;
+	int		i;
 	t_node	*list_cpy;
 	char	*str;
 	int		j;
 
 	j = 0;
+	i = 0;
 	size = minishell->nbr_pipe + 1;
 	init_var_redirection(minishell, size);
 	list_cpy = minishell->head;

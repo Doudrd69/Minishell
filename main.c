@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:56:33 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 14:23:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ void	exec_main(t_data *data, char *envp[], t_node *node);
 void	heredoc_main(t_data *data);
 
 int		p_status;
+
+void	sighandler_hd(int signum)//CTRL-C
+{
+	(void)signum;
+	dprintf(2, "Catch SIGINT --> %d\n", getpid());
+	p_status = 1;
+	return ;
+}
 
 void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 {
@@ -171,6 +179,17 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 		free(data->hd_pid);
 	return ;
 }
-//dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//demander le parsing du export
-//le exit va casser les couilles
+
+
+//probleme avec echo si pas de str apres --> "echo" ==> echo
+//si echo -n --> segfault ==> devrait faire un retour a la ligne
+//pas le bon output --> echo $USER $123456789USER $USER123456789
+//echo '' "" ne devrait rien afficher
+
+//probleme ctrl-c in cat --> double display
+//probleme avec quotes --> les quotes sont affichées
+//sur l'export --> export LOL= on est la hein ==> LOL=on
+//cd seul doit return au root
+//probleme si on unset PATH
+
+//(attention si on unset $VAR (car on recoit une str) --> segfault) --> faire un message d'erreur
