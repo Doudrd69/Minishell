@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 15:59:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 16:43:04 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 }
 
 
-//probleme avec echo si pas de str apres --> "echo" ==> echo
 //si echo -n --> segfault ==> devrait faire un retour a la ligne
 //pas le bon output --> echo $USER $123456789USER $USER123456789
 //echo '' "" ne devrait rien afficher
@@ -191,6 +190,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //probleme avec quotes --> les quotes sont affichées
 //sur l'export --> export LOL= on est la hein ==> LOL=on
 
-//cd seul doit return au root
+//probleme avec echo si pas de str apres --> "echo" ==> echo
 //probleme si on unset PATH
 //probleme ctrl-c in cat --> double display
