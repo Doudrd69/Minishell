@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 15:17:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 16:36:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	mini_cd(t_mini_data *data, t_node *node)
 {
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
-	if (node->content == NULL)
+	printf("==> %s\n", data->oldpwd);
+	if (node->next == NULL && ft_strncmp(node->content, "cd", 2) == 0)
 	{
 		if (no_path(data) == 1)
 			return (1);
