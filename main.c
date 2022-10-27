@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 14:23:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 15:20:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int ch
 {
 	if (ft_strncmp(node->content, "export", 6) == 0)
 	{
-		export_exec(mini_data, data, node);
-		check = 1;
+			export_exec(mini_data, data, node);
+			return (1);
 	}
 	if (ft_strncmp(node->content, "unset", 5) == 0)
 	{
 		unset_exec(mini_data, data, node);
-		check = 1;
+			return (1);
 	}
 	return (check);
 }
@@ -143,8 +143,8 @@ int main(int argc, char *argv[], char *envp[])
 				mini_data.pipe_check = 0;
 			node = minishell->head;
 			//print_dlist(&node, minishell);
-			check = 0;
 			data.envp_size = mini_data.envp_size;
+			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
 			check = export_and_unset(&mini_data, &data, node, check);
 			if (check == 0)
@@ -193,3 +193,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //probleme si on unset PATH
 
 //(attention si on unset $VAR (car on recoit une str) --> segfault) --> faire un message d'erreur
+//si export $MDR=lol --> export "export"

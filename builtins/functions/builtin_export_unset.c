@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 19:34:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 14:50:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	mini_unset(t_mini_data *data, char *var_unset)
 		}
 		index++;
 	}
+	ft_printf("minishell: unset: '%s': not a valid identifier\n", var_unset);
 	return (1);
 }
