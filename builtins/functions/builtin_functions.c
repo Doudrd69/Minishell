@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 16:36:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 17:18:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int	mini_env(t_mini_data *data, t_node *node)
 	return (2);
 }
 
+int	no_args(t_node *node)
+{
+	if ((ft_strncmp(node->content, "echo", 4) == 0))
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
+	return (1);
+}
+
 int	mini_echo(t_mini_data *data, t_node *node)
 {
 	int	i;
@@ -81,12 +91,16 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	int	loop;
 
 	loop = 0;
+	if (no_args(node) == 0)
+		return (0);
 	while (node != NULL)
 	{
 		i = 0;
 		check = 0;
 		data->str = node->content;
 		node = echo_arg_newline_check(data, node, check, loop);
+		if (node == NULL)
+			return (0);
 		loop = 1;
 		if (check_if_empty(data) == 0)
 			return (0);
