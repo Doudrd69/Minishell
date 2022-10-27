@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 16:43:04 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 16:48:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 			if (node->next != NULL)
 				node = node->next;
 			status = (*builtins[i])(data, node);
-			printf("STATUS : %d\n", status);
 			if (status == 1)
 			{
 				printf("P_STATUS fail : %d\n", *data->p_status);
