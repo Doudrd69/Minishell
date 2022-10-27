@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 15:20:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 15:59:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 			if (node->next != NULL)
 				node = node->next;
 			status = (*builtins[i])(data, node);
+			printf("STATUS : %d\n", status);
 			if (status == 1)
 			{
 				printf("P_STATUS fail : %d\n", *data->p_status);
@@ -185,12 +186,11 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //si echo -n --> segfault ==> devrait faire un retour a la ligne
 //pas le bon output --> echo $USER $123456789USER $USER123456789
 //echo '' "" ne devrait rien afficher
+//echo peut pas afficher plusieurs var d'affilées
 
-//probleme ctrl-c in cat --> double display
 //probleme avec quotes --> les quotes sont affichées
 //sur l'export --> export LOL= on est la hein ==> LOL=on
+
 //cd seul doit return au root
 //probleme si on unset PATH
-
-//(attention si on unset $VAR (car on recoit une str) --> segfault) --> faire un message d'erreur
-//si export $MDR=lol --> export "export"
+//probleme ctrl-c in cat --> double display
