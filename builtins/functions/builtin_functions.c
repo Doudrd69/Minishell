@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 13:48:51 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 15:56:04 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,16 @@ int	mini_echo(t_mini_data *data, t_node *node)
 
 int	mini_exit(t_mini_data *data, t_node *node)
 {
-	(void)node;
+	int	tmp;
+
+	tmp = ft_atoi(node->content);
 	if (data->pipe_check == 0)
 	{
-		*data->p_status = 1;
-		exit(0);
+		*data->p_status = tmp;
+		exit(tmp);
 	}
-	else
-		return (2);
+	while (node->next != NULL)
+		node = node->next;
+	*data->p_status = ft_atoi(node->content);
+	return (2);
 }
