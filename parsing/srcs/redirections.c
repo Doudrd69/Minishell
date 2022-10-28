@@ -58,8 +58,8 @@ static void	append_outfile(char *str, int tab, t_shell *minishell)
 	tab += 0;
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] == '>')
 	{
-		i++;
 		printf("append outfile\n");
+		i++;
 	}
 }
 
