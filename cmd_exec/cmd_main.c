@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 16:02:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:57:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{
-		if (check_inputfile(data) != 0)
+		if (check_inputfile(data) != 0)//envoyer infile ici
 			return ;
 		data->env.tab1 = get_path(envp, data, data->env.tab1);
 		data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
 		while (data->env.param_tab1[data->size_ptab1])
 			data->size_ptab1++;
-		check_outfile(data);
+		check_outfile(data);//envoyer outfile ici
 		first_cmd_execution(data, envp);
 	}
 }
