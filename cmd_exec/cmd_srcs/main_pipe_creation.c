@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 11:26:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 11:11:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	pipe_creation(t_data *data)
 void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
 {
 	(void)cmd_id;
+	signal(SIGQUIT, &sigtest);
+	signal(SIGINT, &sigint_handler_in_process);
 	if (dup2(data->pipefd[data->pipe_id - 1][READ], STDIN_FILENO) == -1)
 	{
 		perror("dup2");

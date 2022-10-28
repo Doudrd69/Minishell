@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 17:43:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 11:11:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,11 @@ void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
 void	eof_handler(char *input, t_shell *minishell);
+void	sigint_handler_in_process(int signum);
+void	sigint_handler_main_loop(int signum);
 void	close_pipe(t_data *data, int i);
 void	*node_rotation(t_node *node);
 void	free_param_tab(t_data *data);
-void	sighandler(int signum);
 void	sigtest(int signum);
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);

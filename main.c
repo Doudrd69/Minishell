@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 16:48:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 11:11:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int main(int argc, char *argv[], char *envp[])
 	mini_data.main_pid = getpid();
 	while (1)
 	{
-		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
+		signal(SIGINT, &sigint_handler_main_loop);
 		minishell = malloc(sizeof(t_shell));
 		init_variable(minishell, data.envp_size, data.envp);
 		minishell->cmd = readline("minishell$ ");
@@ -181,14 +181,13 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 }
 
 
-//si echo -n --> segfault ==> devrait faire un retour a la ligne
 //pas le bon output --> echo $USER $123456789USER $USER123456789
 //echo '' "" ne devrait rien afficher
 //echo peut pas afficher plusieurs var d'affilées
+//retirer les getpid
 
 //probleme avec quotes --> les quotes sont affichées
 //sur l'export --> export LOL= on est la hein ==> LOL=on
 
-//probleme avec echo si pas de str apres --> "echo" ==> echo
 //probleme si on unset PATH
 //probleme ctrl-c in cat --> double display
