@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 19:13:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 13:42:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	heredoc(t_data *data)
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
-	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
