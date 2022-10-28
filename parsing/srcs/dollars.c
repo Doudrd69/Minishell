@@ -65,7 +65,6 @@ static int	check_dollar_export(char *str, int i)
 	{
 		i--;
 	}
-	printf("str =%s, i = %d\n", str + i, i);
 	if (ft_strncmp(str, "export", 6) != 0)
 		return (2);
 	return (5);
@@ -90,7 +89,6 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 				check = check_dollar_export(str, i);
 			write_newvalue(minishell, str + i, check);
 			change_var_to_value(str, i, minishell, list);
-			print_dlist(&minishell->head, minishell);
 		}
 	}
 	else
@@ -98,7 +96,6 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 		check = check_dollars_mod(str + i);
 		write_newvalue(minishell, str + i, check);
 		change_var_to_value(str, i, minishell, list);
-		print_dlist(&minishell->head, minishell);
 	}
 	return (str);
 }
