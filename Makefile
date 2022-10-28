@@ -54,7 +54,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/pipe.c										\
 		parsing/srcs/space.c									\
 		parsing/srcs/new_value_dollars.c						\
-		parsing/srcs/search_file.c								\
+		parsing/srcs/search_infile.c							\
+		parsing/srcs/search_heredoc.c							\
 		main_loop_utils.c										\
 		main_utils.c											\
 		no_env.c												\
