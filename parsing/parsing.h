@@ -46,7 +46,7 @@ typedef struct s_shell
 void	init_dlist_var(t_shell *minishell);
 
 /*DEBUG*/
-void	print_dlist(t_node **list, t_shell *minishell);
+void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_shell *minishell);
 
 /*----*PARSING*----*/
 void	parsing(char **env, t_shell *minishell);
@@ -69,6 +69,8 @@ char	*ft_copy_string_without_quote(char *str, char quote);
 
 /*REDIRECTIONS*/
 void	parse_redirections(t_shell *minishell);
+void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list);
+void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);

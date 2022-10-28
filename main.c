@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 18:17:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:08:24 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

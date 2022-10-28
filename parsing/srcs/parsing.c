@@ -26,6 +26,7 @@ void	tokenizers_arg(t_shell *minishell)
 		parse_redirections(minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space(minishell);
+	printf("DEBUG\n");
 }
 
 void	first_parse(t_shell *minishell, char *str)
