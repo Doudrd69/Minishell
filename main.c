@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 18:07:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 18:17:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,12 +182,14 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	return ;
 }
 
+//PARSING WILLIAM
+	//pas le bon output --> echo $USER $123456789USER $USER123456789
+	//echo '' "" ne devrait rien afficher
+	//echo peut pas afficher plusieurs var d'affilées
+	//probleme avec quotes --> les quotes sont affichées
+	//sur l'export --> export LOL= on est la hein ==> LOL=on
 
-//pas le bon output --> echo $USER $123456789USER $USER123456789
-//echo '' "" ne devrait rien afficher
-//echo peut pas afficher plusieurs var d'affilées
-
-//probleme avec quotes --> les quotes sont affichées
-//sur l'export --> export LOL= on est la hein ==> LOL=on
-
-//faire la verification de la secu des malloc
+//MES TACHES
+	//faire la verification de la secu des malloc
+	//si "command not found" --> exit(127) et mettre p_status à 127
+	//CTRL-C fonctionnel dans les Heredoc
