@@ -136,5 +136,9 @@ void	print_var_parsing(t_shell *minishell)
 		minishell->value[i] = '\0';
 		free(var);
 	}
+	else
+	{
+		minishell->value = NULL;
+	}
 	return ;
 }

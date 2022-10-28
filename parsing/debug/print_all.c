@@ -1,13 +1,16 @@
 #include "../parsing.h"
 
-void	print_dlist(t_node **list, t_shell *minishell)
+void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_shell *minishell)
 {
 	t_node	*tmp;
+	t_node	**tmp_tab;
 	int		i;
 	int		j;
 
 	i = 1;
+	printf("check adress1: list[i] = %p, list = %p\n", (*tab_infile)[0], (**tab_infile));
 	tmp = (*list);
+	tab_outfile += 0;
 	while (tmp && tmp != NULL)
 	{
 		if (tmp->type != 'N')
@@ -20,13 +23,14 @@ void	print_dlist(t_node **list, t_shell *minishell)
 		i++;
 	}
 	i = 0;
-	while (minishell->tab_infile[i] != NULL)
+	tmp_tab = *tab_infile;
+	while (tmp_tab[i] && tmp_tab[i] != NULL)
 	{
 		j = 0;
-		tmp = minishell->tab_infile[i];
+		tmp = (tmp_tab)[i];
 		while (tmp && tmp != NULL)
 		{
-			printf("infile_list[%d][%d] = %s\n", i, j, (char *)tmp);
+			printf("infile_list[%d][%d] = %s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
 			j++;
 			tmp = tmp->next;
 		}

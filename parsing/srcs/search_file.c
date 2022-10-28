@@ -1,15 +1,15 @@
 #include "../parsing.h"
 
-static void	add_back_file_list(t_node **minishell, t_node *new)
+static void	add_back_file_list(t_node **tab_list, t_node *new)
 {
 	t_node	*list_cpy;
 
-	list_cpy = *minishell;
+	list_cpy = *tab_list;
 	if (new)
 	{
 		if (!list_cpy)
 		{
-			list_cpy = new;
+			(*tab_list) = new;
 		}
 		else
 		{
@@ -22,23 +22,43 @@ static void	add_back_file_list(t_node **minishell, t_node *new)
 	}
 }
 
-static void	include_infile_list(t_node **minishell, char *tmp)
+static void	include_infile_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
-	add_back_file_list(minishell, ft_dlstnew(tmp));
-	list_cpy = *minishell;
-	while (list_cpy && list_cpy->next != NULL)
+	list_cpy = *tab_list;
+	printf("tmp ?? = %s\n", (char *)tmp);
+	add_back_file_list(tab_list, ft_dlstnew(tmp));
+	list_cpy = *tab_list;
+	while (list_cpy && list_cpy->next != NULL && list_cpy != NULL)
 				list_cpy = list_cpy->next;
-	printf("DEBUG\n");
-	// list_cpy->type = 'C';
+	list_cpy->type = 'C';
 }
 
-void	search_infile(t_shell *minishell, char *str, int tab)
+static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char *str)
+{
+	int	i;
+	int	j;
+
+	i = minishell->mod;
+	j = -1;
+	while (++j < i)
+		cpy[j] = str[j];
+	while (str[++i] != '\0' && str[i] == ' ')
+		i++;
+	while (str[i] != '\0' && str[i] != ' ')
+		i++;
+	while (str[i] != '\0')
+		cpy[j++] = str[i++];
+	include_dollar_list(minishell, list, cpy);
+}
+
+void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
 {
 	int		i;
 	int		file;
 	char	*tmp;
+	char	*cpy;
 
 	file = 0;
 	i = minishell->mod;
@@ -46,9 +66,11 @@ void	search_infile(t_shell *minishell, char *str, int tab)
 		file++;
 	while (str[i++] != '\0' && str[i] != ' ')
 		file++;
-	tmp = malloc(sizeof(char) * (file + 1));
+	tmp = malloc(sizeof(char) * (file + 2));
+	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file + 2))));
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1, file + 2);
-	include_infile_list(&minishell->tab_infile[tab], tmp);
-	printf("tmp = %s, file = %d\n", tmp, file);
-	print_dlist(&minishell->head, minishell);
+	include_infile_list(tab_infile, tmp);
+	delete_file_list(minishell, list, cpy, str);
+	minishell->mod = -1;
+	// print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 }

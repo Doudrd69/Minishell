@@ -2,18 +2,27 @@
 
 static void	init_var_redirection(t_shell *minishell, int size)
 {
+	int	i;
+
+	i = 0;
 	minishell->tab_infile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
 	minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
+	while (i <= size)
+	{
+		minishell->tab_infile[i] = NULL;
+		minishell->tab_outfile[i] = NULL;
+		i++;
+	}
 }
 
-static void	classic_infile(char *str, int tab, t_shell *minishell)
+static void	classic_infile(char *str, int tab, t_shell *minishell, t_node **list)
 {
 	int	i;
 
 	i = minishell->mod;
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] != '<')
 	{
-		search_infile(minishell, str, tab);
+		search_infile(minishell, str, &(minishell->tab_infile[tab]), list);
 		printf("classic infile\n");
 	}
 }
@@ -73,10 +82,14 @@ void	parse_redirections(t_shell *minishell)
 		minishell->mod = -1;
 		while (str[++(minishell->mod)] != '\0')
 		{
-			classic_infile(str, j, minishell);
+			classic_infile(str, j, minishell, &list_cpy);
+		if (minishell->mod != -1)
+		{
 			append_infile(str, j, minishell);
 			classic_outfile(str, j, minishell);
 			append_outfile(str, j, minishell);
+		}
+			str = (char *)(list_cpy->content);
 		}
 		list_cpy = list_cpy->next;
 	}
