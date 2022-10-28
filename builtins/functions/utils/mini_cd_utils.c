@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 17:46:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 17:05:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,21 @@
 
 int	no_path(t_mini_data *data)
 {
-	data->home_path = getenv("HOME");
+	int	i;
+
+	i = 0;
+	data->home_path = mini_getenv(data->env, data, "HOME");
 	if (data->home_path)
 	{
-		chdir(data->home_path);
+		while (data->home_path[i])
+		{
+				if (data->home_path[i] == '=')
+					break ;
+				i++;
+		}
+		i++;
+		chdir(&data->home_path[i]);
+		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 		*data->p_status = 0;
 		return (0);
 	}
@@ -29,7 +40,8 @@ int	path_exists(t_mini_data *data, t_node *node)
 	if (chdir(node->content) != 0)
 	{
 		*data->p_status = 1;
-		ft_printf("minishell: cd: %s: No such file or directory\n", node->content);
+		ft_printf("minishell: cd: %s: ", node->content);
+		ft_printf("No such file or directory\n");
 		return (1);
 	}
 	data->cwd = getcwd(data->buff, BUF_SIZE);
@@ -86,7 +98,10 @@ int	update_old_pwd(t_mini_data *data)
 	char	*str;
 
 	if (find_position(data, "OLDPWD") == data->envp_size)
-		check_oldpwd(data);
+	{
+		if (check_oldpwd(data) == 1)
+			return (1);
+	}
 	else
 	{
 		position = find_position(data, "OLDPWD");

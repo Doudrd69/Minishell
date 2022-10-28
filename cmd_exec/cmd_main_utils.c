@@ -1,37 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_functions.c                                :+:      :+:    :+:   */
+/*   cmd_main_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:44:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/26 15:02:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_exec/cmd_include/pipex_bonus.h"
+#include "cmd_include/pipex_bonus.h"
+#include "../includes/minishell.h"
 
-void	eof_handler_hd(t_data *data, char *input, int output_fd)
+void	sigtest(int signum)
 {
-	if (input == NULL)
-	{
-		close(output_fd);
-		close(data->hd_pipefd[data->hd_pipe_id][READ]);
-		data->p_status = 0;
-		exit (0);
-	}
-	return ;
+	(void)signum;
+	write(1, "Quit : 3\n", 9);
 }
 
-int	check_delimiter(char *str, char *delimiter)
+int	fork_creation(int pid)
 {
-	size_t	size;
+	pid = fork();
+	if (pid == -1)
+	{
+		ft_printf("Error : fork failed\n");
+		exit(1);
+	}
+	return (pid);
+}
 
-	size = 0;
-	while (str[size])
-		size++;
-	if (size == ft_strlen(delimiter))
-		return (0);
-	return (1);
+int	check_pipe(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
 }

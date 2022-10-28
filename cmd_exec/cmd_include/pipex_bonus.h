@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:42:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 17:53:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ typedef struct data
 }	t_data;
 
 /* HEREDOC */
+void	eof_handler_hd(t_data *data, char *input, int output_fd);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
-void	eof_handler_hd(char *input);
 void	sighandler_hd(int signum);
 void	heredoc(t_data *data);
 
@@ -137,13 +137,15 @@ void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
 void	eof_handler(char *input, t_shell *minishell);
+void	sigint_handler_in_process(int signum);
+void	sigint_handler_main_loop(int signum);
 void	close_pipe(t_data *data, int i);
 void	*node_rotation(t_node *node);
 void	free_param_tab(t_data *data);
-void	sighandler(int signum);
+void	sigtest(int signum);
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char 	**fill_param_tab(t_node *node, t_data *data, char **tab);
+char	**fill_param_tab(t_node *node, t_data *data, char **tab);
 char	**get_path(char *env[], t_data *data, char **args);
 char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
@@ -156,6 +158,7 @@ int		check_inputfile(t_data *data);
 int		check_outfile(t_data *data);
 int		pipe_creation(t_data *data);
 int		check_sq_cmd(char *cmd);
+int		fork_creation(int pid);
 int		check_pipe(char *str);
 
 #endif

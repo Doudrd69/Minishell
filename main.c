@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 13:10:24 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:08:24 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	exec_main(t_data *data, char *envp[], t_node *node);
 void	heredoc_main(t_data *data);
 
 int		p_status;
+
+void	sighandler_hd(int signum)
+{
+	(void)signum;
+	p_status = 1;
+	return ;
+}
 
 void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 {
@@ -53,13 +60,13 @@ int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int ch
 {
 	if (ft_strncmp(node->content, "export", 6) == 0)
 	{
-		export_exec(mini_data, data, node);
-		check = 1;
+			export_exec(mini_data, data, node);
+			return (1);
 	}
 	if (ft_strncmp(node->content, "unset", 5) == 0)
 	{
 		unset_exec(mini_data, data, node);
-		check = 1;
+			return (1);
 	}
 	return (check);
 }
@@ -80,7 +87,8 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 			status = (*builtins[i])(data, node);
 			if (status == 1)
 			{
-				printf("P_STATUS fail : %d\n", *data->p_status);
+				printf("P_STATUS fail : %d\n", status);
+				*data->p_status = status;
 				return (1);
 			}
 			if (status == 2)
@@ -115,11 +123,10 @@ int main(int argc, char *argv[], char *envp[])
 	sa.sa_handler = SIG_IGN;
 	init_main(&mini_data, &data, envp);
 	envp_check(&mini_data, &data, envp, envpsize);
-	mini_data.main_pid = getpid();
 	while (1)
 	{
-		signal(SIGINT, &sighandler);
 		sigaction(SIGQUIT, &sa, NULL);
+		signal(SIGINT, &sigint_handler_main_loop);
 		minishell = malloc(sizeof(t_shell));
 		init_variable(minishell, data.envp_size, data.envp);
 		minishell->cmd = readline("minishell$ ");
@@ -129,14 +136,13 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
-			if (minishell->list_size > 1)
+			if (minishell->nbr_pipe > 0)
 				mini_data.pipe_check = 1;
 			else
 				mini_data.pipe_check = 0;
 			node = minishell->head;
-			//print_dlist(&node, minishell);
-			check = 0;
 			data.envp_size = mini_data.envp_size;
+			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
 			check = export_and_unset(&mini_data, &data, node, check);
 			if (check == 0)
@@ -156,6 +162,10 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	while (node->next != NULL)
+		node = node->next;
+	*data->p_status = ft_atoi(node->content);
+	node = minishell->head;
 	exec_main(data, envp, node);				//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
@@ -171,6 +181,15 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 		free(data->hd_pid);
 	return ;
 }
-//dans HD ---> CTRL-C retourne au prompt sans executer le HD
-//demander le parsing du export
-//le exit va casser les couilles
+
+//PARSING WILLIAM
+	//pas le bon output --> echo $USER $123456789USER $USER123456789
+	//echo '' "" ne devrait rien afficher
+	//echo peut pas afficher plusieurs var d'affilées
+	//probleme avec quotes --> les quotes sont affichées
+	//sur l'export --> export LOL= on est la hein ==> LOL=on
+
+//MES TACHES
+	//faire la verification de la secu des malloc
+	//si "command not found" --> exit(127) et mettre p_status à 127
+	//CTRL-C fonctionnel dans les Heredoc

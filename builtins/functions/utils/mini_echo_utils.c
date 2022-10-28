@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/01 16:15:16 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:16:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/10/28 19:21:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	check_loop(char *str, int j)
 	return (0);
 }
 
-void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loop)
+void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check,
+int loop)
 {
 	int	j;
-	
+
 	while (ft_strncmp(data->str, "-n", 2) == 0 && loop == 0)
 	{
 		j = 0;
@@ -33,7 +34,10 @@ void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loo
 		if (check == 0)
 		{
 			data->echo_arg = 1;
-			node = node->next;
+			if (node->next != NULL)
+				node = node->next;
+			else
+				return (NULL);
 			data->str = node->content;
 		}
 		else
@@ -71,6 +75,11 @@ int	write_and_check_signs(int i, t_mini_data *data)
 {
 	while (data->str[i])
 	{
+		if (data->str[i] == '$' && data->str[i + 1] == '?')
+		{
+			ft_printf("%d", *data->p_status);
+			i += 2;
+		}
 		data->check_print_var = 0;
 		if (data->str[i] == '\0')
 			return (i);

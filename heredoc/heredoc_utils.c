@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:50:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 13:48:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,9 @@ int	print_var_util(t_data *data, char *str, int i, int output_fd)
 {
 	int		var_size;
 	char	*var;
-	char	*pid;
 
 	var_size = 0;
 	var = &str[i];
-	if (str[i] == '$' && str[i + 1] == '$')
-	{
-		pid = ft_itoa(getpid());
-		write(output_fd, pid, ft_strlen(pid));
-		return (i += 2);
-	}
 	if (str[i + 1] <= '9' && str[i + 1] >= '0')
 		return (i + 2);
 	if (print_var_hd(data, var_size, var, output_fd) == 2)

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 18:21:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 15:39:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,13 @@ char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
 	while (envp[i])
 	{
 		if (i == mini_data->envp_size)
-		{
-			ft_printf("\nCannot find %s\n", var_name);
 			return (NULL);
-		}
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
 			str = check_and_return_var(mini_data, envp, var_name, i);
 		if (str != NULL)
 			return (str);
 		i++;
 	}
-	printf("Cannot find %s\n", var_name);
 	return (NULL);
 }
 

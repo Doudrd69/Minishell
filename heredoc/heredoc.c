@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: will <will@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/25 22:18:48 by will             ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 13:42:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	heredoc_exit(char *str, int output_fd, t_data *data)
 			free(str);
 			close(output_fd);
 			close(data->hd_pipefd[data->hd_pipe_id][READ]);
+			data->p_status = 0;
 			exit(0);
 		}
 	}
@@ -97,7 +98,6 @@ void	heredoc(t_data *data)
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
-	data->hd.hd_pid = getpid();
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
@@ -105,7 +105,9 @@ void	heredoc(t_data *data)
 	{
 		size = 0;
 		str = readline("> ");
-		eof_handler_hd(str);
+		if (*data->p_status == 1)
+			dprintf(2, "Catch in while(1)\n");
+		eof_handler_hd(data, str, output_fd);
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)
@@ -114,4 +116,8 @@ void	heredoc(t_data *data)
 	}
 	return ;
 }
-//si on fait un CRTL-C ou CTRL-D ---> ne pas ecrire dans le fichier (donc pas le creer)
+
+//CTRL-D = On exec les commandes et on affiche un nouveau prompt
+	//j'affiche une ligne de trop (dans le HD? le '>' du readline s'affiche)
+//CTRL-C = on exit le(s) processus HD (pas d'exec des commandes) et on affiche un nouveau prompt
+	//j'affiche le nouveau prompt mais j'exec

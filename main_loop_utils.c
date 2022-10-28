@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:56:40 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 14:51:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,29 @@
 int	export_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 {
 	if (node->next != NULL)
-		node = node->next;
-	while (node != NULL)
 	{
-		mini_export(mini_data, node->content);
-		if (node->next == NULL)
-			break ;
+		node = node->next;
+		while (node != NULL)
+		{
+			mini_export(mini_data, node->content);
+			if (node->next == NULL)
+				break ;
+			mini_data->env = mini_data->new_env;
+			data->envp = mini_data->new_env;
+			node = node->next;
+		}
+		mini_data->new_env_check = 1;
+		if (mini_data->unset_env && mini_data->unset_env_check == 1)
+		{
+			free_tab(mini_data->unset_env, mini_data->envp_size - 2);
+			mini_data->unset_env_check = 0;
+		}
 		mini_data->env = mini_data->new_env;
 		data->envp = mini_data->new_env;
-		node = node->next;
+		return (0);
 	}
-	mini_data->new_env_check = 1;
-	if (mini_data->unset_env && mini_data->unset_env_check == 1)
-	{
-		free_tab(mini_data->unset_env, mini_data->envp_size - 2);
-		mini_data->unset_env_check = 0;
-	}
-	mini_data->env = mini_data->new_env;
-	data->envp = mini_data->new_env;
-	return (0);
+	ft_printf("minishell: export: '%s': not a valid identifier\n", node->content);
+	return (1);
 }
 
 int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
@@ -43,7 +47,8 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 		node = node->next;
 	while (node != NULL)
 	{
-		mini_unset(mini_data, node->content);
+		if (mini_unset(mini_data, node->content) == 1)
+			return (1);
 		if (node->next == NULL)
 			break ;
 		mini_data->env = mini_data->unset_env;
@@ -106,5 +111,3 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 	}
 	return ;
 }
-//si on a un argument apres la commande --> on saute l'argument (tant qu'il y en a) + le pipe
-//si on a une commande sans argument --> on saute le pipe
