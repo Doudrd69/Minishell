@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 16:35:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 17:05:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,14 @@ int	update_old_pwd(t_mini_data *data)
 	char	*str;
 
 	if (find_position(data, "OLDPWD") == data->envp_size)
-		check_oldpwd(data);
+	{
+		if (check_oldpwd(data) == 1)
+			return (1);
+	}
 	else
 	{
 		position = find_position(data, "OLDPWD");
 		size = ft_strlen(data->oldpwd);
-		printf("--> %s\n", data->oldpwd);
 		str = malloc(sizeof(char) * (size + 8));
 		if (!str)
 			return (1);

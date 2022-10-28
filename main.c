@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 16:02:16 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 18:07:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 			status = (*builtins[i])(data, node);
 			if (status == 1)
 			{
-				printf("P_STATUS fail : %d\n", *data->p_status);
+				printf("P_STATUS fail : %d\n", status);
+				*data->p_status = status;
 				return (1);
 			}
 			if (status == 2)
@@ -161,6 +162,10 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	while (node->next != NULL)
+		node = node->next;
+	*data->p_status = ft_atoi(node->content);
+	node = minishell->head;
 	exec_main(data, envp, node);				//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
