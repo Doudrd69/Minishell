@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 15:01:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 19:21:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ int loop)
 	{
 		j = 0;
 		check = check_loop(data->str, j);
-		if (node->next == NULL)
-			return (NULL);
 		if (check == 0)
 		{
 			data->echo_arg = 1;
-			node = node->next;
+			if (node->next != NULL)
+				node = node->next;
+			else
+				return (NULL);
 			data->str = node->content;
 		}
 		else
