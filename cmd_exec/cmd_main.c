@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:02:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 11:12:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	first_command(char *envp[], t_data *data, t_node *node)
 {
 	signal(SIGQUIT, &sigtest);
+	signal(SIGINT, &sigint_handler_in_process);
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{
@@ -32,6 +33,8 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 
 void	last_command(char *envp[], t_data *data, t_node *node)
 {
+	signal(SIGQUIT, &sigtest);
+	signal(SIGINT, &sigint_handler_in_process);
 	data->last_cmd_pid = fork_creation(data->last_cmd_pid);
 	if (data->last_cmd_pid == 0)
 	{
