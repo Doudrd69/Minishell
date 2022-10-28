@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 11:11:16 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 13:49:31 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		p_status;
 void	sighandler_hd(int signum)//CTRL-C
 {
 	(void)signum;
-	dprintf(2, "Catch SIGINT --> %d\n", getpid());
 	p_status = 1;
 	return ;
 }
@@ -123,7 +122,6 @@ int main(int argc, char *argv[], char *envp[])
 	sa.sa_handler = SIG_IGN;
 	init_main(&mini_data, &data, envp);
 	envp_check(&mini_data, &data, envp, envpsize);
-	mini_data.main_pid = getpid();
 	while (1)
 	{
 		sigaction(SIGQUIT, &sa, NULL);
@@ -184,10 +182,11 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //pas le bon output --> echo $USER $123456789USER $USER123456789
 //echo '' "" ne devrait rien afficher
 //echo peut pas afficher plusieurs var d'affilées
-//retirer les getpid
 
 //probleme avec quotes --> les quotes sont affichées
 //sur l'export --> export LOL= on est la hein ==> LOL=on
 
-//probleme si on unset PATH
-//probleme ctrl-c in cat --> double display
+//faire la verification de la secu des malloc
+//faire exit
+	//prend un int en param --> exit_status
+	//mettre la var_globale p_status avec le exit_status et exit
