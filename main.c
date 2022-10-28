@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:08:24 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:19:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
+			//print_dlist(&node, minishell);
 			if (minishell->nbr_pipe > 0)
 				mini_data.pipe_check = 1;
 			else
@@ -157,24 +158,24 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 {
 	t_node *node;
 
-	node = minishell->head;						//la on est sur la commande
+	node = minishell->head;
 	cmd_exec_init(data, minishell);
 	int pipe_nb = 0;
-	heredoc_main(data);							//exec des HD
-	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	heredoc_main(data);
+	pipe_nb = pipe_creation(data);
 	while (node->next != NULL)
 		node = node->next;
 	*data->p_status = ft_atoi(node->content);
 	node = minishell->head;
-	exec_main(data, envp, node);				//exec des commandes
-	if (data->check_hd == 1)					//on close les pipes des Heredocs
+	exec_main(data, envp, node);
+	if (data->check_hd == 1)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 	}
-	if (data->exec.pipe_check > 0)				//on close les pipes des process
+	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
-	while (wait(NULL) != -1)					//on attend les process
+	while (wait(NULL) != -1)
 		;
 	free_param_tab(data);
 	if (data->check_hd > 0)

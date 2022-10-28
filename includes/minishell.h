@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 14:40:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:17:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
 char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_size);
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
 char	**new_tab_with_existing_var(t_mini_data *data, char *var_export);
+char	*oldpwd_copy(t_mini_data *data, char *str, int size);
 char	**free_tab(char **tab, int i);
 char	*get_var_name(char *var);
 
+int		check_length(t_mini_data *data, size_t size, int position, char *str);
 int		check_var_exists_export(t_mini_data *data, char *var_export);
 int		specific_cases_with_special_char(t_mini_data *data, int i);
 int		var_search_copy(t_mini_data *data, int size, int i, int j);
@@ -103,9 +105,11 @@ int		check_special_char(char c, int size);
 int		update_old_pwd(t_mini_data *data);
 int		check_if_empty(t_mini_data *data);
 int		check_oldpwd(t_mini_data *data);
+int		newline_arg(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 int		no_path(t_mini_data *data);
 int		check_remains(char *str);
+int		no_args(t_node *node);
 
 /* GNL FUNCTIONS */
 size_t	ft_strlen_gnl(char *s);
