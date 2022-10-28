@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 19:21:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 19:49:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,6 @@ int	mini_env(t_mini_data *data, t_node *node)
 	return (2);
 }
 
-int	no_args(t_node *node)
-{
-	if ((ft_strncmp(node->content, "echo", 4) == 0))
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
-	return (1);
-}
-
 int	mini_echo(t_mini_data *data, t_node *node)
 {
 	int	i;
@@ -92,6 +82,7 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	loop = 0;
 	if (no_args(node) == 0)
 		return (0);
+	data->echo_arg = 0;
 	while (node != NULL)
 	{
 		i = 0;
@@ -104,16 +95,11 @@ int	mini_echo(t_mini_data *data, t_node *node)
 		if (check_if_empty(data) == 0)
 			return (0);
 		i = write_and_check_signs(i, data);
-		if (data->str[i] == '$' && data->str[i + 1] == '\0')
-			write(1, &data->str[i], 1);
 		if (node->next != NULL)
 			write(1, " ", 1);
 		node = node->next;
 	}
-	if (data->echo_arg == 0)
-		write(1, "\n", 1);
-	*data->p_status = 0;
-	return (0);
+	return (newline_arg(data));
 }
 
 int	mini_exit(t_mini_data *data, t_node *node)

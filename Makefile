@@ -22,6 +22,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		cmd_exec/cmd_main_utils.c								\
 		builtins/functions/utils/mini_export_existing_var.c		\
 		builtins/functions/utils/builtin_functions_utils.c		\
+		builtins/functions/utils/mini_echo_newline_arg.c		\
+		builtins/functions/utils/mini_cd_oldpwd_update.c		\
 		builtins/functions/utils/mini_getenv_utils.c			\
 		builtins/functions/utils/mini_export_utils.c			\
 		builtins/functions/utils/mini_unset_utils.c				\
