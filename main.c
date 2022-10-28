@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 15:55:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 18:07:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	heredoc_main(t_data *data);
 
 int		p_status;
 
-void	sighandler_hd(int signum)//CTRL-C
+void	sighandler_hd(int signum)
 {
 	(void)signum;
 	p_status = 1;
@@ -87,7 +87,8 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 			status = (*builtins[i])(data, node);
 			if (status == 1)
 			{
-				printf("P_STATUS fail : %d\n", *data->p_status);
+				printf("P_STATUS fail : %d\n", status);
+				*data->p_status = status;
 				return (1);
 			}
 			if (status == 2)
@@ -140,17 +141,13 @@ int main(int argc, char *argv[], char *envp[])
 			else
 				mini_data.pipe_check = 0;
 			node = minishell->head;
-			//print_dlist(&node, minishell);
 			data.envp_size = mini_data.envp_size;
 			check = 0;
-			//printf("MAIN PID %D\n", getpid());
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
 			check = export_and_unset(&mini_data, &data, node, check);
 			if (check == 0)
 				cmd_exec(&data, data.envp, minishell);
 		}
-		// printf("P_STATUS : %d\n", p_status);
-		// printf("MINI_DATA->P_STATUS : %d\n", *mini_data.p_status);
 		free(minishell->cmd);
 		free_all(minishell);
 	}
@@ -165,6 +162,10 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	int pipe_nb = 0;
 	heredoc_main(data);							//exec des HD
 	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	while (node->next != NULL)
+		node = node->next;
+	*data->p_status = ft_atoi(node->content);
+	node = minishell->head;
 	exec_main(data, envp, node);				//exec des commandes
 	if (data->check_hd == 1)					//on close les pipes des Heredocs
 	{
@@ -190,19 +191,3 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //sur l'export --> export LOL= on est la hein ==> LOL=on
 
 //faire la verification de la secu des malloc
-
-//faire exit ---> modif de mini_xit + dans echo faire l'affichage de $?
-	//prend un int en param --> exit_status
-	//mettre la var_globale p_status avec le exit_status et exit
-	//bash-3.2$ exit | exit 42
-	// bash-3.2$ echo $?
-	// 42
-	// bash-3.2$ exit 24 | exit
-	// bash-3.2$ echo $?
-	// 0
-	// bash-3.2$ exit 5 | exit 6
-	// bash-3.2$ echo $?
-	// 6
-
-	//cat | exit 88 | rev --> OK
-	// echo $? = 0

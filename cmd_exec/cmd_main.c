@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 15:04:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 16:02:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	first_command(char *envp[], t_data *data, t_node *node)
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{
-		//printf("FIRST COMMAND --> %s\n", node->content);
 		if (check_inputfile(data) != 0)
 			return ;
 		data->env.tab1 = get_path(envp, data, data->env.tab1);
@@ -39,7 +38,6 @@ void	last_command(char *envp[], t_data *data, t_node *node)
 	data->last_cmd_pid = fork_creation(data->last_cmd_pid);
 	if (data->last_cmd_pid == 0)
 	{
-		//printf("LAST COMMAND --> %s\n", node->content);
 		if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)
 		{
 			perror("dup2");
