@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 15:57:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 16:01:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 	int	i;
 
 	i = -1;
-	//printf("PARAM : %s\n", param[1]);
 	if (tab == NULL)
 	{
 		write(2, "PATH not found : can't execute command : ", 41);
@@ -98,7 +97,6 @@ void	last_cmd_execution(t_data *data, char *envp[])
 			close(data->output_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
-		//printf("LAST CMD BEFORE EXEC\n");
 		exec_cmd(data->env.tab2, data->env.param_tab2, envp, data);
 	}
 }
