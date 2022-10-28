@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 13:49:31 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 15:55:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
-			if (minishell->list_size > 1)
+			if (minishell->nbr_pipe > 0)
 				mini_data.pipe_check = 1;
 			else
 				mini_data.pipe_check = 0;
@@ -143,11 +143,14 @@ int main(int argc, char *argv[], char *envp[])
 			//print_dlist(&node, minishell);
 			data.envp_size = mini_data.envp_size;
 			check = 0;
+			//printf("MAIN PID %D\n", getpid());
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
 			check = export_and_unset(&mini_data, &data, node, check);
 			if (check == 0)
 				cmd_exec(&data, data.envp, minishell);
 		}
+		// printf("P_STATUS : %d\n", p_status);
+		// printf("MINI_DATA->P_STATUS : %d\n", *mini_data.p_status);
 		free(minishell->cmd);
 		free_all(minishell);
 	}
@@ -187,6 +190,19 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 //sur l'export --> export LOL= on est la hein ==> LOL=on
 
 //faire la verification de la secu des malloc
-//faire exit
+
+//faire exit ---> modif de mini_xit + dans echo faire l'affichage de $?
 	//prend un int en param --> exit_status
 	//mettre la var_globale p_status avec le exit_status et exit
+	//bash-3.2$ exit | exit 42
+	// bash-3.2$ echo $?
+	// 42
+	// bash-3.2$ exit 24 | exit
+	// bash-3.2$ echo $?
+	// 0
+	// bash-3.2$ exit 5 | exit 6
+	// bash-3.2$ echo $?
+	// 6
+
+	//cat | exit 88 | rev --> OK
+	// echo $? = 0
