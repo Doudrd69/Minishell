@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:57:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 15:06:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ typedef struct data
 
 /* HEREDOC */
 void	eof_handler_hd(t_data *data, char *input, int output_fd);
+void	heredoc(t_data *data, t_shell *parse, int index);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
 void	sighandler_hd(int signum);
-void	heredoc(t_data *data);
 
 char	*var_found(t_data *data, char *envp[], char *var_name, int i);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
@@ -120,19 +120,19 @@ int		check_var_exists(int j, t_data *data, int output_fd);
 int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
 int		check_delimiter(char *str, char *delimiter);
+int		heredoc_exec(t_data *data, t_shell *parse);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
 int		var_exists_hd(t_data *data);
-int		heredoc_exec(t_data *data);
 int		check_eof(char *str);
 
 /* COMMAND UTILS */
-void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id);
+void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
+void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
+void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[]);
+void	*commands(t_data *data, t_node *node, t_shell *parse, char *envp[]);
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
-void	last_command(char *envp[], t_data *data, t_node *node);
-void	first_command(char *envp[], t_data *data, t_node *node);
-void	*commands(t_data *data, t_node *node, char *envp[]);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	last_cmd_execution(t_data *data, char *envp[]);
@@ -151,11 +151,12 @@ char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
 char	**free_tab(char **tab, int i);
 
-int		check_outfile_last_cmd(t_data *data);
+int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
+int		check_outfile_last_cmd(t_data *data, t_shell *parse);
+int		check_inputfile(t_data *data, t_shell *parse);
+int		check_outfile(t_data *data, t_shell *parse);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
-int		check_inputfile(t_data *data);
-int		check_outfile(t_data *data);
 int		pipe_creation(t_data *data);
 int		check_sq_cmd(char *cmd);
 int		fork_creation(int pid);
