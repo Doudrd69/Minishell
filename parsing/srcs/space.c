@@ -61,7 +61,7 @@ void	parse_space(t_shell *minishell)
 		while (j-- >= 0 && list_cpy && list_cpy != NULL)
 			list_cpy = list_cpy->next;
 	}
-	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
+	//print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 }
 
 void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j)

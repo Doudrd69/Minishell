@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:08:24 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 09:45:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 void	init_main(t_mini_data *mini_data, t_data *data, char **envp);
-void	cmd_exec_init(t_data *data, t_shell *parse_data);
-int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	exec_main(t_data *data, char *envp[], t_node *node);
+void	cmd_exec_init(t_data *data, t_shell *parse_data);
 void	heredoc_main(t_data *data);
+
+int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
+int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 
 int		p_status;
 
@@ -155,26 +156,26 @@ int main(int argc, char *argv[], char *envp[])
 
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 {
-	t_node *node;
+	t_node	*node;
 
-	node = minishell->head;						//la on est sur la commande
+	node = minishell->head;
 	cmd_exec_init(data, minishell);
 	int pipe_nb = 0;
-	heredoc_main(data);							//exec des HD
-	pipe_nb = pipe_creation(data);				//On cree les pipe + il me faut le nombre de cmd la dedans
+	heredoc_main(data);
+	pipe_nb = pipe_creation(data);
 	while (node->next != NULL)
 		node = node->next;
 	*data->p_status = ft_atoi(node->content);
 	node = minishell->head;
-	exec_main(data, envp, node);				//exec des commandes
-	if (data->check_hd == 1)					//on close les pipes des Heredocs
+	exec_main(data, envp, node);
+	if (data->check_hd == 1)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 	}
-	if (data->exec.pipe_check > 0)				//on close les pipes des process
+	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
-	while (wait(NULL) != -1)					//on attend les process
+	while (wait(NULL) != -1)
 		;
 	free_param_tab(data);
 	if (data->check_hd > 0)
@@ -193,3 +194,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	//faire la verification de la secu des malloc
 	//si "command not found" --> exit(127) et mettre p_status à 127
 	//CTRL-C fonctionnel dans les Heredoc
+	//implementation redirections

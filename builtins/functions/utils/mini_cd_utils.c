@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 17:05:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:15:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	no_path(t_mini_data *data)
 	{
 		while (data->home_path[i])
 		{
-				if (data->home_path[i] == '=')
-					break ;
-				i++;
+			if (data->home_path[i] == '=')
+				break ;
+			i++;
 		}
 		i++;
 		chdir(&data->home_path[i]);
@@ -109,13 +109,9 @@ int	update_old_pwd(t_mini_data *data)
 		str = malloc(sizeof(char) * (size + 8));
 		if (!str)
 			return (1);
-		ft_strlcpy(str, "OLDPWD=", 7, 0);
-		ft_strlcpy(&str[7], data->oldpwd, size, 1);
-		if (size > ft_strlen(data->env[position]))
-		{
-			data->env[position] = str;
+		str = oldpwd_copy(data, str, size);
+		if (check_length(data, size, position, str) == 0)
 			return (0);
-		}
 		else
 			ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
 		free(str);

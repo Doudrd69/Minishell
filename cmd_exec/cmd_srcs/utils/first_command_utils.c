@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:10:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:51:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_pipe_and_exec(t_data *data)
 
 int	input_file_opening(t_data *data)
 {
-	data->input_fd = open(data->exec.infile_fd, O_RDONLY);
+	data->input_fd = open(data->exec.infile_fd, O_RDONLY);//ici se mettre sur le bon index du tableau
 	if (data->input_fd < 0)
 	{
 		ft_printf("minishell: %s: No such file or directory\n",

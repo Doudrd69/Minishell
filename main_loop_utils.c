@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 14:51:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:57:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	exec_main(t_data *data, char *envp[], t_node *node)
 {
 	if (data->cmd_nb > 0)
 	{
-		first_command(envp, data, node);
+		first_command(envp, data, node);//passer les infile/outfile ici
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);

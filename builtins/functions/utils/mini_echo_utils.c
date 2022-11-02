@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 19:21:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:02:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int loop)
 		}
 		else
 		{
+			if (node->next == NULL || ft_strncmp(node->content, "-n", 2) == 0)
+				break ;
 			data->echo_arg = 1;
 			break ;
 		}

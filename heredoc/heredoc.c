@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 13:42:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:10:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,3 @@ void	heredoc(t_data *data)
 	}
 	return ;
 }
-
-//CTRL-D = On exec les commandes et on affiche un nouveau prompt
-	//j'affiche une ligne de trop (dans le HD? le '>' du readline s'affiche)
-//CTRL-C = on exit le(s) processus HD (pas d'exec des commandes) et on affiche un nouveau prompt
-	//j'affiche le nouveau prompt mais j'exec

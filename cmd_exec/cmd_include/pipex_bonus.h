@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 17:53:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 20:57:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,9 @@ int		check_eof(char *str);
 /* COMMAND UTILS */
 void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id);
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data);
-void	first_command(char *envp[], t_data *data, t_node *node);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
 void	last_command(char *envp[], t_data *data, t_node *node);
+void	first_command(char *envp[], t_data *data, t_node *node);
 void	*commands(t_data *data, t_node *node, char *envp[]);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
