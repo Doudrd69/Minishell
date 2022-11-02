@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 15:06:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:37:30 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 	int	index;
 	int	ptr;
 	int	pipe_nb;
+	int	tmp = 0;
 
 	i = -1;
 	index = 0;
@@ -86,6 +87,7 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 		return (1);
 	while (++i < data->heredoc_nb)
 	{
+		tmp = index;
 		data->hd_pid[i] = fork();
 		if (data->hd_pid[i] == -1)
 		{
@@ -93,13 +95,14 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			return (1);
 		}
 		if (data->hd_pid[i] == 0)
-			heredoc(data, parse, index);//faut lui filer index ptdr
+			heredoc(data, parse, index);//on return la ou on en est dans la ligne
 		waitpid(data->hd_pid[i], &ptr, 0);
-		if (parse->tab_infile[index]->next == NULL)
+		if (parse->tab_infile[index]->next == NULL)	//on a terminé la ligne du tableau donc on passe a la suivante
 			index++;
-		printf("===> %d\n", index);
-		if (parse->tab_infile[index + 1] != NULL)
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
+		if (parse->tab_infile[index] != NULL && tmp == index)			//si la ligne existe on peut se promener dedans
+			parse->tab_infile[index] = parse->tab_infile[index]->next;	//probleme je saute le premier limiteur de la nouvelle ligne
+		if (parse->tab_infile[index] != NULL && tmp != index)			//on a changé de ligne
+			;
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
@@ -107,3 +110,5 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 }
 
 //pb j'affiche le limiter
+//a chaque tour --> tant que j'ai de trucs sur ma ligne on continue --> puis on incremente (nouvelle ligne si existe)
+//on reprend du debut de la liste
