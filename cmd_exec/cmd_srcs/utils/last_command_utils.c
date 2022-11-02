@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 13:58:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 17:03:56 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	int	size;
 
 	size = 0;
-	printf("Size of infile tab : %d\n", size);
 	if (parse->nbr_infile > 0)
 	{
 		while (parse->tab_infile[size])
