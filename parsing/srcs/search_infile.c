@@ -43,6 +43,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	j = -1;
 	while (++j < i)
 		cpy[j] = str[j];
+	printf("char =%s\n", str + j);
 	while (str[++i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0' && str[i] != ' ')
@@ -62,11 +63,13 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 	int		file;
 	char	*tmp;
 	char	*cpy;
+	int		space;
 
 	file = 0;
 	i = minishell->mod;
+	space = 0;
 	while (str[++i] != '\0' && str[i] == ' ')
-		file++;
+		space++;
 	while (str[i] != '\0' && str[i] != ' ')
 	{
 		file++;
@@ -74,7 +77,8 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 	}
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
-	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1, file + 1);
+	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
+	printf("tmp =%s\n", tmp);
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;

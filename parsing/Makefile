@@ -34,6 +34,8 @@ FILES = srcs/main.c								\
 		srcs/space.c							\
 		srcs/check_quote_dollars.c				\
 		srcs/new_value_dollars.c				\
+		srcs/search_infile.c					\
+		srcs/search_heredoc.c					\
 
 all: libs $(NAME)
 
@@ -41,7 +43,7 @@ libs:
 	$(MAKE) -C $(LIBSDIR)
 
 $(NAME): $(OBJ) $(LIBSDIR)libft.a
-	$(CC) $(SFLAGS) $(OBJ) -lreadline $(LIBSDIR)libft.a -o $(NAME)
+	$(CC) $(SFLAG) $(OBJ) -lreadline $(LIBSDIR)libft.a -o $(NAME)
 	
 $(OBJS_DIR)/%.o:		%.c parsing.h ${LIBSDIR}libft.h ${LIBSDIR}libft.a Makefile
 				mkdir -p $(dir $@)

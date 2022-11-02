@@ -92,7 +92,7 @@ char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name, t_shell *m
 	{
 		if (i == env_size)
 		{
-			ft_printf("\nCannot find %s\n", var_name);
+			printf("\nCannot find %s\n", var_name);
 			return (NULL);
 		}
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
