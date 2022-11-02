@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:08:27 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 14:20:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,15 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->lst_size = parse_data->list_size;
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
+	if (parse_data->nbr_appendin > 0)
+		data->check_hd = 1;
+	else
+		data->check_hd = 0;
 	data->cmd_nb = parse_data->nbr_pipe + 1;
 	data->size_ptab1 = 0;
 	data->size_ptab2 = 0;
 	data->size_ptab3 = 0;
 	data->heredoc_nb = 0;						//ca va degager apres implementation
-	data->check_hd = 0;							//ca va degager apres implementation
-	data->hd.delimiter_quotes = 0;				//ca va degager apres implementation
-	data->exec.first_cmd_squotes_check = 0;		//ca va degager apres implementation
-	data->exec.infile_check = 0;				//ca va degager apres implementation
-	data->exec.outfile_check = 0;				//ca va degager apres implementation
 	data->exec.last_cmd_outfile_check = 0;		//ca va degager apres implementation
 	if (data->cmd_nb > 1)
 		data->exec.pipe_check = 1;

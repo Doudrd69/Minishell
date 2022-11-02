@@ -6,17 +6,17 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 11:10:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:42:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	check_eof(char *str)
+int	check_eof(char *str, char *limiter)
 {
-	if ((ft_strncmp(str, "test", 4) == 0))
+	if ((ft_strncmp(str, limiter, 4) == 0))
 	{
-		if (check_delimiter(str, "test") == 0)
+		if (check_delimiter(str, limiter) == 0)
 			return (0);
 	}
 	return (1);

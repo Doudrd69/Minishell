@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 11:11:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 13:50:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,4 @@ int	pipe_creation(t_data *data)
 		i++;
 	}
 	return (i);
-}
-
-void	command_exec(t_data *data, t_node *node, char *envp[], int cmd_id)
-{
-	(void)cmd_id;
-	signal(SIGQUIT, &sigtest);
-	signal(SIGINT, &sigint_handler_in_process);
-	if (dup2(data->pipefd[data->pipe_id - 1][READ], STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		return ;
-	}
-	data->env.tab3 = get_path(envp, data, data->env.tab3);
-	data->env.param_tab3 = fill_param_tab(node, data, data->env.param_tab3);
-	while (data->env.param_tab3[data->size_ptab3])
-		data->size_ptab3++;
-	if (dup2(data->pipefd[data->pipe_id][WRITE], STDOUT_FILENO) == -1)
-	{
-		perror("dup2");
-		return ;
-	}
-	cmd_execution(data, envp, data->pipe_id);
 }
