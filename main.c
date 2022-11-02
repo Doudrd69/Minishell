@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 21:00:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 09:45:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,7 @@ int main(int argc, char *argv[], char *envp[])
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 {
 	t_node	*node;
-	t_node ***tab_lk;
 
-	tab_lk = malloc(sizeof(t_node *) * 2);
-	if (!tab_lk)
-		return (0);//faire une fonction de free
-	// tab_lk[0] = t_node **infile;
-	// tab_lk[0] = t_node **outfile;
 	node = minishell->head;
 	cmd_exec_init(data, minishell);
 	int pipe_nb = 0;
@@ -173,7 +167,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 		node = node->next;
 	*data->p_status = ft_atoi(node->content);
 	node = minishell->head;
-	exec_main(data, envp, node);//envoyer un t_node **
+	exec_main(data, envp, node);
 	if (data->check_hd == 1)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
@@ -201,10 +195,3 @@ void	cmd_exec(t_data *data, char **envp, t_shell *minishell)
 	//si "command not found" --> exit(127) et mettre p_status à 127
 	//CTRL-C fonctionnel dans les Heredoc
 	//implementation redirections
-
-	//--> pour les tableau infile/outfile
-		//ce sont des t_node **
-		//il me faut un tableau pour les trimballer donc t_node ***
-			//malloc(sizeof(t_ndoe *) * 2)
-			//-> tab[0] = t_node **infile
-			//-> tab[1] = t_node **outfile
