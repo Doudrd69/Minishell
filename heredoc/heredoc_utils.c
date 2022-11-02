@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 13:48:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:44:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_and_print_var_hd(char *str, t_data *data, int output_fd, int size)
 	while (i < size)
 	{
 		data->hd.bkslash_check = 0;
-		if (check_eof(str) == 0)
+		if (check_eof(str, data->hd.limiter) == 0)
 			return (0);
 		i = backslash_check(data, str, i);
 		if (str[i] == '$' && str[i + 1] != '\0' && data->hd.bkslash_check == 0)

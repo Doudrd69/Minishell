@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:37:30 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:46:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			return (1);
 		}
 		if (data->hd_pid[i] == 0)
-			heredoc(data, parse, index);//on return la ou on en est dans la ligne
+			heredoc(data, parse, index);
 		waitpid(data->hd_pid[i], &ptr, 0);
-		if (parse->tab_infile[index]->next == NULL)	//on a terminé la ligne du tableau donc on passe a la suivante
+		if (parse->tab_infile[index]->next == NULL)
 			index++;
-		if (parse->tab_infile[index] != NULL && tmp == index)			//si la ligne existe on peut se promener dedans
-			parse->tab_infile[index] = parse->tab_infile[index]->next;	//probleme je saute le premier limiteur de la nouvelle ligne
-		if (parse->tab_infile[index] != NULL && tmp != index)			//on a changé de ligne
+		if (parse->tab_infile[index] != NULL && tmp == index)
+			parse->tab_infile[index] = parse->tab_infile[index]->next;
+		if (parse->tab_infile[index] != NULL && tmp != index)
 			;
 		data->hd_pipe_id++;
 		data->hd_id++;

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:38:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:44:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour t
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];//pete ici
+	data->hd.limiter = parse->tab_infile[index]->content;
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
 	while (1)
@@ -111,7 +112,7 @@ void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour t
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)
-			heredoc_exit(str, parse->tab_infile[index]->content, output_fd, data);
+			heredoc_exit(str, data->hd.limiter, output_fd, data);
 		free(str);
 	}
 	return ;

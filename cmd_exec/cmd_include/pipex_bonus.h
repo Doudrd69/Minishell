@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 15:06:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:44:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct heredoc
 {
 	char	*env_var;
 	char	*env_var_value;
+	char	*limiter;
 	int		var_length;
 	int		delimiter_quotes;
 	int		hd_pid;
@@ -123,8 +124,8 @@ int		check_delimiter(char *str, char *delimiter);
 int		heredoc_exec(t_data *data, t_shell *parse);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
+int		check_eof(char *str, char *limiter);
 int		var_exists_hd(t_data *data);
-int		check_eof(char *str);
 
 /* COMMAND UTILS */
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 14:07:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:47:46 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	heredoc_main(t_data *data, t_shell *parse)
 
 	j = 0;
 	data->heredoc_nb = parse->nbr_appendin;
-	printf("HD number : %d\n", data->heredoc_nb);
 	if (data->heredoc_nb > 0)
 	{
 		heredoc_exec(data, parse);
