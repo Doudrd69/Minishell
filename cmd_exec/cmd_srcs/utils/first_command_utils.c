@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 14:20:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 17:24:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	iterate_outfile(t_shell *parse)
 	i = 0;
 	while (i < parse->nbr_outfile)
 	{
+		printf("==> %s\n", parse->tab_outfile[0]->content);
 		if (i == parse->nbr_outfile - 1)
 			return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
 					| O_CREAT, 0666));

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 17:03:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 18:17:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	{
 		while (parse->tab_infile[size])
 			size++;
-		input_file_opening_lastcmd(data, parse, size);
-	}
-	else
-	{
-		if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)
+		if (size > 1)
 		{
-			perror("dup2");
-			return (1);
+			input_file_opening_lastcmd(data, parse, size);
+			return (0);
 		}
-		return (0);
+	}
+	if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		return (1);
 	}
 	return (0);
 }

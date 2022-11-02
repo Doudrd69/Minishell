@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:49:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 18:13:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,5 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	//CTRL-C fonctionnel dans les Heredoc
 
 	//implementation redirections
-		//input file for first cmd done
-		//output file for first cmd
-		//output file for last cmd
-		//heredoc (reste a gerer si y'a des infile au milieux)
+		//verif des outfiles
+		//"< heredoc/heredoc.c grep if | cat -n" fait juste un cat -n --> faut gerer les conditions dans les fonctions inputfile
