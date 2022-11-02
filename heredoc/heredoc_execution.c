@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:58:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 17:12:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 		}
 		while ((parse->tab_infile[index]->type != 'A') && (parse->tab_infile[index]->next != NULL))
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		printf("LIMITER ----> %s\n", parse->tab_infile[index]->content);
 		if (data->hd_pid[i] == 0)
 			heredoc(data, parse, index);
 		waitpid(data->hd_pid[i], &ptr, 0);
