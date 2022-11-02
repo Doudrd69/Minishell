@@ -12,20 +12,17 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 	tab_outfile += 0;
 	while (tmp && tmp != NULL)
 	{
-		if (tmp->type != 'N')
-		{
-			printf("list[%d] =%s\ntype = %c\n\n", i, (char *)tmp->content, tmp->type);
-		}
-		else
-			printf("list[%d] =%s\ntype = No Type\n\n", i, (char *)tmp->content);
+
+		printf("list[%d] =%s\ntype = %c\n\n", i, (char *)(tmp->content), tmp->type);
 		tmp = tmp->next;
 		i++;
 	}
 	i = 0;
 	tmp_tab = *tab_infile;
-	while (tmp_tab[i] && tmp_tab[i] != NULL)
+	while (tmp_tab && tmp_tab[i] && tmp_tab[i] != NULL)
 	{
 		j = 0;
+
 		tmp = (tmp_tab)[i];
 		while (tmp && tmp != NULL)
 		{
