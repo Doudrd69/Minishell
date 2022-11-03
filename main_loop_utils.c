@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:57:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 17:14:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,16 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 	return (0);
 }
 
-void	heredoc_main(t_data *data)
+void	heredoc_main(t_data *data, t_shell *parse)
 {
 	int	j;
 	int	ptr;
 
 	j = 0;
+	data->heredoc_nb = parse->nbr_appendin;
 	if (data->heredoc_nb > 0)
 	{
-		heredoc_exec(data);
+		heredoc_exec(data, parse);
 		while (j < data->heredoc_nb)
 		{
 			waitpid(data->hd_pid[j], &ptr, 0);
@@ -92,21 +93,23 @@ void	*node_rotation(t_node *node)
 		node = node->next->next->next;
 	else
 		node = node->next;
-	if (ft_strncmp(node->content, "|", 1) == 0)
+	if (node->type == 'P')
 		node = node->next;
 	return (node);
 }
 
-void	exec_main(t_data *data, char *envp[], t_node *node)
+void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 {
 	if (data->cmd_nb > 0)
 	{
-		first_command(envp, data, node);//passer les infile/outfile ici
+		// if (node->type == 'P')
+		// 	node = node->next;
+		first_command(envp, data, node, parse);//passer les infile/outfile ici
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
-			node = commands(data, node, envp);
-			last_command(envp, data, node);
+			node = commands(data, node, parse, envp);
+			last_command(envp, data, node, parse);
 		}
 	}
 	return ;

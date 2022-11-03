@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:10:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:44:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 	return (1);
 }
 
-void	heredoc_exit(char *str, int output_fd, t_data *data)
+void	heredoc_exit(char *str, char *limiter, int output_fd, t_data *data)
 {
-	if ((ft_strncmp(str, "test", 4) == 0))
+	if ((ft_strncmp(str, limiter, 4) == 0))
 	{
-		if (check_delimiter(str, "test") == 0)
+		if (check_delimiter(str, limiter) == 0)
 		{
 			free(str);
 			close(output_fd);
@@ -89,7 +89,7 @@ void	heredoc_exit(char *str, int output_fd, t_data *data)
 	return ;
 }
 
-void	heredoc(t_data *data)
+void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour trouver que les infile de type A
 {
 	struct sigaction	sa_hd;
 	int					output_fd;
@@ -98,7 +98,8 @@ void	heredoc(t_data *data)
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
-	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
+	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];//pete ici
+	data->hd.limiter = parse->tab_infile[index]->content;
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
 	while (1)
@@ -111,7 +112,7 @@ void	heredoc(t_data *data)
 		while (str[size])
 			size++;
 		if (check_and_print_var_hd(str, data, output_fd, size) == 0)
-			heredoc_exit(str, output_fd, data);
+			heredoc_exit(str, data->hd.limiter, output_fd, data);
 		free(str);
 	}
 	return ;

@@ -14,6 +14,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		cmd_exec/cmd_srcs/utils/first_command_utils.c			\
 		cmd_exec/cmd_srcs/utils/last_command_utils.c			\
 		cmd_exec/cmd_srcs/utils/single_quote_exec.c				\
+		cmd_exec/cmd_srcs/utils/multi_commands_utils.c			\
 		cmd_exec/cmd_srcs/child_execution_bonus.c				\
 		cmd_exec/cmd_srcs/main_pipe_creation.c					\
 		cmd_exec/cmd_srcs/main_utils_bonus.c					\

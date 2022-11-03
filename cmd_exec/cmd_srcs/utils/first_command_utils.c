@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:51:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 14:20:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int	check_pipe_and_exec(t_data *data)
 	return (0);
 }
 
-int	input_file_opening(t_data *data)
+int	input_file_opening(t_data *data, t_shell *parse)
 {
-	data->input_fd = open(data->exec.infile_fd, O_RDONLY);//ici se mettre sur le bon index du tableau
+	while (parse->tab_infile[0]->next != NULL)
+		parse->tab_infile[0] = parse->tab_infile[0]->next;
+	data->input_fd = open(parse->tab_infile[0]->content, O_RDONLY);
 	if (data->input_fd < 0)
 	{
 		ft_printf("minishell: %s: No such file or directory\n",
-			data->exec.infile_fd);
+			parse->tab_infile[0]->content);
 		return (1);
 	}
 	if (dup2(data->input_fd, STDIN_FILENO) == -1)
@@ -44,7 +46,7 @@ int	input_file_opening(t_data *data)
 	return (0);
 }
 
-int	check_inputfile(t_data *data)
+int	check_inputfile(t_data *data, t_shell *parse)
 {
 	if (data->check_hd == 1 && data->exec.infile_check == 0)
 	{
@@ -56,24 +58,34 @@ int	check_inputfile(t_data *data)
 		}
 		return (0);
 	}
-	if (data->exec.infile_check == 1)
-		*data->p_status = input_file_opening(data);
+	if (parse->nbr_infile > 0)
+		*data->p_status = input_file_opening(data, parse);
 	data->input_fd = STDIN_FILENO;
 	return (0);
 }
 
-int	check_outfile(t_data *data)
+int	iterate_outfile(t_shell *parse)
 {
-	if (data->exec.outfile_check == 1)
+	int	i;
+
+	i = 0;
+	while (i < parse->nbr_outfile)
 	{
-		if (data->exec.append_check == 1)
-			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_CREAT,
-					0666);
-		else
-		{
-			data->output_fd = open(data->exec.outfile_fd, O_WRONLY | O_TRUNC
-					| O_CREAT, 0666);
-		}
+		if (i == parse->nbr_outfile - 1)
+			return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
+					| O_CREAT, 0666));
+		open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		parse->tab_outfile[0] = parse->tab_outfile[0]->next;
+		i++;
+	}
+	return (-1);
+}
+
+int	check_outfile(t_data *data, t_shell *parse)
+{
+	if (parse->nbr_outfile > 0 && parse->nbr_pipe == 0)
+	{
+		data->output_fd = iterate_outfile(parse);
 		if (data->output_fd < 0)
 		{
 			ft_printf("Error : can't open file :\n");
