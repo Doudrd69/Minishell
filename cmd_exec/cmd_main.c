@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:17:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 14:48:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 	{
 		if (check_inputfile_last_cmd(data, parse) != 0)
 			return ;
+		dprintf(2, "***** TEST 3\n");
 		check_outfile_last_cmd(data, parse);
 		data->env.tab2 = get_path(envp, data, data->env.tab2);
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:13:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 15:04:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,5 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		//verif des outfiles
 		//"< heredoc/heredoc.c grep if | cat -n" fait juste un cat -n --> faut gerer les conditions dans les fonctions inputfile
 		//si plusieurs infiles (HD et Files) --> on va toujours prendre et executer le DERNIER
-
-		//si que HD --> crash
+		//gerer les grands nombres pour exit (< 255 je crois)
+		//"< main.c <<q < no_env.c <<w cat | <<e rev" --> la derniere commande n'a pas l.air de lire dans le bon stdin?

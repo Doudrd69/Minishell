@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:23:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 14:48:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,13 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	int	size;
 
 	size = 0;
-	if (parse->nbr_infile > 0)
+	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && parse->tab_infile[1])
 	{
-		while (parse->tab_infile[size])
+		while (parse->tab_infile[size] != NULL)
 			size++;
 		while (parse->tab_infile[size - 1]->next != NULL)
 			parse->tab_infile[size - 1] = parse->tab_infile[size - 1]->next;
-		if (parse->tab_infile[size - 1]->type == 'C')
-			return (input_file_opening_lastcmd(data, parse, size));
-		if (parse->tab_infile[size - 1]->type == 'A')
+		if (data->check_hd == 1 && (parse->tab_infile[size - 1]->type == 'A'))
 		{
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
 				STDIN_FILENO) == -1)
@@ -91,9 +89,14 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 				perror("dup2");
 				return (1);
 			}
+			dprintf(2, "==> STDIN on HD_PIPE %d\n", data->hd_pipe_id);
 			return (0);
 		}
+		dprintf(2, "***** TEST 1\n");
+		if (parse->tab_infile[size - 1]->type == 'C')
+			return (input_file_opening_lastcmd(data, parse, size));
 	}
+	dprintf(2, "***** TEST 2\n");
 	if (dup2(data->pipefd[data->cmd_nb - 2][READ], STDIN_FILENO) == -1)
 	{
 		perror("dup2");
