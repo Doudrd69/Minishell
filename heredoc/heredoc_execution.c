@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 17:12:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 14:51:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 	int	index;
 	int	ptr;
 	int	pipe_nb;
-	int	tmp = 0;
+	int	tmp;
 
 	i = -1;
 	index = 0;
@@ -91,7 +91,7 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 		data->hd_pid[i] = fork();
 		if (data->hd_pid[i] == -1)
 		{
-			printf("Error while creating heredoc process\n");
+			ft_printf("Error while creating heredoc process\n");
 			return (1);
 		}
 		while ((parse->tab_infile[index]->type != 'A') && (parse->tab_infile[index]->next != NULL))
@@ -99,18 +99,20 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 		if (data->hd_pid[i] == 0)
 			heredoc(data, parse, index);
 		waitpid(data->hd_pid[i], &ptr, 0);
-		if (parse->tab_infile[index]->next == NULL)
+		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL))
+			break ;
+		else if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
 			index++;
-		if (parse->tab_infile[index] != NULL && tmp == index)
+		else if (parse->tab_infile[index] != NULL && tmp == index)
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		if (parse->tab_infile[index] != NULL && tmp != index)
+		else if (parse->tab_infile[index] != NULL && tmp != index)
+			;
+		else if (parse->tab_infile[index]->next == NULL && parse->tab_infile[index + 1])
+			index++;
+		else
 			;
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
 	return (0);
 }
-
-//pb j'affiche le limiter
-//a chaque tour --> tant que j'ai de trucs sur ma ligne on continue --> puis on incremente (nouvelle ligne si existe)
-//on reprend du debut de la liste
