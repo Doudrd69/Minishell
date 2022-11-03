@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:24:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 18:21:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 			}
 			return (0);
 		}
-		if (parse->nbr_infile > 0 && (parse->tab_infile[0]->type == 'C'))//si dernier INFILE == File on passe ici
+		if (parse->tab_infile[0]->type == 'C')//si dernier INFILE == File on passe ici
 			*data->p_status = input_file_opening(data, parse);
 		data->input_fd = STDIN_FILENO;
 	}
@@ -69,30 +69,28 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 
 int	iterate_outfile(t_shell *parse)
 {
-	int	i;
-
-	i = 0;
-	while (i < parse->nbr_outfile)
+	while (parse->tab_outfile[0] != NULL)
 	{
-		printf("==> %s\n", parse->tab_outfile[0]->content);
-		if (i == parse->nbr_outfile - 1)
+		if (parse->tab_outfile[0]->next == NULL)
+		{
+			dprintf(2, "Outfile first_cmd opening ==> %s\n", parse->tab_outfile[0]->content);
 			return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
 					| O_CREAT, 0666));
+		}
 		open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		parse->tab_outfile[0] = parse->tab_outfile[0]->next;
-		i++;
 	}
 	return (-1);
 }
 
 int	check_outfile(t_data *data, t_shell *parse)
 {
-	if (parse->nbr_outfile > 0 && parse->nbr_pipe == 0)
+	if (parse->nbr_outfile > 0 && parse->tab_outfile[0])
 	{
 		data->output_fd = iterate_outfile(parse);
 		if (data->output_fd < 0)
 		{
-			ft_printf("Error : can't open file :\n");
+			ft_printf("Error : can't open file : %s\n", parse->tab_outfile[0]->content);
 			return (1);
 		}
 		if (dup2(data->output_fd, STDOUT_FILENO) == -1)
