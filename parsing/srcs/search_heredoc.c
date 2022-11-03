@@ -53,7 +53,8 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	while (str[i] != '\0')
 		cpy[j++] = str[i++];
 	cpy[j] = '\0';
-	printf("cpy =%s|\n", cpy);
+	if (j == 0)
+		cpy = NULL;
 	include_dollar_list(minishell, list, cpy);
 }
 

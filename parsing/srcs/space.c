@@ -47,16 +47,22 @@ void	parse_space(t_shell *minishell)
 	{
 		str = (char *)(list_cpy->content);
 		tab = ft_split(str, ' ');
+		if (tab == NULL)
+		{
+			minishell->head = NULL;
+			list_cpy = minishell->head;
+		}
 		j = -1;
-		while (tab[++j] != NULL)
+		while (tab && tab[++j] != NULL)
 			list_nospace(minishell, &list_cpy, tab[j], j);
 		tmp = list_cpy;
-		list_cpy = list_cpy->next;
+		if (tmp)
+			list_cpy = list_cpy->next;
 		if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
 			ft_mid(list_cpy, tmp, minishell);
-		else if (tmp->prev == NULL && tmp->next->next != NULL)
+		else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
 			ft_prev(list_cpy, minishell, tmp);
-		else
+		else if (tmp)
 			ft_next(list_cpy, minishell, tmp);
 		while (j-- >= 0 && list_cpy && list_cpy != NULL)
 			list_cpy = list_cpy->next;

@@ -3,30 +3,42 @@
 void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_shell *minishell)
 {
 	t_node	*tmp;
-	t_node	**tmp_tab;
+	t_node	**tmp_intab;
+	t_node	**tmp_outab;
 	int		i;
 	int		j;
 
 	i = 1;
 	tmp = (*list);
-	tab_outfile += 0;
 	while (tmp && tmp != NULL)
 	{
-
 		printf("list[%d] =%s\ntype = %c\n\n", i, (char *)(tmp->content), tmp->type);
 		tmp = tmp->next;
 		i++;
 	}
 	i = 0;
-	tmp_tab = *tab_infile;
-	while (tmp_tab && tmp_tab[i] && tmp_tab[i] != NULL)
+	tmp_intab = *tab_infile;
+	while (tmp_intab && tmp_intab[i] && tmp_intab[i] != NULL)
 	{
 		j = 0;
-
-		tmp = (tmp_tab)[i];
+		tmp = (tmp_intab)[i];
 		while (tmp && tmp != NULL)
 		{
 			printf("infile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
+			j++;
+			tmp = tmp->next;
+		}
+		i++;
+	}
+	i = 0;
+	tmp_outab = *tab_outfile;
+	while (tmp_outab && tmp_outab[i] && tmp_outab[i] != NULL)
+	{
+		j = 0;
+		tmp = (tmp_outab)[i];
+		while (tmp && tmp != NULL)
+		{
+			printf("outfile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
 			j++;
 			tmp = tmp->next;
 		}
