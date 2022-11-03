@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 11:02:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 18:20:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	last_cmd_execution(t_data *data, char *envp[])
 			close_pipe(data, (data->cmd_nb - 2));
 		// if (data->exec.outfile_check == 1)		//close dans le main?
 		// 	close(data->output_fd);
+		// if (data->exec.infile_check == 1)		//peut etre pas close ici
+		// 	close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		exec_cmd(data->env.tab2, data->env.param_tab2, envp, data);
@@ -114,6 +116,8 @@ void	cmd_execution(t_data *data, char *envp[], int pipe_id)
 			close_pipe(data, pipe_id + 1);
 		else
 			close_pipe(data, pipe_id);
+		if (data->input_fd > 0)
+			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		exec_cmd(data->env.tab3, data->env.param_tab3, envp, data);
