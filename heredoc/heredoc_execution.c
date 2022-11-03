@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 17:12:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 11:16:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 	int	index;
 	int	ptr;
 	int	pipe_nb;
-	int	tmp = 0;
+	int	tmp;
 
 	i = -1;
 	index = 0;
@@ -99,12 +99,16 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 		if (data->hd_pid[i] == 0)
 			heredoc(data, parse, index);
 		waitpid(data->hd_pid[i], &ptr, 0);
-		if (parse->tab_infile[index]->next == NULL)
+		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL))
+			break ;
+		if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
 			index++;
 		if (parse->tab_infile[index] != NULL && tmp == index)
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
 		if (parse->tab_infile[index] != NULL && tmp != index)
 			;
+		if (parse->tab_infile[index]->next == NULL && parse->tab_infile[index + 1])
+			index++;
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}

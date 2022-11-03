@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 18:17:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 11:23:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	check_outfile_last_cmd(t_data *data, t_shell *parse)
 
 int	input_file_opening_lastcmd(t_data *data, t_shell *parse, int size)
 {
-	while (parse->tab_infile[size - 1]->next != NULL)
-		parse->tab_infile[size - 1] = parse->tab_infile[size - 1]->next;
 	data->input_fd = open(parse->tab_infile[size - 1]->content, O_RDONLY);
-	printf("inputfile in last cmd : %s\n", parse->tab_infile[size - 1]->content);
 	if (data->input_fd < 0)
 	{
 		ft_printf("minishell: %s: No such file or directory\n",
@@ -72,7 +69,6 @@ int	input_file_opening_lastcmd(t_data *data, t_shell *parse, int size)
 	}
 	return (0);
 }
-//derniere commande donc je vais forcement chercher la derniere ligne du tableau
 
 int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 {
@@ -83,9 +79,18 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	{
 		while (parse->tab_infile[size])
 			size++;
-		if (size > 1)
+		while (parse->tab_infile[size - 1]->next != NULL)
+			parse->tab_infile[size - 1] = parse->tab_infile[size - 1]->next;
+		if (parse->tab_infile[size - 1]->type == 'C')
+			return (input_file_opening_lastcmd(data, parse, size));
+		if (parse->tab_infile[size - 1]->type == 'A')
 		{
-			input_file_opening_lastcmd(data, parse, size);
+			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
+				STDIN_FILENO) == -1)
+			{
+				perror("dup2");
+				return (1);
+			}
 			return (0);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 18:13:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 11:13:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	//echo peut pas afficher plusieurs var d'affilées
 	//probleme avec quotes --> les quotes sont affichées
 	//sur l'export --> export LOL= on est la hein ==> LOL=on
+	//echo "                          5                     " doit print tout les espaces
 
 //MES TACHES
 	//faire la verification de la secu des malloc
@@ -200,3 +201,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	//implementation redirections
 		//verif des outfiles
 		//"< heredoc/heredoc.c grep if | cat -n" fait juste un cat -n --> faut gerer les conditions dans les fonctions inputfile
+		//si plusieurs infiles (HD et Files) --> on va toujours prendre et executer le DERNIER
+
+		//si que HD --> crash
