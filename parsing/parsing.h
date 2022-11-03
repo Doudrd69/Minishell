@@ -71,6 +71,8 @@ char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_redirections(t_shell *minishell);
 void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list);
 void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list);
+void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list);
+void	search_append(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
