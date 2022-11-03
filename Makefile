@@ -62,6 +62,10 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/search_heredoc.c							\
 		parsing/srcs/search_outfile.c							\
 		parsing/srcs/search_append.c							\
+		parsing/srcs/split_minishell.c							\
+		parsing/srcs/split_minishell_nbr_words.c				\
+		parsing/srcs/split_minishell_malloc_ws.c				\
+		parsing/srcs/parse_space_quote.c						\
 		main_loop_utils.c										\
 		main_utils.c											\
 		no_env.c												\

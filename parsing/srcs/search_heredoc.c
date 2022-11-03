@@ -58,6 +58,35 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	include_dollar_list(minishell, list, cpy);
 }
 
+int	check_quote_heredoc(t_shell *minishell, char *str, int len)
+{
+	int	i;
+	int	dquote;
+
+	i = 0;
+	dquote = 0;
+	minishell->quote = 0;
+	while (i < len + 1 && str[i] != '\0')
+	{
+		if (str[i] == '\"' && minishell->quote != 1 && str[i - 1] != '\\')
+			minishell->quote = 1;
+		else if (str[i] == '\"' && minishell->quote != 0 && str[i - 1] != '\\')
+			minishell->quote = 0;
+		if (str[i] == '\'' && dquote != 1 && str[i - 1] != '\\')
+			dquote = 1;
+		else if (str[i] == '\'' && dquote != 0 && str[i - 1] != '\\')
+			dquote = 0;
+		if (str[i] == '<' && str[i + 1] == '<'
+			&& (minishell->quote == 1 || dquote == 1))
+			return (0);
+		if (str[i] == '<' && str[i + 1] == '<'
+			&& (minishell->quote == 0 || dquote == 0))
+			return (1);
+		i++;
+	}
+	return (1);
+}
+
 void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
 {
 	int		i;

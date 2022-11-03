@@ -29,3 +29,20 @@ void	init_dlist_var(t_shell *minishell)
 	minishell->tail = NULL;
 	minishell->list_size = 0;
 }
+
+void	init_var_redirection(t_shell *minishell, int size)
+{
+	int	i;
+
+	i = 0;
+	minishell->tab_infile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
+	minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
+	while (i <= size)
+	{
+		minishell->tab_infile[i] = NULL;
+		minishell->tab_outfile[i] = NULL;
+		i++;
+	}
+	minishell->infile_size = 0;
+	minishell->outfile_size = 0;
+}
