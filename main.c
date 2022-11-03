@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 19:24:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 19:34:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,3 +204,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		//si plusieurs infiles (HD et Files) --> on va toujours prendre et executer le DERNIER
 		//gerer les grands nombres pour exit (< 255 je crois)
 		//"< main.c <<q < no_env.c <<w cat | <<e rev" --> la derniere commande n'a pas l.air de lire dans le bon stdin?
+		//enfait il me faut la taille des tableaux mdr
