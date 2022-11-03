@@ -46,3 +46,8 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 	}
 	printf("list_size = %d\n\n", minishell->list_size);
 }
+
+/*
+parse quote comment faire
+
+*/

@@ -25,7 +25,7 @@ void	tokenizers_arg(t_shell *minishell)
 		|| minishell->nbr_outfile != 0 || minishell->nbr_appendout != 0)
 		parse_redirections(minishell);
 	if (minishell->head && minishell->head != NULL)
-		parse_space(minishell);
+		parse_space_quote(minishell);
 }
 
 void	first_parse(t_shell *minishell, char *str)

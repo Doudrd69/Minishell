@@ -34,7 +34,8 @@ static void	include_infile_list(t_node **tab_list, char *tmp)
 	list_cpy->type = 'C';
 }
 
-static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char *str)
+static void	delete_file_list(t_shell *minishell, t_node **list,
+	char *cpy, char *str)
 {
 	int	i;
 	int	j;
@@ -59,7 +60,37 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	include_dollar_list(minishell, list, cpy);
 }
 
-void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
+int	check_quote_infile(t_shell *minishell, char *str, int len)
+{
+	int	i;
+	int	dquote;
+
+	i = 0;
+	dquote = 0;
+	minishell->quote = 0;
+	while (i < len + 1 && str[i] != '\0')
+	{
+		if (str[i] == '\"' && minishell->quote != 1 && str[i - 1] != '\\')
+			minishell->quote = 1;
+		else if (str[i] == '\"' && minishell->quote != 0 && str[i - 1] != '\\')
+			minishell->quote = 0;
+		if (str[i] == '\'' && dquote != 1 && str[i - 1] != '\\')
+			dquote = 1;
+		else if (str[i] == '\'' && dquote != 0 && str[i - 1] != '\\')
+			dquote = 0;
+		if (str[i] == '<' && str[i + 1] != '<'
+			&& (minishell->quote == 1 || dquote == 1))
+			return (0);
+		if (str[i] == '<' && str[i + 1] != '<'
+			&& (minishell->quote == 0 || dquote == 0))
+			return (1);
+		i++;
+	}
+	return (1);
+}
+
+void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
+	t_node **list)
 {
 	int		i;
 	int		file;
@@ -84,5 +115,6 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
+	printf("infile = %s\n", (char *)((*tab_infile)->content));
 	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 }
