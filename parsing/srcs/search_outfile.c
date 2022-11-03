@@ -59,7 +59,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	include_dollar_list(minishell, list, cpy);
 }
 
-void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
+void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list)
 {
 	int		i;
 	int		file;
@@ -81,7 +81,7 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
 	printf("tmp =%s\n", tmp);
-	include_infile_list(tab_infile, tmp);
+	include_infile_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
 	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);

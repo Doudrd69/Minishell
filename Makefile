@@ -60,6 +60,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/new_value_dollars.c						\
 		parsing/srcs/search_infile.c							\
 		parsing/srcs/search_heredoc.c							\
+		parsing/srcs/search_outfile.c							\
+		parsing/srcs/search_append.c							\
 		main_loop_utils.c										\
 		main_utils.c											\
 		no_env.c												\

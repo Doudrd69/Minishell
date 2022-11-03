@@ -22,7 +22,7 @@ static void	add_back_file_list(t_node **tab_list, t_node *new)
 	}
 }
 
-static void	include_infile_list(t_node **tab_list, char *tmp)
+static void	include_heredoc_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
@@ -31,7 +31,7 @@ static void	include_infile_list(t_node **tab_list, char *tmp)
 	list_cpy = *tab_list;
 	while (list_cpy && list_cpy->next != NULL && list_cpy != NULL)
 				list_cpy = list_cpy->next;
-	list_cpy->type = 'C';
+	list_cpy->type = 'A';
 }
 
 static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char *str)
@@ -43,7 +43,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	j = -1;
 	while (++j < i)
 		cpy[j] = str[j];
-	printf("char =%s\n", str + j);
+	i++;
 	while (str[++i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0' && str[i] != ' ')
@@ -59,19 +59,18 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	include_dollar_list(minishell, list, cpy);
 }
 
-void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
+void	search_append(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list)
 {
 	int		i;
 	int		file;
 	char	*tmp;
 	char	*cpy;
-	int		space;
 
 	file = 0;
 	i = minishell->mod;
-	space = 0;
+	i += 1;
 	while (str[++i] != '\0' && str[i] == ' ')
-		space++;
+		file++;
 	while (str[i] != '\0' && str[i] != ' ')
 	{
 		file++;
@@ -79,9 +78,8 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 	}
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
-	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
-	printf("tmp =%s\n", tmp);
-	include_infile_list(tab_infile, tmp);
+	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1, file + 1);
+	include_heredoc_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
 	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);

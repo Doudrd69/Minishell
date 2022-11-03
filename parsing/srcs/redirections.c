@@ -22,7 +22,6 @@ static void	classic_infile(char *str, int tab, t_shell *minishell, t_node **list
 	i = minishell->mod;
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] != '<')
 	{
-		printf("classic infile\n");
 		search_infile(minishell, str, &(minishell->tab_infile[tab]), list);
 	}
 }
@@ -34,31 +33,30 @@ static void	append_infile(char *str, int tab, t_shell *minishell, t_node **list)
 	i = minishell->mod;
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] == '<')
 	{
-		printf("append infile\n");
 		search_heredoc(minishell, str, &(minishell->tab_infile[tab]), list);
 		i++;
 	}
 }
 
-static void	classic_outfile(char *str, int tab, t_shell *minishell)
+static void	classic_outfile(char *str, int tab, t_shell *minishell, t_node **list)
 {
 	int	i;
 
 	i = minishell->mod;
-	tab += 0;
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] != '>')
-		printf("classic outfile\n");
+	{
+		search_outfile(minishell, str, &(minishell->tab_outfile[tab]), list);
+	}
 }
 
-static void	append_outfile(char *str, int tab, t_shell *minishell)
+static void	append_outfile(char *str, int tab, t_shell *minishell, t_node **list)
 {
 	int	i;
 
 	i = minishell->mod;
-	tab += 0;
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] == '>')
 	{
-		printf("append outfile\n");
+		search_append(minishell, str, &(minishell->tab_outfile[tab]), list);
 		i++;
 	}
 }
@@ -80,7 +78,7 @@ void	parse_redirections(t_shell *minishell)
 			j++;
 		str = (char *)(list_cpy->content);
 		minishell->mod = -1;
-		while (str[++(minishell->mod)] != '\0')
+		while (str && str[++(minishell->mod)] != '\0')
 		{
 			classic_infile(str, j, minishell, &list_cpy);
 			if (minishell->mod != -1)
@@ -88,13 +86,14 @@ void	parse_redirections(t_shell *minishell)
 				append_infile(str, j, minishell, &list_cpy);
 				if (minishell->mod != -1)
 				{
-					classic_outfile(str, j, minishell);
+					classic_outfile(str, j, minishell, &list_cpy);
 					if (minishell->mod != -1)
-						append_outfile(str, j, minishell);
+						append_outfile(str, j, minishell, &list_cpy);
 				}
 			}
 			str = (char *)(list_cpy->content);
 		}
+
 		list_cpy = list_cpy->next;
 	}
 }
