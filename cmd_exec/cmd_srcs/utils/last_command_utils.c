@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 09:52:51 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 11:25:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	iterate_outfile_lastcmd(t_shell *parse)
 {
 	int	size;
 
-	size = parse->nbr_pipe;
+	size = parse->outfile_size;
 	while (parse->tab_outfile[size] != NULL)
 	{
 		if (parse->tab_outfile[size]->next == NULL)
@@ -29,12 +29,15 @@ int	iterate_outfile_lastcmd(t_shell *parse)
 
 int	check_outfile_last_cmd(t_data *data, t_shell *parse)
 {
-	if (parse->nbr_outfile > 0 && parse->tab_outfile[parse->nbr_pipe])
+	int	size;
+
+	size = parse->outfile_size;
+	if (parse->nbr_outfile > 0 && parse->tab_outfile[size])
 	{
 		data->output_fd = iterate_outfile_lastcmd(parse);
 		if (data->output_fd < 0)
 		{
-			ft_printf("Error : can't open file : %s\n", parse->tab_outfile[parse->nbr_pipe]->content);
+			ft_printf("Error : can't open file : %s\n", parse->tab_outfile[size]->content);
 			return (0);
 		}
 		if (dup2(data->output_fd, STDOUT_FILENO) == -1)
@@ -70,7 +73,7 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	int	size;
 
 	size = parse->infile_size;
-	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && size > 0)
+	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && size > 0)//si HD ou INPUTFILE
 	{
 		while (parse->tab_infile[size]->next != NULL)
 			parse->tab_infile[size] = parse->tab_infile[size]->next;

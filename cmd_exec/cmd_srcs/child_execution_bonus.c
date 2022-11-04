@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 18:20:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 10:28:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	first_cmd_execution(t_data *data, char *envp[])
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		// if (data->exec.infile_check == 1)		//peut etre pas close ici
-		// 	close(data->input_fd);
+		if (data->exec.infile_check == 1)		//peut etre pas close ici
+			close(data->input_fd);
 		if (data->exec.outfile_check == 1)			//peut etre close dans le main
 			close(data->output_fd);
 		if (data->hd_pipefd)
@@ -90,10 +90,10 @@ void	last_cmd_execution(t_data *data, char *envp[])
 			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		// if (data->exec.outfile_check == 1)		//close dans le main?
-		// 	close(data->output_fd);
-		// if (data->exec.infile_check == 1)		//peut etre pas close ici
-		// 	close(data->input_fd);
+		if (data->exec.outfile_check == 1)		//close dans le main?
+			close(data->output_fd);
+		if (data->exec.infile_check == 1)		//peut etre pas close ici
+			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		exec_cmd(data->env.tab2, data->env.param_tab2, envp, data);
