@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 18:50:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 09:53:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,10 @@
 
 int	iterate_outfile_cmd(t_data *data, t_shell *parse)
 {
-	dprintf(2, "PIPE_ID in mid_cmd outfile --> %d\n", data->pipe_id);
 	while (parse->tab_outfile[data->pipe_id] != NULL)
 	{
-		dprintf(2, "Iterate mid_cmd\n");
 		if (parse->tab_outfile[data->pipe_id]->next == NULL)
-		{
-			dprintf(2, "Outfile mid_cmd opening ==> %s\n", parse->tab_outfile[data->pipe_id]->content);
 			return (open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666));
-		}
 		open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		parse->tab_outfile[data->pipe_id] = parse->tab_outfile[data->pipe_id]->next;
 	}
@@ -57,7 +52,6 @@ int	check_outfile_cmd(t_data *data, t_shell *parse)
 
 int	input_file_opening_cmd(t_data *data, t_shell *parse)
 {
-	dprintf(2, "Inputfile mid_cmd opening ==> %s\n", parse->tab_infile[data->pipe_id]->content);
 	data->input_fd = open(parse->tab_infile[data->pipe_id]->content, O_RDONLY);
 	if (data->input_fd < 0)
 	{
@@ -75,7 +69,7 @@ int	input_file_opening_cmd(t_data *data, t_shell *parse)
 
 int	check_inputfile_cmd(t_data *data, t_shell *parse)
 {
-	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && parse->tab_infile[1])
+	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && parse->infile_size > 0)
 	{
 		while (parse->tab_infile[data->pipe_id]->next != NULL)
 			parse->tab_infile[data->pipe_id] = parse->tab_infile[data->pipe_id]->next;
