@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 19:35:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 09:52:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,8 @@ int	iterate_outfile_lastcmd(t_shell *parse)
 	size = parse->nbr_pipe;
 	while (parse->tab_outfile[size] != NULL)
 	{
-		dprintf(2, "Iterate in last_cmd outfile\n");
 		if (parse->tab_outfile[size]->next == NULL)
-		{
-			dprintf(2, "Outfile last_cmd opening ==> %s\n", parse->tab_outfile[size]->content);
 			return (open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666));
-		}
 		open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		parse->tab_outfile[size] = parse->tab_outfile[size]->next;
 	}
@@ -66,7 +62,6 @@ int	input_file_opening_lastcmd(t_data *data, t_shell *parse, int size)
 		perror("dup2");
 		return (1);
 	}
-	dprintf(2, "Inputfile last_cmd ==> %s\n", parse->tab_infile[size]->content);
 	return (0);
 }
 
@@ -74,12 +69,9 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 {
 	int	size;
 
-	size = 0;
-	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && parse->tab_infile[1])
+	size = parse->infile_size;
+	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && size > 0)
 	{
-		while (parse->tab_infile[size] != NULL)
-			size++;
-		size++;
 		while (parse->tab_infile[size]->next != NULL)
 			parse->tab_infile[size] = parse->tab_infile[size]->next;
 		if (data->check_hd == 1 && (parse->tab_infile[size]->type == 'A'))
@@ -102,6 +94,3 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	}
 	return (0);
 }
-
-//si plusieurs outfile --> on les créer tous mais on ecrit que dans le dernier
-	//--> open pour tous mais data->outpud_fd = dernier outfile

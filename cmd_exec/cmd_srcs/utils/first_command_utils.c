@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 18:21:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 09:52:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,8 @@ int	iterate_outfile(t_shell *parse)
 	while (parse->tab_outfile[0] != NULL)
 	{
 		if (parse->tab_outfile[0]->next == NULL)
-		{
-			dprintf(2, "Outfile first_cmd opening ==> %s\n", parse->tab_outfile[0]->content);
 			return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
 					| O_CREAT, 0666));
-		}
 		open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		parse->tab_outfile[0] = parse->tab_outfile[0]->next;
 	}
