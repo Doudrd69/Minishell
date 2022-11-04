@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 09:52:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 11:25:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 	{
 		while (parse->tab_infile[0]->next != NULL)
 			parse->tab_infile[0] = parse->tab_infile[0]->next;
-		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))//si le dernier INFILE == HD on passe ici
+		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
 		{
+			if (parse->infile_size > 0)
+				data->hd_pipe_id = data->hd_pipe_id - 1;
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
 				STDIN_FILENO) == -1)
 			{
@@ -60,7 +62,7 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 			}
 			return (0);
 		}
-		if (parse->tab_infile[0]->type == 'C')//si dernier INFILE == File on passe ici
+		if (parse->tab_infile[0]->type == 'C')
 			*data->p_status = input_file_opening(data, parse);
 		data->input_fd = STDIN_FILENO;
 	}
