@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 10:54:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 20:45:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,12 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
 		if (data->hd_pid[i] == 0)
 			heredoc(data, parse, index);
-		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL))
+		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL) && parse->infile_size > 1)
+		{
+			dprintf(2, "DEBUG 1\n");
 			break ;
-		else if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
+		}
+		if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
 			index++;
 		else if (parse->tab_infile[index] != NULL && tmp == index)
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
@@ -110,7 +113,12 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			index++;
 		else
 			;
+		dprintf(2, "Parent process [%d] is waiting\n", getpid());
 		waitpid(data->hd_pid[i], &ptr, 0);
+		dprintf(2, "PTR value ==> %d\n", ptr);
+		if (ptr != 0)
+			return (1);
+		dprintf(2, "Parent process stopped to wait\n");
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}

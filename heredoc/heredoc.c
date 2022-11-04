@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 11:25:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 20:47:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour t
 	{
 		size = 0;
 		str = readline("> ");
-		// if (*data->p_status == 1)
-		// 	dprintf(2, "Catch in while(1)\n");
 		eof_handler_hd(data, str, output_fd);
 		while (str[size])
 			size++;

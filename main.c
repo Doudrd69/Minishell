@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 10:55:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 20:47:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse);
 void	init_main(t_mini_data *mini_data, t_data *data, char **envp);
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	cmd_exec_init(t_data *data, t_shell *parse_data);
-void	heredoc_main(t_data *data, t_shell *parse);
 
+int		heredoc_main(t_data *data, t_shell *parse);
 int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 
@@ -29,9 +29,7 @@ int		p_status;
 
 void	sighandler_hd(int signum)
 {
-	(void)signum;
-	p_status = 1;
-	return ;
+	exit(signum);
 }
 
 void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
@@ -163,18 +161,18 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	node = parse->head;
 	cmd_exec_init(data, parse);
 	int pipe_nb = 0;
-	heredoc_main(data, parse);
+	if (heredoc_main(data, parse) == 1)
+	{
+		close_hd_pipe(data, data->heredoc_nb - 1);
+		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+		return ;
+	}
 	pipe_nb = pipe_creation(data);
 	while (node->next != NULL)
 		node = node->next;
 	*data->p_status = ft_atoi(node->content);
 	node = parse->head;
 	exec_main(data, envp, node, parse);
-	if (data->check_hd == 1)
-	{
-		close_hd_pipe(data, data->heredoc_nb - 1);
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
-	}
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)

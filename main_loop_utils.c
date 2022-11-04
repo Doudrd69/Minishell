@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:02:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 20:49:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 	return (0);
 }
 
-void	heredoc_main(t_data *data, t_shell *parse)
+int	heredoc_main(t_data *data, t_shell *parse)
 {
 	int	j;
 	int	ptr;
@@ -75,14 +75,15 @@ void	heredoc_main(t_data *data, t_shell *parse)
 	data->heredoc_nb = parse->nbr_appendin;
 	if (data->heredoc_nb > 0)
 	{
-		heredoc_exec(data, parse);
+		if (heredoc_exec(data, parse) == 1)
+			return (1);
 		while (j < data->heredoc_nb)
 		{
 			waitpid(data->hd_pid[j], &ptr, 0);
 			j++;
 		}
 	}
-	return ;
+	return (0);
 }
 
 void	*node_rotation(t_node *node)
