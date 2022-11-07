@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 20:45:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 12:48:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,37 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			heredoc(data, parse, index);
 		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL) && parse->infile_size > 1)
 		{
-			dprintf(2, "DEBUG 1\n");
+			dprintf(2, "TEST 1\n");
 			break ;
 		}
-		if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
+		if ((parse->tab_infile[index] == NULL) && (parse->tab_infile[index + 1] != NULL))
+		{
+			dprintf(2, "TEST 2\n");
 			index++;
-		else if (parse->tab_infile[index] != NULL && tmp == index)
+		}
+		else if (parse->tab_infile[index]->next != NULL && tmp == index)
+		{
+			dprintf(2, "TEST 3\n");
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
+		}
 		else if (parse->tab_infile[index] != NULL && tmp != index)
+		{
+			dprintf(2, "TEST 4\n");
 			;
+		}
 		else if (parse->tab_infile[index]->next == NULL && parse->tab_infile[index + 1])
+		{
+			dprintf(2, "TEST 5\n");
 			index++;
+		}
 		else
+		{
+			dprintf(2, "TEST 6\n");
 			;
-		dprintf(2, "Parent process [%d] is waiting\n", getpid());
+		}
 		waitpid(data->hd_pid[i], &ptr, 0);
-		dprintf(2, "PTR value ==> %d\n", ptr);
 		if (ptr != 0)
 			return (1);
-		dprintf(2, "Parent process stopped to wait\n");
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}

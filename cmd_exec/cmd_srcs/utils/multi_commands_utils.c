@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 11:25:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 12:31:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	check_inputfile_cmd(t_data *data, t_shell *parse)
 			parse->tab_infile[data->pipe_id] = parse->tab_infile[data->pipe_id]->next;
 		if (data->check_hd == 1 && (parse->tab_infile[data->pipe_id]->type == 'A'))
 		{
+			dprintf(2, "HD_PIPE ID in cmd_exec ==> %d\n", data->hd_pipe_id);
 			if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ],
 				STDIN_FILENO) == -1)
 			{

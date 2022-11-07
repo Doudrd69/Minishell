@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 20:47:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 12:36:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour t
 	data->hd.limiter = parse->tab_infile[index]->content;
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
+	dprintf(2, "HD Limiter ===> [ %s ]\n", data->hd.limiter);
 	while (1)
 	{
 		size = 0;

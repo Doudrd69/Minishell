@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 20:57:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 12:30:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,14 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 {
 	if (parse->nbr_infile > 0 || parse->nbr_appendin > 0)
 	{
-		dprintf(2, "Infile check --> size = %d\n", parse->infile_size);
 		while (parse->tab_infile[0]->next != NULL)
 			parse->tab_infile[0] = parse->tab_infile[0]->next;
-		dprintf(2, "CONTENT ===> %s\n", parse->tab_infile[0]->content);
 		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
 		{
 			if (parse->infile_size > 0)
 				data->hd_pipe_id = data->hd_pipe_id - 1;
-			dprintf(2, "HD_PIPE --> %d\n", data->hd_pipe_id);
-			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
+			dprintf(2, "HD_PIPE ID ==> %d\n", data->hd_pipe_id);
+			if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ],
 				STDIN_FILENO) == -1)
 			{
 				perror("dup2");

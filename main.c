@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 20:47:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 11:30:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	*data->p_status = ft_atoi(node->content);
 	node = parse->head;
 	exec_main(data, envp, node, parse);
+	if (data->check_hd == 1)
+		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
 	while (wait(NULL) != -1)
