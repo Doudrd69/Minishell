@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 12:48:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 15:49:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,23 @@ int	hd_pipe_creation(t_data *data)
 	return (i);
 }
 
+int	check_for_append(t_shell *parse, int index)
+{
+	if (parse->tab_infile[index] == NULL)
+		return (1);
+	else if (parse->tab_infile[index]->type == 'C' && parse->tab_infile[index]->next == NULL)
+		return (1);
+	else if (parse->tab_infile[index]->type == 'A' && parse->tab_infile[index]->next == NULL)
+		return (0);
+	while (parse->tab_infile[index] != NULL)
+	{
+		if (parse->tab_infile[index]->type == 'A')
+			return (0);
+		parse->tab_infile[index] = parse->tab_infile[index]->next;
+	}
+	return (1);
+}
+
 int	heredoc_exec(t_data *data, t_shell *parse)
 {
 	int	i;
@@ -98,41 +115,20 @@ int	heredoc_exec(t_data *data, t_shell *parse)
 			parse->tab_infile[index] = parse->tab_infile[index]->next;
 		if (data->hd_pid[i] == 0)
 			heredoc(data, parse, index);
-		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL) && parse->infile_size > 1)
-		{
-			dprintf(2, "TEST 1\n");
-			break ;
-		}
-		if ((parse->tab_infile[index] == NULL) && (parse->tab_infile[index + 1] != NULL))
-		{
-			dprintf(2, "TEST 2\n");
-			index++;
-		}
-		else if (parse->tab_infile[index]->next != NULL && tmp == index)
-		{
-			dprintf(2, "TEST 3\n");
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		}
-		else if (parse->tab_infile[index] != NULL && tmp != index)
-		{
-			dprintf(2, "TEST 4\n");
-			;
-		}
-		else if (parse->tab_infile[index]->next == NULL && parse->tab_infile[index + 1])
-		{
-			dprintf(2, "TEST 5\n");
-			index++;
-		}
-		else
-		{
-			dprintf(2, "TEST 6\n");
-			;
-		}
 		waitpid(data->hd_pid[i], &ptr, 0);
 		if (ptr != 0)
 			return (1);
+		if (parse->tab_infile[index]->next != NULL)
+			parse->tab_infile[index] = parse->tab_infile[index]->next;
+		else if (parse->tab_infile[index]->next == NULL)
+		{
+			index++;
+			while (check_for_append(parse, index) == 1 && (index != parse->infile_size + 1))
+				index++;
+		}
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
 	return (0);
 }
+//je passe a la ligne suivant que si elle est nul mdr
