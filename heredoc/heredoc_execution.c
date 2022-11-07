@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 18:58:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 19:19:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	check_for_append(t_node *infile_tmp)
 		return (1);
 	else if (infile_tmp->type == 'A' && infile_tmp->next == NULL)
 		return (0);
-	while (infile_tmp != NULL)
+	while (infile_tmp->next != NULL)
 	{
 		if (infile_tmp->type == 'A')
 			return (0);
@@ -111,18 +111,19 @@ int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 			ft_printf("Error while creating heredoc process\n");
 			return (1);
 		}
-		while ((infile_tmp[index]->type != 'A') && (infile_tmp[index]->next != NULL))
-			infile_tmp[index] = infile_tmp[index]->next;
+		while ((tmp->type != 'A') && (tmp->next != NULL))
+			tmp = tmp->next;
 		if (data->hd_pid[i] == 0)
-			heredoc(data, infile_tmp, index);
+			heredoc(data, tmp);
 		waitpid(data->hd_pid[i], &ptr, 0);
 		if (ptr != 0)
 			return (1);
-		if (infile_tmp[index]->next != NULL)
-			infile_tmp[index] = infile_tmp[index]->next;
-		else if (infile_tmp[index]->next == NULL)
+		if (tmp->next != NULL)
+			tmp = tmp->next;
+		if (tmp->next == NULL)
 		{
 			index++;
+			tmp = infile_tmp[index];
 			while (check_for_append(tmp) == 1 && (index != parse->infile_size + 1))
 			{
 				index++;
@@ -130,12 +131,10 @@ int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 			}
 		}
 		tmp = infile_tmp[index];
-		dprintf(2, "TMP --> %p\n", infile_tmp);
-		dprintf(2, "TAB --> %p\n", parse->tab_infile);
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
 	dprintf(2, "INDEX ==> %d\n", index);
 	return (0);
 }
-//je passe a la ligne suivant que si elle est nul mdr
+//attention "<<a < main.c cat | <<s <<d cat | rev | rev | rev | rev | <<f grep e > lol.txt" --> je saute le <<d et segfault apres le <<f
