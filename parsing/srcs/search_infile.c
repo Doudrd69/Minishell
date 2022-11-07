@@ -14,7 +14,9 @@ static void	add_back_file_list(t_node **tab_list, t_node *new)
 		else
 		{
 			while (list_cpy && list_cpy->next != NULL)
+			{
 				list_cpy = list_cpy->next;
+			}
 			list_cpy->next = new;
 			new->prev = list_cpy;
 			list_cpy = new;

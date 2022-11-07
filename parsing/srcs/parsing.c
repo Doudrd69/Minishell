@@ -26,10 +26,22 @@ void	tokenizers_arg(t_shell *minishell)
 		parse_redirections(minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space_quote(minishell);
+	if (minishell->tab_infile != NULL || minishell->tab_outfile != NULL)
+		parse_quote_tab(minishell, &minishell->tab_infile, &minishell->tab_outfile);
+	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
+	printf("END PARSING\n");
 }
 
 void	first_parse(t_shell *minishell, char *str)
 {
+	int	i;
+
+	i = -1;
+	while (str[++i] != '\0')
+		if (str[i] != 32)
+			break ;
+	if (str[i] == '\0')
+		str = NULL;
 	if (ft_strlen(str) > 0)
 	{
 		minishell->head = ft_dlstnew((void *)str);
