@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 15:49:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:58:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,65 +70,72 @@ int	hd_pipe_creation(t_data *data)
 	return (i);
 }
 
-int	check_for_append(t_shell *parse, int index)
+int	check_for_append(t_node *infile_tmp)
 {
-	if (parse->tab_infile[index] == NULL)
+	if (infile_tmp == NULL)
 		return (1);
-	else if (parse->tab_infile[index]->type == 'C' && parse->tab_infile[index]->next == NULL)
+	else if (infile_tmp->type == 'C' && infile_tmp->next == NULL)
 		return (1);
-	else if (parse->tab_infile[index]->type == 'A' && parse->tab_infile[index]->next == NULL)
+	else if (infile_tmp->type == 'A' && infile_tmp->next == NULL)
 		return (0);
-	while (parse->tab_infile[index] != NULL)
+	while (infile_tmp != NULL)
 	{
-		if (parse->tab_infile[index]->type == 'A')
+		if (infile_tmp->type == 'A')
 			return (0);
-		parse->tab_infile[index] = parse->tab_infile[index]->next;
+		infile_tmp = infile_tmp->next;
 	}
 	return (1);
 }
 
-int	heredoc_exec(t_data *data, t_shell *parse)
+int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 {
 	int	i;
 	int	index;
 	int	ptr;
 	int	pipe_nb;
-	int	tmp;
+	t_node *tmp;
 
 	i = -1;
 	index = 0;
-	pipe_nb = hd_pipe_creation(data);
 	(void)pipe_nb;
+	pipe_nb = hd_pipe_creation(data);
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
+	tmp = infile_tmp[index];
 	while (++i < data->heredoc_nb)
 	{
-		tmp = index;
 		data->hd_pid[i] = fork();
 		if (data->hd_pid[i] == -1)
 		{
 			ft_printf("Error while creating heredoc process\n");
 			return (1);
 		}
-		while ((parse->tab_infile[index]->type != 'A') && (parse->tab_infile[index]->next != NULL))
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
+		while ((infile_tmp[index]->type != 'A') && (infile_tmp[index]->next != NULL))
+			infile_tmp[index] = infile_tmp[index]->next;
 		if (data->hd_pid[i] == 0)
-			heredoc(data, parse, index);
+			heredoc(data, infile_tmp, index);
 		waitpid(data->hd_pid[i], &ptr, 0);
 		if (ptr != 0)
 			return (1);
-		if (parse->tab_infile[index]->next != NULL)
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		else if (parse->tab_infile[index]->next == NULL)
+		if (infile_tmp[index]->next != NULL)
+			infile_tmp[index] = infile_tmp[index]->next;
+		else if (infile_tmp[index]->next == NULL)
 		{
 			index++;
-			while (check_for_append(parse, index) == 1 && (index != parse->infile_size + 1))
+			while (check_for_append(tmp) == 1 && (index != parse->infile_size + 1))
+			{
 				index++;
+				tmp = infile_tmp[index];
+			}
 		}
+		tmp = infile_tmp[index];
+		dprintf(2, "TMP --> %p\n", infile_tmp);
+		dprintf(2, "TAB --> %p\n", parse->tab_infile);
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
+	dprintf(2, "INDEX ==> %d\n", index);
 	return (0);
 }
 //je passe a la ligne suivant que si elle est nul mdr

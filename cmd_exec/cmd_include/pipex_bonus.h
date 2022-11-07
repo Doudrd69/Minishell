@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:35:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct data
 
 /* HEREDOC */
 void	eof_handler_hd(t_data *data, char *input, int output_fd);
-void	heredoc(t_data *data, t_shell *parse, int index);
+void	heredoc(t_data *data, t_node **parse, int index);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
@@ -116,12 +116,12 @@ char	*ft_itoa(int n);
 int		check_and_print_var_hd(char *str, t_data *data, int out_fd, int size);
 int		cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd);
 int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
+int		heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse);
 int		print_var_util(t_data *data, char *str, int i, int output_fd);
 int		check_var_exists(int j, t_data *data, int output_fd);
 int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
 int		check_delimiter(char *str, char *delimiter);
-int		heredoc_exec(t_data *data, t_shell *parse);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
 int		check_eof(char *str, char *limiter);

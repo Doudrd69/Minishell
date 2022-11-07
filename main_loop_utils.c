@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 11:27:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:54:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,18 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 	return (0);
 }
 
-int	heredoc_main(t_data *data, t_shell *parse)
+int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 {
 	int	j;
 	int	ptr;
+	t_node	**infile_tmp;
 
 	j = 0;
+	infile_tmp = *intab;
 	data->heredoc_nb = parse->nbr_appendin;
 	if (data->heredoc_nb > 0)
 	{
-		if (heredoc_exec(data, parse) == 1)
+		if (heredoc_exec(data, infile_tmp, parse) == 1)
 			return (1);
 		while (j < data->heredoc_nb)
 		{

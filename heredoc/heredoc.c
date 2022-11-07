@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 12:36:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 17:42:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	heredoc_exit(char *str, char *limiter, int output_fd, t_data *data)
 	return ;
 }
 
-void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour trouver que les infile de type A
+void	heredoc(t_data *data, t_node **tmp, int index)//faire une fonction pour trouver que les infile de type A
 {
 	struct sigaction	sa_hd;
 	int					output_fd;
@@ -98,11 +98,12 @@ void	heredoc(t_data *data, t_shell *parse, int index)//faire une fonction pour t
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
+	dprintf(2, "HD pipe to write : %d\n", data->hd_pipe_id);
+	dprintf(2, "Limiter ==> [ %s ]\n", tmp[index]->content);
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
-	data->hd.limiter = parse->tab_infile[index]->content;
+	data->hd.limiter = tmp[index]->content;
 	sigaction(SIGQUIT, &sa_hd, NULL);
 	signal(SIGINT, &sighandler_hd);
-	dprintf(2, "HD Limiter ===> [ %s ]\n", data->hd.limiter);
 	while (1)
 	{
 		size = 0;

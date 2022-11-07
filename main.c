@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 11:30:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:52:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp);
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	cmd_exec_init(t_data *data, t_shell *parse_data);
 
-int		heredoc_main(t_data *data, t_shell *parse);
+int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
 int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
 
@@ -161,7 +161,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	node = parse->head;
 	cmd_exec_init(data, parse);
 	int pipe_nb = 0;
-	if (heredoc_main(data, parse) == 1)
+	if (heredoc_main(data, &parse->tab_infile, parse) == 1)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
@@ -198,9 +198,3 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	//si "command not found" --> exit(127) et mettre p_status à 127
 	//CTRL-C fonctionnel dans les Heredoc
 	//gerer les grands nombres pour exit (< 255 je crois)
-
-	//implementation redirections
-		//"< main.c <<q < no_env.c <<w cat | <<e rev" --> la derniere commande n'a pas l.air de lire dans le bon stdin?
-		//meme commande mais avec un inputfile au lieu de "<<e" fonctionne
-			//heredoc_exec OK
-			//inputcheck OK
