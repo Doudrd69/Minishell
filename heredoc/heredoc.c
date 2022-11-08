@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 19:08:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 13:00:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	heredoc_exit(char *str, char *limiter, int output_fd, t_data *data)
 	return ;
 }
 
-void	heredoc(t_data *data, t_node *tmp)//faire une fonction pour trouver que les infile de type A
+void	heredoc(t_data *data, t_node *tmp)
 {
 	struct sigaction	sa_hd;
 	int					output_fd;

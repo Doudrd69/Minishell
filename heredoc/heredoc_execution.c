@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 19:19:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 12:59:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,71 +70,21 @@ int	hd_pipe_creation(t_data *data)
 	return (i);
 }
 
-int	check_for_append(t_node *infile_tmp)
-{
-	if (infile_tmp == NULL)
-		return (1);
-	else if (infile_tmp->type == 'C' && infile_tmp->next == NULL)
-		return (1);
-	else if (infile_tmp->type == 'A' && infile_tmp->next == NULL)
-		return (0);
-	while (infile_tmp->next != NULL)
-	{
-		if (infile_tmp->type == 'A')
-			return (0);
-		infile_tmp = infile_tmp->next;
-	}
-	return (1);
-}
-
 int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 {
 	int	i;
-	int	index;
 	int	ptr;
-	int	pipe_nb;
-	t_node *tmp;
 
 	i = -1;
-	index = 0;
-	(void)pipe_nb;
-	pipe_nb = hd_pipe_creation(data);
+	ptr = 0;
+	data->hd.check = 0;
+	data->hd.flag = 0;
+	data->hd.index = 0;
+	hd_pipe_creation(data);
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
-	tmp = infile_tmp[index];
-	while (++i < data->heredoc_nb)
-	{
-		data->hd_pid[i] = fork();
-		if (data->hd_pid[i] == -1)
-		{
-			ft_printf("Error while creating heredoc process\n");
-			return (1);
-		}
-		while ((tmp->type != 'A') && (tmp->next != NULL))
-			tmp = tmp->next;
-		if (data->hd_pid[i] == 0)
-			heredoc(data, tmp);
-		waitpid(data->hd_pid[i], &ptr, 0);
-		if (ptr != 0)
-			return (1);
-		if (tmp->next != NULL)
-			tmp = tmp->next;
-		if (tmp->next == NULL)
-		{
-			index++;
-			tmp = infile_tmp[index];
-			while (check_for_append(tmp) == 1 && (index != parse->infile_size + 1))
-			{
-				index++;
-				tmp = infile_tmp[index];
-			}
-		}
-		tmp = infile_tmp[index];
-		data->hd_pipe_id++;
-		data->hd_id++;
-	}
-	dprintf(2, "INDEX ==> %d\n", index);
+	if (heredoc_loop(data, infile_tmp, parse, ptr) == 1)
+		return (1);
 	return (0);
 }
-//attention "<<a < main.c cat | <<s <<d cat | rev | rev | rev | rev | <<f grep e > lol.txt" --> je saute le <<d et segfault apres le <<f
