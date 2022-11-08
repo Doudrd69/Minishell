@@ -22,7 +22,6 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	while (++j < i)
 		cpy[j] = str[j];
 	i += 2;
-	printf("char =%s\n", str + i);
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0' && str[i] != ' ')
@@ -48,7 +47,6 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	cpy[j] = '\0';
 	if (j == 0)
 		cpy = NULL;
-	printf("cpy =%s*\n", cpy);
 	include_dollar_list(minishell, list, cpy);
 }
 
@@ -118,5 +116,4 @@ void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node *
 	include_heredoc_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
-	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 }

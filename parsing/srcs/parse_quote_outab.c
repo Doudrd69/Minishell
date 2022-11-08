@@ -5,7 +5,7 @@ static void	ft_prev(t_node *list_cpy, t_node *tmp, t_shell *minishell, int tab)
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = NULL;
 	(list_cpy)->type = tmp->type;
-	minishell->tab_infile[tab] = list_cpy;
+	minishell->tab_outfile[tab] = list_cpy;
 	free(tmp);
 }
 
@@ -30,7 +30,7 @@ static void	ft_next(t_node **list_cpy, t_node *tmp, t_shell *minishell, int tab)
 	{
 		(*list_cpy)->prev = NULL;
 		(*list_cpy)->type = tmp->type;
-		minishell->tab_infile[tab] = *list_cpy;
+		minishell->tab_outfile[tab] = *list_cpy;
 	}
 	free(tmp);
 }
@@ -66,7 +66,7 @@ static void	list_nospace_tab(t_shell *minishell, t_node **list, char *tmp, int j
 	}
 }
 
-void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_outfile)
+void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile)
 {
 	t_node	**intab;
 	t_node	*list_cpy;
@@ -76,12 +76,10 @@ void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_out
 	char	*str;
 	int		j;
 
-	tab_outfile += 0;
-	minishell += 0;
-	if (minishell->tab_infile != NULL)
+	if (minishell->tab_outfile != NULL)
 	{
 		i = 0;
-		intab = *tab_infile;
+		intab = *tab_outfile;
 		while (intab && intab[i] && intab[i] != NULL)
 		{
 			list_cpy = (intab)[i];
@@ -113,5 +111,4 @@ void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_out
 			i++;
 		}
 	}
-	ft_parse_quote_outab(minishell, tab_outfile);
 }
