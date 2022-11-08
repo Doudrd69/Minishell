@@ -1,6 +1,6 @@
 #include "../parsing.h"
 
-static void	add_back_file_list(t_node **tab_list, t_node *new)
+void	add_back_file_list(t_node **tab_list, t_node *new)
 {
 	t_node	*list_cpy;
 
@@ -44,11 +44,25 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	j = -1;
 	while (++j < i)
 		cpy[j] = str[j];
-	i++;
-	while (str[++i] != '\0' && str[i] == ' ')
+	i += 2;
+	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0' && str[i] != ' ')
+	{
+		if (str[i] == '\"' && str[i + 1] != '\0')
+		{
+			i++;
+			while (str[i] != '\"' && str[i] != '\0')
+				i++;
+		}
+		if (str[i] == '\'' && str[i + 1] != '\0')
+		{
+			i++;
+			while (str[i] != '\'')
+				i++;
+		}
 		i++;
+	}
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0')
@@ -96,20 +110,34 @@ void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	int		file;
 	char	*tmp;
 	char	*cpy;
+	int		space;
 
 	file = 0;
 	i = minishell->mod;
 	i += 1;
+	space = 0;
 	while (str[++i] != '\0' && str[i] == ' ')
-		file++;
+		space++;
 	while (str[i] != '\0' && str[i] != ' ')
 	{
+		if (str[i] == '\"' && str[i + 1] != '\0')
+		{
+			while (str[++i] != '\"' && str[i] != '\0')
+				file++;
+			if (str[i] == '\"')
+				file++;
+		}
+		if (str[i] == '\'' && str[i + 1] != '\0')
+		{
+			while (str[++i] != '\'')
+				file++;
+		}
 		file++;
 		i++;
 	}
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
-	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1, file + 1);
+	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1 + space, file + 1);
 	include_heredoc_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
