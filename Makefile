@@ -67,6 +67,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/split_minishell_nbr_words.c				\
 		parsing/srcs/split_minishell_malloc_ws.c				\
 		parsing/srcs/parse_space_quote.c						\
+		parsing/srcs/parse_quote_tab.c							\
+		parsing/srcs/parse_quote_outab.c						\
 		main_loop_utils.c										\
 		main_utils.c											\
 		no_env.c												\

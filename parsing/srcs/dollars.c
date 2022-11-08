@@ -7,7 +7,7 @@ static int	check_dollars_mod(char *str)
 
 	i = 0;
 	mod = 0;
-	if (str[i + 1] != '\0' && (str[i + 1] == 34 || str[i + 1] == 39))
+	if (str[i + 1] != '\0' && ((str[i + 1] == 34 && str[i - 1] != 34) || (str[i + 1] == 39 && str[i - 1] != 39)))
 		mod = 3;
 	if (str[i + 1] != '\0' && (str[i + 1] == 36
 			|| (str[i + 1] >= 48 && str[i + 1] <= 57) || str[i + 1] == 42
@@ -93,6 +93,7 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	}
 	else
 	{
+		printf("ICI\n");
 		check = check_dollars_mod(str + i);
 		write_newvalue(minishell, str + i, check);
 		change_var_to_value(str, i, minishell, list);
@@ -108,10 +109,10 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	int		j;
 	int		k;
 
-	size = -1;
+	size = 0;
 	j = 0;
 	cpy = &str[i];
-	while (cpy[++size] != '\0' && cpy[size] != ' ')
+	while (cpy[++size] != '\0' && cpy[size] != ' ' && cpy[size] != '$')
 		if (cpy[size] == '\"' || cpy[size] == '\'')
 			j++;
 	tmp = (char *)malloc(sizeof(char)
@@ -123,7 +124,10 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	size += k;
 	replace_value_and_after(minishell, &j, &tmp);
 	while (str[size] && str[size] != '\0')
+	{
+		printf("str[size] = %c\n", str[size]);
 		tmp[j++] = str[size++];
+	}
 	tmp = replace_quote_dollars(minishell, tmp, j);
 	include_dollar_list(minishell, list, tmp);
 }

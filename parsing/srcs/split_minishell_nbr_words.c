@@ -63,6 +63,5 @@ int	ft_nbr_words_split_minishell(t_shell *minishell,
 		if (minishell->mod == 2)
 			pass_dquote(str, charset, &i);
 	}
-	printf("nbr word = %d\n", nbrw);
 	return (nbrw);
 }

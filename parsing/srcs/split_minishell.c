@@ -38,7 +38,7 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 		}
 		if ((str[*i] == '\"' || str[*i] == '\'') && str[*i] != '\0')
 			(*i) += 1;
-		if (str[*i] != '\0')
+		if (str[*i] != '\0' && str[*i] != ' ')
 		{
 			(*tab)[*k][x++] = str[*i];
 			(*i) += 1;

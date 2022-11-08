@@ -76,6 +76,8 @@ int		ft_nbr_words_split_minishell(t_shell *minishell,
 void	parse_space_quote(t_shell *minishell);
 int		ft_split_minishell_malloc_ws(char const	*str, char charset, char **tab);
 char	**ft_split_minishell_get_filling(char const *str, char **tab);
+void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_outfile);
+void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile);
 
 /*REDIRECTIONS*/
 void	parse_redirections(t_shell *minishell);
@@ -92,6 +94,7 @@ int		check_quote_infile(t_shell *minishell, char *str, int len);
 int		check_quote_append(t_shell *minishell, char *str, int len);
 int		check_quote_heredoc(t_shell *minishell, char *str, int len);
 int		check_quote_outfile(t_shell *minishell, char *str, int len);
+void	add_back_file_list(t_node **tab_list, t_node *new);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
