@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 17:53:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 20:54:49 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,52 @@ int	check_for_append(t_node *infile_tmp)
 	return (1);
 }
 
+void	search_hd(t_node *tmp, t_shell *parse, t_node **tab)
+{
+	int	i;
+	int	check;
+	int	tmp1;
+	int	tmp2;
+
+	i = 0;
+	check = 0;
+	tmp1 = 0;
+	tmp2 = 0;
+	printf("infile size : %d\n", parse->infile_size);
+	while (i < parse->infile_size)
+	{
+		tmp = tab[i];
+		while (tmp != NULL)
+		{
+			printf("==> %s [%d][%d]\n", tmp->content, i, check);
+			if (tmp->type == 'A')
+			{
+				tmp1 = check;
+				break ;
+			}
+			check++;
+			tmp = tmp->next;
+		}
+		check = 0;
+		i++;
+	}
+	tmp2 = i;
+	printf("Hd at [%d][%d]\n", tmp2, tmp1);
+}
+
 t_node	*infile_rotation(t_data *data, t_node *tmp, t_node **i_tmp)
 {
 	if (tmp->type == 'C' && tmp->next == NULL)
-		tmp = i_tmp[data->hd.index++];
+	{
+		data->hd.index++;
+		tmp = i_tmp[data->hd.index];
+	}
 	else if (tmp->type == 'A' && tmp->next == NULL)
 		tmp = tmp->next;
 	else
 	{
-		while (tmp->next != NULL)
-		{
-			if (tmp->type == 'A')
-				break ;
+		while (tmp->next != NULL && (tmp->type != 'A'))
 			tmp = tmp->next;
-		}
 	}
 	return (tmp);
 }
@@ -95,7 +127,9 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 	t_node	*tmp;
 
 	i = -1;
+	//si HD == 1 et tab[0..n]==NULL --> on se met direct sur le bon
 	tmp = infile_tmp[data->hd.index];
+	search_hd(tmp, parse, infile_tmp);
 	while (++i < data->heredoc_nb)
 	{
 		data->hd_pid[i] = fork();
