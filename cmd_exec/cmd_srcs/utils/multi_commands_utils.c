@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 17:32:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 13:32:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	check_outfile_cmd(t_data *data, t_shell *parse)
 
 int	input_file_opening_cmd(t_data *data, t_shell *parse)
 {
-	dprintf(2, "Opening in cmd_exec : %s\n", parse->tab_infile[data->pipe_id]->content);
 	data->input_fd = open(parse->tab_infile[data->pipe_id]->content, O_RDONLY);
 	if (data->input_fd < 0)
 	{
