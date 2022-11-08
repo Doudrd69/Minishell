@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 10:28:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 11:27:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	first_cmd_execution(t_data *data, char *envp[])
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->exec.infile_check == 1)		//peut etre pas close ici
+		if (data->exec.infile_check == 1)
 			close(data->input_fd);
-		if (data->exec.outfile_check == 1)			//peut etre close dans le main
+		if (data->exec.outfile_check == 1)
 			close(data->output_fd);
 		if (data->hd_pipefd)
-			close_hd_pipe(data, data->heredoc_nb - 1);
+			close_hd_pipe(data, data->heredoc_nb - 1);//bien close
 		exec_cmd(data->env.tab1, data->env.param_tab1, envp, data);
 	}
 }

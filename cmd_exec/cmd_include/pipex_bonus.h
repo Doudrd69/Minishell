@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 12:56:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct heredoc
 	int		hd_pid;
 	int		position;
 	int		bkslash_check;
+	int		check;
+	int		flag;
+	int		index;
 	char	**envp;
 }	t_heredoc;
 
@@ -103,7 +106,7 @@ typedef struct data
 
 /* HEREDOC */
 void	eof_handler_hd(t_data *data, char *input, int output_fd);
-void	heredoc(t_data *data, t_shell *parse, int index);
+void	heredoc(t_data *data, t_node *tmp);
 void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
@@ -113,17 +116,19 @@ char	*var_found(t_data *data, char *envp[], char *var_name, int i);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 char	*ft_itoa(int n);
 
+int		heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr);
 int		check_and_print_var_hd(char *str, t_data *data, int out_fd, int size);
 int		cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd);
 int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
+int		heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse);
 int		print_var_util(t_data *data, char *str, int i, int output_fd);
 int		check_var_exists(int j, t_data *data, int output_fd);
 int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
 int		check_delimiter(char *str, char *delimiter);
-int		heredoc_exec(t_data *data, t_shell *parse);
 int		check_special_char_second_loop(char c);
 int		check_special_char(char c, int size);
+int		check_for_append(t_node *infile_tmp);
 int		check_eof(char *str, char *limiter);
 int		var_exists_hd(t_data *data);
 
