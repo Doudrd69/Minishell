@@ -24,7 +24,7 @@ static void	count_lenght_ws(char const *str, int *wlen, int *i)
 		}
 		if ((str[*i] == '\"' || str[*i] == '\'') && str[*i] != '\0')
 			(*i) += 1;
-		if (str[*i] != '\0')
+		if (str[*i] != '\0' && str[*i] != ' ')
 		{
 			(*i) += 1;
 			(*wlen) += 1;
@@ -53,7 +53,6 @@ int	ft_split_minishell_malloc_ws(char const	*str, char charset, char **tab)
 			j++;
 		while (str[i] == charset && str[i])
 			i++;
-		printf("length = %d\n", wlen);
 	}
 	return (0);
 }
