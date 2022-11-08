@@ -33,6 +33,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/utils/mini_cd_utils.c				\
 		builtins/functions/builtin_functions.c					\
 		heredoc/heredoc_env_var_handling_utils.c				\
+		heredoc/heredoc_execution_utils.c						\
 		heredoc/heredoc_functions.c								\
 		heredoc/heredoc_execution.c								\
 		heredoc/heredoc_utils.c									\

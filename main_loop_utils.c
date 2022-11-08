@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 11:02:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:54:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,26 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 	return (0);
 }
 
-void	heredoc_main(t_data *data, t_shell *parse)
+int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 {
 	int	j;
 	int	ptr;
+	t_node	**infile_tmp;
 
 	j = 0;
+	infile_tmp = *intab;
 	data->heredoc_nb = parse->nbr_appendin;
 	if (data->heredoc_nb > 0)
 	{
-		heredoc_exec(data, parse);
+		if (heredoc_exec(data, infile_tmp, parse) == 1)
+			return (1);
 		while (j < data->heredoc_nb)
 		{
 			waitpid(data->hd_pid[j], &ptr, 0);
 			j++;
 		}
 	}
-	return ;
+	return (0);
 }
 
 void	*node_rotation(t_node *node)
@@ -104,7 +107,7 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 	{
 		if (node->type == 'P')
 			node = node->next;
-		first_command(envp, data, node, parse);//passer les infile/outfile ici
+		first_command(envp, data, node, parse);
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 18:56:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 17:50:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,3 @@ void	*commands(t_data *data, t_node *node, t_shell *parse, char *envp[])
 	free(pid);
 	return (node);
 }
-
-//on prend toujours le dernier infile/outfile si plusieurs

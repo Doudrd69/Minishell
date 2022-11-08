@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/04 10:54:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 12:59:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,49 +70,21 @@ int	hd_pipe_creation(t_data *data)
 	return (i);
 }
 
-int	heredoc_exec(t_data *data, t_shell *parse)
+int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 {
 	int	i;
-	int	index;
 	int	ptr;
-	int	pipe_nb;
-	int	tmp;
 
 	i = -1;
-	index = 0;
-	pipe_nb = hd_pipe_creation(data);
-	(void)pipe_nb;
+	ptr = 0;
+	data->hd.check = 0;
+	data->hd.flag = 0;
+	data->hd.index = 0;
+	hd_pipe_creation(data);
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
 		return (1);
-	while (++i < data->heredoc_nb)
-	{
-		tmp = index;
-		data->hd_pid[i] = fork();
-		if (data->hd_pid[i] == -1)
-		{
-			ft_printf("Error while creating heredoc process\n");
-			return (1);
-		}
-		while ((parse->tab_infile[index]->type != 'A') && (parse->tab_infile[index]->next != NULL))
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		if (data->hd_pid[i] == 0)
-			heredoc(data, parse, index);
-		if (parse->tab_infile[index + 1] == NULL && (parse->tab_infile[index]->next == NULL))
-			break ;
-		else if (parse->tab_infile[index]->next == NULL && (parse->tab_infile[index + 1] != NULL))
-			index++;
-		else if (parse->tab_infile[index] != NULL && tmp == index)
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		else if (parse->tab_infile[index] != NULL && tmp != index)
-			;
-		else if (parse->tab_infile[index]->next == NULL && parse->tab_infile[index + 1])
-			index++;
-		else
-			;
-		waitpid(data->hd_pid[i], &ptr, 0);
-		data->hd_pipe_id++;
-		data->hd_id++;
-	}
+	if (heredoc_loop(data, infile_tmp, parse, ptr) == 1)
+		return (1);
 	return (0);
 }
