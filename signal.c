@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/03 13:33:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 11:37:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+void	signal_tmp(int tmp)
+{
+	(void)tmp;
+	return ;
+}
 
 int	check_eof(char *str, char *limiter)
 {
@@ -53,5 +59,3 @@ void	sigint_handler_in_process(int signum)
 		rl_on_new_line();
 	}
 }
-
-//pb dans commande bloquante car j'affiche le "minishell$" du readline avec le rl_redisplay

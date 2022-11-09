@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 14:38:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 11:27:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	close_hd_pipe(t_data *data, int i);
 void	output_redirection(t_data *data);
 void	print_heredoc(int output_fd);
 void	sighandler_hd(int signum);
+void	signal_tmp(int tmp);
 
 char	*var_found(t_data *data, char *envp[], char *var_name, int i);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 09:44:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 11:37:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,3 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 	}
 	return (0);
 }
-
-//<main.c cat | <<d rev | cat | cat | <<f cat | cat | <main.c <signal.c rev <<a | <<s cat
