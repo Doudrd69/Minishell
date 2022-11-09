@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 20:54:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 09:44:36 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,60 @@ int	check_for_append(t_node *infile_tmp)
 	return (1);
 }
 
-void	search_hd(t_node *tmp, t_shell *parse, t_node **tab)
+int	search_hd(t_node *tmp, t_shell *parse, t_node **tab)
 {
-	int	i;
-	int	check;
-	int	tmp1;
-	int	tmp2;
+	int	index;
 
-	i = 0;
-	check = 0;
-	tmp1 = 0;
-	tmp2 = 0;
-	printf("infile size : %d\n", parse->infile_size);
-	while (i < parse->infile_size)
+	index = 0;
+	while (index < parse->infile_size)
 	{
-		tmp = tab[i];
-		while (tmp != NULL)
+		tmp = tab[index];
+		if (tmp == NULL)
+			index++;
+		else
 		{
-			printf("==> %s [%d][%d]\n", tmp->content, i, check);
-			if (tmp->type == 'A')
-			{
-				tmp1 = check;
+			while (tmp->next != NULL && tmp->type != 'A')
+				tmp = tmp->next;
+			if (tmp && tmp->type == 'A')
 				break ;
-			}
-			check++;
-			tmp = tmp->next;
+			index++;
 		}
-		check = 0;
-		i++;
 	}
-	tmp2 = i;
-	printf("Hd at [%d][%d]\n", tmp2, tmp1);
+	return (index);
 }
 
 t_node	*infile_rotation(t_data *data, t_node *tmp, t_node **i_tmp)
 {
-	if (tmp->type == 'C' && tmp->next == NULL)
+	if (tmp && tmp->type == 'C' && tmp->next == NULL)
 	{
 		data->hd.index++;
 		tmp = i_tmp[data->hd.index];
 	}
-	else if (tmp->type == 'A' && tmp->next == NULL)
+	else if (tmp && tmp->type == 'A' && tmp->next == NULL)
 		tmp = tmp->next;
 	else
 	{
-		while (tmp->next != NULL && (tmp->type != 'A'))
-			tmp = tmp->next;
+		if (tmp)
+		{
+			while (tmp->next != NULL && (tmp->type != 'A'))
+				tmp = tmp->next;
+		}
 	}
+	if (tmp == NULL)
+	{
+		data->hd.index++;
+		tmp = i_tmp[data->hd.index];
+	}
+	if (tmp == NULL || tmp->type != 'A')
+		tmp = infile_rotation(data, tmp, i_tmp);
 	return (tmp);
 }
 
 t_node	*rotation_after_exec(t_node *tmp, t_data *data, t_node **in, t_shell *s)
 {
-	if (tmp->next != NULL && tmp->next->type == 'A')
+	if (tmp && tmp->next != NULL && tmp->next->type == 'A')
 		tmp = tmp->next;
-	else if (tmp->next != NULL && tmp->next->type == 'C')
+	else if (tmp && tmp->next != NULL && tmp->next->type == 'C')
 	{
 		tmp = tmp->next;
 		if (tmp->next == NULL)
@@ -110,14 +109,11 @@ t_node	*rotation_after_exec(t_node *tmp, t_data *data, t_node **in, t_shell *s)
 
 int	heredoc_process(t_node *tmp, t_data *data, int i, int ptr)
 {
-	if (tmp && tmp->type == 'A')
-	{
-		if (data->hd_pid[i] == 0)
-			heredoc(data, tmp);
-		waitpid(data->hd_pid[i], &ptr, 0);
-		if (ptr != 0)
-			return (1);
-	}
+	if (data->hd_pid[i] == 0)
+		heredoc(data, tmp);
+	waitpid(data->hd_pid[i], &ptr, 0);
+	if (ptr != 0)
+		return (1);
 	return (0);
 }
 
@@ -127,9 +123,12 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 	t_node	*tmp;
 
 	i = -1;
-	//si HD == 1 et tab[0..n]==NULL --> on se met direct sur le bon
 	tmp = infile_tmp[data->hd.index];
-	search_hd(tmp, parse, infile_tmp);
+	if (data->heredoc_nb == 1)
+	{
+		data->hd.index = search_hd(tmp, parse, infile_tmp);
+		tmp = infile_tmp[data->hd.index];
+	}
 	while (++i < data->heredoc_nb)
 	{
 		data->hd_pid[i] = fork();
@@ -140,14 +139,15 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 			data->hd.index++;
 			tmp = infile_tmp[data->hd.index];
 		}
-		if (tmp && tmp->type != 'A')
+		if (tmp == NULL || tmp->type != 'A')
 			tmp = infile_rotation(data, tmp, infile_tmp);
 		if (heredoc_process(tmp, data, i, ptr) == 1)
 			return (1);
 		tmp = rotation_after_exec(tmp, data, infile_tmp, parse);
-		data->hd.check = i;
 		data->hd_pipe_id++;
 		data->hd_id++;
 	}
 	return (0);
 }
+
+//<main.c cat | <<d rev | cat | cat | <<f cat | cat | <main.c <signal.c rev <<a | <<s cat
