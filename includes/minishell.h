@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:17:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 17:22:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct mini_data
 	int			var_position;
 	int			echo_sq_check;
 	int			check_print_var;
-	int			*p_status;
+	int			p_status;
 	int			new_env_check;
 	int			unset_env_check;
 	int			tmp_count;
@@ -116,6 +116,8 @@ size_t	ft_strlen_gnl(char *s);
 size_t	ft_strnlen(char *s);
 
 /* MAIN UTILS FUNCTIONS */
+t_node	*node_rotation_exec(t_node *node, t_shell *parse);
+
 void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_mini_data *, t_node *));
 void	free_all(t_shell *minishell);
 

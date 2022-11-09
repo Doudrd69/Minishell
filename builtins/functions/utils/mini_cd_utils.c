@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:15:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 14:25:46 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	no_path(t_mini_data *data)
 		i++;
 		chdir(&data->home_path[i]);
 		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
-		*data->p_status = 0;
+		data->p_status = 0;
 		return (0);
 	}
 	return (1);
@@ -39,7 +39,7 @@ int	path_exists(t_mini_data *data, t_node *node)
 {
 	if (chdir(node->content) != 0)
 	{
-		*data->p_status = 1;
+		data->p_status = 1;
 		ft_printf("minishell: cd: %s: ", node->content);
 		ft_printf("No such file or directory\n");
 		return (1);

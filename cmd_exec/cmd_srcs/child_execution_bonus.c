@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 11:27:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 17:36:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 {
 	int	i;
 
+	(void)data;
 	i = -1;
 	if (tab == NULL)
 	{
@@ -33,11 +34,10 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 		}
 	}
 	if (ft_strncmp(param[0], "exit", 4) == 0)
-		exit(*data->p_status);
+		exit(3);
 	write(2, "minishell: ", 11);
 	write(2, param[0], ft_strlen(param[0]));
 	write(2, ": command not found\n", 20);
-	*data->p_status = 127;
 	exit(127);
 }
 

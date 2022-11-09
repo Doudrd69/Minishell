@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:02:27 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 17:36:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,35 @@ int	fork_creation(int pid)
 	return (pid);
 }
 
-int	check_pipe(char *str)
+int	set_p_status(int status, t_data *data)
 {
-	int		i;
+	dprintf(2, "In set_status ==> %d\n", status);
+	if (status == 2)
+		return (130);
+	else if (status == 32512)
+		return (127);
+	else
+		return (0);
+}
 
-	i = 0;
-	while (str[i])
+t_node *node_rotation_exec(t_node *node, t_shell *parse)
+{
+	while (node && node->next != NULL)
+		node = node->next;
+	if (parse->head != NULL)
+		node = parse->head;
+	else
+		node = NULL;
+	return (node);
+}
+
+int	start_heredoc(t_data *data, t_shell *parse)
+{
+	if (heredoc_main(data, &parse->tab_infile, parse) == 1)
 	{
-		if (str[i] == '|')
-			return (1);
-		i++;
+		close_hd_pipe(data, data->heredoc_nb - 1);
+		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+		return (1);
 	}
 	return (0);
 }

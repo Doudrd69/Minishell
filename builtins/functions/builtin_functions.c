@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 19:49:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 16:26:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	mini_pwd(t_mini_data *data, t_node *node)
 	{
 		if (getcwd(data->buff, BUF_SIZE) == NULL)
 		{
-			*data->p_status = 1;
+			data->p_status = 1;
 			return (1);
 		}
 		ft_printf("%s\n", data->buff);
-		*data->p_status = 0;
+		data->p_status = 0;
 		return (0);
 	}
 	return (2);
@@ -59,7 +59,7 @@ int	mini_env(t_mini_data *data, t_node *node)
 	{
 		if (data->env[0] == NULL)
 		{
-			*data->p_status = 1;
+			data->p_status = 1;
 			return (1);
 		}
 		while (i < data->envp_size)
@@ -67,7 +67,7 @@ int	mini_env(t_mini_data *data, t_node *node)
 			printf("%s\n", data->env[i]);
 			i++;
 		}
-		*data->p_status = 0;
+		data->p_status = 0;
 		return (0);
 	}
 	return (2);
@@ -106,11 +106,12 @@ int	mini_exit(t_mini_data *data, t_node *node)
 {
 	int	tmp;
 
+	//cast le return en unsighned char
 	tmp = ft_atoi(node->content);
 	if (data->pipe_check == 0)
 	{
-		*data->p_status = tmp;
-		exit(tmp);
+		data->p_status = tmp;
+		exit((unsigned char)tmp);
 	}
 	return (2);
 }

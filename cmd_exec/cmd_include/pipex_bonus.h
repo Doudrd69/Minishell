@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 11:27:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 17:23:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ void	signal_tmp(int tmp);
 char	*var_found(t_data *data, char *envp[], char *var_name, int i);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 char	*ft_itoa(int n);
-
 int		heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr);
 int		check_and_print_var_hd(char *str, t_data *data, int out_fd, int size);
 int		cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd);
 int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
 int		heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse);
 int		print_var_util(t_data *data, char *str, int i, int output_fd);
+int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
 int		check_var_exists(int j, t_data *data, int output_fd);
 int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
@@ -162,7 +162,9 @@ char	**free_tab(char **tab, int i);
 int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
 int		check_outfile_last_cmd(t_data *data, t_shell *parse);
 int		check_inputfile(t_data *data, t_shell *parse);
+int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
+int		set_p_status(int status, t_data *data);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
 int		pipe_creation(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 13:55:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 17:33:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int ch
 {
 	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
-			export_exec(mini_data, data, node);
-			return (1);
+		mini_data->p_status = export_exec(mini_data, data, node);
+		return (1);
 	}
 	if (node && ft_strncmp(node->content, "unset", 5) == 0)
 	{
-		unset_exec(mini_data, data, node);
-			return (1);
+		mini_data->p_status = unset_exec(mini_data, data, node);
+		return (1);
 	}
 	return (check);
 }
@@ -86,14 +86,13 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 		{
 			if (node->next != NULL)
 				node = node->next;
-			status = (*builtins[i])(data, node);
-			if (status == 1)
+			data->p_status = (*builtins[i])(data, node);
+			if (data->p_status == 1)
 			{
-				printf("P_STATUS fail : %d\n", status);
-				*data->p_status = status;
+				printf("Error code debug : %d\n", data->p_status);
 				return (1);
 			}
-			if (status == 2)
+			if (data->p_status == 2)
 				return (check = 0);
 			return (check = 1);
 		}
@@ -119,8 +118,6 @@ int main(int argc, char *argv[], char *envp[])
 
 	envpsize = 0;
 	builtin_cmd_nb = 5;
-	mini_data.p_status = &p_status;
-	data.p_status = &p_status;
 	init_builtins_tab(builtins_name, builtins);
 	sa.sa_handler = SIG_IGN;
 	init_main(&mini_data, &data, envp);
@@ -163,32 +160,26 @@ int main(int argc, char *argv[], char *envp[])
 void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 {
 	t_node	*node;
+	int		status;
 
 	node = parse->head;
 	cmd_exec_init(data, parse);
 	int pipe_nb = 0;
-	if (heredoc_main(data, &parse->tab_infile, parse) == 1)
-	{
-		close_hd_pipe(data, data->heredoc_nb - 1);
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+	if (start_heredoc(data, parse) == 1)
 		return ;
-	}
 	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
 	pipe_nb = pipe_creation(data);
-	while (node && node->next != NULL)
-		node = node->next;
-	if (parse->head != NULL)
-		node = parse->head;
-	else
-		node = NULL;
+	node = node_rotation_exec(node, parse);
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
-	while (wait(NULL) != -1)
+	printf("==> %s\n", data->env.param_tab2[0]);
+	while (wait(&status) != -1)
 		;
+	*data->p_status = set_p_status(status, data);
 	free_param_tab(data);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
@@ -197,5 +188,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 
 //MES TACHES
 	//faire la verification de la secu des malloc
-	//si "command not found" --> exit(127) et mettre p_status à 127
-	//gerer les grands nombres pour exit (< 255 je crois)
+	//SIGINT dans le main (sans rien) --> error 1
