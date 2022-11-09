@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 17:36:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:01:56 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,22 @@ int	fork_creation(int pid)
 	return (pid);
 }
 
-int	set_p_status(int status, t_data *data)
+int	set_p_status(int status, t_data *data, t_node *node)
 {
+	(void)data;
+	int	tmp;
+	tmp = 0;
+	while (node && node->next != NULL)
+		node = node->next;
+	if (node->prev != NULL && ft_strncmp(node->prev->content, "exit", 4) == 0)
+		tmp = ft_atoi(node->content);
 	dprintf(2, "In set_status ==> %d\n", status);
-	if (status == 2)
+	if (status == 768 || status == 13)
+	{
+		dprintf(2, "==> %d\n", tmp);
+		return (tmp);
+	}
+	else if (status == 2)
 		return (130);
 	else if (status == 32512)
 		return (127);

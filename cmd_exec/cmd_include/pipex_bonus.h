@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 17:23:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 18:26:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,11 @@ char	**ft_split(const char *s, char c);
 char	**free_tab(char **tab, int i);
 
 int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
+int		set_p_status(int status, t_data *data, t_node *node);
 int		check_outfile_last_cmd(t_data *data, t_shell *parse);
 int		check_inputfile(t_data *data, t_shell *parse);
 int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
-int		set_p_status(int status, t_data *data);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
 int		pipe_creation(t_data *data);

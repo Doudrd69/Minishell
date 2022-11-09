@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 17:33:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 18:26:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,9 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (pipe_nb - 1));
-	printf("==> %s\n", data->env.param_tab2[0]);
 	while (wait(&status) != -1)
 		;
-	*data->p_status = set_p_status(status, data);
+	*data->p_status = set_p_status(status, data, node);
 	free_param_tab(data);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
