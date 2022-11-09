@@ -52,7 +52,7 @@ void	parse_pipe(t_shell *minishell, int j, int i)
 	while (str[++i + j] != '\0')
 	{
 		if (str[i + j] == '|' && pipe != 0
-			&& check_quote_pipe(minishell, str + i + j, i + j, &pipe) == 1)
+			&& check_quote_pipe(minishell, str, i + j, &pipe) == 0)
 		{
 			tmp = ft_tmp(tmp, str, j, i);
 			ft_gagne_place(minishell, tmp, &i, &list_cpy);

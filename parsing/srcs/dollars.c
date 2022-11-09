@@ -125,7 +125,6 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	replace_value_and_after(minishell, &j, &tmp);
 	while (str[size] && str[size] != '\0')
 	{
-		printf("str[size] = %c\n", str[size]);
 		tmp[j++] = str[size++];
 	}
 	tmp = replace_quote_dollars(minishell, tmp, j);
