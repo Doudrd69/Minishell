@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 18:52:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 11:36:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int		p_status;
 
 void	sighandler_hd(int signum)
 {
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	exit(signum);
 }
 
@@ -185,16 +188,9 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	return ;
 }
 
-//PARSING WILLIAM
-	//pas le bon output --> echo $USER $123456789USER $USER123456789
-	//echo '' "" ne devrait rien afficher
-	//echo peut pas afficher plusieurs var d'affilées
-	//probleme avec quotes --> les quotes sont affichées
-	//sur l'export --> export LOL= on est la hein ==> LOL=on
-	//echo "                          5                     " doit print tout les espaces
-
 //MES TACHES
 	//faire la verification de la secu des malloc
 	//si "command not found" --> exit(127) et mettre p_status à 127
 	//CTRL-C fonctionnel dans les Heredoc
 	//gerer les grands nombres pour exit (< 255 je crois)
+	//gerer input NULL pour les heredoc (pas de commande)

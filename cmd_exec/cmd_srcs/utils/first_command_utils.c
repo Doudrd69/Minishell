@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 17:49:04 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 16:00:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 				data->hd_pipe_id = data->hd_pipe_id - parse->nbr_appendin;
 			else
 				data->hd_pipe_id -= 1;
-			dprintf(2, "First_cmd --> %d\n", data->hd_pipe_id);
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ], STDIN_FILENO) == -1)
 			{
 				perror("dup2");

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 12:59:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 08:59:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 
 	i = -1;
 	ptr = 0;
-	data->hd.check = 0;
 	data->hd.flag = 0;
 	data->hd.index = 0;
 	hd_pipe_creation(data);
