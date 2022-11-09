@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:04:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:57:30 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 		if (access(tab[i], X_OK) == 0)
 		{
 			if (execve(tab[i], param, env) == -1)
+			{
 				perror("execve");
+				exit(1);
+			}
 		}
 	}
 	if (ft_strncmp(param[0], "exit", 4) == 0)
@@ -40,7 +43,7 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 	write(2, ": command not found\n", 20);
 	exit(127);
 }
-
+//tab pas termine par un NULL
 void	exec_cmd_path(t_data *data, char *envp[])
 {
 	if (data->exec.pipe_check == 1)

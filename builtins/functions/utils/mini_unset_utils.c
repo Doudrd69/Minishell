@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 11:37:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:56:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	unset_var(int index, t_mini_data *data, char *var_unset)
 	{
 		if (malloc_and_cpy(data, i, index) == 1)
 			return (1);
+		data->unset_env[data->envp_size - 1] = NULL;
 		data->envp_size--;
 		return (0);
 	}

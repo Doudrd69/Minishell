@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 14:25:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:55:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	mini_export(t_mini_data *data, char *var)
 		return (1);
 	data->new_env = newtab_malloc(data, data->envp_size, data->env, var);
 	copy_loop(data, var);
+	data->new_env[data->envp_size + 1] = NULL;
 	data->envp_size++;
 	data->p_status = 0;
 	return (0);
