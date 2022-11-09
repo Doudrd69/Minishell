@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:01:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:04:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	set_p_status(int status, t_data *data, t_node *node)
 		node = node->next;
 	if (node->prev != NULL && ft_strncmp(node->prev->content, "exit", 4) == 0)
 		tmp = ft_atoi(node->content);
-	dprintf(2, "In set_status ==> %d\n", status);
 	if (status == 768 || status == 13)
 	{
 		dprintf(2, "==> %d\n", tmp);

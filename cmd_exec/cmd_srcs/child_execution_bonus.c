@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 18:36:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 19:04:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 		}
 	}
 	if (ft_strncmp(param[0], "exit", 4) == 0)
-	{
-		dprintf(2, "** exit cmd **\n");
 		exit(3);
-	}
 	write(2, "minishell: ", 11);
 	write(2, param[0], ft_strlen(param[0]));
 	write(2, ": command not found\n", 20);
