@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 11:27:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 12:58:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 {
 	if (data->cmd_nb > 0)
 	{
-		if (node->type == 'P')
+		if (node && node->type == 'P')
 			node = node->next;
 		first_command(envp, data, node, parse);
 		if (data->cmd_nb > 1)

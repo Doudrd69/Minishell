@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 12:43:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:02:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,13 +173,16 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		return ;
 	}
-	if (node == NULL)
+	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
 	pipe_nb = pipe_creation(data);
-	while (node->next != NULL)
+	while (node && node->next != NULL)
 		node = node->next;
-	*data->p_status = ft_atoi(node->content);
-	node = parse->head;
+	//*data->p_status = ft_atoi(node->content);
+	if (parse->head != NULL)
+		node = parse->head;
+	else
+		node = NULL;
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
@@ -198,3 +201,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	//si "command not found" --> exit(127) et mettre p_status à 127
 	//gerer les grands nombres pour exit (< 255 je crois)
 	//gerer input NULL pour les heredoc (pas de commande)
+	//faire les appendout
