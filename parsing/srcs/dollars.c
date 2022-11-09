@@ -36,18 +36,20 @@ void	parse_dollars(t_shell *minishell)
 	{
 		i = 0;
 		str = (char *)(list_cpy->content);
-		while (str[i] != '\0')
+		while (str && str[i] != '\0')
 		{
 			if (str[i] == '$')
 			{
 				dollars--;
 				minishell->mod = check_quote_dollars(str);
+				printf("%s\n", (char *)(list_cpy->content));
 				dollars_mod(str, i, minishell, &list_cpy);
 				str = (char *)(list_cpy->content);
 			}
 			i++;
 		}
-		list_cpy = list_cpy->next;
+		if (list_cpy != NULL)
+			list_cpy = list_cpy->next;
 	}
 }
 
@@ -93,7 +95,6 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	}
 	else
 	{
-		printf("ICI\n");
 		check = check_dollars_mod(str + i);
 		write_newvalue(minishell, str + i, check);
 		change_var_to_value(str, i, minishell, list);

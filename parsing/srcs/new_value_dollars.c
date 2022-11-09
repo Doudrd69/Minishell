@@ -69,6 +69,7 @@ static void	new_value3(t_shell *minishell, char *str, int mod)
 			cpy++;
 		}
 		minishell->value[i] = '\0';
+		printf("value = %s\n", minishell->value);
 	}
 }
 
