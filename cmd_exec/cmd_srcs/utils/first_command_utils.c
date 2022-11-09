@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 16:00:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:32:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,17 @@ int	iterate_outfile(t_shell *parse)
 	while (parse->tab_outfile[0] != NULL)
 	{
 		if (parse->tab_outfile[0]->next == NULL)
-			return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
+		{
+			if (parse->tab_outfile[0]->type == 'C')
+				return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
 					| O_CREAT, 0666));
-		open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+			else
+				return (open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND | O_CREAT, 0666));
+		}
+		if (parse->tab_outfile[0]->type == 'C')
+			open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		else
+			open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND | O_CREAT, 0666);
 		parse->tab_outfile[0] = parse->tab_outfile[0]->next;
 	}
 	return (-1);
@@ -85,7 +93,7 @@ int	iterate_outfile(t_shell *parse)
 
 int	check_outfile(t_data *data, t_shell *parse)
 {
-	if (parse->nbr_outfile > 0 && parse->tab_outfile[0])
+	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0) && parse->tab_outfile[0])
 	{
 		data->output_fd = iterate_outfile(parse);
 		if (data->output_fd < 0)
