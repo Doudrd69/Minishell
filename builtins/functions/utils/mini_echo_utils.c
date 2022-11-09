@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:02:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 14:25:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_if_empty(t_mini_data *data)
 	if (!data->str || (data->str[0] == '$' && data->str[1] == '\0'))
 	{
 		write(1, "\n", 1);
-		*data->p_status = 0;
+		data->p_status = 0;
 		return (0);
 	}
 	return (1);
@@ -79,7 +79,7 @@ int	write_and_check_signs(int i, t_mini_data *data)
 	{
 		if (data->str[i] == '$' && data->str[i + 1] == '?')
 		{
-			ft_printf("%d", *data->p_status);
+			ft_printf("%d", data->p_status);
 			i += 2;
 		}
 		data->check_print_var = 0;

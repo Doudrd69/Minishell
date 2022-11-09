@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 14:20:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 14:56:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	free_all(t_shell *minishell)
 
 void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 {
-	mini_data->hd_limit = "on est la hein";	//ca va degager apres implementation
 	mini_data->var_export = NULL;
 	mini_data->str = NULL;
 	mini_data->unset_env_check = 0;
@@ -44,6 +43,7 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 	mini_data->echo_arg = 0;
 	mini_data->env = envp;
 	data->envp = envp;
+	data->p_status = &mini_data->p_status;
 	return ;
 }
 
