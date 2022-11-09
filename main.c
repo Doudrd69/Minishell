@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/07 18:52:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:02:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int		p_status;
 
 void	sighandler_hd(int signum)
 {
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	exit(signum);
 }
 
@@ -57,12 +60,12 @@ void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 
 int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int check)
 {
-	if (ft_strncmp(node->content, "export", 6) == 0)
+	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
 			export_exec(mini_data, data, node);
 			return (1);
 	}
-	if (ft_strncmp(node->content, "unset", 5) == 0)
+	if (node && ft_strncmp(node->content, "unset", 5) == 0)
 	{
 		unset_exec(mini_data, data, node);
 			return (1);
@@ -77,7 +80,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 
 	i = 0;
 	status = 0;
-	while (i < builtin_cmd_nb)
+	while (node && i < builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content, ft_strlen(node->content)) == 0)
 		{
@@ -139,7 +142,10 @@ int main(int argc, char *argv[], char *envp[])
 				mini_data.pipe_check = 1;
 			else
 				mini_data.pipe_check = 0;
-			node = minishell->head;
+			if (minishell->head != NULL)
+				node = minishell->head;
+			else
+				node = NULL;
 			data.envp_size = mini_data.envp_size;
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
@@ -167,11 +173,16 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		return ;
 	}
+	if (node == NULL && parse->tab_outfile == NULL)
+		return ;
 	pipe_nb = pipe_creation(data);
-	while (node->next != NULL)
+	while (node && node->next != NULL)
 		node = node->next;
-	*data->p_status = ft_atoi(node->content);
-	node = parse->head;
+	//*data->p_status = ft_atoi(node->content);
+	if (parse->head != NULL)
+		node = parse->head;
+	else
+		node = NULL;
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
@@ -185,16 +196,9 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	return ;
 }
 
-//PARSING WILLIAM
-	//pas le bon output --> echo $USER $123456789USER $USER123456789
-	//echo '' "" ne devrait rien afficher
-	//echo peut pas afficher plusieurs var d'affilées
-	//probleme avec quotes --> les quotes sont affichées
-	//sur l'export --> export LOL= on est la hein ==> LOL=on
-	//echo "                          5                     " doit print tout les espaces
-
 //MES TACHES
 	//faire la verification de la secu des malloc
 	//si "command not found" --> exit(127) et mettre p_status à 127
-	//CTRL-C fonctionnel dans les Heredoc
 	//gerer les grands nombres pour exit (< 255 je crois)
+	//gerer input NULL pour les heredoc (pas de commande)
+	//faire les appendout
