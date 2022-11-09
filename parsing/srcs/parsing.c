@@ -21,13 +21,14 @@ void	tokenizers_arg(t_shell *minishell)
 		parse_pipe(minishell, 0, -1);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
+	printf("DEBUG\n");
 	if (minishell->nbr_infile != 0 || minishell->nbr_appendin != 0
 		|| minishell->nbr_outfile != 0 || minishell->nbr_appendout != 0)
 		parse_redirections(minishell);
-	// print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
+	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space_quote(minishell);
-	if (minishell->tab_infile != NULL || minishell->tab_outfile != NULL)
+	if (minishell->head != NULL && (minishell->tab_infile != NULL || minishell->tab_outfile != NULL))
 		parse_quote_tab(minishell, &minishell->tab_infile, &minishell->tab_outfile);
 	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
 	printf("END PARSING\n");

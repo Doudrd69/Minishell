@@ -37,6 +37,11 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	t_node	*tmp_list;
 	t_node	*new_node;
 
+	if (tmp)
+	{
+		if (ft_strlen(tmp) == 0)
+			tmp = NULL;
+	}
 	if ((*list) && (*list)->next == NULL)
 	{
 		ft_dlstadd_back(&minishell, ft_dlstnew((void *)(tmp)));
