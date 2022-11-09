@@ -1,5 +1,42 @@
 #include "../parsing.h"
 
+static void	check_syntax(t_shell *minishell, char *str, int i)
+{
+	int	j;
+
+	minishell += 0;
+	j = i;
+	if (str[i + 1] == '|')
+	{
+		printf("minishell: syntax error near unexpected token `||'\n");
+		exit(0);
+	}
+	if (i == 0 || str[i + 1] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		exit(0);
+	}
+	while (--j >= 0 && str[j] == ' ')
+	{
+		if (j == 0)
+		{
+			printf("minishell: syntax error near unexpected token `|'\n");
+			exit(0);
+		}
+	}
+	while (str[++i] != '\0' && (str[i] == ' ' || str[i] == '|'))
+	{
+		if (str[i] == '|')
+		{
+			if (str[i + 1] == '|')
+				printf("minishell: syntax error near unexpected token `||'\n");
+			else
+				printf("minishell: syntax error near unexpected token `|'\n");
+			exit(0);
+		}
+	}
+}
+
 char	*cmd_cpy(char *dest, char *src, int size)
 {
 	int	i;
@@ -16,21 +53,28 @@ char	*cmd_cpy(char *dest, char *src, int size)
 
 int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
-	while (i < len + 1 && str[i] != '\0')
+	tmp = str;
+	str = str + len;
+	while (i < len + 1 && str[i] + len != '\0')
 	{
-		if (str[i] == '\"' && minishell->quote != 1 && str[i - 1] != '\\')
+		if ((str[i]) == '\"' && minishell->quote != 1
+			&& str[i - 1] != '\\')
 			minishell->quote = 1;
 		else if (str[i] == '\"' && minishell->quote != 0 && str[i - 1] != '\\')
 			minishell->quote = 0;
 		if (str[i] == '|' && minishell->quote == 1)
-			return (0);
+		{
+			return (1);
+		}
 		if (str[i] == '|' && minishell->quote == 0)
 		{
+			check_syntax(minishell, tmp, len);
 			(*pipe)--;
-			return (1);
+			return (0);
 		}
 		i++;
 	}
