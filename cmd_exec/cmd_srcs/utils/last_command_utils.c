@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 10:04:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:51:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,18 @@ int	iterate_outfile_lastcmd(t_shell *parse)
 	while (parse->tab_outfile[size] != NULL)
 	{
 		if (parse->tab_outfile[size]->next == NULL)
-			return (open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666));
-		open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		{
+			if (parse->tab_outfile[size]->type == 'C')
+				return (open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC
+					| O_CREAT, 0666));
+			else
+				return (open(parse->tab_outfile[size]->content, O_WRONLY |
+					O_APPEND | O_CREAT, 0666));
+		}
+		if (parse->tab_outfile[size]->type == 'C')
+			open(parse->tab_outfile[size]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		else
+			open(parse->tab_outfile[size]->content, O_WRONLY | O_APPEND | O_CREAT, 0666);
 		parse->tab_outfile[size] = parse->tab_outfile[size]->next;
 	}
 	return (-1);
@@ -32,7 +42,7 @@ int	check_outfile_last_cmd(t_data *data, t_shell *parse)
 	int	size;
 
 	size = parse->outfile_size;
-	if (parse->nbr_outfile > 0 && parse->tab_outfile[size])
+	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0) && parse->tab_outfile[size])
 	{
 		data->output_fd = iterate_outfile_lastcmd(parse);
 		if (data->output_fd < 0)

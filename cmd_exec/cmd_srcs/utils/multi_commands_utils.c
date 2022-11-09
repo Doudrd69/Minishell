@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/08 13:32:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:53:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,20 @@ int	iterate_outfile_cmd(t_data *data, t_shell *parse)
 	while (parse->tab_outfile[data->pipe_id] != NULL)
 	{
 		if (parse->tab_outfile[data->pipe_id]->next == NULL)
-			return (open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666));
-		open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		{
+			if (parse->tab_outfile[data->pipe_id]->type == 'C')
+				return (open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY
+					| O_TRUNC | O_CREAT, 0666));
+			else
+				return (open(parse->tab_outfile[data->pipe_id]->content,
+					O_WRONLY | O_APPEND | O_CREAT, 0666));
+		}
+		if (parse->tab_outfile[data->pipe_id]->type == 'C')
+			open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY |
+				O_TRUNC | O_CREAT, 0666);
+		else
+			open(parse->tab_outfile[data->pipe_id]->content, O_WRONLY |
+				O_APPEND | O_CREAT, 0666);
 		parse->tab_outfile[data->pipe_id] = parse->tab_outfile[data->pipe_id]->next;
 	}
 	return (-1);
@@ -27,7 +39,7 @@ int	iterate_outfile_cmd(t_data *data, t_shell *parse)
 
 int	check_outfile_cmd(t_data *data, t_shell *parse)
 {
-	if (parse->nbr_outfile > 0 && parse->tab_outfile[data->pipe_id])
+	if ((parse->nbr_outfile > 0 || parse->nbr_outfile > 0) && parse->tab_outfile[data->pipe_id])
 	{
 		data->output_fd = iterate_outfile_cmd(data, parse);
 		if (data->output_fd < 0)

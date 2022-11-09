@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 13:02:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:09:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	pipe_nb = pipe_creation(data);
 	while (node && node->next != NULL)
 		node = node->next;
-	//*data->p_status = ft_atoi(node->content);
 	if (parse->head != NULL)
 		node = parse->head;
 	else
