@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 11:36:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 12:43:46 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
 
 int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int check)
 {
-	if (ft_strncmp(node->content, "export", 6) == 0)
+	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
 			export_exec(mini_data, data, node);
 			return (1);
 	}
-	if (ft_strncmp(node->content, "unset", 5) == 0)
+	if (node && ft_strncmp(node->content, "unset", 5) == 0)
 	{
 		unset_exec(mini_data, data, node);
 			return (1);
@@ -80,7 +80,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *)
 
 	i = 0;
 	status = 0;
-	while (i < builtin_cmd_nb)
+	while (node && i < builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content, ft_strlen(node->content)) == 0)
 		{
@@ -142,7 +142,10 @@ int main(int argc, char *argv[], char *envp[])
 				mini_data.pipe_check = 1;
 			else
 				mini_data.pipe_check = 0;
-			node = minishell->head;
+			if (minishell->head != NULL)
+				node = minishell->head;
+			else
+				node = NULL;
 			data.envp_size = mini_data.envp_size;
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
@@ -170,6 +173,8 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		return ;
 	}
+	if (node == NULL)
+		return ;
 	pipe_nb = pipe_creation(data);
 	while (node->next != NULL)
 		node = node->next;
@@ -191,6 +196,5 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 //MES TACHES
 	//faire la verification de la secu des malloc
 	//si "command not found" --> exit(127) et mettre p_status à 127
-	//CTRL-C fonctionnel dans les Heredoc
 	//gerer les grands nombres pour exit (< 255 je crois)
 	//gerer input NULL pour les heredoc (pas de commande)
