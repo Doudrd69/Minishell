@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 12:56:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 13:02:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	sorting(char **tmp_tab)
+void	sorting(char **tmp_tab, int size)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 
 	i = 0;
-	while (tmp_tab[i])
+	while (i < size)
 	{
 		j = 0;
-		while (tmp_tab[j])
+		while (j < size)
 		{
 			if (ft_strcmp(tmp_tab[i], tmp_tab[j]) < 0)
 			{
@@ -47,12 +47,12 @@ void	sorting(char **tmp_tab)
 	return ;
 }
 
-void	display_env(char **tmp_tab)
+void	display_env(char **tmp_tab, int size)
 {
 	int	i;
 
 	i = 0;
-	while (tmp_tab[i])
+	while (i < size)
 	{
 		write(1, "declare -x ", 11);
 		write(1, tmp_tab[i], ft_strlen(tmp_tab[i]));
@@ -80,8 +80,8 @@ int	display_export(t_mini_data *data)
 			i++;
 		}
 		tmp_tab[i] = NULL;
-		sorting(tmp_tab);
-		display_env(tmp_tab);
+		sorting(tmp_tab, data->envp_size);
+		display_env(tmp_tab, data->envp_size);
 		free_tab(tmp_tab, data->envp_size);
 		return (1);
 	}
