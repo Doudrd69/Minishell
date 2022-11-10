@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 14:14:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 16:09:36 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	set_p_status(int status, t_data *data, t_node *node)
 	tmp = 0;
 	while (node && node->next != NULL)
 		node = node->next;
-	if (node->prev != NULL && ft_strncmp(node->prev->content, "exit", 4) == 0)
+	if (node && node->prev != NULL && ft_strncmp(node->prev->content, "exit", 4) == 0)
 		tmp = ft_atoi(node->content);
 	if (status == 768 || status == 13)
 		return (tmp);
@@ -47,7 +47,7 @@ int	set_p_status(int status, t_data *data, t_node *node)
 		return (130);
 	else if (status == 32512)
 		return (127);
-	else if (status == 1)
+	else if (status == 1 || status == 3328)
 		return (1);
 	else
 		return (0);
@@ -75,7 +75,7 @@ int	start_heredoc(t_data *data, t_shell *parse)
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		return (1);
 	}
-	if (node == NULL)
+	if (node == NULL && parse->tab_outfile == NULL)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 13:32:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 16:08:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	input_file_opening(t_data *data, t_shell *parse)
 	data->input_fd = open(parse->tab_infile[0]->content, O_RDONLY);
 	if (data->input_fd < 0)
 	{
-		ft_printf("minishell: %s: No such file or directory\n",
-			parse->tab_infile[0]->content);
+		ft_printf("minishell: %s\n", strerror(errno));
 		return (1);
 	}
 	if (dup2(data->input_fd, STDIN_FILENO) == -1)
@@ -64,7 +63,7 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 			return (0);
 		}
 		if (parse->tab_infile[0]->type == 'C')
-			*data->p_status = input_file_opening(data, parse);
+			return (input_file_opening(data, parse));
 		data->input_fd = STDIN_FILENO;
 	}
 	return (0);
@@ -98,7 +97,7 @@ int	check_outfile(t_data *data, t_shell *parse)
 		data->output_fd = iterate_outfile(parse);
 		if (data->output_fd < 0)
 		{
-			ft_printf("Error : can't open file : %s\n", parse->tab_outfile[0]->content);
+			ft_printf("minishell: %s: %s\n", parse->tab_outfile[0]->content, strerror(errno));
 			return (1);
 		}
 		if (dup2(data->output_fd, STDOUT_FILENO) == -1)
