@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:44:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:14:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ int	check_delimiter(char *str, char *delimiter)
 	if (size == ft_strlen(delimiter))
 		return (0);
 	return (1);
+}
+
+int	check_var_hd(char *str, char *var_name)
+{
+	size_t	size;
+
+	size = 0;
+	while (str[size] != '=')
+		size++;
+	if (size == ft_strlen(var_name))
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:15:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*var_found(t_data *data, char *envp[], char *var_name, int i)
 
 	j = -1;
 	k = 0;
-	if (check_var(envp[i], var_name))
+	if (check_var_hd(envp[i], var_name))
 	{
 		data->home_path = malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
 		if (!data->home_path)

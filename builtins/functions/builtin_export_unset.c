@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:55:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:57:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ int	mini_export(t_mini_data *data, char *var)
 		data->p_status = 0;
 		return (0);
 	}
-	data->new_env = malloc(sizeof(char *) * (data->envp_size + 1));
+	printf("Begin export --> %d\n", data->envp_size);
+	data->new_env = malloc(sizeof(char *) * (data->envp_size + 2));//1 pour la var_export et 1 pour le NULL
 	if (!data->new_env)
 		return (1);
-	data->new_env = newtab_malloc(data, data->envp_size, data->env, var);
-	copy_loop(data, var);
-	data->new_env[data->envp_size + 1] = NULL;
+	data->new_env = newtab_malloc(data, data->envp_size + 1, data->env, var);
+	copy_loop(data, var, data->envp_size + 1);
 	data->envp_size++;
+	printf("End export --> %d\n", data->envp_size);
+	data->new_env[data->envp_size] = NULL;
 	data->p_status = 0;
 	return (0);
 }
@@ -41,14 +43,11 @@ int	mini_unset(t_mini_data *data, char *var_unset)
 		if (ft_strnstr(data->env[index], var_unset, ft_strlen(var_unset)))
 		{
 			if (unset_var(index, data, var_unset) == 1)
-			{
-				data->p_status = 1;
 				return (1);
-			}
 			return (0);
 		}
 		index++;
 	}
-	ft_printf("minishell: unset: '%s': not a valid identifier\n", var_unset);
+	//ft_printf("minishell: unset: '%s': not a valid identifier\n", var_unset);
 	return (1);
 }

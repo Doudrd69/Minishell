@@ -6,22 +6,26 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/28 20:15:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:28:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_var(char *str, char *var_name)
+int	check_var(char *str, char *var_name)//trouver la bonne variable parmi plusieurs si nom semblable
 {
 	size_t	size;
 
 	size = 0;
-	while (str[size] != '=')
+	while (str[size] && str[size] != '=')
 		size++;
 	if (size == ft_strlen(var_name))
+	{
+		if (ft_strncmp(str, var_name, size) == 0)
+			return (0);
 		return (1);
-	return (0);
+	}
+	return (1);
 }
 
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
