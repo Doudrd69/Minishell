@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:57:30 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 14:45:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,15 @@ void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 			if (execve(tab[i], param, env) == -1)
 			{
 				perror("execve");
-				exit(1);
+				exit(errno);
 			}
 		}
 	}
 	if (ft_strncmp(param[0], "exit", 4) == 0)
 		exit(3);
-	write(2, "minishell: ", 11);
-	write(2, param[0], ft_strlen(param[0]));
-	write(2, ": command not found\n", 20);
-	exit(127);
+	exit_cmd_not_found(param);
 }
-//tab pas termine par un NULL
+
 void	exec_cmd_path(t_data *data, char *envp[])
 {
 	if (data->exec.pipe_check == 1)
@@ -54,6 +51,7 @@ void	exec_cmd_path(t_data *data, char *envp[])
 		close(data->output_fd);
 	if (data->hd_pipefd)
 		close_hd_pipe(data, data->heredoc_nb - 1);
+	check_file(data->env.param_tab1[0]);
 	if (execve(data->env.param_tab1[0], data->env.param_tab1, envp) == -1)
 		perror("execve");
 }
@@ -61,7 +59,9 @@ void	exec_cmd_path(t_data *data, char *envp[])
 void	first_cmd_execution(t_data *data, char *envp[])
 {
 	if (access(data->env.param_tab1[0], X_OK) == 0)
+	{
 		exec_cmd_path(data, envp);
+	}
 	else
 	{
 		if (data->env.tab1 != NULL)
@@ -73,7 +73,8 @@ void	first_cmd_execution(t_data *data, char *envp[])
 		if (data->exec.outfile_check == 1)
 			close(data->output_fd);
 		if (data->hd_pipefd)
-			close_hd_pipe(data, data->heredoc_nb - 1);//bien close
+			close_hd_pipe(data, data->heredoc_nb - 1);
+		check_file(data->env.param_tab1[0]);
 		exec_cmd(data->env.tab1, data->env.param_tab1, envp, data);
 	}
 }
@@ -83,6 +84,7 @@ void	last_cmd_execution(t_data *data, char *envp[])
 	if (access(data->env.param_tab2[0], X_OK) == 0)
 	{
 		close_pipe(data, (data->cmd_nb - 2));
+		check_file(data->env.param_tab2[0]);
 		close(data->output_fd);
 		if (execve(data->env.param_tab2[0], data->env.param_tab2, envp) == -1)
 			perror("execve");
@@ -93,12 +95,13 @@ void	last_cmd_execution(t_data *data, char *envp[])
 			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->exec.outfile_check == 1)		//close dans le main?
+		if (data->exec.outfile_check == 1)
 			close(data->output_fd);
-		if (data->exec.infile_check == 1)		//peut etre pas close ici
+		if (data->exec.infile_check == 1)
 			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
+		check_file(data->env.param_tab2[0]);
 		exec_cmd(data->env.tab2, data->env.param_tab2, envp, data);
 	}
 }
@@ -108,6 +111,7 @@ void	cmd_execution(t_data *data, char *envp[], int pipe_id)
 	if (access(data->env.param_tab3[0], X_OK) == 0)
 	{
 		close_pipe(data, pipe_id);
+		check_file(data->env.param_tab3[0]);
 		if (execve(data->env.param_tab3[0], data->env.param_tab3, envp) == -1)
 			perror("execve");
 	}
@@ -123,6 +127,7 @@ void	cmd_execution(t_data *data, char *envp[], int pipe_id)
 			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
+		check_file(data->env.param_tab3[0]);
 		exec_cmd(data->env.tab3, data->env.param_tab3, envp, data);
 	}
 }
