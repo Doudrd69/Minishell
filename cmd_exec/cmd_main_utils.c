@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:16:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 11:03:30 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,16 @@ t_node *node_rotation_exec(t_node *node, t_shell *parse)
 
 int	start_heredoc(t_data *data, t_shell *parse)
 {
+	t_node *node;
+
+	node = parse->head;
 	if (heredoc_main(data, &parse->tab_infile, parse) == 1)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		return (1);
 	}
+	if (node == NULL)
+		return (1);
 	return (0);
 }
