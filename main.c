@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:19:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 16:09:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int ch
 {
 	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
+		if (node->next == NULL || node->next->type == 'P')
+			return (display_export(mini_data));
 		mini_data->p_status = export_exec(mini_data, data, node);
 		return (1);
 	}
@@ -191,5 +193,4 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 
 	//si export abd --> on l'affiche pas dans env mais dans export
 	//si export qwe= -> onl'affiche dans env et export
-	//pb si j'unset plusieurs variables d'un coup --> je fais que (size - 1)
-	//si var_export = "abd" --> j'arrive pas a l'upload si je refai un export
+	//pb dans parsing --> single quote = boucle infinie

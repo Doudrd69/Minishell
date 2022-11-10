@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:53:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 16:12:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 	if (data->first_cmd_pid == 0)
 	{
 		if (check_inputfile(data, parse) != 0)
-			return ;
+			exit(errno);
 		if (node != NULL)
 		{
 			data->env.tab1 = get_path(envp, data, data->env.tab1);
@@ -29,7 +29,8 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 			while (data->env.param_tab1[data->size_ptab1])
 				data->size_ptab1++;
 		}
-		check_outfile(data, parse);
+		if (check_outfile(data, parse) != 0)
+			exit(errno);
 		first_cmd_execution(data, envp);
 	}
 }
@@ -42,8 +43,9 @@ void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 	if (data->last_cmd_pid == 0)
 	{
 		if (check_inputfile_last_cmd(data, parse) != 0)
-			return ;
-		check_outfile_last_cmd(data, parse);
+			exit(errno);
+		if (check_outfile_last_cmd(data, parse) != 0)
+			exit(errno);
 		data->env.tab2 = get_path(envp, data, data->env.tab2);
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		while (data->env.param_tab2[data->size_ptab2])

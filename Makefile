@@ -20,6 +20,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		cmd_exec/cmd_srcs/main_utils_bonus.c					\
 		cmd_exec/cmd_srcs/split_path_bonus.c					\
 		cmd_exec/cmd_srcs/fill_param_tab.c						\
+		cmd_exec/cmd_srcs/child_exec_utils.c					\
 		cmd_exec/cmd_main_utils.c								\
 		builtins/functions/utils/mini_export_existing_var.c		\
 		builtins/functions/utils/builtin_functions_utils.c		\
@@ -32,6 +33,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/builtin_export_unset.c				\
 		builtins/functions/utils/mini_cd_utils.c				\
 		builtins/functions/builtin_functions.c					\
+		builtins/functions/display_export.c						\
 		heredoc/heredoc_env_var_handling_utils.c				\
 		heredoc/heredoc_execution_utils.c						\
 		heredoc/heredoc_functions.c								\

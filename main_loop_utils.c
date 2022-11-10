@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:12:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 16:22:56 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,17 @@ int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 
 void	*node_rotation(t_node *node)
 {
-	if (node->next->type == 'P')
-		node = node->next->next;
-	else if (node->next->type == 'N')
-		node = node->next->next->next;
-	else
-		node = node->next;
-	if (node->type == 'P')
-		node = node->next;
+	if (node != NULL)
+	{
+		if (node && node->next->type == 'P')
+			node = node->next->next;
+		else if (node && node->next->type == 'N')
+			node = node->next->next->next;
+		else
+			node = node->next;
+		if (node && node->type == 'P')
+			node = node->next;
+	}
 	return (node);
 }
 
