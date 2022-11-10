@@ -25,6 +25,7 @@ typedef struct s_shell
 	t_node			**tab_infile;
 	t_node			**tab_outfile;
 	int				quote;
+	int				dquote;
 	int				nbr_pipe;
 	int				nbr_infile;
 	int				nbr_outfile;
@@ -57,7 +58,7 @@ void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
 void	parse_pipe(t_shell *minishell, int j, int i);
-int		check_quote_pipe(t_shell *minishell, char *str, int i, int *pipe);
+int		check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe);
 char	*cmd_cpy(char *dest, char *src, int size);
 void	delist(t_node **list);
 void	ft_incr_var_pipe(int *j, int *i);

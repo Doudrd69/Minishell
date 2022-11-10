@@ -5,6 +5,8 @@ static void	check_syntax(t_shell *minishell, char *str, int i)
 	int	j;
 
 	minishell += 0;
+	if (i != 0)
+		i++;
 	j = i;
 	if (str[i + 1] == '|')
 	{
@@ -57,21 +59,31 @@ int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 	char	*tmp;
 
 	i = 0;
+	if (len == -1)
+		len = 0;
 	tmp = str;
-	str = str + len;
-	while (i < len + 1 && str[i] + len != '\0')
+	str = str + (len);
+	printf("%s\n", tmp);
+	minishell->dquote = 0;
+	minishell->quote = 0;
+	while (str[i] != '\0')
 	{
-		if ((str[i]) == '\"' && minishell->quote != 1
-			&& str[i - 1] != '\\')
+		if ((str[i]) == '\"' && minishell->dquote != 1)
+			minishell->dquote = 1;
+		else if (str[i] == '\"' && minishell->dquote != 0)
+			minishell->dquote = 0;
+		if (str[i] == '\'' && minishell->quote != 1)
 			minishell->quote = 1;
-		else if (str[i] == '\"' && minishell->quote != 0 && str[i - 1] != '\\')
+		else if (str[i] == '\'' && minishell->quote != 0)
 			minishell->quote = 0;
-		if (str[i] == '|' && minishell->quote == 1)
+		if (str[i] == '|' && (minishell->dquote == 1 || minishell->quote == 1))
 		{
+			printf("str + len ==%s\n", str + i);
 			return (1);
 		}
-		if (str[i] == '|' && minishell->quote == 0)
+		if (str[i] == '|' && minishell->dquote == 0 && minishell->quote == 0)
 		{
+			printf("str + len ==%s\n", str + i);
 			check_syntax(minishell, tmp, len);
 			(*pipe)--;
 			return (0);

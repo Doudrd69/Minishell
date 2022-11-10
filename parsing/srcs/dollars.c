@@ -16,7 +16,7 @@ static int	check_dollars_mod(char *str)
 		mod = 1;
 	}
 	if (str[i + 1] != '\0' && ((str[i + 1] >= 65 && str[i + 1] <= 90)
-			|| str[i + 1] == 95 || (str[i + 1] >= 97 && str[i + 1] <= 122)))
+			|| str[i + 1] == 95 || (str[i + 1] >= 97 && str[i + 1] <= 122) || str[i + 1] == 32))
 	{
 		mod = 2;
 	}
