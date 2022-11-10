@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:57:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 09:38:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	mini_unset(t_mini_data *data, char *var_unset)
 		{
 			if (unset_var(index, data, var_unset) == 1)
 				return (1);
+			data->envp_size--;
 			return (0);
 		}
 		index++;
