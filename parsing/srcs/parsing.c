@@ -21,7 +21,6 @@ void	tokenizers_arg(t_shell *minishell)
 		parse_pipe(minishell, 0, -1);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
-	printf("DEBUG\n");
 	if (minishell->nbr_infile != 0 || minishell->nbr_appendin != 0
 		|| minishell->nbr_outfile != 0 || minishell->nbr_appendout != 0)
 		parse_redirections(minishell);

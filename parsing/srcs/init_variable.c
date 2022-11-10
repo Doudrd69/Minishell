@@ -7,6 +7,7 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 	minishell->env_size = env_size;
 	minishell->home_path = NULL;
 	minishell->quote = 0;
+	minishell->dquote = 0;
 	minishell->nbr_pipe = 0;
 	minishell->nbr_infile = 0;
 	minishell->nbr_outfile = 0;

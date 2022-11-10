@@ -14,37 +14,63 @@ static char	**ft_free(int k, char **tab)
 static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 {
 	int	x;
+	int	j;
 
 	x = 0;
 	while (str[*i] != ' ' && str[*i] != '\0')
 	{
 		if (str[*i] == '\'')
 		{
+			if (str[*i + 1] == '\0')
+				(*tab)[*k][x++] = str[*i];
+			if (str[*i + 1] == '\'')
+			{
+				(*tab)[*k][x++] = ' ';
+			}
 			(*i) += 1;
 			while (str[*i] != '\0' && str[*i] != '\'')
 			{
 				(*tab)[*k][x++] = str[*i];
 				(*i) += 1;
 			}
+			if (str[*i] == '\'' && str[*i] != '\0')
+				(*i) += 1;
 		}
 		if (str[*i] == '\"')
 		{
+			if (str[*i + 1] == '\0')
+				(*tab)[*k][x++] = str[*i];
 			(*i) += 1;
 			while (str[*i] != '\0' && str[*i] != '\"')
 			{
 				(*tab)[*k][x++] = str[*i];
 				(*i) += 1;
 			}
+			if (str[*i] == '\"' && str[*i] != '\0')
+				(*i) += 1;
+			if (str[*i] == ' ')
+			{
+				j = (*i);
+				while (str[j] != '\0')
+				{
+					if (str[j] != ' ')
+					{
+						(*tab)[*k][x++] = ' ';
+						(*i) = j;
+						break ;
+					}
+					j++;
+				}
+			}
 		}
-		if ((str[*i] == '\"' || str[*i] == '\'') && str[*i] != '\0')
-			(*i) += 1;
-		if (str[*i] != '\0' && str[*i] != ' ')
+		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"')
 		{
 			(*tab)[*k][x++] = str[*i];
 			(*i) += 1;
 		}
 	}
-	(*tab)[*k][x] = '\0';
+	if (x != 0)
+		(*tab)[*k][x] = '\0';
 	return (x);
 }
 
@@ -61,7 +87,7 @@ char	**ft_split_minishell_get_filling(char const *str, char **tab)
 		while (str[i] == ' ' && str[i])
 			i++;
 		x = fill_with_quotes(str, &i, &k, &tab);
-		if (str[i] == ' ' || str[i - x] != '\0')
+		if ((str[i] == ' ' || str[i - x] != '\0') && x != 0)
 			k++;
 		while (str[i] == ' ' && str[i])
 			i++;
@@ -77,12 +103,17 @@ char	**ft_split_minishell(t_shell *minishell, char const *str, char c)
 	if (!str)
 		return (NULL);
 	nbrw = ft_nbr_words_split_minishell(minishell, str, c);
+	if (nbrw == 0)
+	{
+		if (strlen(str) == 2)
+			printf("minishell: : command not found\n");
+		return (NULL);
+	}
+	printf("nbrw == %d\n", nbrw);
 	tab = (char **)malloc(sizeof(char *) * (nbrw + 1));
 	if (tab == NULL)
 		return (NULL);
 	tab[nbrw] = 0;
-	if (nbrw == 0)
-		return (tab);
 	if (ft_split_minishell_malloc_ws(str, c, tab))
 		return (ft_free(ft_split_minishell_malloc_ws(str, c, tab), tab));
 	tab = ft_split_minishell_get_filling(str, tab);

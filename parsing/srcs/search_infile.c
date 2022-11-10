@@ -61,13 +61,13 @@ int	check_quote_infile(t_shell *minishell, char *str, int len)
 	minishell->quote = 0;
 	while (i < len + 1 && str[i] != '\0')
 	{
-		if (str[i] == '\"' && minishell->quote != 1 && str[i - 1] != '\\')
+		if (str[i] == '\"' && minishell->quote != 1)
 			minishell->quote = 1;
-		else if (str[i] == '\"' && minishell->quote != 0 && str[i - 1] != '\\')
+		else if (str[i] == '\"' && minishell->quote != 0)
 			minishell->quote = 0;
-		if (str[i] == '\'' && dquote != 1 && str[i - 1] != '\\')
+		if (str[i] == '\'' && dquote != 1)
 			dquote = 1;
-		else if (str[i] == '\'' && dquote != 0 && str[i - 1] != '\\')
+		else if (str[i] == '\'' && dquote != 0)
 			dquote = 0;
 		if (str[i] == '<' && str[i + 1] != '<'
 			&& (minishell->quote == 1 || dquote == 1))
