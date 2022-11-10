@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:50:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:12:17 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	unset_exec(t_mini_data *mini_data, t_data *data, t_node *node)
 	while (node != NULL)
 	{
 		if (mini_unset(mini_data, node->content) == 1)
-			return (1);
+			return (0);
 		if (node->next == NULL)
 			break ;
 		mini_data->env = mini_data->unset_env;

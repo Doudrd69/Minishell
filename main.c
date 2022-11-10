@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 18:26:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:19:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,3 +188,8 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 //MES TACHES
 	//faire la verification de la secu des malloc
 	//SIGINT dans le main (sans rien) --> error 1
+
+	//si export abd --> on l'affiche pas dans env mais dans export
+	//si export qwe= -> onl'affiche dans env et export
+	//pb si j'unset plusieurs variables d'un coup --> je fais que (size - 1)
+	//si var_export = "abd" --> j'arrive pas a l'upload si je refai un export

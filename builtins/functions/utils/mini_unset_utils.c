@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 19:56:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 09:50:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,20 @@ int	unset_var(int index, t_mini_data *data, char *var_unset)
 	int	i;
 
 	i = 0;
-	if (check_var(data->env[index], var_unset))
+	if (check_var(data->env[index], var_unset) == 0)
 	{
 		if (malloc_and_cpy(data, i, index) == 1)
 			return (1);
-		data->unset_env[data->envp_size - 1] = NULL;
-		data->envp_size--;
 		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 int	malloc_and_cpy(t_mini_data *data, int i, int index)
 {
 	int	j;
 
-	data->unset_env = malloc(sizeof(char *) * (data->envp_size - 1));
+	data->unset_env = malloc(sizeof(char *) * (data->envp_size));//on malloc de la taille actuelle pour le NULL
 	if (!data->unset_env)
 		return (1);
 	while (i < data->envp_size - 1)
@@ -77,5 +75,6 @@ int	malloc_and_cpy(t_mini_data *data, int i, int index)
 			i++;
 		}
 	}
+	data->unset_env[data->envp_size - 1] = NULL;
 	return (0);
 }

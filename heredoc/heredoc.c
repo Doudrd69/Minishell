@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 11:11:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:14:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	var_exists_hd(t_data *data)
 	{
 		if (ft_strnstr(data->envp[i], data->hd.env_var, size))
 		{
-			if (check_var(data->envp[i], data->hd.env_var))
+			if (check_var_hd(data->envp[i], data->hd.env_var))
 			{
 				data->hd.position = i;
 				return (0);

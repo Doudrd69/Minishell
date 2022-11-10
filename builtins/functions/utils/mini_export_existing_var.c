@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:26:30 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/21 19:34:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:28:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_var_exists_export(t_mini_data *data, char *var_export)
 	{
 		if (ft_strnstr(data->env[i], str, ft_strlen(str)))
 		{
-			if (check_var(data->env[i], str))
+			if (check_var(data->env[i], str) == 0)
 			{
 				data->var_position = i;
 				return (1);

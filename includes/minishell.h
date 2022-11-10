@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 17:22:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 08:54:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ int		mini_exit();
 /* BUILTIN FUNCTIONS UTILS */
 void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loop);
 void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
-void	copy_loop(t_mini_data *data, char *var_export);
+void	copy_loop(t_mini_data *data, char *var_export, int new_size);
 void	print_var(int j, t_mini_data *data);
 void	sighandler(int signum);
 
 char	**newtab_malloc(t_mini_data *data, int old_size, char **env, char *var);
 char	*check_and_return_var(t_mini_data *data, char **envp, char *var, int i);
-char	**new_var_tab_copy(t_mini_data *data, int i, char *name, char *value);
 char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int old_size);
 char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name);
 char	**new_tab_with_existing_var(t_mini_data *data, char *var_export);
@@ -100,6 +99,7 @@ int		write_and_check_signs(int i, t_mini_data *data );
 int		path_exists(t_mini_data *data, t_node *node);
 int		pid_display(t_mini_data *data, int i);
 int		check_signs(int i, t_mini_data *data);
+int		check_var_hd(char *str, char *var_name);
 int		check_var(char *str, char *var_name);
 int		check_special_char(char c, int size);
 int		update_old_pwd(t_mini_data *data);
