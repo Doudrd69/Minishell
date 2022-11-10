@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:54:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/10 12:47:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int		mini_exit();
 
 /* BUILTIN FUNCTIONS UTILS */
 void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check, int loop);
-void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 void	copy_loop(t_mini_data *data, char *var_export, int new_size);
 void	print_var(int j, t_mini_data *data);
+void	opendir_test(char *str, DIR *dir, struct dirent *pdir);
 void	sighandler(int signum);
 
 char	**newtab_malloc(t_mini_data *data, int old_size, char **env, char *var);
@@ -103,6 +103,7 @@ int		check_var_hd(char *str, char *var_name);
 int		check_var(char *str, char *var_name);
 int		check_special_char(char c, int size);
 int		update_old_pwd(t_mini_data *data);
+int		display_export(t_mini_data *data);
 int		check_if_empty(t_mini_data *data);
 int		check_oldpwd(t_mini_data *data);
 int		newline_arg(t_mini_data *data);
