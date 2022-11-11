@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 14:56:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:16:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
 	mini_data->first_cd_check = 0;
 	mini_data->new_env_check = 0;
 	mini_data->echo_sq_check = 0;
+	mini_data->infile_check = 0;
+	mini_data->outfile_check = 0;
 	mini_data->oldpwd_if = 0;
 	mini_data->echo_arg = 0;
 	mini_data->env = envp;

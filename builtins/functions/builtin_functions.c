@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 10:11:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 15:40:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,17 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	int	i;
 	int	check;
 	int	loop;
+	int	output_fd;
 
 	loop = 0;
 	if (no_args(node) == 0)
 		return (0);
 	data->echo_arg = 0;
-	while (node != NULL)
+	if (data->pipe_check == 1)
+		output_fd = data->pipefd_tmp;
+	else
+		output_fd = 1;
+	while (node != NULL && node->type != 'P')
 	{
 		i = 0;
 		check = 0;
@@ -101,19 +106,18 @@ int	mini_echo(t_mini_data *data, t_node *node)
 		loop = 1;
 		if (check_if_empty(data) == 0)
 			return (0);
-		i = write_and_check_signs(i, data);
-		if (node->next != NULL)
-			write(1, " ", 1);
+		i = write_and_check_signs(i, data, output_fd);
+		if (node->next != NULL && node->next->type != 'P')
+			write(output_fd, " ", 1);
 		node = node->next;
 	}
-	return (newline_arg(data));
+	return (newline_arg(data, output_fd));
 }
 
 int	mini_exit(t_mini_data *data, t_node *node)
 {
 	int	tmp;
 
-	//cast le return en unsighned char
 	tmp = ft_atoi(node->content);
 	if (data->pipe_check == 0)
 	{

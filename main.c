@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 16:09:26 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:53:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,20 @@ int main(int argc, char *argv[], char *envp[])
 				node = minishell->head;
 			else
 				node = NULL;
+			if (minishell->tab_infile!= NULL)
+				mini_data.infile_check = 1;
+			else
+				mini_data.infile_check = 0;
+			if (minishell->tab_outfile != NULL)
+				mini_data.outfile_check = 1;
+			else
+				mini_data.outfile_check = 0;
 			data.envp_size = mini_data.envp_size;
+			if (minishell->nbr_pipe > 0)
+			{
+				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
+				mini_data.pipefd_tmp = data.pipefd[0][WRITE];
+			}
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
 			check = export_and_unset(&mini_data, &data, node, check);
@@ -166,18 +179,17 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 
 	node = parse->head;
 	cmd_exec_init(data, parse);
-	int pipe_nb = 0;
 	if (start_heredoc(data, parse) == 1)
 		return ;
 	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
-	pipe_nb = pipe_creation(data);
+	//data->pipe_nb = pipe_creation(data);
 	node = node_rotation_exec(node, parse);
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
-		close_pipe(data, (pipe_nb - 1));
+		close_pipe(data, (data->pipe_nb - 1));
 	while (wait(&status) != -1)
 		;
 	*data->p_status = set_p_status(status, data, node);
@@ -188,9 +200,5 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 }
 
 //MES TACHES
-	//faire la verification de la secu des malloc
-	//SIGINT dans le main (sans rien) --> error 1
 
-	//si export abd --> on l'affiche pas dans env mais dans export
-	//si export qwe= -> onl'affiche dans env et export
-	//pb dans parsing --> single quote = boucle infinie
+	//SIGINT dans le main (sans rien) --> error 1
