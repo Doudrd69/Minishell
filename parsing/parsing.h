@@ -96,6 +96,10 @@ int		check_quote_append(t_shell *minishell, char *str, int len);
 int		check_quote_heredoc(t_shell *minishell, char *str, int len);
 int		check_quote_outfile(t_shell *minishell, char *str, int len);
 void	add_back_file_list(t_node **tab_list, t_node *new);
+int		check_syntax_infile(t_shell *minishell, char *str, int i);
+int		check_syntax_outfile(t_shell *minishell, char *str, int i);
+int		check_syntax_heredoc(t_shell *minishell, char *str, int i);
+int		check_syntax_append(t_shell *minishell, char *str, int i);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);

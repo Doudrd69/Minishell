@@ -115,6 +115,7 @@ void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	i = minishell->mod;
 	i += 1;
 	space = 0;
+	check_syntax_append(minishell, str, i);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
