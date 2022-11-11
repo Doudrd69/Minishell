@@ -56,7 +56,6 @@ static int	pass_dquote(char const *str, char charset, int *i)
 		(*i) += 1;
 		return (1);
 	}
-	printf("str + i ===%s\n", str + *i);
 	if (str[*i] != '\0' && str[(*i) + 1] == '\0')
 		return (0);
 	while (str[*i] != '\0' && str[*i] != '\"')

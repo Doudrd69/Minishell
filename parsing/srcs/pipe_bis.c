@@ -63,7 +63,6 @@ int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 		len = 0;
 	tmp = str;
 	str = str + (len);
-	printf("%s\n", tmp);
 	minishell->dquote = 0;
 	minishell->quote = 0;
 	while (str[i] != '\0')
@@ -78,12 +77,10 @@ int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 			minishell->quote = 0;
 		if (str[i] == '|' && (minishell->dquote == 1 || minishell->quote == 1))
 		{
-			printf("str + len ==%s\n", str + i);
 			return (1);
 		}
 		if (str[i] == '|' && minishell->dquote == 0 && minishell->quote == 0)
 		{
-			printf("str + len ==%s\n", str + i);
 			check_syntax(minishell, tmp, len);
 			(*pipe)--;
 			return (0);

@@ -48,7 +48,10 @@ int	check_quote_dollars(char *str)
 		check_dquote_dollars(str, &dquote, i, &quote);
 		if (str[i] == '$' && str[i - 1] == '"'
 			&& str[i + 1] == '"' && quote != 1)
-			return (1);
+			return (6);
+		if (str[i] == '$' && str[i - 1] == '\''
+			&& str[i + 1] == '\'' && dquote != 1)
+			return (7);
 		if (str[i] == '$' && str[i - 1] == '"' && dquote == 1 && quote != 1)
 			return (2);
 		if (str[i] == '$' && dquote == 1 && quote != 1)

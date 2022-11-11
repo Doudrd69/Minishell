@@ -8,6 +8,11 @@ static void	classic_infile(char *str, int tab, t_shell *minishell,
 	i = minishell->mod;
 	if (i == -1)
 		return ;
+	if (str[i] == '<' && str[i + 1] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		exit(0);
+	}
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] != '<'
 		&& check_quote_infile(minishell, str, strlen(str)) == 1)
 	{
@@ -23,6 +28,11 @@ static void	append_infile(char *str, int tab, t_shell *minishell, t_node **list)
 	i = minishell->mod;
 	if (i == -1)
 		return ;
+	if (str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		exit(0);
+	}
 	if (str[i] == '<' && str[i + 1] != '\0' && str[i + 1] == '<'
 		&& check_quote_heredoc(minishell, str, strlen(str)) == 1)
 	{
@@ -40,6 +50,11 @@ static void	classic_outfile(char *str, int tab, t_shell *minishell,
 	i = minishell->mod;
 	if (i == -1)
 		return ;
+	if (str[i] == '>' && str[i + 1] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		exit(0);
+	}
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] != '>'
 		&& check_quote_outfile(minishell, str, strlen(str)) == 1)
 	{
@@ -56,6 +71,11 @@ static void	append_outfile(char *str, int tab, t_shell *minishell,
 	i = minishell->mod;
 	if (i == -1)
 		return ;
+	if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '\0')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		exit(0);
+	}
 	if (str[i] == '>' && str[i + 1] != '\0' && str[i + 1] == '>'
 		&& check_quote_append(minishell, str, strlen(str)) == 1)
 	{

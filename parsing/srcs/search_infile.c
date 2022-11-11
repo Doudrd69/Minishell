@@ -20,12 +20,13 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 
 	i = minishell->mod;
 	j = -1;
+	printf("str + j==%s\n", str + i);
 	while (++j < i)
 		cpy[j] = str[j];
 	i++;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{
@@ -48,6 +49,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	cpy[j] = '\0';
 	if (j == 0)
 		cpy = NULL;
+	printf("cpy==%s\n", cpy);
 	include_dollar_list(minishell, list, cpy);
 }
 
@@ -80,6 +82,49 @@ int	check_quote_infile(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
+static int	check_syntax_infile(t_shell *minishell, char *str, int i)
+{
+	int	j;
+
+	j = ft_strlen(str);
+	if (j == i)
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		exit (0);
+	}
+	if (j > i + 2)
+	{
+		if (str[i + 1] == '|' && str[i + 2] == '|')
+		{
+			printf("minishell: syntax error near unexpected token `||'\n");
+			exit (0);
+		}
+		if (str[i + 1] == '>' && str[i + 2] == '>' && str[i + 3] == '<')
+		{
+			printf("minishell: syntax error near unexpected token `>>'\n");
+			exit (0);
+		}
+		else if (str[i + 1] == '>' && str[i + 2] == '>')
+		{
+			printf("minishell: syntax error near unexpected token `>'\n");
+			exit (0);
+		}
+	}
+	if (j > i + 1)
+	{
+		if (str[i + 1] == '|')
+		{
+			printf("minishell: syntax error near unexpected token `|'\n");
+			exit (0);
+		}
+	}
+	j = 0;
+	minishell += 0;
+	while (str[++i] != '\0' && str[i] == ' ')
+		j++;
+	return (1);
+}
+
 void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	t_node **list)
 {
@@ -92,9 +137,11 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	file = 0;
 	i = minishell->mod;
 	space = 0;
+	if (str[i] == '<' || str[i] == '>')
+		check_syntax_infile(minishell, str, i);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && (str[i] != '<' && str[i] != '>'))
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{
@@ -113,8 +160,17 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	}
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
+	printf("file ==%d, i==%d\n", file, i);
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
+	printf("tmp=%s\n", tmp);
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
 }
+
+/*
+commence par le parse des redirections, ne prend pas de << < > >>, si un < dans le parse
+du infile avant une lettre, syntax error a part si entre "" et '' tout peut rentrer
+pareil pour les outfiles
+et si 0 he bien syntax error
+*/
