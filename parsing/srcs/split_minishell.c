@@ -1,5 +1,7 @@
 #include "../parsing.h"
 
+int	p_status;
+
 static char	**ft_free(int k, char **tab)
 {
 	while (k > 0)
@@ -116,7 +118,10 @@ char	**ft_split_minishell(t_shell *minishell, char const *str, char c)
 	if (nbrw == 0)
 	{
 		if (strlen(str) == 2)
+		{
 			printf("minishell: : command not found\n");
+			p_status = 127;
+		}
 		return (NULL);
 	}
 	tab = (char **)malloc(sizeof(char *) * (nbrw + 1));
