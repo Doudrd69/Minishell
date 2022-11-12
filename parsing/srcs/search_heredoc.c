@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:42:05 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:42:05 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	include_heredoc_list(t_node **tab_list, char *tmp)
@@ -79,7 +91,7 @@ int	check_quote_heredoc(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
+int	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
 {
 	int		i;
 	int		file;
@@ -91,7 +103,8 @@ void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node *
 	i = minishell->mod;
 	i += 1;
 	space = 0;
-	check_syntax_heredoc(minishell, str, i);
+	if (check_syntax_heredoc(minishell, str, i) == 0)
+		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
@@ -117,4 +130,5 @@ void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node *
 	include_heredoc_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
+	return (1);
 }

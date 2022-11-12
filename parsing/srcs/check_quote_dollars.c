@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_quote_dollars.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:36:54 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:36:54 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote)
@@ -34,24 +46,34 @@ int	check_quote_in_quote_dollars(char *str)
 	return (1);
 }
 
+static int	check_quote_dollars_bis(char *str, int i, int dquote, int quote)
+{
+	if (str[i] == '$' && str[i - 1] == '"'
+		&& str[i + 1] == '"' && quote != 1)
+		return (6);
+	if (str[i] == '$' && str[i - 1] == '\''
+		&& str[i + 1] == '\'' && dquote != 1)
+		return (7);
+	return (0);
+}
+
 int	check_quote_dollars(char *str)
 {
 	int	i;
 	int	quote;
 	int	dquote;
+	int	j;
 
 	i = -1;
 	quote = 0;
 	dquote = 0;
+	j = 0;
 	while (str[++i] != '\0')
 	{
 		check_dquote_dollars(str, &dquote, i, &quote);
-		if (str[i] == '$' && str[i - 1] == '"'
-			&& str[i + 1] == '"' && quote != 1)
-			return (6);
-		if (str[i] == '$' && str[i - 1] == '\''
-			&& str[i + 1] == '\'' && dquote != 1)
-			return (7);
+		j = check_quote_dollars_bis(str, i, dquote, quote);
+		if (j == 6 || j == 7)
+			return (j);
 		if (str[i] == '$' && str[i - 1] == '"' && dquote == 1 && quote != 1)
 			return (2);
 		if (str[i] == '$' && dquote == 1 && quote != 1)

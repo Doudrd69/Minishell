@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollars.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:44:41 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static int	check_dollars_mod(char *str)
@@ -7,7 +19,8 @@ static int	check_dollars_mod(char *str)
 
 	i = 0;
 	mod = 0;
-	if (str[i + 1] != '\0' && ((str[i + 1] == 34 && str[i - 1] != 34) || (str[i + 1] == 39 && str[i - 1] != 39)))
+	if (str[i + 1] != '\0' && ((str[i + 1] == 34 && str[i - 1] != 34)
+			|| (str[i + 1] == 39 && str[i - 1] != 39)))
 		mod = 3;
 	if (str[i + 1] != '\0' && (str[i + 1] == 36
 			|| (str[i + 1] >= 48 && str[i + 1] <= 57) || str[i + 1] == 42
@@ -16,7 +29,8 @@ static int	check_dollars_mod(char *str)
 		mod = 1;
 	}
 	if (str[i + 1] != '\0' && ((str[i + 1] >= 65 && str[i + 1] <= 90)
-			|| str[i + 1] == 95 || (str[i + 1] >= 97 && str[i + 1] <= 122) || str[i + 1] == 32))
+			|| str[i + 1] == 95 || (str[i + 1] >= 97 && str[i + 1] <= 122)
+			|| str[i + 1] == 32))
 	{
 		mod = 2;
 	}
@@ -42,6 +56,7 @@ void	parse_dollars(t_shell *minishell)
 			{
 				dollars--;
 				minishell->mod = check_quote_dollars(str);
+				printf("%d\n", minishell->mod);
 				dollars_mod(str, i, minishell, &list_cpy);
 				str = (char *)(list_cpy->content);
 			}
@@ -71,7 +86,8 @@ static int	check_dollar_export(char *str, int i)
 	return (5);
 }
 
-static void	change_value_mod2_and_3(char *str, int i, t_shell *minishell, t_node **list)
+static void	change_value_mod2_and_3(char *str, int i,
+	t_shell *minishell, t_node **list)
 {
 	char	*tmp;
 	char	*cpy;
@@ -110,7 +126,8 @@ static void	change_value_mod2_and_3(char *str, int i, t_shell *minishell, t_node
 	include_dollar_list(minishell, list, tmp);
 }
 
-static void	change_value_mod1(char *str, int i, t_shell *minishell, t_node **list)
+static void	change_value_mod1(char *str, int i,
+	t_shell *minishell, t_node **list)
 {
 	char	*tmp;
 	char	*cpy;
@@ -149,6 +166,71 @@ static void	change_value_mod1(char *str, int i, t_shell *minishell, t_node **lis
 	include_dollar_list(minishell, list, tmp);
 }
 
+static int	check_heredoc_dollar_mod(char *str, int i)
+{
+	int	j;
+	int	tpm;
+
+	j = i;
+	if (i == 0)
+		return (1);
+	while (--i > 0 && str[i] == ' ')
+		tpm = 0;
+	if (i < 1)
+		return (1);
+	if (str[i] == '<' && str[i - 1] == '<')
+		return (0);
+	return (1);
+}
+
+static int	check_heredoc_dollar_mod_2_3(char *str, int i)
+{
+	int	j;
+	int	tpm;
+
+	tpm = i;
+	while (str[tpm] != '\0' && str[tpm] != '\"')
+		tpm++;
+	if (str[tpm] == '\0')
+		return (1);
+	j = tpm;
+	if (i == 0)
+		return (1);
+	i--;
+	while (i > 0 && str[i] == ' ')
+		i--;
+	while (i > 0 && str[i] == '\"')
+		i--;
+	while (i > 0 && str[i] == ' ')
+		i--;
+	if (i < 1)
+		return (1);
+	if (str[i] == '<' && str[i - 1] == '<')
+		return (0);
+	return (1);
+}
+
+static int	check_heredoc_dollar_mod_1(char *str, int i)
+{
+	int	j;
+	int	tpm;
+
+	j = i;
+	if (i == 0)
+		return (1);
+	while (--i > 0 && str[i] == ' ')
+		tpm = 0;
+	while (--i > 0 && str[i] == '\'')
+		tpm = 0;
+	while (--i > 0 && str[i] == ' ')
+		tpm = 0;
+	if (i < 1)
+		return (1);
+	if (str[i] == '<' && str[i - 1] == '<')
+		return (0);
+	return (1);
+}
+
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 {
 	int	check;
@@ -156,6 +238,16 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	if (minishell->mod == 0 || minishell->mod == 2
 		|| minishell->mod == 4 || minishell->mod == 3)
 	{
+		if (check_heredoc_dollar_mod_2_3(str, i) == 0)
+		{
+			printf("heredoc23\n");
+			return (str);
+		}
+		if (check_heredoc_dollar_mod(str, i) == 0)
+		{
+			printf("heredoc\n");
+			return (str);
+		}
 		check_and_print_var_parsing(minishell, str + i);
 		if (minishell->value)
 		{
@@ -166,7 +258,8 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 			check = check_dollars_mod(str + i);
 			if (check == 2)
 				check = check_dollar_export(str, i);
-			if ((minishell->mod == 2 || minishell->mod == 3) && str[i + 1] == ' ')
+			if ((minishell->mod == 2 || minishell->mod == 3)
+				&& str[i + 1] == ' ')
 			{
 				check = 6;
 				write_newvalue(minishell, str, check, i);
@@ -181,6 +274,16 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	}
 	else
 	{
+		if (check_heredoc_dollar_mod_1(str, i) == 0)
+		{
+			printf("heredoc1\n");
+			return (str);
+		}
+		if (check_heredoc_dollar_mod(str, i) == 0)
+		{
+			printf("heredoc\n");
+			return (str);
+		}
 		check = check_dollars_mod(str + i);
 		if (minishell->mod == 1)
 		{

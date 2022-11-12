@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_minishell_malloc_ws.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:40:53 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:41:22 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	count_lenght_ws(char const *str, int *wlen, int *i)
@@ -30,7 +42,8 @@ static void	count_lenght_ws(char const *str, int *wlen, int *i)
 			if (str[*i] == '\"' && str[*i] != '\0')
 				(*i) += 1;
 		}
-		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\'')
+		if (str[*i] != '\0' && str[*i] != ' '
+			&& str[*i] != '\"' && str[*i] != '\'')
 		{
 			(*i) += 1;
 			(*wlen) += 1;

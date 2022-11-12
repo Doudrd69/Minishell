@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_append.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:41:52 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:41:52 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 void	add_back_file_list(t_node **tab_list, t_node *new)
@@ -102,7 +114,7 @@ int	check_quote_append(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
+int	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	t_node **list)
 {
 	int		i;
@@ -115,7 +127,8 @@ void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	i = minishell->mod;
 	i += 1;
 	space = 0;
-	check_syntax_append(minishell, str, i);
+	if (check_syntax_append(minishell, str, i) == 0)
+		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
@@ -141,4 +154,5 @@ void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	include_heredoc_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
+	return (1);
 }

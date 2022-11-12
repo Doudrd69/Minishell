@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 15:51:52 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 11:40:08 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
+			if (minishell->error != 0)
+				exit (0);
 			if (minishell->nbr_pipe > 0)
 				mini_data.pipe_check = 1;
 			else
