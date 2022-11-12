@@ -47,7 +47,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	i += 2;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{
@@ -115,9 +115,10 @@ void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 	i = minishell->mod;
 	i += 1;
 	space = 0;
+	check_syntax_append(minishell, str, i);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{

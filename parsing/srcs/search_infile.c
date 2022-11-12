@@ -20,12 +20,13 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 
 	i = minishell->mod;
 	j = -1;
+	printf("str + j==%s\n", str + i);
 	while (++j < i)
 		cpy[j] = str[j];
 	i++;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{
@@ -48,6 +49,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	cpy[j] = '\0';
 	if (j == 0)
 		cpy = NULL;
+	printf("cpy==%s\n", cpy);
 	include_dollar_list(minishell, list, cpy);
 }
 
@@ -92,9 +94,10 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	file = 0;
 	i = minishell->mod;
 	space = 0;
+	check_syntax_infile(minishell, str, i);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != ' ' && (str[i] != '<' && str[i] != '>'))
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
 		{
@@ -118,3 +121,10 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
 }
+
+/*
+commence par le parse des redirections, ne prend pas de << < > >>, si un < dans le parse
+du infile avant une lettre, syntax error a part si entre "" et '' tout peut rentrer
+pareil pour les outfiles
+et si 0 he bien syntax error
+*/

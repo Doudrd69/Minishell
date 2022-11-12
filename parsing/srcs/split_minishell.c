@@ -1,5 +1,7 @@
 #include "../parsing.h"
 
+int	p_status;
+
 static char	**ft_free(int k, char **tab)
 {
 	while (k > 0)
@@ -23,10 +25,6 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 		{
 			if (str[*i + 1] == '\0')
 				(*tab)[*k][x++] = str[*i];
-			if (str[*i + 1] == '\'')
-			{
-				(*tab)[*k][x++] = ' ';
-			}
 			(*i) += 1;
 			while (str[*i] != '\0' && str[*i] != '\'')
 			{
@@ -35,6 +33,20 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 			}
 			if (str[*i] == '\'' && str[*i] != '\0')
 				(*i) += 1;
+			if (str[*i] == ' ')
+			{
+				j = (*i);
+				while (str[j] != '\0')
+				{
+					if (str[j] != ' ')
+					{
+						(*tab)[*k][x++] = ' ';
+						(*i) = j;
+						break ;
+					}
+					j++;
+				}
+			}
 		}
 		if (str[*i] == '\"')
 		{
@@ -63,7 +75,7 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 				}
 			}
 		}
-		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"')
+		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\'')
 		{
 			(*tab)[*k][x++] = str[*i];
 			(*i) += 1;
@@ -106,10 +118,12 @@ char	**ft_split_minishell(t_shell *minishell, char const *str, char c)
 	if (nbrw == 0)
 	{
 		if (strlen(str) == 2)
+		{
 			printf("minishell: : command not found\n");
+			p_status = 127;
+		}
 		return (NULL);
 	}
-	printf("nbrw == %d\n", nbrw);
 	tab = (char **)malloc(sizeof(char *) * (nbrw + 1));
 	if (tab == NULL)
 		return (NULL);

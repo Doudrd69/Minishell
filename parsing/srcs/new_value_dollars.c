@@ -27,11 +27,9 @@ static void	new_value2(t_shell *minishell, char *str)
 	i = -1;
 	while (str[++size] != '\0' && str[size] != ' ')
 	{
-		printf("ha =%s, %s\n", minishell->value, str);
 		minishell->value[++i] = str[size];
 	}
 	minishell->value[++i] = '\0';
-	printf("VALUE = %s\n", minishell->value);
 }
 
 static void	new_value3(t_shell *minishell, char *str, int mod)
@@ -69,7 +67,6 @@ static void	new_value3(t_shell *minishell, char *str, int mod)
 			cpy++;
 		}
 		minishell->value[i] = '\0';
-		printf("value = %s\n", minishell->value);
 	}
 }
 
@@ -89,14 +86,64 @@ static void	new_value4(t_shell *minishell, char *str)
 	minishell->value[size] = '\0';
 }
 
-void	write_newvalue(t_shell *minishell, char *str, int mod)
+static void	new_value5(t_shell *minishell, char *str, int i)
+{
+	int	size;
+	int	j;
+
+	size = 0;
+	while (i + size > 0 && str[i + size] != '\'')
+		size--;
+	i += size;
+	size = 1;
+	while (str[++i] != '\0' && str[i] != '\'')
+		size++;
+	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
+	j = 0;
+	minishell->value[j++] = '\'';
+	i -= size;
+	while (str[++i] != '\0' && str[i] != '\'')
+		minishell->value[j++] = str[i];
+	if (str[i] == '\'')
+		minishell->value[j++] = str[i];
+	minishell->value[j] = '\0';
+}
+
+static void	new_value6(t_shell *minishell, char *str, int i)
+{
+	int	size;
+	int	j;
+
+	size = 0;
+	while (i + size > 0 && str[i + size] != '\"')
+		size--;
+	i += size;
+	size = 1;
+	while (str[++i] != '\0' && str[i] != '\"')
+		size++;
+	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
+	j = 0;
+	minishell->value[j++] = '\"';
+	i -= size;
+	while (str[++i] != '\0' && str[i] != '\"')
+		minishell->value[j++] = str[i];
+	if (str[i] == '\"')
+		minishell->value[j++] = str[i];
+	minishell->value[j] = '\0';
+}
+
+void	write_newvalue(t_shell *minishell, char *str, int mod, int i)
 {
 	if (mod == 0)
 		new_value1(minishell, str);
-	if (mod == 1)
+	if (mod == 1 || mod == 7)
 		new_value2(minishell, str);
 	if (mod == 2 || mod == 5)
 		new_value3(minishell, str, mod);
 	if (mod == 3)
 		new_value4(minishell, str);
+	if (mod == 4)
+		new_value5(minishell, str, i);
+	if (mod == 6)
+		new_value6(minishell, str, i);
 }

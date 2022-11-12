@@ -96,6 +96,10 @@ int		check_quote_append(t_shell *minishell, char *str, int len);
 int		check_quote_heredoc(t_shell *minishell, char *str, int len);
 int		check_quote_outfile(t_shell *minishell, char *str, int len);
 void	add_back_file_list(t_node **tab_list, t_node *new);
+int		check_syntax_infile(t_shell *minishell, char *str, int i);
+int		check_syntax_outfile(t_shell *minishell, char *str, int i);
+int		check_syntax_heredoc(t_shell *minishell, char *str, int i);
+int		check_syntax_append(t_shell *minishell, char *str, int i);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
@@ -114,7 +118,7 @@ void	find_position_of_dollars(char *position, int i, int *size);
 void	replace_value_and_after(t_shell *minishell, int *j, char **tmp);
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote);
 int		check_quote_in_quote_dollars(char *str);
-void	write_newvalue(t_shell *minishell, char *str, int mod);
+void	write_newvalue(t_shell *minishell, char *str, int mod, int i);
 char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name,
 			t_shell *minishell);
 char	*check_and_return_var_parsing(char *home_path, char **envp,

@@ -42,7 +42,6 @@ void	parse_dollars(t_shell *minishell)
 			{
 				dollars--;
 				minishell->mod = check_quote_dollars(str);
-				printf("%s\n", (char *)(list_cpy->content));
 				dollars_mod(str, i, minishell, &list_cpy);
 				str = (char *)(list_cpy->content);
 			}
@@ -72,6 +71,84 @@ static int	check_dollar_export(char *str, int i)
 	return (5);
 }
 
+static void	change_value_mod2_and_3(char *str, int i, t_shell *minishell, t_node **list)
+{
+	char	*tmp;
+	char	*cpy;
+	int		size;
+	int		j;
+	int		k;
+
+	size = 0;
+	j = 0;
+	while (i + size > 0 && (str[i + size] != '\"' && str[i + size] != '\''))
+		size--;
+	cpy = &str[i + size];
+	i += size;
+	size = 0;
+	while (cpy[++size] != '\0' && cpy[size] != ' ' && cpy[size] != '$')
+	{
+		if ((minishell->mod == 2 || minishell->mod == 3) && cpy[size] == '\"')
+			break ;
+		if (cpy[size] == '\"' || cpy[size] == '\'')
+			j++;
+	}
+	tmp = (char *)malloc(sizeof(char)
+			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	j = -1;
+	k = 0;
+	while (++j < i)
+		tmp[j] = str[k++];
+	size += k;
+	replace_value_and_after(minishell, &j, &tmp);
+	while (str[size] != '\0' && str[size] != '\"')
+		size++;
+	while (str[++size] && str[size] != '\0')
+	{
+		tmp[j++] = str[size];
+	}
+	include_dollar_list(minishell, list, tmp);
+}
+
+static void	change_value_mod1(char *str, int i, t_shell *minishell, t_node **list)
+{
+	char	*tmp;
+	char	*cpy;
+	int		size;
+	int		j;
+	int		k;
+
+	size = 0;
+	j = 0;
+	while (i + size > 0 && str[i + size] != '\'')
+		size--;
+	cpy = &str[i + size];
+	i += size;
+	size = 0;
+	while (cpy[++size] != '\0' && cpy[size] != ' ' && cpy[size] != '$')
+	{
+		if ((minishell->mod == 2 || minishell->mod == 3) && cpy[size] == '\'')
+			break ;
+		if (cpy[size] == '\"' || cpy[size] == '\'')
+			j++;
+	}
+	tmp = (char *)malloc(sizeof(char)
+			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	j = -1;
+	k = 0;
+	while (++j < i)
+		tmp[j] = str[k++];
+	size += k;
+	replace_value_and_after(minishell, &j, &tmp);
+	while (str[size] != '\0' && str[size] != '\'')
+		size++;
+	while (str[++size] && str[size] != '\0')
+	{
+		tmp[j++] = str[size];
+	}
+	include_dollar_list(minishell, list, tmp);
+}
+
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 {
 	int	check;
@@ -89,15 +166,33 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 			check = check_dollars_mod(str + i);
 			if (check == 2)
 				check = check_dollar_export(str, i);
-			write_newvalue(minishell, str + i, check);
-			change_var_to_value(str, i, minishell, list);
+			if ((minishell->mod == 2 || minishell->mod == 3) && str[i + 1] == ' ')
+			{
+				check = 6;
+				write_newvalue(minishell, str, check, i);
+				change_value_mod2_and_3(str, i, minishell, list);
+			}
+			else
+			{
+				write_newvalue(minishell, str + i, check, i);
+				change_var_to_value(str, i, minishell, list);
+			}
 		}
 	}
 	else
 	{
 		check = check_dollars_mod(str + i);
-		write_newvalue(minishell, str + i, check);
-		change_var_to_value(str, i, minishell, list);
+		if (minishell->mod == 1)
+		{
+			check = 4;
+			write_newvalue(minishell, str, check, i);
+			change_value_mod1(str, i, minishell, list);
+		}
+		else
+		{
+			write_newvalue(minishell, str + i, check, i);
+			change_var_to_value(str, i, minishell, list);
+		}
 	}
 	return (str);
 }
