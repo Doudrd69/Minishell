@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 12:47:52 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:52:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ typedef struct mini_data
 	int			oldpwd_if;
 	int			main_pid;
 	int			pipe_check;
+	int			infile_check;
+	int			outfile_check;
+	int			pipefd_tmp;
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
 	char		*home_path;
@@ -90,12 +93,13 @@ char	**free_tab(char **tab, int i);
 char	*get_var_name(char *var);
 
 int		check_length(t_mini_data *data, size_t size, int position, char *str);
+int		write_and_check_signs(int i, t_mini_data *data, int output_fd);
 int		check_var_exists_export(t_mini_data *data, char *var_export);
 int		specific_cases_with_special_char(t_mini_data *data, int i);
 int		var_search_copy(t_mini_data *data, int size, int i, int j);
 int		unset_var(int index, t_mini_data *data, char *var_unset);
 int		malloc_and_cpy(t_mini_data *data, int i, int index);
-int		write_and_check_signs(int i, t_mini_data *data );
+int		newline_arg(t_mini_data *data, int output_fd);
 int		path_exists(t_mini_data *data, t_node *node);
 int		pid_display(t_mini_data *data, int i);
 int		check_signs(int i, t_mini_data *data);
@@ -106,7 +110,6 @@ int		update_old_pwd(t_mini_data *data);
 int		display_export(t_mini_data *data);
 int		check_if_empty(t_mini_data *data);
 int		check_oldpwd(t_mini_data *data);
-int		newline_arg(t_mini_data *data);
 int		update_pwd(t_mini_data *data);
 int		no_path(t_mini_data *data);
 int		check_remains(char *str);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:22:52 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 15:18:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:28:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct data
 	int			size_ptab1;
 	int			size_ptab2;
 	int			size_ptab3;
+	int			pipe_nb;
 	char		**envp;
 	char		*home_path;
 	t_heredoc	hd;
@@ -166,11 +167,11 @@ int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
 int		set_p_status(int status, t_data *data, t_node *node);
 int		check_outfile_last_cmd(t_data *data, t_shell *parse);
 int		check_inputfile(t_data *data, t_shell *parse);
+int		pipe_creation(t_data *data, int nbr_of_pipe);
 int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
-int		pipe_creation(t_data *data);
 int		check_sq_cmd(char *cmd);
 int		fork_creation(int pid);
 int		check_pipe(char *str);

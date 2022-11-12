@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 16:08:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 16:26:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,17 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 		}
 		if (parse->tab_infile[0]->type == 'C')
 			return (input_file_opening(data, parse));
-		data->input_fd = STDIN_FILENO;
 	}
+	if (ft_strncmp(parse->head->content, "echo", 4) == 0)
+	{
+		if (dup2(data->pipefd[0][READ], STDIN_FILENO) == -1)
+		{
+			perror("dup2");
+			return (1);
+		}
+	}
+	else
+		data->input_fd = STDIN_FILENO;
 	return (0);
 }
 

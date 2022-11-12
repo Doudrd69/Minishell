@@ -6,24 +6,24 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/02 13:50:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:37:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cmd_include/pipex_bonus.h"
 
-int	pipe_creation(t_data *data)
+int	pipe_creation(t_data *data, int nb_of_pipe)
 {
 	int	i;
 
 	i = 0;
-	if (data->cmd_nb > 1)
+	if (nb_of_pipe > 0)
 	{
-		data->pipefd = malloc(sizeof(int *) * (data->cmd_nb - 1));
+		data->pipefd = malloc(sizeof(int *) * (nb_of_pipe - 1));
 		if (!data->pipefd)
 			return (0);
 	}
-	while (i < data->cmd_nb - 1)
+	while (i < nb_of_pipe)
 	{
 		data->pipefd[i] = malloc(sizeof(int) * 2);
 		if (!data->pipefd[i])

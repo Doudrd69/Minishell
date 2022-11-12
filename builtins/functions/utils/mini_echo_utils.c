@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 14:25:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:31:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	echo_newline_arg(t_mini_data *data)
 		return (1);
 }
 
-int	write_and_check_signs(int i, t_mini_data *data)
+int	write_and_check_signs(int i, t_mini_data *data, int output_fd)
 {
 	while (data->str[i])
 	{
@@ -89,7 +89,7 @@ int	write_and_check_signs(int i, t_mini_data *data)
 			i++;
 		else
 		{
-			write(1, &data->str[i], 1);
+			write(output_fd, &data->str[i], 1);
 			i++;
 		}
 	}
