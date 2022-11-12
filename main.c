@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:56:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 16:54:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,5 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 }
 
 //MES TACHES
-
 	//SIGINT dans le main (sans rien) --> error 1
+	//petit soucis avec le echo et le pipe si plusieurs chaines de char

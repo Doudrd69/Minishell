@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:49:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 17:01:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
+			if (ft_strncmp(parse->head->content, "echo", 4) == 0)
+			{
+				while (node->type != 'P')
+					node = node->next;
+				node = node->next;
+			}
 			node = commands(data, node, parse, envp);
 			last_command(envp, data, node, parse);
 		}

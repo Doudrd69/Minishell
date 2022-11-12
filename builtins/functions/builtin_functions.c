@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:45:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 16:39:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,27 @@ int	mini_echo(t_data *data, t_node *node)
 		return (0);
 	data->echo_arg = 0;
 	output_fd = 1;
-	while (node != NULL && node->type != 'P')
+	if (data->pipe_check == 0)
 	{
-		i = 0;
-		check = 0;
-		data->str = node->content;
-		node = echo_arg_newline_check(data, node, check, loop);
-		if (node == NULL)
-			return (0);
-		loop = 1;
-		if (check_if_empty(data) == 0)
-			return (0);
-		i = write_and_check_signs(i, data, output_fd);
-		if (node->next != NULL && node->next->type != 'P')
-			write(output_fd, " ", 1);
-		node = node->next;
+		while (node != NULL && node->type != 'P')
+		{
+			i = 0;
+			check = 0;
+			data->str = node->content;
+			node = echo_arg_newline_check(data, node, check, loop);
+			if (node == NULL)
+				return (0);
+			loop = 1;
+			if (check_if_empty(data) == 0)
+				return (0);
+			i = write_and_check_signs(i, data, output_fd);
+			if (node->next != NULL && node->next->type != 'P')
+				write(output_fd, " ", 1);
+			node = node->next;
+		}
+		return (newline_arg(data, output_fd));
 	}
-	return (newline_arg(data, output_fd));
+	return (2);
 }
 
 int	mini_exit(t_data *data, t_node *node)
