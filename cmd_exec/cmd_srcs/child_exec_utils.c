@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:44:07 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:34:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:37:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	exit_cmd_not_found(char **param)
 		write(1, ": No such file or directory\n", 28);
 		exit(127);
 	}
+	if (ft_strncmp(param[0], "export", 6) == 0)
+		exit(0);
 	write(1, "minishell: ", 11);
 	write(1, param[0], ft_strlen(param[0]));
 	write(1, ": command not found\n", 20);

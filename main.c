@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:02:09 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:33:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ int main(int argc, char *argv[], char *envp[])
 			else
 				data.outfile_check = 0;
 			data.envp_size = data.envp_size;
+			if (minishell->nbr_pipe > 0)
+				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &data, builtin_cmd_nb, check);
 			check = export_and_unset(&data, node, check);
@@ -171,9 +173,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		return ;
 	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
-	data->pipe_nb = pipe_creation(data, parse->nbr_pipe);
 	node = node_rotation_exec(node, parse);
-	//printf("Node content before exec_main ==> %s\n", node->content);
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
