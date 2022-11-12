@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:33:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:51:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,11 @@ int main(int argc, char *argv[], char *envp[])
 			data.envp_size = data.envp_size;
 			if (minishell->nbr_pipe > 0)
 				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
+			if (minishell->tab_outfile != NULL)
+			{
+				data.echo_file = minishell->tab_outfile[0]->content;
+				data.cmd_nb = minishell->nbr_pipe + 1;
+			}
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &data, builtin_cmd_nb, check);
 			check = export_and_unset(&data, node, check);

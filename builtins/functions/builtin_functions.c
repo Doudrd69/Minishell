@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 18:16:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:51:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,24 @@ int	mini_echo(t_data *data, t_node *node)
 	if (no_args(node) == 0)
 		return (0);
 	data->echo_arg = 0;
-	// if (data->outfile_check == 1 && data->cmd_nb == 1)
-	// {
-	// 	printf("TEST >> %s\n", data->echo_file);
-	// 	data->input_fd = open(data->echo_file, O_RDONLY | O_CREAT, 0666);
-	// 	if (data->input_fd < 0)
-	// 	{
-	// 		ft_printf("minishell: %s: %s\n", data->echo_file, strerror(errno));
-	// 		return (1);
-	// 	}
-	// 	if (dup2(data->input_fd, STDIN_FILENO) == -1)
-	// 	{
-	// 		perror("dup2");
-	// 		return (1);
-	// 	}
-	// 	return (2);
-	// }
-	output_fd = 1;
-	printf("PIPE CHECK --> %d\n", data->pipe_check);
+	if (data->outfile_check == 1 && data->cmd_nb > 1)
+	{
+		printf("TEST >> %s\n", data->echo_file);
+		output_fd = open(data->echo_file, O_RDONLY | O_CREAT, 0666);
+		if (output_fd < 0)
+		{
+			ft_printf("minishell: %s: %s\n", data->echo_file, strerror(errno));
+			return (1);
+		}
+		if (dup2(output_fd, STDIN_FILENO) == -1)
+		{
+			perror("dup2");
+			return (1);
+		}
+	}
+	else
+		output_fd = 1;
+	printf("OUTPUT CHECK --> %d\n", output_fd);
 	if (data->pipe_check == 0)
 	{
 		printf("** In ECHO **\n");
