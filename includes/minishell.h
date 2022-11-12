@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:33:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 17:22:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct data
 	char		*var_export;
 	char		**envp;
 	char		*home_path;
+	char		*echo_file;
 	t_heredoc	hd;
 	t_env		env;
 	t_exec		exec;

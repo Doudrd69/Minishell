@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:01:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:05:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	*node_rotation(t_node *node)
 {
 	if (node != NULL)
 	{
+		// while (node->next->type != 'P')
+		// 	node = node->next;
 		if (node && node->next->type == 'P')
 			node = node->next->next;
 		else if (node && node->next->type == 'N')
@@ -106,16 +108,18 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 	{
 		if (node && node->type == 'P')
 			node = node->next;
+		//printf("Node content going in FIRST ==> %s\n", node->content);
 		first_command(data->envp, data, node, parse);
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
-			if (ft_strncmp(parse->head->content, "echo", 4) == 0)
-			{
-				while (node->type != 'P')
-					node = node->next;
-				node = node->next;
-			}
+			// if (ft_strncmp(parse->head->content, "echo", 4) == 0 && node->next != NULL && (node->type == 'P' || node->next->type == 'P'))
+			// {
+			// 	while (node != NULL && node->type != 'P')
+			// 		node = node->next;
+			// 	if (node->next != NULL &&  node->type == 'P')
+			// 		node = node->next;
+			// }
 			node = commands(data, node, parse, envp);
 			last_command(envp, data, node, parse);
 		}
