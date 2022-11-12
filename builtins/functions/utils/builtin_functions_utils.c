@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:28:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:24:49 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_var(char *str, char *var_name)//trouver la bonne variable parmi plusie
 	return (1);
 }
 
-char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
+char	*mini_getenv(char *envp[], t_data *mini_data, char *var_name)
 {
 	int		i;
 	char	*str;

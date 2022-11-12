@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:44:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 14:37:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 int	pipe_creation(t_data *data, int nb_of_pipe)
 {

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 13:02:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:23:46 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	display_env(char **tmp_tab, int size)
 }
 
 
-int	display_export(t_mini_data *data)
+int	display_export(t_data *data)
 {
 	int		i;
 	char	**tmp_tab;
@@ -76,7 +76,7 @@ int	display_export(t_mini_data *data)
 			free(tmp_tab);
 		while (i < data->envp_size)
 		{
-			tmp_tab[i] = ft_strdup(data->env[i]);
+			tmp_tab[i] = ft_strdup(data->envp[i]);
 			i++;
 		}
 		tmp_tab[i] = NULL;

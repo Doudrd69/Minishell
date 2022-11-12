@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:44:07 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 15:18:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 void	exit_cmd_not_found(char **param)
 {

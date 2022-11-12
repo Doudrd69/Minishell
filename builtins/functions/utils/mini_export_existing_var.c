@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:26:30 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:28:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:26:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_var_exists_export(t_mini_data *data, char *var_export)
+int	check_var_exists_export(t_data *data, char *var_export)
 {
 	int		i;
 	char	*str;
@@ -21,9 +21,9 @@ int	check_var_exists_export(t_mini_data *data, char *var_export)
 	str = get_var_name(var_export);
 	while (i < data->envp_size)
 	{
-		if (ft_strnstr(data->env[i], str, ft_strlen(str)))
+		if (ft_strnstr(data->envp[i], str, ft_strlen(str)))
 		{
-			if (check_var(data->env[i], str) == 0)
+			if (check_var(data->envp[i], str) == 0)
 			{
 				data->var_position = i;
 				return (1);
@@ -34,9 +34,9 @@ int	check_var_exists_export(t_mini_data *data, char *var_export)
 	return (0);
 }
 
-int	malloc_new_env(t_mini_data *data, int i)
+int	malloc_new_env(t_data *data, int i)
 {
-	data->new_env[i] = malloc(sizeof(char) * ft_strlen(data->env[i]) + 1);
+	data->new_env[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]) + 1);
 	if (!data->new_env[i])
 	{
 		free_tab(data->new_env, data->envp_size);
@@ -45,7 +45,7 @@ int	malloc_new_env(t_mini_data *data, int i)
 	return (0);
 }
 
-char	**malloc_tab_with_existing_var(t_mini_data *data, char *var)
+char	**malloc_tab_with_existing_var(t_data *data, char *var)
 {
 	int	i;
 
@@ -71,21 +71,21 @@ char	**malloc_tab_with_existing_var(t_mini_data *data, char *var)
 	return (data->new_env);
 }
 
-char	**copy_value(t_mini_data *data, int i)
+char	**copy_value(t_data *data, int i)
 {
 	int	j;
 
 	j = 0;
-	while (data->env[i][j])
+	while (data->envp[i][j])
 	{
-		data->new_env[i][j] = data->env[i][j];
+		data->new_env[i][j] = data->envp[i][j];
 		j++;
 	}
 	data->new_env[i][j] = '\0';
 	return (data->new_env);
 }
 
-char	**new_tab_with_existing_var(t_mini_data *data, char *var)
+char	**new_tab_with_existing_var(t_data *data, char *var)
 {
 	int	i;
 

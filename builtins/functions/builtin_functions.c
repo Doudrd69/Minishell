@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:33:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:45:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	mini_cd(t_mini_data *data, t_node *node)
+int	mini_cd(t_data *data, t_node *node)
 {
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 	if (node->next == NULL && ft_strncmp(node->content, "cd", 2) == 0)
@@ -32,7 +32,7 @@ int	mini_cd(t_mini_data *data, t_node *node)
 	return (0);
 }
 
-int	mini_pwd(t_mini_data *data, t_node *node)
+int	mini_pwd(t_data *data, t_node *node)
 {
 	(void)node;
 	if (data->pipe_check == 0)
@@ -49,7 +49,7 @@ int	mini_pwd(t_mini_data *data, t_node *node)
 	return (2);
 }
 
-int	mini_env(t_mini_data *data, t_node *node)
+int	mini_env(t_data *data, t_node *node)
 {
 	int	i;
 	int	j;
@@ -58,16 +58,16 @@ int	mini_env(t_mini_data *data, t_node *node)
 	(void)node;
 	if (data->pipe_check == 0)
 	{
-		if (data->env[0] == NULL)
+		if (data->envp[0] == NULL)
 			return (1);
 		while (i < data->envp_size)
 		{
 			j = 0;
-			while (data->env[i][j])
+			while (data->envp[i][j])
 			{
-				if (data->env[i][j] == '=')
+				if (data->envp[i][j] == '=')
 				{
-					ft_printf("%s\n", data->env[i]);
+					ft_printf("%s\n", data->envp[i]);
 					break ;
 				}
 				j++;
@@ -80,7 +80,7 @@ int	mini_env(t_mini_data *data, t_node *node)
 	return (2);
 }
 
-int	mini_echo(t_mini_data *data, t_node *node)
+int	mini_echo(t_data *data, t_node *node)
 {
 	int	i;
 	int	check;
@@ -91,10 +91,7 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	if (no_args(node) == 0)
 		return (0);
 	data->echo_arg = 0;
-	if (data->pipe_check == 1)
-		output_fd = data->pipefd_tmp;
-	else
-		output_fd = 1;
+	output_fd = 1;
 	while (node != NULL && node->type != 'P')
 	{
 		i = 0;
@@ -114,7 +111,7 @@ int	mini_echo(t_mini_data *data, t_node *node)
 	return (newline_arg(data, output_fd));
 }
 
-int	mini_exit(t_mini_data *data, t_node *node)
+int	mini_exit(t_data *data, t_node *node)
 {
 	int	tmp;
 

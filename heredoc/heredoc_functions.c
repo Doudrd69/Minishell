@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:14:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:28:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_exec/cmd_include/pipex_bonus.h"
+#include "../includes/minishell.h"
 
 void	eof_handler_hd(t_data *data, char *input, int output_fd)
 {

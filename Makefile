@@ -81,9 +81,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		signal.c												\
 		main.c													\
 
-INCS = 	cmd_exec/cmd_include/pipex_bonus.h						\
-		parsing/parsing.h										\
-		includes/minishell.h
+INCS =	includes/minishell.h									\
+		parsing/parsing.h
 
 OBJS = $(SRCS:.c=.o)
 

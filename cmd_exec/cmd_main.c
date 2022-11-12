@@ -6,11 +6,10 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:26:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:57:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmd_include/pipex_bonus.h"
 #include "../includes/minishell.h"
 
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)

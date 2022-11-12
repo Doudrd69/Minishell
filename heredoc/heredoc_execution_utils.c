@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 12:42:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:28:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_exec/cmd_include/pipex_bonus.h"
+#include "../includes/minishell.h"
 
 int	check_for_append(t_node *infile_tmp)
 {

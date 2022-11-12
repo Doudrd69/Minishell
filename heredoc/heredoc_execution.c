@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 12:42:55 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:28:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_exec/cmd_include/pipex_bonus.h"
+#include "../includes/minishell.h"
 
 char	*getenv_hd(char *envp[], t_data *data, char *var_name)
 {

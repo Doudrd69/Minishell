@@ -6,11 +6,10 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:01:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:07:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:36 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
 #include "../../includes/minishell.h"
 
 void	*count_nb_of_args(t_node *node, t_data *data, int i)

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 16:52:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:28:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	eof_handler(char *input, t_shell *minishell)
 
 void	sigint_handler_main_loop(int signum)
 {
-	t_mini_data data;
+	t_data data;
 
 	if (signum == 2)
 	{

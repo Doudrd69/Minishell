@@ -6,13 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 14:16:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:29:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "parsing/parsing.h"
-#include "cmd_exec/cmd_include/pipex_bonus.h"
 
 void	free_all(t_shell *minishell)
 {
@@ -31,21 +30,20 @@ void	free_all(t_shell *minishell)
 	free(minishell);
 }
 
-void	init_main(t_mini_data *mini_data, t_data *data, char **envp)
+void	init_main(t_data *data, char **envp)
 {
-	mini_data->var_export = NULL;
-	mini_data->str = NULL;
-	mini_data->unset_env_check = 0;
-	mini_data->first_cd_check = 0;
-	mini_data->new_env_check = 0;
-	mini_data->echo_sq_check = 0;
-	mini_data->infile_check = 0;
-	mini_data->outfile_check = 0;
-	mini_data->oldpwd_if = 0;
-	mini_data->echo_arg = 0;
-	mini_data->env = envp;
+	data->var_export = NULL;
+	data->str = NULL;
+	data->unset_env_check = 0;
+	data->first_cd_check = 0;
+	data->new_env_check = 0;
+	data->echo_sq_check = 0;
+	data->infile_check = 0;
+	data->outfile_check = 0;
+	data->oldpwd_if = 0;
+	data->echo_arg = 0;
 	data->envp = envp;
-	data->p_status = &mini_data->p_status;
+	data->envp = envp;
 	return ;
 }
 
@@ -76,7 +74,7 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	return ;
 }
 
-void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_mini_data *, t_node *))
+void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_data *, t_node *))
 {
 	builtins_name[0] = "cd";
 	builtins_name[1] = "echo";

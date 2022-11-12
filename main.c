@@ -6,24 +6,23 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 15:51:52 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:56:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "parsing/parsing.h"
-#include "cmd_exec/cmd_include/pipex_bonus.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
 void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse);
-void	init_main(t_mini_data *mini_data, t_data *data, char **envp);
+void	init_main(t_data *data, char **envp);
 void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	cmd_exec_init(t_data *data, t_shell *parse_data);
 
 int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
-int		export_exec(t_mini_data *mini_data, t_data *data, t_node *node);
-int		unset_exec(t_mini_data *mini_data, t_data *data, t_node *node);
+int		export_exec(t_data *data, t_node *node);
+int		unset_exec(t_data *data, t_node *node);
 
 int		p_status;
 
@@ -35,47 +34,44 @@ void	sighandler_hd(int signum)
 	exit(signum);
 }
 
-void	envp_check(t_mini_data *mini_data, t_data *data, char **envp, int envpsize)
+void	envp_check(t_data *data, char **envp, int envpsize)
 {
 	if (envp[0] != NULL)
 	{
 		while (envp[envpsize])
 			envpsize++;
-		mini_data->envp_size = envpsize;
 		data->envp_size = envpsize;
 	}
 	else
 	{
-		if (export_no_env(mini_data) == 1)
+		if (export_no_env(data) == 1)
 			exit(1);
-		envp = mini_data->no_env;
-		mini_data->env = envp;
 		data->envp = envp;
 		envpsize = 3;
-		mini_data->envp_size = envpsize;
+		data->envp_size = envpsize;
 		data->envp_size = envpsize;
 	}
 	return ;
 }
 
-int		export_and_unset(t_mini_data *mini_data, t_data *data, t_node *node, int check)
+int		export_and_unset(t_data *data, t_node *node, int check)
 {
 	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
 		if (node->next == NULL || node->next->type == 'P')
-			return (display_export(mini_data));
-		mini_data->p_status = export_exec(mini_data, data, node);
+			return (display_export(data));
+		data->p_status = export_exec(data, node);
 		return (1);
 	}
 	if (node && ft_strncmp(node->content, "unset", 5) == 0)
 	{
-		mini_data->p_status = unset_exec(mini_data, data, node);
+		data->p_status = unset_exec(data, node);
 		return (1);
 	}
 	return (check);
 }
 
-int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_mini_data *, t_node *), t_node *node, t_mini_data *data, int builtin_cmd_nb, int check)
+int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *), t_node *node, t_data *data, int builtin_cmd_nb, int check)
 {
 	int	i;
 	int	status;
@@ -108,7 +104,6 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	struct sigaction	sa;
-	t_mini_data			mini_data;
 	t_data				data;
 	t_shell				*minishell;
 	t_node				*node;
@@ -116,14 +111,14 @@ int main(int argc, char *argv[], char *envp[])
 	int					envpsize;
 	int					check;
 	char				*builtins_name[5];
-	int					(*builtins[5])(t_mini_data *data, t_node *node);
+	int					(*builtins[5])(t_data *data, t_node *node);
 
 	envpsize = 0;
 	builtin_cmd_nb = 5;
 	init_builtins_tab(builtins_name, builtins);
 	sa.sa_handler = SIG_IGN;
-	init_main(&mini_data, &data, envp);
-	envp_check(&mini_data, &data, envp, envpsize);
+	init_main(&data, envp);
+	envp_check(&data, envp, envpsize);
 	while (1)
 	{
 		sigaction(SIGQUIT, &sa, NULL);
@@ -138,35 +133,28 @@ int main(int argc, char *argv[], char *envp[])
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
 			if (minishell->nbr_pipe > 0)
-				mini_data.pipe_check = 1;
+				data.pipe_check = 1;
 			else
-				mini_data.pipe_check = 0;
+				data.pipe_check = 0;
 			if (minishell->head != NULL)
 				node = minishell->head;
 			else
 				node = NULL;
 			if (minishell->tab_infile!= NULL)
-				mini_data.infile_check = 1;
+				data.infile_check = 1;
 			else
-				mini_data.infile_check = 0;
+				data.infile_check = 0;
 			if (minishell->tab_outfile != NULL)
-				mini_data.outfile_check = 1;
+				data.outfile_check = 1;
 			else
-				mini_data.outfile_check = 0;
-			data.envp_size = mini_data.envp_size;
-			if (minishell->nbr_pipe > 0)
-			{
-				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
-				mini_data.pipefd_tmp = data.pipefd[0][WRITE];
-			}
+				data.outfile_check = 0;
+			data.envp_size = data.envp_size;
 			check = 0;
-			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
-			check = export_and_unset(&mini_data, &data, node, check);
+			check = builtins_loop(builtins_name, builtins, node, &data, builtin_cmd_nb, check);
+			check = export_and_unset(&data, node, check);
 			if (check == 0)
 				cmd_exec(&data, data.envp, minishell);
 		}
-		if (data.exec.infile_fd)
-			free(data.exec.infile_fd);
 		free(minishell->cmd);
 		free_all(minishell);
 	}
@@ -183,6 +171,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		return ;
 	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
+	data->pipe_nb = pipe_creation(data, parse->nbr_pipe);
 	node = node_rotation_exec(node, parse);
 	exec_main(data, envp, node, parse);
 	if (data->check_hd == 1)
@@ -191,7 +180,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		close_pipe(data, (data->pipe_nb - 1));
 	while (wait(&status) != -1)
 		;
-	*data->p_status = set_p_status(status, data, node);
+	data->p_status = set_p_status(status, data, node);
 	free_param_tab(data);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
