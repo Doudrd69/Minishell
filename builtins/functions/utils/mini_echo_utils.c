@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:26:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 13:26:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,14 @@ int	echo_newline_arg(t_data *data)
 
 int	write_and_check_signs(int i, t_data *data, int output_fd)
 {
+	char	*tmp;
+
 	while (data->str[i])
 	{
 		if (data->str[i] == '$' && data->str[i + 1] == '?')
 		{
-			ft_printf("%d", data->p_status);
+			tmp = ft_itoa(data->p_status);
+			write(output_fd, tmp, ft_strlen(tmp));
 			i += 2;
 		}
 		data->check_print_var = 0;

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:51:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 14:41:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,34 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *), t_n
 	return (check);
 }
 
+t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
+{
+	if (minishell->nbr_pipe > 0)
+		data->pipe_check = 1;
+	else
+		data->pipe_check = 0;
+	if (minishell->head != NULL)
+		node = minishell->head;
+	else
+		node = NULL;
+	if (minishell->tab_infile!= NULL)
+		data->infile_check = 1;
+	else
+		data->infile_check = 0;
+	if (minishell->tab_outfile != NULL)
+		data->outfile_check = 1;
+	else
+		data->outfile_check = 0;
+	if (minishell->nbr_pipe > 0)
+	{
+		data->cmd_nb = minishell->nbr_pipe + 1;
+		data->pipe_nb = pipe_creation(data, minishell->nbr_pipe);
+	}
+	else
+		data->cmd_nb = 1;
+	return (node);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
@@ -115,8 +143,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	envpsize = 0;
 	builtin_cmd_nb = 5;
-	init_builtins_tab(builtins_name, builtins);
 	sa.sa_handler = SIG_IGN;
+	init_builtins_tab(builtins_name, builtins);
 	init_main(&data, envp);
 	envp_check(&data, envp, envpsize);
 	while (1)
@@ -132,30 +160,12 @@ int main(int argc, char *argv[], char *envp[])
 			if (minishell->cmd && *minishell->cmd)
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
-			if (minishell->nbr_pipe > 0)
-				data.pipe_check = 1;
-			else
-				data.pipe_check = 0;
-			if (minishell->head != NULL)
-				node = minishell->head;
-			else
-				node = NULL;
-			if (minishell->tab_infile!= NULL)
-				data.infile_check = 1;
-			else
-				data.infile_check = 0;
-			if (minishell->tab_outfile != NULL)
-				data.outfile_check = 1;
-			else
-				data.outfile_check = 0;
-			data.envp_size = data.envp_size;
-			if (minishell->nbr_pipe > 0)
-				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
-			if (minishell->tab_outfile != NULL)
-			{
-				data.echo_file = minishell->tab_outfile[0]->content;
-				data.cmd_nb = minishell->nbr_pipe + 1;
-			}
+			node = main_init_check(&data, minishell, node);
+			// if (minishell->tab_outfile != NULL)
+			// {
+			// 	data.echo_file = minishell->tab_outfile[0]->content;
+			// 	data.cmd_nb = minishell->nbr_pipe + 1;
+			// }
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &data, builtin_cmd_nb, check);
 			check = export_and_unset(&data, node, check);
@@ -195,4 +205,3 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 
 //MES TACHES
 	//SIGINT dans le main (sans rien) --> error 1
-	//petit soucis avec le echo et le pipe si plusieurs chaines de char

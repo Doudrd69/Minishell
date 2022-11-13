@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:55:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 13:00:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 		if (node && node->type == 'P')
 			node = node->next;
 		//printf("Node content going in FIRST ==> %s\n", node->content);
-		if (ft_strncmp(parse->head->content, "echo", 4) != 0 && data->cmd_nb != 1 && data->outfile_check != 1)
+		//if (ft_strncmp(parse->head->content, "echo", 4) != 0 && data->cmd_nb != 1 && data->outfile_check != 1)
 			first_command(data->envp, data, node, parse);
 		if (data->cmd_nb > 1)
 		{

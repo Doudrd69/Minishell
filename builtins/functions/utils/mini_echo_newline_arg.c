@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:36:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:09:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 13:58:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,5 @@ int	newline_arg(t_data *data, int output_fd)
 {
 	if (data->echo_arg == 0)
 		write(output_fd, "\n", 1);
-	if (data->pipe_check == 1 || (data->infile_check == 1)
-		|| (data->outfile_check == 1))
-		return (2);
 	return (0);
 }

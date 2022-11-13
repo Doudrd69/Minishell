@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:54:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 13:04:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{
-		dprintf(2, "Bah oui mdr\n");
 		if (check_inputfile(data, parse) != 0)
 			exit(errno);
 		if (node != NULL)

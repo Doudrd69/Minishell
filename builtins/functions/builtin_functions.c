@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:51:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 14:47:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,30 +88,31 @@ int	mini_echo(t_data *data, t_node *node)
 	int	output_fd;
 
 	loop = 0;
+	output_fd = 1;
+	data->echo_arg = 0;
 	if (no_args(node) == 0)
 		return (0);
-	data->echo_arg = 0;
-	if (data->outfile_check == 1 && data->cmd_nb > 1)
+	// printf("CMD_NB >> %d\n", data->cmd_nb);
+	// if (data->outfile_check == 1 && data->cmd_nb == 1)
+	// {
+	// 	output_fd = open("lol.txt", O_RDONLY | O_CREAT, 0666);
+	// 	if (output_fd < 0)
+	// 	{
+	// 		ft_printf("minishell: %s: %s\n", data->echo_file, strerror(errno));
+	// 		return (1);
+	// 	}
+	// 	if (dup2(output_fd, STDIN_FILENO) == -1)
+	// 	{
+	// 		perror("dup2");
+	// 		return (1);
+	// 	}
+	// }
+	// else
+	// 	output_fd = 1;
+	// printf("OUTPUT FD --> %d\n", output_fd);
+	if (data->pipe_check == 0 && data->outfile_check == 0)
 	{
-		printf("TEST >> %s\n", data->echo_file);
-		output_fd = open(data->echo_file, O_RDONLY | O_CREAT, 0666);
-		if (output_fd < 0)
-		{
-			ft_printf("minishell: %s: %s\n", data->echo_file, strerror(errno));
-			return (1);
-		}
-		if (dup2(output_fd, STDIN_FILENO) == -1)
-		{
-			perror("dup2");
-			return (1);
-		}
-	}
-	else
-		output_fd = 1;
-	printf("OUTPUT CHECK --> %d\n", output_fd);
-	if (data->pipe_check == 0)
-	{
-		printf("** In ECHO **\n");
+		printf("** In ECHO -- first node ==> %s **\n", node->content);
 		while (node != NULL && node->type != 'P')
 		{
 			i = 0;
@@ -121,13 +122,13 @@ int	mini_echo(t_data *data, t_node *node)
 			if (node == NULL)
 				return (0);
 			loop = 1;
-			if (check_if_empty(data) == 0)
-				return (0);
 			i = write_and_check_signs(i, data, output_fd);
 			if (node->next != NULL && node->next->type != 'P')
 				write(output_fd, " ", 1);
 			node = node->next;
 		}
+		// if (data->outfile_check == 1)
+		// 	close(output_fd);
 		return (newline_arg(data, output_fd));
 	}
 	return (2);
@@ -145,3 +146,13 @@ int	mini_exit(t_data *data, t_node *node)
 	}
 	return (2);
 }
+
+//echo seul et sans redirection				--> fonction builtin			OK
+//echo seul et avec redirection				--> fonction builtin			OK
+//echo seul avec -n et sans redirection		--> fonction builtin			OK
+//echo seul avec -n et avec redirection		--> fonction builtin			/!\ ecriture des -n
+
+//echo avec commandes et sans redirection	--> exec						OK
+//echo avce commandes et avec redirection	--> exec						OK
+//echo avec commandes -n et sans redirection		--> ?					/!\ ecriture des -n
+//echo avec commandes -n et avec redirection		--> ?					/!\ ecriture des -n
