@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:34:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:43:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ int	fork_creation(int pid)
 	return (pid);
 }
 
-int	set_p_status(int status, t_data *data, t_node *node)
+int	set_p_status(int status, t_node *node)
 {
-	(void)data;
 	int	tmp;
+
 	tmp = 0;
 	while (node && node->next != NULL)
 		node = node->next;
-	if (node && node->prev != NULL && ft_strncmp(node->prev->content, "exit", 4) == 0)
+	if (node && node->prev != NULL
+		&& ft_strncmp(node->prev->content, "exit", 4) == 0)
 		tmp = ft_atoi(node->content);
 	if (status == 768 || status == 13)
 		return (tmp);
@@ -52,7 +53,7 @@ int	set_p_status(int status, t_data *data, t_node *node)
 		return (0);
 }
 
-t_node *node_rotation_exec(t_node *node, t_shell *parse)
+t_node	*node_rotation_exec(t_node *node, t_shell *parse)
 {
 	while (node && node->next != NULL)
 		node = node->next;
@@ -65,7 +66,7 @@ t_node *node_rotation_exec(t_node *node, t_shell *parse)
 
 int	start_heredoc(t_data *data, t_shell *parse)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = parse->head;
 	if (heredoc_main(data, &parse->tab_infile, parse) == 1)

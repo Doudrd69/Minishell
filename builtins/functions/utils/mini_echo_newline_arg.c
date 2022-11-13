@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:36:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 13:58:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:33:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	no_args(t_node *node)
 	return (1);
 }
 
-int	newline_arg(t_data *data, int output_fd)
+int	newline_arg(t_data *data)
 {
 	if (data->echo_arg == 0)
-		write(output_fd, "\n", 1);
+		write(1, "\n", 1);
 	return (0);
 }

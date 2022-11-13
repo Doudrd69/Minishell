@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:33:22 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:26:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:39:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	new_tab_malloc_loop(t_data *data, int i, int new_size, char **envp)
 {
 	if (i == new_size - 1)
 	{
-		data->new_env[i] = malloc(sizeof(char) * ft_strlen(envp[data->envp_size - 1]) + 1);
+		data->new_env[i] = malloc(sizeof(char)
+				* ft_strlen(envp[data->envp_size - 1]) + 1);
 		if (!data->new_env[i])
 			free_tab(data->new_env, i);
 		i++;

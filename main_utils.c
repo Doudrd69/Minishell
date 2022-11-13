@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:29:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 17:52:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ void	init_main(t_data *data, char **envp)
 	data->var_export = NULL;
 	data->str = NULL;
 	data->unset_env_check = 0;
+	data->builtin_cmd_nb = 5;
 	data->first_cd_check = 0;
 	data->new_env_check = 0;
+	data->outfile_check = 0;
 	data->echo_sq_check = 0;
 	data->infile_check = 0;
-	data->outfile_check = 0;
+	data->check_main = 0;
 	data->oldpwd_if = 0;
 	data->echo_arg = 0;
-	data->envp = envp;
 	data->envp = envp;
 	return ;
 }
@@ -65,8 +66,8 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->size_ptab1 = 0;
 	data->size_ptab2 = 0;
 	data->size_ptab3 = 0;
-	data->heredoc_nb = 0;						//ca va degager apres implementation
-	data->exec.last_cmd_outfile_check = 0;		//ca va degager apres implementation
+	data->heredoc_nb = 0;
+	data->exec.last_cmd_outfile_check = 0;
 	if (data->cmd_nb > 1)
 		data->exec.pipe_check = 1;
 	else
@@ -74,7 +75,8 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	return ;
 }
 
-void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_data *, t_node *))
+void	init_builtins_tab(char *builtins_name[5],
+	int (*builtins[5])(t_data *, t_node *))
 {
 	builtins_name[0] = "cd";
 	builtins_name[1] = "echo";
@@ -91,9 +93,6 @@ void	init_builtins_tab(char *builtins_name[5], int (*builtins[5])(t_data *, t_no
 
 void	free_param_tab(t_data *data)
 {
-	// printf("PTAB1  size : %d --> %p\n", data->size_ptab1, data->env.param_tab1);
-	// printf("PTAB2  size : %d --> %p\n", data->size_ptab2, data->env.param_tab2);
-	// printf("PTAB3  size : %d --> %p\n", data->size_ptab3, data->env.param_tab3);
 	if (data->env.param_tab1 != NULL)
 		free_tab(data->env.param_tab1, data->size_ptab1 - 1);
 	if (data->env.param_tab2 != NULL)

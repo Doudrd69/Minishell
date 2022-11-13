@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:28:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 17:13:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,16 +107,6 @@ t_node	*rotation_after_exec(t_node *tmp, t_data *data, t_node **in, t_shell *s)
 	return (tmp);
 }
 
-int	heredoc_process(t_node *tmp, t_data *data, int i, int ptr)
-{
-	if (data->hd_pid[i] == 0)
-		heredoc(data, tmp);
-	waitpid(data->hd_pid[i], &ptr, 0);
-	if (ptr != 0)
-		return (1);
-	return (0);
-}
-
 int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 {
 	int		i;
@@ -124,11 +114,7 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 
 	i = -1;
 	tmp = infile_tmp[data->hd.index];
-	if (data->heredoc_nb == 1)
-	{
-		data->hd.index = search_hd(tmp, parse, infile_tmp);
-		tmp = infile_tmp[data->hd.index];
-	}
+	tmp = search_first_hd(data, tmp, parse, infile_tmp);
 	while (++i < data->heredoc_nb)
 	{
 		data->hd_pid[i] = fork();

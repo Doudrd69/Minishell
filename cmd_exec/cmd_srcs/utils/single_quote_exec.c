@@ -6,22 +6,18 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:34:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 17:06:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_sq_cmd(char *cmd)
+int	multi_cmd_dup_to_pipe(t_data *data, int index)
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i])
+	if (dup2(data->pipefd[index - 1][READ], STDIN_FILENO) == -1)
 	{
-		if (cmd[i] == ' ')
-			return (1);
-		i++;
+		perror("dup2 TEST 2");
+		return (1);
 	}
 	return (0);
 }
