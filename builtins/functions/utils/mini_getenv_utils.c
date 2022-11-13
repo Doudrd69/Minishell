@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:05:14 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:23:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:27:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*check_and_return_var(t_mini_data *data, char **envp, char *var, int i)
+char	*check_and_return_var(t_data *data, char **envp, char *var, int i)
 {
 	int	j;
 	int	k;

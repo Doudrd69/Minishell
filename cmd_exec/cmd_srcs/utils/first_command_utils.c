@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:26:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:04:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cmd_include/pipex_bonus.h"
+#include "../../../includes/minishell.h"
 
 int	check_pipe_and_exec(t_data *data)
 {
@@ -20,7 +20,7 @@ int	check_pipe_and_exec(t_data *data)
 	{
 		if (dup2(data->pipefd[0][WRITE], STDOUT_FILENO) == -1)
 		{
-			perror("dup2");
+			perror("dup2 TEST 1");
 			return (1);
 		}
 	}
@@ -65,16 +65,7 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 		if (parse->tab_infile[0]->type == 'C')
 			return (input_file_opening(data, parse));
 	}
-	if (ft_strncmp(parse->head->content, "echo", 4) == 0)
-	{
-		if (dup2(data->pipefd[0][READ], STDIN_FILENO) == -1)
-		{
-			perror("dup2");
-			return (1);
-		}
-	}
-	else
-		data->input_fd = STDIN_FILENO;
+	data->input_fd = STDIN_FILENO;
 	return (0);
 }
 

@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 14:45:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:04:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data)
 {
@@ -59,9 +59,7 @@ void	exec_cmd_path(t_data *data, char *envp[])
 void	first_cmd_execution(t_data *data, char *envp[])
 {
 	if (access(data->env.param_tab1[0], X_OK) == 0)
-	{
 		exec_cmd_path(data, envp);
-	}
 	else
 	{
 		if (data->env.tab1 != NULL)

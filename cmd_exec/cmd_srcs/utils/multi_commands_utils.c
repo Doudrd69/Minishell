@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:04:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 20:05:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cmd_include/pipex_bonus.h"
+#include "../../../includes/minishell.h"
 
 
 int	iterate_outfile_cmd(t_data *data, t_shell *parse)
@@ -99,7 +99,7 @@ int	check_inputfile_cmd(t_data *data, t_shell *parse)
 	}
 	if (dup2(data->pipefd[data->pipe_id - 1][READ], STDIN_FILENO) == -1)
 	{
-		perror("dup2");
+		perror("dup2 TEST 2");
 		return (1);
 	}
 	return (0);

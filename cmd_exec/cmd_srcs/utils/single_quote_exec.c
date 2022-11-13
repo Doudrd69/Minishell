@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:29:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cmd_include/pipex_bonus.h"
+#include "../../../includes/minishell.h"
 
 int	check_sq_cmd(char *cmd)
 {

@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:39:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/19 13:49:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:28:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_exec/cmd_include/pipex_bonus.h"
+#include "../includes/minishell.h"
 
 int	check_special_char(char c, int size)
 {

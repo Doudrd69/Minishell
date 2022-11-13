@@ -6,11 +6,10 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 16:09:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmd_include/pipex_bonus.h"
 #include "../includes/minishell.h"
 
 void	sigtest(int signum)

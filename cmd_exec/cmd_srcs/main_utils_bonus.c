@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:09:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:34:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 char	*strjoin_arg(char *s1, char *s2)
 {
