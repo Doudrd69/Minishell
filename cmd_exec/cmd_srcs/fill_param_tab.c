@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:01:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:00:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:19:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_loop_exec(char *str, int i)
 {
-	if (ft_strlen(str) > 2)
+	if (str[i] != '-')
 		return (1);
 	while (str[++i])
 	{
@@ -35,10 +35,14 @@ void	*count_nb_of_args(t_node *node, t_data *data, int i)
 	while (i < data->lst_size)
 	{
 		tmp = node->content;
+		printf("tmp ==> %s\n", tmp);
 		if (check == 0)
 			check = check_loop_exec(tmp, 0);
 		if (check == 1)
+		{
 			data->nb_of_args++;
+			printf("ARG [ %s ]\n", tmp);
+		}
 		i++;
 		if (node->next == NULL || (ft_strncmp(node->next->content, "|", 4) == 0))
 			break ;
@@ -62,6 +66,7 @@ int	copy_args_in_param_tab(t_node *node, t_data *data, char **tab, int j)
 	while (i < data->nb_of_args && data->nb_of_args > 0)
 	{
 		tmp = node->content;
+		printf("tmp in copy ==> %s\n", tmp);
 		if (check == 0)
 			check = check_loop_exec(tmp, 0);
 		if (check == 1)

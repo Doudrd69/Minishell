@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 14:51:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:07:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,4 @@ int	mini_exit(t_data *data, t_node *node)
 	return (2);
 }
 
-//echo seul et sans redirection				--> fonction builtin			OK
-//echo seul et avec redirection				--> fonction builtin			OK
-//echo seul avec -n et sans redirection		--> fonction builtin			OK
-//echo seul avec -n et avec redirection		--> fonction builtin			/!\ ecriture des -n
-
-//echo avec commandes et sans redirection	--> exec						OK
-//echo avce commandes et avec redirection	--> exec						OK
-//echo avec commandes -n et sans redirection		--> ?					/!\ ecriture des -n
-//echo avec commandes -n et avec redirection		--> ?					/!\ ecriture des -n
+//attention a l'incrementation des node
