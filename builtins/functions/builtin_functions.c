@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:07:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:28:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	mini_echo(t_data *data, t_node *node)
 		return (0);
 	if (data->pipe_check == 0 && data->outfile_check == 0)
 	{
-		printf("** In ECHO -- first node ==> %s **\n", node->content);
 		while (node != NULL && node->type != 'P')
 		{
 			i = 0;
@@ -126,5 +125,3 @@ int	mini_exit(t_data *data, t_node *node)
 	}
 	return (2);
 }
-
-//attention a l'incrementation des node

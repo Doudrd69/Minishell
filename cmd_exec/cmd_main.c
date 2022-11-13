@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:09:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:27:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 			data->env.tab1 = get_path(envp, data, data->env.tab1);
 			data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
 			while (data->env.param_tab1[data->size_ptab1])
-			{
-				printf("First CMD >> %s\n", data->env.param_tab1[data->size_ptab1]);
 				data->size_ptab1++;
-			}
 		}
 		if (check_outfile(data, parse) != 0)
 			exit(errno);
