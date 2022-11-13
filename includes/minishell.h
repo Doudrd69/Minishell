@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 17:22:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 15:29:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
+int		check_loop(char *str, int j);
 int		check_sq_cmd(char *cmd);
 int		fork_creation(int pid);
 int		check_pipe(char *str);

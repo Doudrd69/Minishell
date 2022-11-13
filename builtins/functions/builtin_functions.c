@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 14:47:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 14:51:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,6 @@ int	mini_echo(t_data *data, t_node *node)
 	data->echo_arg = 0;
 	if (no_args(node) == 0)
 		return (0);
-	// printf("CMD_NB >> %d\n", data->cmd_nb);
-	// if (data->outfile_check == 1 && data->cmd_nb == 1)
-	// {
-	// 	output_fd = open("lol.txt", O_RDONLY | O_CREAT, 0666);
-	// 	if (output_fd < 0)
-	// 	{
-	// 		ft_printf("minishell: %s: %s\n", data->echo_file, strerror(errno));
-	// 		return (1);
-	// 	}
-	// 	if (dup2(output_fd, STDIN_FILENO) == -1)
-	// 	{
-	// 		perror("dup2");
-	// 		return (1);
-	// 	}
-	// }
-	// else
-	// 	output_fd = 1;
-	// printf("OUTPUT FD --> %d\n", output_fd);
 	if (data->pipe_check == 0 && data->outfile_check == 0)
 	{
 		printf("** In ECHO -- first node ==> %s **\n", node->content);
@@ -127,8 +109,6 @@ int	mini_echo(t_data *data, t_node *node)
 				write(output_fd, " ", 1);
 			node = node->next;
 		}
-		// if (data->outfile_check == 1)
-		// 	close(output_fd);
 		return (newline_arg(data, output_fd));
 	}
 	return (2);

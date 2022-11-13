@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 14:41:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 14:51:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,6 @@ int main(int argc, char *argv[], char *envp[])
 				add_history (minishell->cmd);
 			parsing(data.envp, minishell);
 			node = main_init_check(&data, minishell, node);
-			// if (minishell->tab_outfile != NULL)
-			// {
-			// 	data.echo_file = minishell->tab_outfile[0]->content;
-			// 	data.cmd_nb = minishell->nbr_pipe + 1;
-			// }
 			check = 0;
 			check = builtins_loop(builtins_name, builtins, node, &data, builtin_cmd_nb, check);
 			check = export_and_unset(&data, node, check);
