@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:01:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:53:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:39:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	**fill_param_tab(t_node *node, t_data *data, char **tab)
 		|| node->next != NULL)
 		node = count_nb_of_args(node, data, i);
 	else
-		printf("Error : impossible to create PARAM TAB\n");
+		ft_printf("Error : impossible to create PARAM TAB\n");
 	tab = malloc(sizeof(char *) * (data->nb_of_args + 2));
 	if (!tab)
 		return (NULL);

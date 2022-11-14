@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -28,6 +28,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/utils/mini_cd_oldpwd_update.c		\
 		builtins/functions/utils/mini_getenv_utils.c			\
 		builtins/functions/utils/mini_export_utils.c			\
+		builtins/functions/utils/export_exec_utils.c			\
 		builtins/functions/utils/mini_unset_utils.c				\
 		builtins/functions/utils/mini_echo_utils.c				\
 		builtins/functions/builtin_export_unset.c				\
@@ -89,12 +90,18 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/parse_space_quote_utils.c					\
 		parsing/srcs/split_minishell_get_filling.c				\
 		parsing/srcs/check_syntax_pipe.c						\
-		main_loop_utils.c										\
-		main_function.c											\
-		main_utils.c											\
-		no_env.c												\
-		signal.c												\
-		main.c
+		parsing/srcs/space_utils.c								\
+		parsing/srcs/search_outfile_utils.c						\
+		parsing/srcs/search_infile_utils.c						\
+		parsing/srcs/search_heredoc_utils.c						\
+		parsing/srcs/search_append_utils.c						\
+		parsing/srcs/redirections_utils.c						\
+		main_functions/main_loop_utils.c						\
+		main_functions/main_function.c							\
+		main_functions/main_utils.c								\
+		main_functions/no_env.c									\
+		main_functions/signal.c									\
+		main_functions/main.c
 
 INCS =	includes/minishell.h									\
 		parsing/parsing.h

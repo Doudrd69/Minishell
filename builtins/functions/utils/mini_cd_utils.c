@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:19:52 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:39:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	no_path(t_data *data)
 		chdir(&data->home_path[i]);
 		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 		data->p_status = 0;
-		printf("RETURN 0\n");
 		return (0);
 	}
+	ft_printf("minishell: cd: HOME not set\n");
 	return (1);
 }
 

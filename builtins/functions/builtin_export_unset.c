@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:22:27 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 15:10:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	mini_export(t_data *data, char *var)
 	data->new_env_size = 0;
 	if (check_var_exists_export(data, var))
 	{
-		data->new_env = new_tab_with_existing_var(data, var);
+		data->envp = new_tab_with_existing_var(data, var);
 		data->p_status = 0;
 		return (0);
 	}

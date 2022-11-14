@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 12:35:23 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 15:59:25 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "parsing/parsing.h"
-
-static int	test_free(void *tmp)
-{
-	if (tmp == NULL)
-		return (0);
-	else
-		free(tmp);
-	return (1);
-}
+#include "../includes/minishell.h"
+#include "../parsing/parsing.h"
 
 void	free_all(t_shell *minishell)
 {
@@ -54,6 +45,7 @@ void	init_main(t_data *data, char **envp)
 	data->check_main = 0;
 	data->oldpwd_if = 0;
 	data->echo_arg = 0;
+	data->p_status = 0;
 	data->envp = envp;
 	return ;
 }

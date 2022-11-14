@@ -3,29 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   split_minishell_nbr_words.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:00 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:41:00 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:18:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
 
-static int	count_word(char const *str, char charset, int *i, int *nbrw)
+static int	last_loop(char const *str, char charset, int *i)
 {
-	while (str[*i] == charset && str[*i] && str[*i] != '\0')
-	{
-		(*i) += 1;
-	}
-	if (str[*i] != charset && str[*i] && str[*i] != '\0')
-	{
-		(*nbrw) += 1;
-		if (str[*i] == '\"' && str[*i + 1] == '\"')
-			(*nbrw) -= 1;
-		if (str[*i] == '\'' && str[*i + 1] == '\'')
-			(*nbrw) -= 1;
-	}
 	while (str[*i] != charset && str[*i] && str[*i] != '\0')
 	{
 		if (str[*i] == '\'')
@@ -41,6 +29,24 @@ static int	count_word(char const *str, char charset, int *i, int *nbrw)
 		if (str[*i] != '\0')
 			(*i) += 1;
 	}
+	return (0);
+}
+
+static int	count_word(char const *str, char charset, int *i, int *nbrw)
+{
+	while (str[*i] == charset && str[*i] && str[*i] != '\0')
+	{
+		(*i) += 1;
+	}
+	if (str[*i] != charset && str[*i] && str[*i] != '\0')
+	{
+		(*nbrw) += 1;
+		if (str[*i] == '\"' && str[*i + 1] == '\"')
+			(*nbrw) -= 1;
+		if (str[*i] == '\'' && str[*i + 1] == '\'')
+			(*nbrw) -= 1;
+	}
+	last_loop(str, charset, i);
 	return (0);
 }
 

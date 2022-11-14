@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:18:01 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:45:31 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	check_arg(int ac)
 	return (1);
 }
 
-void	parsing(char **env, t_shell *minishell)
+int	parsing(char **env, t_shell *minishell)
 {
 	minishell->envp = env;
 	first_parse(minishell, minishell->cmd);
 	count_ope(minishell);
-	tokenizers_arg(minishell);
+	if (tokenizers_arg(minishell) == 0)
+		return (1);
+	return (0);
 }
 
 int	tokenizers_arg(t_shell *minishell)

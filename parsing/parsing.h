@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:25:23 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:45:46 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ typedef struct s_shell
 	char			**env_search;
 	int				env_size;
 	char			*home_path;
+	char			*tmp_lnospace;
 	int				infile_size;
 	int				outfile_size;
+	int				file_search;
 }	t_shell;
 
 void	init_dlist_var(t_shell *minishell);
@@ -72,7 +74,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile,
 			t_shell *minishell);
 
 /*----*PARSING*----*/
-void	parsing(char **env, t_shell *minishell);
+int		parsing(char **env, t_shell *minishell);
 void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
@@ -179,6 +181,19 @@ void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	parse_space(t_shell *minishell);
 void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j);
+void	list_no_space_else(t_shell *minishell, t_node *list_cpy,
+			t_node *tmp_list, t_node *new_node);
+void	last_verif(t_node *tmp, t_node *list_cpy, t_shell *minishell, int j);
+void	copy_value_parsing(t_shell *minishell, int j, int i, char *var);
+int		check_and_print_var_parsing(t_shell *minishell, char *str);
+int		main_loop_search_outfile(t_shell *s, char *str, int i);
+int		main_loop_search_infile(char *str, int i, int file);
+int		dl_fl_search_infile(char *str, int i);
+int		main_loop_search_heredoc(char *str, int i, int file);
+int		dl_fl_search_heredoc(char *str, int i);
+int		main_loop_search_append(char *str, int i, int file);
+int		dl_fl_search_append(char *str, int i);
+int		sorting_loop(t_shell *minishell, char *str, t_node *list_cpy, int j);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);

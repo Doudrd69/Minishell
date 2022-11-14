@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:29:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:58:30 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	create_oldpwd(t_data *data)
 {

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:26:30 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:26:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:47:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	check_var_exists_export(t_data *data, char *var_export)
 			if (check_var(data->envp[i], str) == 0)
 			{
 				data->var_position = i;
+				free(str);
 				return (1);
 			}
 		}

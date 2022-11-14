@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:28:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:40:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*getenv_hd(char *envp[], t_data *data, char *var_name)
 {
 	if (ft_strnstr(envp[data->hd.position], var_name, ft_strlen(var_name)))
 		return (var_found(data, envp, var_name, data->hd.position));
-	printf("Cannot find %s\n", var_name);
+	ft_printf("Cannot find %s\n", var_name);
 	return (NULL);
 }
 
