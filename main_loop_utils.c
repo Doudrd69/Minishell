@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:27:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:28:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	export_exec(t_data *data, t_node *node)
 		data->envp = data->new_env;
 		return (0);
 	}
-	ft_printf("minishell: export: '%s': not a valid identifier\n", node->content);
+	ft_printf("minishell: export: '%s': not a valid identifier\n",
+		node->content);
 	return (1);
 }
 
@@ -63,8 +64,8 @@ int	unset_exec(t_data *data, t_node *node)
 
 int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 {
-	int	j;
-	int	ptr;
+	int		j;
+	int		ptr;
 	t_node	**infile_tmp;
 
 	j = 0;

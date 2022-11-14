@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 13:26:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:35:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,7 @@ int	check_if_empty(t_data *data)
 	return (1);
 }
 
-int	echo_newline_arg(t_data *data)
-{
-	if (data->echo_arg == 0)
-	{
-		write(1, "\n", 1);
-		return (1);
-	}
-	else
-		return (1);
-}
-
-int	write_and_check_signs(int i, t_data *data, int output_fd)
+int	write_and_check_signs(int i, t_data *data)
 {
 	char	*tmp;
 
@@ -82,7 +71,7 @@ int	write_and_check_signs(int i, t_data *data, int output_fd)
 		if (data->str[i] == '$' && data->str[i + 1] == '?')
 		{
 			tmp = ft_itoa(data->p_status);
-			write(output_fd, tmp, ft_strlen(tmp));
+			write(1, tmp, ft_strlen(tmp));
 			i += 2;
 		}
 		data->check_print_var = 0;
@@ -92,7 +81,7 @@ int	write_and_check_signs(int i, t_data *data, int output_fd)
 			i++;
 		else
 		{
-			write(output_fd, &data->str[i], 1);
+			write(1, &data->str[i], 1);
 			i++;
 		}
 	}

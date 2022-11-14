@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:27:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:39:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	copy_var_after_index(int i, int j, t_data *data)
 {
-	data->unset_env[i] = malloc(sizeof(char) * ft_strlen(data->envp[i + 1]) + 1);
+	data->unset_env[i] = malloc(sizeof(char)
+			* ft_strlen(data->envp[i + 1]) + 1);
 	if (!data->unset_env[i])
 	{
 		free_tab(data->unset_env, i);
@@ -58,7 +59,7 @@ int	malloc_and_cpy(t_data *data, int i, int index)
 {
 	int	j;
 
-	data->unset_env = malloc(sizeof(char *) * (data->envp_size));//on malloc de la taille actuelle pour le NULL
+	data->unset_env = malloc(sizeof(char *) * (data->envp_size));
 	if (!data->unset_env)
 		return (1);
 	while (i < data->envp_size - 1)

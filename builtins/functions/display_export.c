@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 20:34:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:38:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	display_env(char **tmp_tab, int size, int output_fd)
 	}
 	return ;
 }
-
 
 int	display_export(t_data *data)
 {

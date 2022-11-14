@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 15:29:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:02:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ typedef struct data
 	int			size_ptab2;
 	int			size_ptab3;
 	int			pipe_nb;
+	int			builtin_cmd_nb;
+	int			check_main;
+	char		*builtins_name[5];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
 	char		**new_env;
@@ -143,6 +146,8 @@ typedef struct data
 }	t_data;
 
 /* HEREDOC */
+t_node	*search_first_hd(t_data *data, t_node *tmp, t_shell *parse, t_node **in);
+
 void	eof_handler_hd(t_data *data, char *input, int output_fd);
 void	heredoc(t_data *data, t_node *tmp);
 void	close_hd_pipe(t_data *data, int i);
@@ -154,6 +159,7 @@ void	signal_tmp(int tmp);
 char	*var_found(t_data *data, char *envp[], char *var_name, int i);
 char	*getenv_hd(char *envp[], t_data *data, char *var_name);
 char	*ft_itoa(int n);
+
 int		heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr);
 int		check_and_print_var_hd(char *str, t_data *data, int out_fd, int size);
 int		cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd);
@@ -161,7 +167,9 @@ int		print_var_hd(t_data *data, int var_size, char *var, int output_fd);
 int		heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse);
 int		print_var_util(t_data *data, char *str, int i, int output_fd);
 int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
+int		heredoc_process(t_node *tmp, t_data *data, int i, int ptr);
 int		check_var_exists(int j, t_data *data, int output_fd);
+int		search_hd(t_node *tmp, t_shell *parse, t_node **tab);
 int		backslash_check(t_data *data, char *str, int i);
 int		check_delimiter(char *str, char *delimiter);
 int		check_delimiter(char *str, char *delimiter);
@@ -172,18 +180,29 @@ int		check_eof(char *str, char *limiter);
 int		var_exists_hd(t_data *data);
 
 /* COMMAND UTILS */
+t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node);
+
+void	execution(t_data *data, t_shell *parse, t_node *node,
+	int (*builtins[5])(t_data *, t_node *));
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[]);
 void	*commands(t_data *data, t_node *node, t_shell *parse, char *envp[]);
+void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse);
 void	exec_cmd(char **tab, char **param, char *env[], t_data *data);
+void	cmd_exec(t_data *data, char **envp, t_shell *minishell);
 void	cmd_execution(t_data *data, char *envp[], int pipe_id);
+void	cmd_exec_init(t_data *data, t_shell *parse_data);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
+void	main_init_before_loop(t_data *data, char **envp,
+	int (*builtins[5])(t_data *data, t_node *node), int argc , char **argv);
 void	last_cmd_execution(t_data *data, char *envp[]);
 void	eof_handler(char *input, t_shell *minishell);
+void	envp_check(t_data *data, char **envp);
 void	sigint_handler_in_process(int signum);
 void	sigint_handler_main_loop(int signum);
+void	init_main(t_data *data, char **envp);
 void	exit_cmd_not_found(char **param);
 void	close_pipe(t_data *data, int i);
 void	*node_rotation(t_node *node);
@@ -198,13 +217,20 @@ char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
 char	**free_tab(char **tab, int i);
 
+int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
+	t_node *node, t_data *data);
+int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
+int		export_and_unset(t_data *data, t_node *node, int check);
 int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
-int		set_p_status(int status, t_data *data, t_node *node);
 int		check_outfile_last_cmd(t_data *data, t_shell *parse);
+int		multi_cmd_dup_to_pipe(t_data *data, int index);
 int		check_inputfile(t_data *data, t_shell *parse);
 int		pipe_creation(t_data *data, int nbr_of_pipe);
 int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
+int		export_exec(t_data *data, t_node *node);
+int		unset_exec(t_data *data, t_node *node);
+int		set_p_status(int status, t_node *node);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);
 int		check_loop(char *str, int j);
@@ -238,26 +264,26 @@ char	**free_tab(char **tab, int i);
 char	*get_var_name(char *var);
 
 int		check_length(t_data *data, size_t size, int position, char *str);
-int		write_and_check_signs(int i, t_data *data, int output_fd);
 int		check_var_exists_export(t_data *data, char *var_export);
 int		specific_cases_with_special_char(t_data *data, int i);
 int		var_search_copy(t_data *data, int size, int i, int j);
 int		unset_var(int index, t_data *data, char *var_unset);
 int		malloc_and_cpy(t_data *data, int i, int index);
-int		newline_arg(t_data *data, int output_fd);
-int		path_exists(t_data *data, t_node *node);
-int		pid_display(t_data *data, int i);
-int		check_signs(int i, t_data *data);
+int		write_and_check_signs(int i, t_data *data);
 int		check_var_hd(char *str, char *var_name);
+int		path_exists(t_data *data, t_node *node);
 int		check_var(char *str, char *var_name);
 int		check_special_char(char c, int size);
+int		pid_display(t_data *data, int i);
+int		check_signs(int i, t_data *data);
 int		update_old_pwd(t_data *data);
 int		display_export(t_data *data);
 int		check_if_empty(t_data *data);
 int		check_oldpwd(t_data *data);
+int		newline_arg(t_data *data);
 int		update_pwd(t_data *data);
-int		no_path(t_data *data);
 int		check_remains(char *str);
+int		no_path(t_data *data);
 int		no_args(t_node *node);
 
 /* GNL FUNCTIONS */

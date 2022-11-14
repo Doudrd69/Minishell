@@ -76,10 +76,11 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/check_syntax_append.c						\
 		parsing/srcs/check_syntax_heredoc.c						\
 		main_loop_utils.c										\
+		main_function.c											\
 		main_utils.c											\
 		no_env.c												\
 		signal.c												\
-		main.c													\
+		main.c
 
 INCS =	includes/minishell.h									\
 		parsing/parsing.h

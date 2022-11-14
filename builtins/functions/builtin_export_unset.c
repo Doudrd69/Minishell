@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:24:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:30:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	mini_export(t_data *data, char *var)
 		data->p_status = 0;
 		return (0);
 	}
-	data->new_env = malloc(sizeof(char *) * (data->envp_size + 2));//1 pour la var_export et 1 pour le NULL
+	data->new_env = malloc(sizeof(char *) * (data->envp_size + 2));
 	if (!data->new_env)
 		return (1);
 	data->new_env = newtab_malloc(data, data->envp_size + 1, data->envp, var);
@@ -47,6 +47,5 @@ int	mini_unset(t_data *data, char *var_unset)
 		}
 		index++;
 	}
-	//ft_printf("minishell: unset: '%s': not a valid identifier\n", var_unset);
 	return (1);
 }
