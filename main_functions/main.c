@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:22:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 14:33:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 		if (node->next == NULL || node->next->type == 'P')
 			return (display_export(data));
 		data->p_status = export_exec(data, node);
+		data->check_loop_export = 1;
 		return (1);
 	}
 	if (node && ft_strncmp(node->content, "unset", 5) == 0)
@@ -54,8 +55,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 
 	i = 0;
 	status = 0;
-	printf("IN BUILTINS --> %d\n", *gstatus);
-	data->test = &g_pstatus;
+	data->test = gstatus;
 	while (node && i < data->builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content,

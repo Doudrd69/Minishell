@@ -6,21 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:22:56 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 15:59:25 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../parsing/parsing.h"
-
-static int	test_free(void *tmp)
-{
-	if (tmp == NULL)
-		return (0);
-	else
-		free(tmp);
-	return (1);
-}
 
 void	free_all(t_shell *minishell)
 {

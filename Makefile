@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -28,6 +28,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/utils/mini_cd_oldpwd_update.c		\
 		builtins/functions/utils/mini_getenv_utils.c			\
 		builtins/functions/utils/mini_export_utils.c			\
+		builtins/functions/utils/export_exec_utils.c			\
 		builtins/functions/utils/mini_unset_utils.c				\
 		builtins/functions/utils/mini_echo_utils.c				\
 		builtins/functions/builtin_export_unset.c				\

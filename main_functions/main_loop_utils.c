@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:52:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:00:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 int	export_exec(t_data *data, t_node *node)
 {
+	char	**tmp;
+	int		tmp_size;
+
 	if (node->next != NULL)
 	{
 		node = node->next;
 		while (node != NULL)
 		{
-			mini_export(data, node->content);
+			tmp = data->envp;
+			tmp_size = envp_size_for_tmp(tmp);
+			if (mini_export(data, node->content) == 1)
+				return (1);
+			data->envp = data->new_env;
+			if ((data->check_loop_export == 1 && node->next == NULL)
+				|| node->next != NULL)
+				free_old(tmp, tmp_size);
 			if (node->next == NULL)
 				break ;
-			data->envp = data->new_env;
 			node = node->next;
 		}
-		data->new_env_check = 1;
-		if (data->unset_env && data->unset_env_check == 1)
-		{
-			free_tab(data->unset_env, data->unset_env_size);
-			data->unset_env_check = 0;
-		}
-		data->envp = data->new_env;
 		return (0);
 	}
 	ft_printf("minishell: export: '%s': not a valid identifier\n",
@@ -41,22 +43,24 @@ int	export_exec(t_data *data, t_node *node)
 
 int	unset_exec(t_data *data, t_node *node)
 {
+	char	**tmp;
+	int		tmp_size;
+
 	if (node->next != NULL)
 		node = node->next;
 	while (node != NULL)
 	{
+		tmp = data->envp;
+		tmp_size = envp_size_for_tmp(tmp);
 		if (mini_unset(data, node->content) == 1)
 			return (0);
+		data->envp = data->unset_env;
+		if ((data->check_loop_export == 1 && node->next == NULL)
+			|| node->next != NULL)
+			free_old(tmp, tmp_size);
 		if (node->next == NULL)
 			break ;
-		data->envp = data->unset_env;
 		node = node->next;
-	}
-	data->unset_env_check = 1;
-	if (data->new_env && data->new_env_check == 1)
-	{
-		free_tab(data->new_env, data->new_env_size);
-		data->new_env_check = 0;
 	}
 	data->envp = data->unset_env;
 	return (0);
