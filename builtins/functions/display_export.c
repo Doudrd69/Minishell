@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:38:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:19:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	sorting(char **tmp_tab, int size)
 	char	*tmp;
 
 	i = 0;
-	while (i < size)
+	while (i < size - 1)
 	{
 		j = 0;
-		while (j < size)
+		while (j < size - 1)
 		{
 			if (ft_strcmp(tmp_tab[i], tmp_tab[j]) < 0)
 			{
@@ -52,7 +52,7 @@ void	display_env(char **tmp_tab, int size, int output_fd)
 	int	i;
 
 	i = 0;
-	while (i < size)
+	while (i < size - 1)
 	{
 		write(output_fd, "declare -x ", 11);
 		write(output_fd, tmp_tab[i], ft_strlen(tmp_tab[i]));
@@ -76,7 +76,7 @@ int	display_export(t_data *data)
 	tmp_tab = malloc(sizeof(char *) * data->envp_size + 1);
 	if (!tmp_tab)
 		free(tmp_tab);
-	while (i < data->envp_size)
+	while (i < data->envp_size - 1)
 	{
 		tmp_tab[i] = ft_strdup(data->envp[i]);
 		i++;
@@ -84,7 +84,7 @@ int	display_export(t_data *data)
 	tmp_tab[i] = NULL;
 	sorting(tmp_tab, data->envp_size);
 	display_env(tmp_tab, data->envp_size, output_fd);
-	free_tab(tmp_tab, data->envp_size);
+	free_tab(tmp_tab, data->envp_size - 1);
 	if (data->pipe_check == 1)
 		return (0);
 	return (1);

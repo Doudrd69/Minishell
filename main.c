@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:39:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:19:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 				node = node->next;
 			data->p_status = (*builtins[i])(data, node);
 			if (data->p_status == 1)
-			{
-				printf("Error code debug : %d\n", data->p_status);
 				return (1);
-			}
 			if (data->p_status == 2)
 				return (data->check_main = 0);
 			return (data->check_main = 1);

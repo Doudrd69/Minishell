@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:39:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:23:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	copy_var_after_index(int i, int j, t_data *data)
 {
+	(void)j;
 	data->unset_env[i] = malloc(sizeof(char)
 			* ft_strlen(data->envp[i + 1]) + 1);
 	if (!data->unset_env[i])
@@ -21,9 +22,8 @@ int	copy_var_after_index(int i, int j, t_data *data)
 		free_tab(data->unset_env, i);
 		return (0);
 	}
-	while (data->envp[i + 1][++j])
-		data->unset_env[i][j] = data->envp[i + 1][j];
-	data->unset_env[i][j] = '\0';
+	ft_strlcpy(data->unset_env[i], data->envp[i + 1],
+		ft_strlen(data->envp[i + 1]), 1);
 	return (1);
 }
 

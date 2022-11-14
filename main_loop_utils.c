@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:28:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:42:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	export_exec(t_data *data, t_node *node)
 		data->new_env_check = 1;
 		if (data->unset_env && data->unset_env_check == 1)
 		{
-			free_tab(data->unset_env, data->envp_size - 2);
+			free_tab(data->unset_env, data->unset_env_size);
 			data->unset_env_check = 0;
 		}
 		data->envp = data->new_env;
@@ -55,7 +55,7 @@ int	unset_exec(t_data *data, t_node *node)
 	data->unset_env_check = 1;
 	if (data->new_env && data->new_env_check == 1)
 	{
-		free_tab(data->new_env, data->envp_size);
+		free_tab(data->new_env, data->new_env_size);
 		data->new_env_check = 0;
 	}
 	data->envp = data->unset_env;

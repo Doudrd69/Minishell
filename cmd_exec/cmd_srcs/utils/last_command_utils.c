@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:59:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:22:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	check_outfile_last_cmd(t_data *data, t_shell *parse)
 	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0)
 		&& parse->tab_outfile[size])
 	{
-		printf("OUTFILE --> %s\n", parse->tab_outfile[size]->content);
 		data->output_fd = iterate_outfile_lastcmd(parse);
-		printf("OUTFILE --> %s\n", parse->tab_outfile[size]->content);
 		if (data->output_fd < 0)
 		{
 			ft_printf("minishell: %s: %s\n", parse->tab_outfile[size]->content,

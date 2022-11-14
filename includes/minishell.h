@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:02:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:05:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct data
 	int			pipe_nb;
 	int			builtin_cmd_nb;
 	int			check_main;
+	int			new_env_size;
+	int			unset_env_size;
 	char		*builtins_name[5];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
