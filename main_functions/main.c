@@ -6,16 +6,32 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD:main_functions/main.c
+/*   Updated: 2022/11/14 13:09:51 by ebrodeur         ###   ########lyon.fr   */
+=======
 /*   Updated: 2022/11/14 12:35:32 by wmonacho         ###   ########lyon.fr   */
+>>>>>>> cffa0ba93f9b3ef12f1bf0766a8b957c70140f08:main.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "parsing/parsing.h"
+#include "../includes/minishell.h"
+#include "../parsing/parsing.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int		g_status;
+int		g_pstatus;
+
+void	sigint_handler_main_loop(int signum)
+{
+	if (signum == 2)
+	{
+		g_pstatus = 1;
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
 
 int	export_and_unset(t_data *data, t_node *node, int check)
 {
@@ -35,13 +51,15 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 }
 
 int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
-	t_node *node, t_data *data)
+	t_node *node, t_data *data, int *gstatus)
 {
 	int	i;
 	int	status;
 
 	i = 0;
 	status = 0;
+	printf("IN BUILTINS --> %d\n", *gstatus);
+	data->test = &g_pstatus;
 	while (node && i < data->builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content,
@@ -73,6 +91,7 @@ int	main(int argc, char *argv[], char *envp[])
 	main_init_before_loop(&data, envp, builtins, argc, argv);
 	while (1)
 	{
+		g_pstatus = 0;
 		sigaction(SIGQUIT, &sa, NULL);
 		signal(SIGINT, &sigint_handler_main_loop);
 		minishell = malloc(sizeof(t_shell));
@@ -81,6 +100,9 @@ int	main(int argc, char *argv[], char *envp[])
 		eof_handler(minishell->cmd, minishell);
 		node = NULL;
 		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
+<<<<<<< HEAD:main_functions/main.c
+			execution(&data, minishell, node, builtins, &g_pstatus);
+=======
 <<<<<<< HEAD
 		{
 			if (minishell->cmd && *minishell->cmd)
@@ -121,6 +143,7 @@ int	main(int argc, char *argv[], char *envp[])
 =======
 			execution(&data, minishell, node, builtins);
 >>>>>>> b3106c43fb9a656714386f0f6dcfc9336c87b2f2
+>>>>>>> cffa0ba93f9b3ef12f1bf0766a8b957c70140f08:main.c
 		free(minishell->cmd);
 		free_all(minishell);
 	}
@@ -151,6 +174,3 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		free(data->hd_pid);
 	return ;
 }
-
-//MES TACHES
-	//SIGINT dans le main (sans rien) --> error 1

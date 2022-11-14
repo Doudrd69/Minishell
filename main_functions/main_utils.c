@@ -6,12 +6,16 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD:main_functions/main_utils.c
+/*   Updated: 2022/11/14 12:23:44 by ebrodeur         ###   ########lyon.fr   */
+=======
 /*   Updated: 2022/11/14 12:35:23 by wmonacho         ###   ########lyon.fr   */
+>>>>>>> cffa0ba93f9b3ef12f1bf0766a8b957c70140f08:main_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "parsing/parsing.h"
+#include "../includes/minishell.h"
+#include "../parsing/parsing.h"
 
 static int	test_free(void *tmp)
 {
@@ -54,6 +58,7 @@ void	init_main(t_data *data, char **envp)
 	data->check_main = 0;
 	data->oldpwd_if = 0;
 	data->echo_arg = 0;
+	data->p_status = 0;
 	data->envp = envp;
 	return ;
 }

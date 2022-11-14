@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 09:05:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:00:38 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct data
 	int			check_main;
 	int			new_env_size;
 	int			unset_env_size;
+	int			*test;
 	char		*builtins_name[5];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
@@ -185,7 +186,7 @@ int		var_exists_hd(t_data *data);
 t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node);
 
 void	execution(t_data *data, t_shell *parse, t_node *node,
-	int (*builtins[5])(t_data *, t_node *));
+	int (*builtins[5])(t_data *, t_node *), int *gstatus);
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[]);
@@ -220,7 +221,7 @@ char	**ft_split(const char *s, char c);
 char	**free_tab(char **tab, int i);
 
 int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
-	t_node *node, t_data *data);
+	t_node *node, t_data *data, int *g);
 int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
 int		export_and_unset(t_data *data, t_node *node, int check);
 int		check_inputfile_last_cmd(t_data *data, t_shell *parse);

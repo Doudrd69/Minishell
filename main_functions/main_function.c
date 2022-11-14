@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:11:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:10:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 {
@@ -22,7 +22,7 @@ t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 		node = minishell->head;
 	else
 		node = NULL;
-	if (minishell->tab_infile!= NULL)
+	if (minishell->tab_infile != NULL)
 		data->infile_check = 1;
 	else
 		data->infile_check = 0;
@@ -63,9 +63,8 @@ void	envp_check(t_data *data, char **envp)
 	{
 		if (export_no_env(data) == 1)
 			exit(1);
-		data->envp = envp;
+		data->envp = data->no_env;
 		envpsize = 3;
-		data->envp_size = envpsize;
 		data->envp_size = envpsize;
 	}
 	return ;
@@ -83,14 +82,15 @@ void	main_init_before_loop(t_data *data, char **envp,
 }
 
 void	execution(t_data *data, t_shell *parse, t_node *node,
-	int (*builtins[5])(t_data *, t_node *))
+	int (*builtins[5])(t_data *, t_node *), int *gstatus)
 {
 	data->check_main = 0;
 	if (parse->cmd && *parse->cmd)
 		add_history (parse->cmd);
 	parsing(data->envp, parse);
 	node = main_init_check(data, parse, node);
-	data->check_main = builtins_loop(data->builtins_name, builtins, node, data);
+	data->check_main = builtins_loop(data->builtins_name, builtins,
+			node, data, gstatus);
 	data->check_main = export_and_unset(data, node, data->check_main);
 	if (data->check_main == 0)
 		cmd_exec(data, data->envp, parse);
