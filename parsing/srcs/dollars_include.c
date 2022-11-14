@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollars_include.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:38:46 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	ft_next(t_shell *minishell, t_node *tmp_list, t_node **list)

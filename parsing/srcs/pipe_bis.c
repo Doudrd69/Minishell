@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_bis.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:42:57 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:42:57 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
-int	p_status;
-
-static void	check_syntax(t_shell *minishell, char *str, int i)
+int	check_syntax(t_shell *minishell, char *str, int i)
 {
 	int	j;
 
@@ -13,22 +23,22 @@ static void	check_syntax(t_shell *minishell, char *str, int i)
 	if (str[i + 1] == '|')
 	{
 		printf("minishell: syntax error near unexpected token `||'\n");
-		p_status = 258;
-		exit(0);
+		minishell->error = 258;
+		return (0);
 	}
 	if (i == 0 || str[i + 1] == '\0')
 	{
 		printf("minishell: syntax error near unexpected token `|'\n");
-		p_status = 258;
-		exit(0);
+		minishell->error = 258;
+		return (0);
 	}
 	while (--j >= 0 && str[j] == ' ')
 	{
 		if (j == 0)
 		{
 			printf("minishell: syntax error near unexpected token `|'\n");
-			p_status = 258;
-			exit(0);
+			minishell->error = 258;
+			return (0);
 		}
 	}
 	while (str[++i] != '\0' && (str[i] == ' ' || str[i] == '|'))
@@ -39,10 +49,11 @@ static void	check_syntax(t_shell *minishell, char *str, int i)
 				printf("minishell: syntax error near unexpected token `||'\n");
 			else
 				printf("minishell: syntax error near unexpected token `|'\n");
-			p_status = 258;
-			exit(0);
+			minishell->error = 258;
+			return (0);
 		}
 	}
+	return (1);
 }
 
 char	*cmd_cpy(char *dest, char *src, int size)
@@ -68,9 +79,10 @@ int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 	if (len == -1)
 		len = 0;
 	tmp = str;
-	str = str + (len);
+	str = str + minishell->last_pipe;
 	minishell->dquote = 0;
 	minishell->quote = 0;
+	printf("tmp==%s, str====%s\n", tmp, str);
 	while (str[i] != '\0')
 	{
 		if ((str[i]) == '\"' && minishell->dquote != 1)
@@ -83,11 +95,11 @@ int	check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe)
 			minishell->quote = 0;
 		if (str[i] == '|' && (minishell->dquote == 1 || minishell->quote == 1))
 		{
+			printf("strerror===%s\n", str + i);
 			return (1);
 		}
 		if (str[i] == '|' && minishell->dquote == 0 && minishell->quote == 0)
 		{
-			check_syntax(minishell, tmp, len);
 			(*pipe)--;
 			return (0);
 		}

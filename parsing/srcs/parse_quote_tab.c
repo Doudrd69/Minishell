@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_quote_tab.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:39:33 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:39:33 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	ft_prev(t_node *list_cpy, t_node *tmp, t_shell *minishell, int tab)
@@ -91,7 +103,9 @@ void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_out
 				tab = ft_split_minishell(minishell, str, ' ');
 				j = -1;
 				while (tab && tab[++j] != NULL)
+				{
 					list_nospace_tab(minishell, &list_cpy, tab[j], j);
+				}
 				tmp = list_cpy;
 				if (tmp)
 					list_cpy = list_cpy->next;

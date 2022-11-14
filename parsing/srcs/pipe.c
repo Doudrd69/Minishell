@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:42:43 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:42:43 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../parsing.h"
 
@@ -39,21 +50,25 @@ static void	ft_gagne_place(t_shell *minishell, char *tmp
 	(*i)++;
 }
 
-void	parse_pipe(t_shell *minishell, int j, int i)
+int	parse_pipe(t_shell *minishell, int j, int i)
 {
 	int		pipe;
 	char	*str;
 	char	*tmp;
 	t_node	*list_cpy;
 
+	minishell->last_pipe = 0;
 	pipe = minishell->nbr_pipe;
 	str = (char *)(minishell->head->content);
 	list_cpy = minishell->head;
 	while (str[++i + j] != '\0')
 	{
 		if (str[i + j] == '|' && pipe != 0
-			&& check_quote_pipe(minishell, str, i + j - 1, &pipe) == 0)
+			&& check_quote_pipe(minishell, str, i + j - 1, &pipe) != 1)
 		{
+			if (check_syntax(minishell, str, i + j) == 0)
+				return (0);
+			minishell->last_pipe = i + j + 1;
 			tmp = ft_tmp(tmp, str, j, i);
 			ft_gagne_place(minishell, tmp, &i, &list_cpy);
 			if (pipe == 0 && str[i + j] != '\0')
@@ -65,4 +80,5 @@ void	parse_pipe(t_shell *minishell, int j, int i)
 		}
 	}
 	ft_next(minishell);
+	return (1);
 }

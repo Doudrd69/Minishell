@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:19:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 12:35:32 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,46 @@ int	main(int argc, char *argv[], char *envp[])
 		eof_handler(minishell->cmd, minishell);
 		node = NULL;
 		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
+<<<<<<< HEAD
+		{
+			if (minishell->cmd && *minishell->cmd)
+				add_history (minishell->cmd);
+			parsing(data.envp, minishell);
+			if (minishell->error != 0)
+				exit (0);
+			if (minishell->nbr_pipe > 0)
+				mini_data.pipe_check = 1;
+			else
+				mini_data.pipe_check = 0;
+			if (minishell->head != NULL)
+				node = minishell->head;
+			else
+				node = NULL;
+			if (minishell->tab_infile!= NULL)
+				mini_data.infile_check = 1;
+			else
+				mini_data.infile_check = 0;
+			if (minishell->tab_outfile != NULL)
+				mini_data.outfile_check = 1;
+			else
+				mini_data.outfile_check = 0;
+			data.envp_size = mini_data.envp_size;
+			if (minishell->nbr_pipe > 0)
+			{
+				data.pipe_nb = pipe_creation(&data, minishell->nbr_pipe);
+				mini_data.pipefd_tmp = data.pipefd[0][WRITE];
+			}
+			check = 0;
+			check = builtins_loop(builtins_name, builtins, node, &mini_data, builtin_cmd_nb, check);
+			check = export_and_unset(&mini_data, &data, node, check);
+			if (check == 0)
+				cmd_exec(&data, data.envp, minishell);
+		}
+		if (data.exec.infile_fd)
+			free(data.exec.infile_fd);
+=======
 			execution(&data, minishell, node, builtins);
+>>>>>>> b3106c43fb9a656714386f0f6dcfc9336c87b2f2
 		free(minishell->cmd);
 		free_all(minishell);
 	}

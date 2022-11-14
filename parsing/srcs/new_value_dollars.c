@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   new_value_dollars.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:43:20 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 20:57:17 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
-static void	new_value1(t_shell *minishell, char *str)
+static int	new_value1(t_shell *minishell, char *str)
 {
 	int		size;
 
@@ -8,13 +20,16 @@ static void	new_value1(t_shell *minishell, char *str)
 	while (str[size] != '\0' && str[size] != ' ')
 		size++;
 	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
+	if (minishell->value == NULL)
+		return (free_exit(minishell));
 	size = -1;
 	while (str[++size] != '\0' && str[size] != ' ')
 		minishell->value[size] = str[size];
 	minishell->value[size] = '\0';
+	return (1);
 }
 
-static void	new_value2(t_shell *minishell, char *str)
+static int	new_value2(t_shell *minishell, char *str)
 {
 	int	size;
 	int	i;
@@ -23,6 +38,8 @@ static void	new_value2(t_shell *minishell, char *str)
 	while (str[size] != '\0' && str[size] != ' ')
 		size++;
 	minishell->value = (char *)malloc(sizeof(char) * (size - 1));
+	if (minishell->value == NULL)
+		return (free_exit(minishell));
 	size = 1;
 	i = -1;
 	while (str[++size] != '\0' && str[size] != ' ')
@@ -30,9 +47,19 @@ static void	new_value2(t_shell *minishell, char *str)
 		minishell->value[++i] = str[size];
 	}
 	minishell->value[++i] = '\0';
+	return (1);
 }
 
-static void	new_value3(t_shell *minishell, char *str, int mod)
+static void	new_value3_bis(int *cpy, char *str, int *i, int *size)
+{
+	*cpy = *i;
+	(*i) += 1;
+	while (str[*i] != '\0' && str[*i++] != ' ')
+		(*size) += 1;
+	*i = 0;
+}
+
+static int	new_value3(t_shell *minishell, char *str, int mod)
 {
 	int	size;
 	int	i;
@@ -40,96 +67,24 @@ static void	new_value3(t_shell *minishell, char *str, int mod)
 
 	size = 1;
 	i = 0;
-	if (mod == 2)
-		minishell->value = NULL;
-	else
+	if (mod != 2)
 	{
 		while (str[i] != '\0' && str[i] != '=')
 			i++;
 		if (str[i] == '\0')
 		{
 			minishell->value = NULL;
-			return ;
+			return (1);
 		}
-		cpy = i;
-		i++;
-		while (str[i] != '\0' && str[i] != ' ')
-		{
-			size++;
-			i++;
-		}
-		i = 0;
+		new_value3_bis(&cpy, str, &i, &size);
 		minishell->value = malloc(sizeof(char) * (size + 1));
+		if (minishell->value == NULL)
+			return (free_exit(minishell));
 		while (str[cpy] != '\0' && str[cpy] != ' ')
-		{
-			minishell->value[i] = str[cpy];
-			i++;
-			cpy++;
-		}
+			minishell->value[i++] = str[cpy++];
 		minishell->value[i] = '\0';
 	}
-}
-
-static void	new_value4(t_shell *minishell, char *str)
-{
-	int	size;
-	int	i;
-
-	size = 0;
-	while (str[size] != '\0' && str[size] != ' ')
-		size++;
-	minishell->value = (char *)malloc(sizeof(char) * (size));
-	size = 0;
-	i = 0;
-	while (str[++size] != '\0' && str[size] != ' ')
-		minishell->value[i++] = str[size];
-	minishell->value[size] = '\0';
-}
-
-static void	new_value5(t_shell *minishell, char *str, int i)
-{
-	int	size;
-	int	j;
-
-	size = 0;
-	while (i + size > 0 && str[i + size] != '\'')
-		size--;
-	i += size;
-	size = 1;
-	while (str[++i] != '\0' && str[i] != '\'')
-		size++;
-	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
-	j = 0;
-	minishell->value[j++] = '\'';
-	i -= size;
-	while (str[++i] != '\0' && str[i] != '\'')
-		minishell->value[j++] = str[i];
-	if (str[i] == '\'')
-		minishell->value[j++] = str[i];
-	minishell->value[j] = '\0';
-}
-
-static void	new_value6(t_shell *minishell, char *str, int i)
-{
-	int	size;
-	int	j;
-
-	size = 0;
-	while (i + size > 0 && str[i + size] != '\"')
-		size--;
-	i += size;
-	size = 1;
-	while (str[++i] != '\0' && str[i] != '\"')
-		size++;
-	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
-	j = 0;
-	minishell->value[j++] = '\"';
-	i -= size;
-	while (str[++i] != '\0' && str[i] != '\"')
-		minishell->value[j++] = str[i];
-	if (str[i] == '\"')
-		minishell->value[j++] = str[i];
-	minishell->value[j] = '\0';
+	return (1);
 }
 
 void	write_newvalue(t_shell *minishell, char *str, int mod, int i)
@@ -145,5 +100,5 @@ void	write_newvalue(t_shell *minishell, char *str, int mod, int i)
 	if (mod == 4)
 		new_value5(minishell, str, i);
 	if (mod == 6)
-		new_value6(minishell, str, i);
+		new_value_mod2_and3(minishell, str, i);
 }

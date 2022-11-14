@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_infile.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:41:59 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	include_infile_list(t_node **tab_list, char *tmp)
@@ -82,7 +94,7 @@ int	check_quote_infile(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
+int	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	t_node **list)
 {
 	int		i;
@@ -94,7 +106,8 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	file = 0;
 	i = minishell->mod;
 	space = 0;
-	check_syntax_infile(minishell, str, i);
+	if (check_syntax_infile(minishell, str, i) == 0)
+		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	while (str[i] != '\0' && str[i] != ' ' && (str[i] != '<' && str[i] != '>'))
@@ -120,6 +133,7 @@ void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
+	return (1);
 }
 
 /*

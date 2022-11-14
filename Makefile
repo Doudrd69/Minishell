@@ -51,7 +51,6 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/ft_dlstnew.c 								\
 		parsing/debug/print_all.c								\
 		parsing/srcs/pipe_bis.c									\
-		parsing/srcs/builtins.c									\
 		parsing/srcs/counter.c									\
 		parsing/srcs/parsing.c									\
 		parsing/srcs/dollars.c									\
@@ -75,6 +74,14 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/check_syntax_outfile.c						\
 		parsing/srcs/check_syntax_append.c						\
 		parsing/srcs/check_syntax_heredoc.c						\
+		parsing/srcs/check_syntax_append_space.c				\
+		parsing/srcs/check_syntax_outfile_space.c				\
+		parsing/srcs/check_syntax_infile_space.c				\
+		parsing/srcs/check_syntax_heredoc_space.c				\
+		parsing/srcs/new_value_dollars_bis.c					\
+		parsing/srcs/free_exit.c								\
+		parsing/srcs/dollars_bis.c								\
+		parsing/srcs/dollars_mod.c								\
 		main_loop_utils.c										\
 		main_function.c											\
 		main_utils.c											\

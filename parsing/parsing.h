@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/14 12:21:06 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -35,9 +47,11 @@ typedef struct s_shell
 	int				nbr_dquote;
 	int				nbr_squote;
 	int				mod;
+	int				error;
 	char			**envp;
 	char			*var_search;
 	char			*value;
+	int				last_pipe;
 	unsigned int	list_size;
 	char			**env_search;
 	int				env_size;
@@ -57,11 +71,12 @@ void	parsing(char **env, t_shell *minishell);
 void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
-void	parse_pipe(t_shell *minishell, int j, int i);
+int		parse_pipe(t_shell *minishell, int j, int i);
 int		check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe);
 char	*cmd_cpy(char *dest, char *src, int size);
 void	delist(t_node **list);
 void	ft_incr_var_pipe(int *j, int *i);
+int		check_syntax(t_shell *minishell, char *str, int i);
 
 /*BUILTINS*/
 void	parse_builtins(char *str, t_shell *minishell);
@@ -77,18 +92,19 @@ int		ft_nbr_words_split_minishell(t_shell *minishell,
 void	parse_space_quote(t_shell *minishell);
 int		ft_split_minishell_malloc_ws(char const	*str, char charset, char **tab);
 char	**ft_split_minishell_get_filling(char const *str, char **tab);
-void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile, t_node ***tab_outfile);
+void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile,
+			t_node ***tab_outfile);
 void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile);
 
 /*REDIRECTIONS*/
-void	parse_redirections(t_shell *minishell);
-void	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
+int		parse_redirections(t_shell *minishell);
+int		search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 			t_node **list);
-void	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile,
+int		search_heredoc(t_shell *minishell, char *str, t_node **tab_infile,
 			t_node **list);
-void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile,
+int		search_outfile(t_shell *minishell, char *str, t_node **tab_outfile,
 			t_node **list);
-void	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
+int		search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 			t_node **list);
 void	init_var_redirection(t_shell *minishell, int size);
 int		check_quote_infile(t_shell *minishell, char *str, int len);
@@ -100,6 +116,13 @@ int		check_syntax_infile(t_shell *minishell, char *str, int i);
 int		check_syntax_outfile(t_shell *minishell, char *str, int i);
 int		check_syntax_heredoc(t_shell *minishell, char *str, int i);
 int		check_syntax_append(t_shell *minishell, char *str, int i);
+int		check_syntax_after_append(t_shell *minishell, char *str, int i);
+int		check_syntax_after_heredoc(t_shell *minishell, char *str, int i);
+int		check_syntax_after_infile(t_shell *minishell, char *str, int i);
+int		check_syntax_after_outfile(t_shell *minishell, char *str, int i);
+int		new_value_mod2_and3(t_shell *minishell, char *str, int i);
+int		new_value5(t_shell *minishell, char *str, int i);
+int		new_value4(t_shell *minishell, char *str);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
@@ -123,6 +146,14 @@ char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name,
 			t_shell *minishell);
 char	*check_and_return_var_parsing(char *home_path, char **envp,
 			char *var, int i);
+int		check_dollars_mod(char *str);
+int		check_dollar_export(char *str, int i);
+int		check_heredoc_dollar_mod(char *str, int i);
+int		check_heredoc_dollar_mod_1(char *str, int i);
+int		check_heredoc_dollar_mod_2_3(char *str, int i);
+void	change_value_mod2_and_3(char *str, int i,
+			t_shell *minishell, t_node **list);
+
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);
@@ -135,12 +166,13 @@ void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j);
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);
 void	ft_free_list(t_shell *minishell);
 
-void	tokenizers_arg(t_shell *minishell);
+int		tokenizers_arg(t_shell *minishell);
 
 /*ERROR*/
 void	exit_error(t_shell *minishell);
 void	exit_perror(t_shell *minishell, char *error);
 void	exit_strerror(t_shell *minishell, char *error);
+int		free_exit(t_shell *minishell);
 
 void	free_all(t_shell *minishell);
 void	count_ope(t_shell *minishell);

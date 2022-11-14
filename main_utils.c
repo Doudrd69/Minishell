@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:52:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 12:35:23 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "parsing/parsing.h"
+
+static int	test_free(void *tmp)
+{
+	if (tmp == NULL)
+		return (0);
+	else
+		free(tmp);
+	return (1);
+}
 
 void	free_all(t_shell *minishell)
 {
@@ -22,11 +31,12 @@ void	free_all(t_shell *minishell)
 		tmp = minishell->head;
 		minishell->head = minishell->head->next;
 		if (ft_strncmp(tmp->content, "|", 1) != 0)
-			free(tmp->content);
-		free(tmp);
+			test_free((void *)(tmp->content));
+		test_free((void *)(tmp));
 	}
-	free(minishell->value);
-	free(minishell->var_search);
+	test_free((void *)(minishell->value));
+	test_free((void *)(minishell->var_search));
+	test_free((void *)(minishell->home_path));
 	free(minishell);
 }
 

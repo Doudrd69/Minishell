@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_var.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:40:34 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/14 12:00:11 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 int	check_and_print_var_parsing(t_shell *minishell, char *str)
@@ -58,7 +70,8 @@ static void	ft_find_dollars(t_shell *minishell, char *var, int *size, int *i)
 		(*i)++;
 }
 
-char	*check_and_return_var_parsing(char *home_path, char **envp, char *var, int i)
+char	*check_and_return_var_parsing(char *home_path,
+	char **envp, char *var, int i)
 {
 	int	j;
 	int	k;
@@ -81,7 +94,8 @@ char	*check_and_return_var_parsing(char *home_path, char **envp, char *var, int 
 	return (NULL);
 }
 
-char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name, t_shell *minishell)
+char	*mini_getenv_parsing(char *envp[], int env_size,
+	char *var_name, t_shell *minishell)
 {
 	int		i;
 	char	*str;
@@ -96,7 +110,10 @@ char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name, t_shell *m
 			return (NULL);
 		}
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
-			str = check_and_return_var_parsing(minishell->home_path, envp, var_name, i);
+		{
+			str = check_and_return_var_parsing(minishell->home_path,
+					envp, var_name, i);
+		}
 		if (str != NULL)
 			return (str);
 		i++;
@@ -116,7 +133,8 @@ void	print_var_parsing(t_shell *minishell)
 	i = 0;
 	if (var_exists_parsing(minishell))
 	{
-		var = mini_getenv_parsing(minishell->env_search, minishell->env_size, minishell->var_search, minishell);
+		var = mini_getenv_parsing(minishell->env_search,
+				minishell->env_size, minishell->var_search, minishell);
 		j = 0;
 		while (var[j] && var[j] != '=')
 			j++;
