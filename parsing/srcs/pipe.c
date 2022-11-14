@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:43 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:50:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:36:28 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,51 +31,28 @@ static char	*ft_tmp(char *tmp, char *str, int j, int i)
 	return (tmp);
 }
 
-static char	*ft_prev(char *tmp, char *str, int j, int i)
-{
-	tmp = malloc(sizeof(char) * (ft_strlen(str) - (j + i - 1)));
-	tmp = cmd_cpy(tmp, str + j + i, ft_strlen(str) - (j + i - 1));
-	(tmp)[ft_strlen(str) - (j + i)] = '\0';
-	return (tmp);
-}
-
-static void	ft_gagne_place(t_shell *minishell, char *tmp
-	, int *i, t_node **list_cpy)
-{
-	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)tmp));
-	*list_cpy = (*list_cpy)->next;
-	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)"|\0"));
-	*list_cpy = (*list_cpy)->next;
-	(*list_cpy)->type = 'P';
-	(*i)++;
-}
-
 int	parse_pipe(t_shell *minishell, int j, int i)
 {
-	int		pipe;
-	char	*str;
-	char	*tmp;
 	t_node	*list_cpy;
 
 	minishell->last_pipe = 0;
-	pipe = minishell->nbr_pipe;
-	str = (char *)(minishell->head->content);
+	minishell->pipe = minishell->nbr_pipe;
+	minishell->strp = (char *)(minishell->head->content);
 	list_cpy = minishell->head;
-	while (str[++i + j] != '\0')
+	while (minishell->strp[++i + j] != '\0')
 	{
-		if (str[i + j] == '|' && pipe != 0
-			&& check_quote_pipe(minishell, str, i + j - 1, &pipe) != 1)
+		if (minishell->strp[i + j] == '|' && minishell->pipe != 0
+			&& check_quote_pipe(minishell,
+				minishell->strp, i + j - 1) != 1)
 		{
-			if (check_syntax(minishell, str, i + j) == 0)
-				return (0);
-			minishell->last_pipe = i + j + 1;
-			tmp = ft_tmp(tmp, str, j, i);
-			ft_gagne_place(minishell, tmp, &i, &list_cpy);
-			if (pipe == 0 && str[i + j] != '\0')
+			if (check_syntax(minishell, minishell->strp, i + j) == 0)
 			{
-				tmp = ft_prev(tmp, str, j, i);
-				ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)tmp));
+				printf("ha\n");
+				return (0);
 			}
+			minishell->last_pipe = i + j + 1;
+			minishell->tmpp = ft_tmp(minishell->tmpp, minishell->strp, j, i);
+			add_last_arg(minishell, &list_cpy, &i, j);
 			ft_incr_var_pipe(&j, &i);
 		}
 	}

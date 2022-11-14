@@ -88,6 +88,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/parse_quote_intab_utils.c					\
 		parsing/srcs/parse_space_quote_utils.c					\
 		parsing/srcs/split_minishell_get_filling.c				\
+		parsing/srcs/check_syntax_pipe.c						\
 		main_loop_utils.c										\
 		main_function.c											\
 		main_utils.c											\

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:15:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:25:23 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,14 @@ void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
 int		parse_pipe(t_shell *minishell, int j, int i);
-int		check_quote_pipe(t_shell *minishell, char *str, int len, int *pipe);
+int		check_quote_pipe(t_shell *minishell, char *str, int len);
 char	*cmd_cpy(char *dest, char *src, int size);
 void	delist(t_node **list);
 void	ft_incr_var_pipe(int *j, int *i);
 int		check_syntax(t_shell *minishell, char *str, int i);
 void	add_last_list_pipe(char *str, int i, int j, t_shell *minishell);
 char	*ft_prev_for_pipe(char *tmp, char *str, int j, int i);
-
-/*BUILTINS*/
-void	parse_builtins(char *str, t_shell *minishell);
+void	add_last_arg(t_shell *minishell, t_node **list_cpy, int *i, int j);
 
 /*QUOTE*/
 int		check_quote(t_shell *minishell, char *str, int i, char c);
@@ -98,7 +96,8 @@ int		ft_nbr_words_split_minishell(t_shell *minishell,
 			char const	*str, char charset);
 void	parse_space_quote(t_shell *minishell);
 int		ft_split_minishell_malloc_ws(char const *str, char charset, char **tab);
-char	**ft_split_minishell_get_filling(char *str, char **tab, t_shell *minishell);
+char	**ft_split_minishell_get_filling(char *str,
+			char **tab, t_shell *minishell);
 void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile,
 			t_node ***tab_outfile);
 void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile);
