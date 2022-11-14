@@ -6,17 +6,18 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:33:22 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 09:12:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:39:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	new_tab_malloc_loop(t_mini_data *data, int i, int new_size, char **envp)
+int	new_tab_malloc_loop(t_data *data, int i, int new_size, char **envp)
 {
 	if (i == new_size - 1)
 	{
-		data->new_env[i] = malloc(sizeof(char) * ft_strlen(envp[data->envp_size - 1]) + 1);
+		data->new_env[i] = malloc(sizeof(char)
+				* ft_strlen(envp[data->envp_size - 1]) + 1);
 		if (!data->new_env[i])
 			free_tab(data->new_env, i);
 		i++;
@@ -31,7 +32,7 @@ int	new_tab_malloc_loop(t_mini_data *data, int i, int new_size, char **envp)
 	return (i);
 }
 
-char	**newtab_malloc(t_mini_data *data, int new_size, char **envp, char *var)
+char	**newtab_malloc(t_data *data, int new_size, char **envp, char *var)
 {
 	int	i;
 
@@ -51,7 +52,7 @@ char	**newtab_malloc(t_mini_data *data, int new_size, char **envp, char *var)
 	return (data->new_env);
 }
 
-char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int new_size)
+char	**new_tab_copy(t_data *data, char *envp[], int i, int new_size)
 {
 	int	j;
 
@@ -76,7 +77,7 @@ char	**new_tab_copy(t_mini_data *data, char *envp[], int i, int new_size)
 	return (data->new_env);
 }
 
-void	copy_loop(t_mini_data *data, char *var_export, int new_size)
+void	copy_loop(t_data *data, char *var_export, int new_size)
 {
 	int	i;
 
@@ -90,7 +91,7 @@ void	copy_loop(t_mini_data *data, char *var_export, int new_size)
 		}
 		else
 		{
-			data->new_env = new_tab_copy(data, data->env, i, new_size);
+			data->new_env = new_tab_copy(data, data->envp, i, new_size);
 			i++;
 		}
 	}

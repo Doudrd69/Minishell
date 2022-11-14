@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:24:36 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/09/27 14:20:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:10:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
+#include "../../includes/minishell.h"
 
 int	string_size(const char *s, char c)
 {

@@ -6,22 +6,42 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:01:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/26 15:07:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:53:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cmd_include/pipex_bonus.h"
 #include "../../includes/minishell.h"
+
+int	check_loop_exec(char *str, int i)
+{
+	if (str[i] != '-')
+		return (1);
+	while (str[++i])
+	{
+		if (str[i] != 'n')
+			return (1);
+	}
+	return (0);
+}
 
 void	*count_nb_of_args(t_node *node, t_data *data, int i)
 {
+	int		check;
+	char	*tmp;
+
+	check = 0;
 	data->nb_of_args = 0;
 	node = node->next;
 	while (i < data->lst_size)
 	{
-		data->nb_of_args++;
+		tmp = node->content;
+		if (check == 0)
+			check = check_loop_exec(tmp, 0);
+		if (check == 1)
+			data->nb_of_args++;
 		i++;
-		if (node->next == NULL || ft_strncmp(node->next->content, "|", 4) == 0)
+		if (node->next == NULL
+			|| (ft_strncmp(node->next->content, "|", 4) == 0))
 			break ;
 		node = node->next;
 	}
@@ -30,25 +50,39 @@ void	*count_nb_of_args(t_node *node, t_data *data, int i)
 	return (node);
 }
 
+int	mallo_loop_fill_param(t_node *node, char **tab, int j)
+{
+	tab[j] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+	if (!tab[j])
+	{
+		free_tab(tab, j - 1);
+		return (0);
+	}
+	return (0);
+}
+
 int	copy_args_in_param_tab(t_node *node, t_data *data, char **tab, int j)
 {
-	int	i;
+	int		i;
+	int		check;
+	char	*tmp;
 
-	i = 0;
+	i = -1;
+	check = 0;
 	if (data->nb_of_args > 0)
 		node = node->next;
-	while (i < data->nb_of_args && data->nb_of_args > 0)
+	while (++i < data->nb_of_args && data->nb_of_args > 0)
 	{
-		tab[j] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
-		if (!tab[j])
+		tmp = node->content;
+		if (check == 0)
+			check = check_loop_exec(tmp, 0);
+		if (check == 1)
 		{
-			free_tab(tab, j - 1);
-			return (0);
+			mallo_loop_fill_param(node, tab, j);
+			ft_strlcpy(tab[j], node->content, ft_strlen(node->content), 1);
+			j++;
 		}
-		ft_strlcpy(tab[j], node->content, ft_strlen(node->content), 1);
 		node = node->next;
-		j++;
-		i++;
 	}
 	return (j);
 }

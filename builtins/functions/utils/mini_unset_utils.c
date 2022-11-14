@@ -6,46 +6,47 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 13:02:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 09:50:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:23:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	copy_var_after_index(int i, int j, t_mini_data *data)
+int	copy_var_after_index(int i, int j, t_data *data)
 {
-	data->unset_env[i] = malloc(sizeof(char) * ft_strlen(data->env[i + 1]) + 1);
+	(void)j;
+	data->unset_env[i] = malloc(sizeof(char)
+			* ft_strlen(data->envp[i + 1]) + 1);
 	if (!data->unset_env[i])
 	{
 		free_tab(data->unset_env, i);
 		return (0);
 	}
-	while (data->env[i + 1][++j])
-		data->unset_env[i][j] = data->env[i + 1][j];
-	data->unset_env[i][j] = '\0';
+	ft_strlcpy(data->unset_env[i], data->envp[i + 1],
+		ft_strlen(data->envp[i + 1]), 1);
 	return (1);
 }
 
-int	copy_var_before_index(int i, int j, t_mini_data *data)
+int	copy_var_before_index(int i, int j, t_data *data)
 {
-	data->unset_env[i] = malloc(sizeof(char) * ft_strlen(data->env[i]) + 1);
+	data->unset_env[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]) + 1);
 	if (!data->unset_env[i])
 	{
 		free_tab(data->unset_env, i);
 		return (0);
 	}
-	while (data->env[i][++j])
-		data->unset_env[i][j] = data->env[i][j];
+	while (data->envp[i][++j])
+		data->unset_env[i][j] = data->envp[i][j];
 	data->unset_env[i][j] = '\0';
 	return (1);
 }
 
-int	unset_var(int index, t_mini_data *data, char *var_unset)
+int	unset_var(int index, t_data *data, char *var_unset)
 {
 	int	i;
 
 	i = 0;
-	if (check_var(data->env[index], var_unset) == 0)
+	if (check_var(data->envp[index], var_unset) == 0)
 	{
 		if (malloc_and_cpy(data, i, index) == 1)
 			return (1);
@@ -54,11 +55,11 @@ int	unset_var(int index, t_mini_data *data, char *var_unset)
 	return (1);
 }
 
-int	malloc_and_cpy(t_mini_data *data, int i, int index)
+int	malloc_and_cpy(t_data *data, int i, int index)
 {
 	int	j;
 
-	data->unset_env = malloc(sizeof(char *) * (data->envp_size));//on malloc de la taille actuelle pour le NULL
+	data->unset_env = malloc(sizeof(char *) * (data->envp_size));
 	if (!data->unset_env)
 		return (1);
 	while (i < data->envp_size - 1)

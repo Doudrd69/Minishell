@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -g3
+FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -83,14 +83,14 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/dollars_bis.c								\
 		parsing/srcs/dollars_mod.c								\
 		main_loop_utils.c										\
+		main_function.c											\
 		main_utils.c											\
 		no_env.c												\
 		signal.c												\
-		main.c													\
+		main.c
 
-INCS = 	cmd_exec/cmd_include/pipex_bonus.h						\
-		parsing/parsing.h										\
-		includes/minishell.h
+INCS =	includes/minishell.h									\
+		parsing/parsing.h
 
 OBJS = $(SRCS:.c=.o)
 

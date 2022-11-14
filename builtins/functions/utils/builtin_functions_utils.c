@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/10 08:28:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:13:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_var(char *str, char *var_name)//trouver la bonne variable parmi plusieurs si nom semblable
+int	check_var(char *str, char *var_name)
 {
 	size_t	size;
 
@@ -28,7 +28,7 @@ int	check_var(char *str, char *var_name)//trouver la bonne variable parmi plusie
 	return (1);
 }
 
-char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
+char	*mini_getenv(char *envp[], t_data *mini_data, char *var_name)
 {
 	int		i;
 	char	*str;
@@ -40,7 +40,11 @@ char	*mini_getenv(char *envp[], t_mini_data *mini_data, char *var_name)
 		if (i == mini_data->envp_size)
 			return (NULL);
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
+		{
+			printf("[ %s ] >> %s\n", envp[i], var_name);
 			str = check_and_return_var(mini_data, envp, var_name, i);
+			printf("STR --> %s\n", str);
+		}
 		if (str != NULL)
 			return (str);
 		i++;

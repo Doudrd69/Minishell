@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:26:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:56:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cmd_include/pipex_bonus.h"
+#include "../../../includes/minishell.h"
 
 int	check_pipe_and_exec(t_data *data)
 {
@@ -20,7 +20,7 @@ int	check_pipe_and_exec(t_data *data)
 	{
 		if (dup2(data->pipefd[0][WRITE], STDOUT_FILENO) == -1)
 		{
-			perror("dup2");
+			perror("dup2 TEST 1");
 			return (1);
 		}
 	}
@@ -43,7 +43,7 @@ int	input_file_opening(t_data *data, t_shell *parse)
 	return (0);
 }
 
-int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD + des inputfile
+int	check_inputfile(t_data *data, t_shell *parse)
 {
 	if (parse->nbr_infile > 0 || parse->nbr_appendin > 0)
 	{
@@ -55,7 +55,8 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 				data->hd_pipe_id = data->hd_pipe_id - parse->nbr_appendin;
 			else
 				data->hd_pipe_id -= 1;
-			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ], STDIN_FILENO) == -1)
+			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
+				STDIN_FILENO) == -1)
 			{
 				perror("dup2");
 				return (1);
@@ -65,16 +66,7 @@ int	check_inputfile(t_data *data, t_shell *parse)//il faut check si j'ai des HD 
 		if (parse->tab_infile[0]->type == 'C')
 			return (input_file_opening(data, parse));
 	}
-	if (ft_strncmp(parse->head->content, "echo", 4) == 0)
-	{
-		if (dup2(data->pipefd[0][READ], STDIN_FILENO) == -1)
-		{
-			perror("dup2");
-			return (1);
-		}
-	}
-	else
-		data->input_fd = STDIN_FILENO;
+	data->input_fd = STDIN_FILENO;
 	return (0);
 }
 
@@ -86,14 +78,17 @@ int	iterate_outfile(t_shell *parse)
 		{
 			if (parse->tab_outfile[0]->type == 'C')
 				return (open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
-					| O_CREAT, 0666));
+						| O_CREAT, 0666));
 			else
-				return (open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND | O_CREAT, 0666));
+				return (open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND
+						| O_CREAT, 0666));
 		}
 		if (parse->tab_outfile[0]->type == 'C')
-			open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+			open(parse->tab_outfile[0]->content, O_WRONLY | O_TRUNC
+				| O_CREAT, 0666);
 		else
-			open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND | O_CREAT, 0666);
+			open(parse->tab_outfile[0]->content, O_WRONLY | O_APPEND
+				| O_CREAT, 0666);
 		parse->tab_outfile[0] = parse->tab_outfile[0]->next;
 	}
 	return (-1);
@@ -101,12 +96,14 @@ int	iterate_outfile(t_shell *parse)
 
 int	check_outfile(t_data *data, t_shell *parse)
 {
-	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0) && parse->tab_outfile[0])
+	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0)
+		&& parse->tab_outfile[0])
 	{
 		data->output_fd = iterate_outfile(parse);
 		if (data->output_fd < 0)
 		{
-			ft_printf("minishell: %s: %s\n", parse->tab_outfile[0]->content, strerror(errno));
+			ft_printf("minishell: %s: %s\n", parse->tab_outfile[0]->content,
+				strerror(errno));
 			return (1);
 		}
 		if (dup2(data->output_fd, STDOUT_FILENO) == -1)

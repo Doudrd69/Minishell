@@ -6,19 +6,19 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/09 14:25:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:19:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	no_path(t_mini_data *data)
+int	no_path(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->home_path = mini_getenv(data->env, data, "HOME");
-	if (data->home_path)
+	data->home_path = mini_getenv(data->envp, data, "HOME");
+	if (data->home_path != NULL)
 	{
 		while (data->home_path[i])
 		{
@@ -30,12 +30,13 @@ int	no_path(t_mini_data *data)
 		chdir(&data->home_path[i]);
 		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 		data->p_status = 0;
+		printf("RETURN 0\n");
 		return (0);
 	}
 	return (1);
 }
 
-int	path_exists(t_mini_data *data, t_node *node)
+int	path_exists(t_data *data, t_node *node)
 {
 	if (chdir(node->content) != 0)
 	{
@@ -48,16 +49,16 @@ int	path_exists(t_mini_data *data, t_node *node)
 	return (0);
 }
 
-int	find_position(t_mini_data *data, char *var)
+int	find_position(t_data *data, char *var)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->envp_size)
 	{
-		if (ft_strnstr(data->env[i], var, ft_strlen(var)))
+		if (ft_strnstr(data->envp[i], var, ft_strlen(var)))
 		{
-			if (check_var(data->env[i], var))
+			if (check_var(data->envp[i], var) == 0)
 				return (i);
 		}
 		i++;
@@ -65,7 +66,7 @@ int	find_position(t_mini_data *data, char *var)
 	return (i);
 }
 
-int	update_pwd(t_mini_data *data)
+int	update_pwd(t_data *data)
 {
 	int		position;
 	size_t	size;
@@ -80,18 +81,18 @@ int	update_pwd(t_mini_data *data)
 		return (1);
 	ft_strlcpy(str, "PWD=", 4, 0);
 	ft_strlcpy(&str[4], data->cwd, size, 1);
-	if (size > ft_strlen(data->env[position]))
+	if (size > ft_strlen(data->envp[position]))
 	{
-		data->env[position] = str;
+		data->envp[position] = str;
 		return (0);
 	}
 	else
-		ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
+		ft_strlcpy(data->envp[position], str, ft_strlen(str), 1);
 	free(str);
 	return (0);
 }
 
-int	update_old_pwd(t_mini_data *data)
+int	update_old_pwd(t_data *data)
 {
 	int		position;
 	size_t	size;
@@ -113,7 +114,7 @@ int	update_old_pwd(t_mini_data *data)
 		if (check_length(data, size, position, str) == 0)
 			return (0);
 		else
-			ft_strlcpy(data->env[position], str, ft_strlen(str), 1);
+			ft_strlcpy(data->envp[position], str, ft_strlen(str), 1);
 		free(str);
 	}
 	return (0);

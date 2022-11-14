@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/10/27 16:38:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 15:29:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	create_oldpwd(t_mini_data *data)
+int	create_oldpwd(t_data *data)
 {
 	char	*str;
 
@@ -22,13 +22,13 @@ int	create_oldpwd(t_mini_data *data)
 	ft_strlcpy(str, "OLDPWD=", 7, 0);
 	ft_strlcpy(&str[7], data->oldpwd, ft_strlen(data->oldpwd), 1);
 	mini_export(data, str);
-	data->env = data->new_env;
+	data->envp = data->new_env;
 	data->first_cd_check = 1;
 	free(str);
 	return (0);
 }
 
-int	check_oldpwd(t_mini_data *data)
+int	check_oldpwd(t_data *data)
 {
 	if (data->first_cd_check == 0)
 	{
@@ -38,7 +38,7 @@ int	check_oldpwd(t_mini_data *data)
 	return (0);
 }
 
-int	check_malloc(t_mini_data *data, int i)
+int	check_malloc(t_data *data, int i)
 {
 	if (!data->no_env[i])
 	{
@@ -48,7 +48,7 @@ int	check_malloc(t_mini_data *data, int i)
 	return (0);
 }
 
-int	export_no_env(t_mini_data *data)
+int	export_no_env(t_data *data)
 {
 	char	*cwd;
 	char	*prog;

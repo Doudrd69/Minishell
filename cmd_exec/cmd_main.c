@@ -6,11 +6,10 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 16:26:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:41:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmd_include/pipex_bonus.h"
 #include "../includes/minishell.h"
 
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
@@ -25,7 +24,8 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 		if (node != NULL)
 		{
 			data->env.tab1 = get_path(envp, data, data->env.tab1);
-			data->env.param_tab1 = fill_param_tab(node, data, data->env.param_tab1);
+			data->env.param_tab1 = fill_param_tab(node, data,
+					data->env.param_tab1);
 			while (data->env.param_tab1[data->size_ptab1])
 				data->size_ptab1++;
 		}

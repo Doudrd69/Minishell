@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/11 14:31:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 16:35:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_loop(char *str, int j)
 	return (0);
 }
 
-void	*echo_arg_newline_check(t_mini_data *data, t_node *node, int check,
+void	*echo_arg_newline_check(t_data *data, t_node *node, int check,
 int loop)
 {
 	int	j;
@@ -51,7 +51,7 @@ int loop)
 	return (node);
 }
 
-int	check_if_empty(t_mini_data *data)
+int	check_if_empty(t_data *data)
 {
 	if (!data->str || (data->str[0] == '$' && data->str[1] == '\0'))
 	{
@@ -62,24 +62,16 @@ int	check_if_empty(t_mini_data *data)
 	return (1);
 }
 
-int	echo_newline_arg(t_mini_data *data)
+int	write_and_check_signs(int i, t_data *data)
 {
-	if (data->echo_arg == 0)
-	{
-		write(1, "\n", 1);
-		return (1);
-	}
-	else
-		return (1);
-}
+	char	*tmp;
 
-int	write_and_check_signs(int i, t_mini_data *data, int output_fd)
-{
 	while (data->str[i])
 	{
 		if (data->str[i] == '$' && data->str[i + 1] == '?')
 		{
-			ft_printf("%d", data->p_status);
+			tmp = ft_itoa(data->p_status);
+			write(1, tmp, ft_strlen(tmp));
 			i += 2;
 		}
 		data->check_print_var = 0;
@@ -89,7 +81,7 @@ int	write_and_check_signs(int i, t_mini_data *data, int output_fd)
 			i++;
 		else
 		{
-			write(output_fd, &data->str[i], 1);
+			write(1, &data->str[i], 1);
 			i++;
 		}
 	}

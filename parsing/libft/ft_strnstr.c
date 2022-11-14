@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:58:09 by wmonacho          #+#    #+#             */
-/*   Updated: 2021/11/12 16:20:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 08:54:31 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ char	*ft_strnstr( const char *haystack, const char *needle, size_t len)
 		while (count < len && haystack[count] == needle[list] && needle[list])
 		{
 			if (list == lenght - 1)
-			{
 				return ((char *)(haystack + count - list));
-			}
 			list++;
 			count++;
 		}
