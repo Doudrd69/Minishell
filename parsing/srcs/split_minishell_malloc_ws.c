@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   split_minishell_malloc_ws.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:41:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:25:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
+
+static void	last_conditions(char const *str, int *wlen, int *i)
+{
+	if (str[*i] == '\"')
+	{
+		(*i) += 1;
+		if (str[*i] != '\"')
+			(*wlen) += 1;
+		while (str[*i] != '\0' && str[*i] != '\"')
+		{
+			(*i) += 1;
+			(*wlen) += 1;
+		}
+		if (str[*i] == '\"' && str[*i] != '\0')
+			(*i) += 1;
+	}
+	if (str[*i] != '\0' && str[*i] != ' '
+		&& str[*i] != '\"' && str[*i] != '\'')
+	{
+		(*i) += 1;
+		(*wlen) += 1;
+	}
+	return ;
+}
 
 static void	count_lenght_ws(char const *str, int *wlen, int *i)
 {
@@ -29,25 +53,7 @@ static void	count_lenght_ws(char const *str, int *wlen, int *i)
 			if (str[*i] == '\'' && str[*i] != '\0')
 				(*i) += 1;
 		}
-		if (str[*i] == '\"')
-		{
-			(*i) += 1;
-			if (str[*i] != '\"')
-				(*wlen) += 1;
-			while (str[*i] != '\0' && str[*i] != '\"')
-			{
-				(*i) += 1;
-				(*wlen) += 1;
-			}
-			if (str[*i] == '\"' && str[*i] != '\0')
-				(*i) += 1;
-		}
-		if (str[*i] != '\0' && str[*i] != ' '
-			&& str[*i] != '\"' && str[*i] != '\'')
-		{
-			(*i) += 1;
-			(*wlen) += 1;
-		}
+		last_conditions(str, wlen, i);
 	}
 }
 

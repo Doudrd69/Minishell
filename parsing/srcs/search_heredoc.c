@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:05 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:42:05 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:22:17 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	include_heredoc_list(t_node **tab_list, char *tmp)
 	list_cpy->type = 'A';
 }
 
-static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char *str)
+static void	delete_file_list(t_shell *minishell, t_node **list,
+	char *cpy, char *str)
 {
 	int	i;
 	int	j;
@@ -36,22 +37,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 	i += 2;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\"' && str[i] != '\0')
-				i++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		i++;
-	}
+	i = dl_fl_search_heredoc(str, i);
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0')
@@ -91,7 +77,8 @@ int	check_quote_heredoc(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-int	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **list)
+int	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile,
+	t_node **list)
 {
 	int		i;
 	int		file;
@@ -107,23 +94,7 @@ int	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile, t_node **
 		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\"' && str[i] != '\0')
-				file++;
-			if (str[i] == '\"')
-				file++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\'')
-				file++;
-		}
-		file++;
-		i++;
-	}
+	file = main_loop_search_heredoc(str, i, file);
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
 	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1 + space, file + 1);

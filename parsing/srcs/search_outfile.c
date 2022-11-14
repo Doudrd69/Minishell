@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_outfile.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:37 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:34:37 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:08:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,8 @@ static void	include_outfile_list(t_node **tab_list, char *tmp)
 	list_cpy->type = 'C';
 }
 
-static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char *str)
+static int	main_loop_dl_fl(char *str, int i)
 {
-	int	i;
-	int	j;
-
-	i = minishell->mod;
-	j = -1;
-	while (++j < i)
-		cpy[j] = str[j];
-	i++;
-	while (str[i] != '\0' && str[i] == ' ')
-		i++;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
 	{
 		if (str[i] == '\"' && str[i + 1] != '\0')
@@ -52,6 +42,23 @@ static void	delete_file_list(t_shell *minishell, t_node **list, char *cpy, char 
 		}
 		i++;
 	}
+	return (i);
+}
+
+static void	delete_file_list(t_shell *minishell, t_node **list,
+	char *cpy, char *str)
+{
+	int	i;
+	int	j;
+
+	i = minishell->mod;
+	j = -1;
+	while (++j < i)
+		cpy[j] = str[j];
+	i++;
+	while (str[i] != '\0' && str[i] == ' ')
+		i++;
+	i = main_loop_dl_fl(str, i);
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0')
@@ -91,41 +98,27 @@ int	check_quote_outfile(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-int	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list)
+int	search_outfile(t_shell *minishell, char *str,
+	t_node **tab_outfile, t_node **list)
 {
 	int		i;
-	int		file;
 	char	*tmp;
 	char	*cpy;
 	int		space;
 
-	file = 0;
+	minishell->file_search = 0;
 	i = minishell->mod;
 	space = 0;
 	if (check_syntax_outfile(minishell, str, i) == 0)
 		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\"' && str[i] != '\0')
-				file++;
-			if (str[i] == '\"')
-				file++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\'')
-				file++;
-		}
-		file++;
-		i++;
-	}
-	tmp = malloc(sizeof(char) * (file + 2));
-	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
-	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
+	main_loop_search_outfile(minishell, str, i);
+	tmp = malloc(sizeof(char) * (minishell->file_search + 2));
+	cpy = malloc(sizeof(char) * ((ft_strlen(str)
+					- (minishell->file_search) + 1)));
+	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space,
+			minishell->file_search + 1);
 	include_outfile_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
