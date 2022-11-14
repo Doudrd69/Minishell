@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_minishell_nbr_words.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:00 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:18:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:51:49 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static int	count_word(char const *str, char charset, int *i, int *nbrw)
 		if (str[*i] == '\'' && str[*i + 1] == '\'')
 			(*nbrw) -= 1;
 	}
-	last_loop(str, charset, i);
-	return (0);
+	return (last_loop(str, charset, i));
 }
 
 static int	pass_quote(char const *str, char charset, int *i)

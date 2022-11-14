@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:45:31 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:46:51 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	tokenizers_arg(t_shell *minishell)
 		if (parse_pipe(minishell, 0, -1) == 0)
 			return (0);
 	}
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
 	if (minishell->nbr_infile != 0 || minishell->nbr_appendin != 0
@@ -46,6 +44,8 @@ int	tokenizers_arg(t_shell *minishell)
 		if (parse_redirections(minishell) == 0)
 			return (0);
 	}
+	print_dlist(&minishell->head, &minishell->tab_infile,
+		&minishell->tab_outfile, minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space_quote(minishell);
 	if ((minishell->tab_infile != NULL || minishell->tab_outfile != NULL))

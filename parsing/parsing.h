@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:45:46 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:43:21 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int		main_loop_search_heredoc(char *str, int i, int file);
 int		dl_fl_search_heredoc(char *str, int i);
 int		main_loop_search_append(char *str, int i, int file);
 int		dl_fl_search_append(char *str, int i);
-int		sorting_loop(t_shell *minishell, char *str, t_node *list_cpy, int j);
+int		sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);

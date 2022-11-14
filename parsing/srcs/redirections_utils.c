@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:40:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:14:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:43:37 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,19 @@ static int	append_outfile(char *str, int tab, t_shell *minishell,
 	return (1);
 }
 
-int	sorting_loop(t_shell *minishell, char *str, t_node *list_cpy, int j)
+int	sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j)
 {
 	while (str && str[++(minishell->mod)] != '\0')
 	{
-		if (classic_infile(str, j, minishell, &list_cpy) == 0)
+		if (classic_infile(str, j, minishell, list_cpy) == 0)
 			return (0);
-		if (append_infile(str, j, minishell, &list_cpy) == 0)
+		if (append_infile(str, j, minishell, list_cpy) == 0)
 			return (0);
-		if (classic_outfile(str, j, minishell, &list_cpy) == 0)
+		if (classic_outfile(str, j, minishell, list_cpy) == 0)
 			return (0);
-		if (append_outfile(str, j, minishell, &list_cpy) == 0)
+		if (append_outfile(str, j, minishell, list_cpy) == 0)
 			return (0);
-		str = (char *)(list_cpy->content);
+		str = (char *)((*list_cpy)->content);
 	}
 	return (1);
 }

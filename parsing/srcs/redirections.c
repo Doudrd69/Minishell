@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:31 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:42:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:43:01 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parse_redirections(t_shell *minishell)
 			j++;
 		str = (char *)(list_cpy->content);
 		minishell->mod = -1;
-		if (sorting_loop(minishell, str, list_cpy, j) == 0)
+		if (sorting_loop(minishell, str, &list_cpy, j) == 0)
 			return (0);
 		list_cpy = list_cpy->next;
 	}
