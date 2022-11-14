@@ -1,0 +1,303 @@
+main.c: Error!
+Notice: GLOBAL_VAR_DETECTED  (line:  28, col:   1):	Global variable present in file. Make sure it is a reasonable choice.
+Error: GLOBAL_VAR_NAMING    (line:  28, col:   9):	Global variable must start with g_
+Error: LINE_TOO_LONG        (line:  38, col:  83):	line too long
+Error: TOO_MANY_TABS_FUNC   (line:  61, col:   5):	extra tabs before function name
+Error: LINE_TOO_LONG        (line:  61, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  78, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  87, col:  82):	line too long
+Error: SPACE_BEFORE_FUNC    (line: 106, col:   4):	space before function name
+Error: VAR_DECL_START_FUNC  (line: 110, col:   1):	Variable declaration not at start of function
+Error: TOO_MANY_VARS_FUNC   (line: 115, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line: 116, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line: 117, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line: 118, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line: 119, col:   1):	Too many variables declarations in a function
+Error: SPC_BFR_OPERATOR     (line: 150, col:  38):	missing space before operator
+Error: LINE_TOO_LONG        (line: 165, col:  92):	line too long
+Error: TOO_MANY_LINES       (line: 175, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 177, col:   1):	Too many functions in file
+main_loop_utils.c: Error!
+Error: LINE_TOO_LONG        (line:  40, col:  82):	line too long
+Error: MISALIGNED_VAR_DECL  (line:  73, col:  13):	Misaligned variable declaration
+main_utils.c: Error!
+Error: TAB_INSTEAD_SPC      (line:  80, col:  26):	Found tab when expecting space
+Error: LINE_TOO_LONG        (line:  80, col:  49):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  80, col:  49):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  80, col:  49):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  80, col:  85):	line too long
+Error: TAB_INSTEAD_SPC      (line:  81, col:  43):	Found tab when expecting space
+Error: LINE_TOO_LONG        (line:  81, col:  49):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  81, col:  49):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  81, col:  49):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  81, col:  85):	line too long
+Error: LINE_TOO_LONG        (line:  89, col:  82):	line too long
+Error: TOO_MANY_FUNCS       (line: 104, col:   1):	Too many functions in file
+Error: WRONG_SCOPE_COMMENT  (line: 106, col:   5):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line: 106, col:  83):	line too long
+Error: WRONG_SCOPE_COMMENT  (line: 107, col:   5):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line: 107, col:  83):	line too long
+Error: WRONG_SCOPE_COMMENT  (line: 108, col:   5):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line: 108, col:  83):	line too long
+no_env.c: OK!
+signal.c: Error!
+Error: SPACE_REPLACE_TAB    (line:  44, col:  16):	Found space when expecting tab
+builtins/functions/builtin_export_unset.c: Error!
+Error: LINE_TOO_LONG        (line:  23, col:  68):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  23, col:  68):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  23, col:  68):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  23, col: 108):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  50, col:   5):	Comment is invalid in this scope
+builtins/functions/builtin_functions.c: Error!
+Error: TOO_MANY_LINES       (line:  81, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 115, col:   1):	Function has more than 25 lines
+builtins/functions/display_export.c: Error!
+Error: CONSECUTIVE_NEWLINES (line:  65, col:   1):	Consecutive newlines
+Error: BRACE_SHOULD_EOL     (line:  89, col:   1):	Expected newline after brace
+builtins/functions/utils/builtin_functions_utils.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  15, col:  41):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  15, col: 101):	line too long
+builtins/functions/utils/mini_cd_oldpwd_update.c: OK!
+builtins/functions/utils/mini_cd_utils.c: OK!
+builtins/functions/utils/mini_echo_newline_arg.c: OK!
+builtins/functions/utils/mini_echo_utils.c: OK!
+builtins/functions/utils/mini_export_existing_var.c: OK!
+builtins/functions/utils/mini_export_utils.c: Error!
+Error: LINE_TOO_LONG        (line:  19, col:  82):	line too long
+builtins/functions/utils/mini_getenv_utils.c: OK!
+builtins/functions/utils/mini_unset_utils.c: Error!
+Error: LINE_TOO_LONG        (line:  61, col:  66):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  61, col:  66):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  61, col:  66):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  61, col: 112):	line too long
+cmd_exec/cmd_main.c: Error!
+Error: LINE_TOO_LONG        (line:  28, col:  83):	line too long
+cmd_exec/cmd_main_utils.c: Error!
+Error: VAR_DECL_START_FUNC  (line:  36, col:   1):	Variable declaration not at start of function
+Error: LINE_TOO_LONG        (line:  40, col:  82):	line too long
+Error: SPACE_BEFORE_FUNC    (line:  56, col:   7):	space before function name
+Error: SPACE_REPLACE_TAB    (line:  69, col:  11):	Found space when expecting tab
+cmd_exec/cmd_include/pipex_bonus.h: Error!
+Error: LINE_TOO_LONG        (line: 122, col:  82):	line too long
+cmd_exec/cmd_srcs/child_exec_utils.c: OK!
+cmd_exec/cmd_srcs/child_execution_bonus.c: OK!
+cmd_exec/cmd_srcs/fill_param_tab.c: OK!
+cmd_exec/cmd_srcs/main_pipe_creation.c: OK!
+cmd_exec/cmd_srcs/main_utils_bonus.c: OK!
+cmd_exec/cmd_srcs/split_path_bonus.c: OK!
+cmd_exec/cmd_srcs/utils/first_command_utils.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  46, col:  50):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  46, col:  96):	line too long
+Error: LINE_TOO_LONG        (line:  58, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  79, col:   1):	Function has more than 25 lines
+Error: TOO_FEW_TAB          (line:  89, col:  21):	Missing tabs for indent level
+Error: LINE_TOO_LONG        (line:  91, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  94, col:  84):	line too long
+Error: LINE_TOO_LONG        (line:  96, col:  85):	line too long
+Error: LINE_TOO_LONG        (line: 104, col:  83):	line too long
+Error: LINE_TOO_LONG        (line: 109, col:  85):	line too long
+cmd_exec/cmd_srcs/utils/last_command_utils.c: Error!
+Error: LINE_TOO_LONG        (line:  25, col:  83):	line too long
+Error: TOO_FEW_TAB          (line:  26, col:  21):	Missing tabs for indent level
+Error: EOL_OPERATOR         (line:  28, col:  74):	Logic operator at the end of line
+Error: TOO_FEW_TAB          (line:  29, col:  21):	Missing tabs for indent level
+Error: LINE_TOO_LONG        (line:  32, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  34, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  45, col:  83):	line too long
+Error: LINE_TOO_LONG        (line:  50, col:  88):	line too long
+Error: LINE_TOO_LONG        (line:  69, col:  83):	line too long
+Error: TOO_MANY_LINES       (line: 108, col:   1):	Function has more than 25 lines
+cmd_exec/cmd_srcs/utils/multi_commands_utils.c: Error!
+Error: CONSECUTIVE_NEWLINES (line:  15, col:   1):	Consecutive newlines
+Error: LINE_TOO_LONG        (line:  23, col:  82):	line too long
+Error: TOO_FEW_TAB          (line:  24, col:  21):	Missing tabs for indent level
+Error: TOO_FEW_TAB          (line:  27, col:  21):	Missing tabs for indent level
+Error: EOL_OPERATOR         (line:  30, col:  72):	Logic operator at the end of line
+Error: EOL_OPERATOR         (line:  33, col:  72):	Logic operator at the end of line
+Error: LINE_TOO_LONG        (line:  35, col:  84):	line too long
+Error: LINE_TOO_LONG        (line:  42, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  47, col:  87):	line too long
+Error: LINE_TOO_LONG        (line:  70, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  83, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  86, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  87, col:  82):	line too long
+Error: CONSECUTIVE_NEWLINES (line: 108, col:   1):	Consecutive newlines
+cmd_exec/cmd_srcs/utils/single_quote_exec.c: OK!
+ft_printf/includes/ft_printf.h: OK!
+ft_printf/includes/ft_sort_params.h: OK!
+ft_printf/srcs/ft_printf.c: OK!
+ft_printf/srcs/ft_sort_params.c: OK!
+ft_printf/srcs/ft_sort_params_utils.c: OK!
+heredoc/heredoc.c: OK!
+heredoc/heredoc_env_var_handling_utils.c: OK!
+heredoc/heredoc_execution.c: OK!
+heredoc/heredoc_execution_utils.c: Error!
+Error: TOO_MANY_FUNCS       (line: 120, col:   1):	Too many functions in file
+Error: TOO_MANY_LINES       (line: 151, col:   1):	Function has more than 25 lines
+heredoc/heredoc_functions.c: OK!
+heredoc/heredoc_utils.c: OK!
+includes/minishell.h: Error!
+Error: NO_ARGS_VOID         (line:  77, col:  19):	Empty function argument requires void
+Error: LINE_TOO_LONG        (line:  80, col:  85):	line too long
+Error: LINE_TOO_LONG        (line: 125, col:  82):	line too long
+parsing/parsing.h: OK!
+parsing/debug/print_all.c: Error!
+Error: LINE_TOO_LONG        (line:  15, col:  88):	line too long
+Error: LINE_TOO_LONG        (line:  27, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  39, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  53, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  60, col:   1):	Function has more than 25 lines
+parsing/libft/ft_atoi.c: OK!
+parsing/libft/ft_bzero.c: OK!
+parsing/libft/ft_calloc.c: OK!
+parsing/libft/ft_convert_base.c: OK!
+parsing/libft/ft_convert_base2.c: OK!
+parsing/libft/ft_isalnum.c: OK!
+parsing/libft/ft_isalpha.c: OK!
+parsing/libft/ft_isascii.c: OK!
+parsing/libft/ft_isdigit.c: OK!
+parsing/libft/ft_isprint.c: OK!
+parsing/libft/ft_itoa.c: OK!
+parsing/libft/ft_lstadd_back.c: OK!
+parsing/libft/ft_lstadd_front.c: OK!
+parsing/libft/ft_lstclear.c: OK!
+parsing/libft/ft_lstdelone.c: OK!
+parsing/libft/ft_lstiter.c: OK!
+parsing/libft/ft_lstlast.c: OK!
+parsing/libft/ft_lstmap.c: OK!
+parsing/libft/ft_lstnew.c: OK!
+parsing/libft/ft_lstsize.c: OK!
+parsing/libft/ft_memchr.c: OK!
+parsing/libft/ft_memcmp.c: OK!
+parsing/libft/ft_memcpy.c: OK!
+parsing/libft/ft_memmove.c: OK!
+parsing/libft/ft_memset.c: OK!
+parsing/libft/ft_put_adr.c: OK!
+parsing/libft/ft_putchar_fd.c: OK!
+parsing/libft/ft_putendl_fd.c: OK!
+parsing/libft/ft_putnbr_base.c: OK!
+parsing/libft/ft_putnbr_basediu.c: OK!
+parsing/libft/ft_putnbr_fd.c: OK!
+parsing/libft/ft_putstr_fd.c: OK!
+parsing/libft/ft_split.c: OK!
+parsing/libft/ft_strchr.c: OK!
+parsing/libft/ft_strdup.c: OK!
+parsing/libft/ft_striteri.c: OK!
+parsing/libft/ft_strjoin.c: OK!
+parsing/libft/ft_strlcat.c: OK!
+parsing/libft/ft_strlcpy.c: OK!
+parsing/libft/ft_strlen.c: OK!
+parsing/libft/ft_strmapi.c: OK!
+parsing/libft/ft_strncmp.c: OK!
+parsing/libft/ft_strnstr.c: OK!
+parsing/libft/ft_strrchr.c: OK!
+parsing/libft/ft_strtrim.c: OK!
+parsing/libft/ft_substr.c: OK!
+parsing/libft/ft_tolower.c: OK!
+parsing/libft/ft_toupper.c: OK!
+parsing/libft/libft.h: OK!
+parsing/srcs/check_quote_dollars.c: OK!
+parsing/srcs/check_syntax_append.c: OK!
+parsing/srcs/check_syntax_append_space.c: OK!
+parsing/srcs/check_syntax_heredoc.c: OK!
+parsing/srcs/check_syntax_heredoc_space.c: OK!
+parsing/srcs/check_syntax_infile.c: OK!
+parsing/srcs/check_syntax_infile_space.c: OK!
+parsing/srcs/check_syntax_outfile.c: OK!
+parsing/srcs/check_syntax_outfile_space.c: OK!
+parsing/srcs/counter.c: OK!
+parsing/srcs/dollars.c: Error!
+Error: TOO_MANY_LINES       (line:  68, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 127, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 167, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 169, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 186, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 213, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 234, col:   1):	Too many functions in file
+Error: TOO_MANY_LINES       (line: 301, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 303, col:   1):	Too many functions in file
+Error: TOO_MANY_LINES       (line: 331, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 333, col:   1):	Too many functions in file
+parsing/srcs/dollars_include.c: Error!
+Error: TOO_MANY_LINES       (line:  78, col:   1):	Function has more than 25 lines
+parsing/srcs/exit.c: OK!
+parsing/srcs/free.c: OK!
+parsing/srcs/free_parse.c: OK!
+parsing/srcs/ft_dlstadd_back.c: OK!
+parsing/srcs/ft_dlstadd_front.c: OK!
+parsing/srcs/ft_dlstnew.c: OK!
+parsing/srcs/init_variable.c: OK!
+parsing/srcs/list.c: OK!
+parsing/srcs/new_value_dollars.c: Error!
+Error: TOO_MANY_LINES       (line:  83, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 124, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 147, col:   1):	Too many functions in file
+parsing/srcs/parse_quote_outab.c: Error!
+Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
+Error: LINE_TOO_LONG        (line:  38, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_VARS_FUNC   (line:  76, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line:  77, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_LINES       (line: 114, col:   1):	Function has more than 25 lines
+parsing/srcs/parse_quote_tab.c: Error!
+Error: LINE_TOO_LONG        (line:  50, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  79, col:   1):	Function has more than 25 lines
+Error: LINE_TOO_LONG        (line:  81, col:  88):	line too long
+Error: TOO_MANY_VARS_FUNC   (line:  88, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_VARS_FUNC   (line:  89, col:   1):	Too many variables declarations in a function
+Error: TOO_MANY_LINES       (line: 131, col:   1):	Function has more than 25 lines
+parsing/srcs/parse_space_quote.c: Error!
+Error: TOO_MANY_LINES       (line:  84, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 115, col:   1):	Function has more than 25 lines
+parsing/srcs/parsing.c: OK!
+parsing/srcs/path.c: OK!
+parsing/srcs/pipe.c: Error!
+Error: TOO_MANY_LINES       (line:  84, col:   1):	Function has more than 25 lines
+parsing/srcs/pipe_bis.c: Error!
+Error: TOO_MANY_LINES       (line:  57, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 109, col:   1):	Function has more than 25 lines
+parsing/srcs/quote.c: Error!
+Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
+parsing/srcs/redirections.c: Error!
+Error: LINE_TOO_LONG        (line:  33, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  56, col:  83):	line too long
+Error: LINE_TOO_LONG        (line:  81, col:  82):	line too long
+Error: LINE_TOO_LONG        (line: 105, col:  83):	line too long
+Error: TOO_MANY_LINES       (line: 144, col:   1):	Function has more than 25 lines
+parsing/srcs/search_append.c: Error!
+Error: TOO_MANY_LINES       (line:  86, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 158, col:   1):	Function has more than 25 lines
+parsing/srcs/search_heredoc.c: Error!
+Error: LINE_TOO_LONG        (line:  27, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  63, col:   1):	Function has more than 25 lines
+Error: LINE_TOO_LONG        (line:  94, col:  85):	line too long
+Error: TOO_MANY_LINES       (line: 134, col:   1):	Function has more than 25 lines
+parsing/srcs/search_infile.c: Error!
+Error: TOO_MANY_LINES       (line:  66, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 137, col:   1):	Function has more than 25 lines
+Error: LINE_TOO_LONG        (line: 139, col:   1):	line too long
+Error: LINE_TOO_LONG        (line: 139, col:   1):	line too long
+parsing/srcs/search_outfile.c: Error!
+Error: LINE_TOO_LONG        (line:  27, col:  82):	line too long
+Error: TOO_MANY_LINES       (line:  63, col:   1):	Function has more than 25 lines
+Error: LINE_TOO_LONG        (line:  94, col:  82):	line too long
+Error: TOO_MANY_LINES       (line: 133, col:   1):	Function has more than 25 lines
+parsing/srcs/search_var.c: Error!
+Error: LINE_TOO_LONG        (line:  73, col:  83):	line too long
+Error: LINE_TOO_LONG        (line:  96, col:  82):	line too long
+Error: LINE_TOO_LONG        (line: 111, col:  84):	line too long
+Error: TOO_MANY_FUNCS       (line: 120, col:   1):	Too many functions in file
+Error: LINE_TOO_LONG        (line: 131, col:  88):	line too long
+Error: TOO_MANY_LINES       (line: 156, col:   1):	Function has more than 25 lines
+parsing/srcs/search_var_bis.c: Error!
+Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
+parsing/srcs/space.c: Error!
+Error: TOO_MANY_LINES       (line:  82, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 113, col:   1):	Function has more than 25 lines
+parsing/srcs/split_minishell.c: Error!
+Error: LINE_TOO_LONG        (line:  88, col:  84):	line too long
+Error: TOO_MANY_LINES       (line:  97, col:   1):	Function has more than 25 lines
+parsing/srcs/split_minishell_malloc_ws.c: Error!
+Error: TOO_MANY_LINES       (line:  52, col:   1):	Function has more than 25 lines
+parsing/srcs/split_minishell_nbr_words.c: Error!
+Error: TOO_MANY_LINES       (line:  45, col:   1):	Function has more than 25 lines

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:12:16 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 12:35:41 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

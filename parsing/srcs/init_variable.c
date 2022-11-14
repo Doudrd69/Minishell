@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_variable.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:39:16 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:39:16 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 void	init_variable(t_shell *minishell, int env_size, char **envp)
@@ -8,6 +20,7 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 	minishell->home_path = NULL;
 	minishell->quote = 0;
 	minishell->dquote = 0;
+	minishell->error = 0;
 	minishell->nbr_pipe = 0;
 	minishell->nbr_infile = 0;
 	minishell->nbr_outfile = 0;

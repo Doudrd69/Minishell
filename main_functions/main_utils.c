@@ -3,15 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
+<<<<<<< HEAD:main_functions/main_utils.c
 /*   Updated: 2022/11/14 12:23:44 by ebrodeur         ###   ########lyon.fr   */
+=======
+/*   Updated: 2022/11/14 12:35:23 by wmonacho         ###   ########lyon.fr   */
+>>>>>>> cffa0ba93f9b3ef12f1bf0766a8b957c70140f08:main_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../parsing/parsing.h"
+
+static int	test_free(void *tmp)
+{
+	if (tmp == NULL)
+		return (0);
+	else
+		free(tmp);
+	return (1);
+}
 
 void	free_all(t_shell *minishell)
 {
@@ -22,11 +35,12 @@ void	free_all(t_shell *minishell)
 		tmp = minishell->head;
 		minishell->head = minishell->head->next;
 		if (ft_strncmp(tmp->content, "|", 1) != 0)
-			free(tmp->content);
-		free(tmp);
+			test_free((void *)(tmp->content));
+		test_free((void *)(tmp));
 	}
-	free(minishell->value);
-	free(minishell->var_search);
+	test_free((void *)(minishell->value));
+	test_free((void *)(minishell->var_search));
+	test_free((void *)(minishell->home_path));
 	free(minishell);
 }
 

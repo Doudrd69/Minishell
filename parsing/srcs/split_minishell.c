@@ -1,6 +1,16 @@
-#include "../parsing.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_minishell.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:40:46 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/14 11:58:59 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	p_status;
+#include "../parsing.h"
 
 static char	**ft_free(int k, char **tab)
 {
@@ -75,7 +85,8 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 				}
 			}
 		}
-		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\'')
+		if (str[*i] != '\0' && str[*i] != ' '
+			&& str[*i] != '\"' && str[*i] != '\'')
 		{
 			(*tab)[*k][x++] = str[*i];
 			(*i) += 1;
@@ -120,7 +131,7 @@ char	**ft_split_minishell(t_shell *minishell, char const *str, char c)
 		if (strlen(str) == 2)
 		{
 			printf("minishell: : command not found\n");
-			p_status = 127;
+			minishell->error = 127;
 		}
 		return (NULL);
 	}

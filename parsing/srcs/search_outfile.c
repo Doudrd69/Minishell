@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_outfile.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/12 19:34:37 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/12 19:34:37 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	include_outfile_list(t_node **tab_list, char *tmp)
@@ -79,7 +91,7 @@ int	check_quote_outfile(t_shell *minishell, char *str, int len)
 	return (1);
 }
 
-void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list)
+int	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node **list)
 {
 	int		i;
 	int		file;
@@ -90,7 +102,8 @@ void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node 
 	file = 0;
 	i = minishell->mod;
 	space = 0;
-	check_syntax_outfile(minishell, str, i);
+	if (check_syntax_outfile(minishell, str, i) == 0)
+		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
@@ -116,4 +129,5 @@ void	search_outfile(t_shell *minishell, char *str, t_node **tab_outfile, t_node 
 	include_outfile_list(tab_outfile, tmp);
 	delete_file_list(minishell, list, cpy, str);
 	minishell->mod = -1;
+	return (1);
 }

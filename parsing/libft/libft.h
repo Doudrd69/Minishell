@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 15:16:32 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/10/24 12:56:05 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 17:17:53 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ char				*ft_strrchr(const char *str, int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr( char const *s, unsigned int start, size_t len);
 
-unsigned int		ft_strlcpy(char *dest, const char *src, size_t size, int check);
+unsigned int		ft_strlcpy(char *dest, const char *src,
+						size_t size, int check);
 unsigned int		ft_strlcat(char *dest, const char *src, unsigned int size);
 
 size_t				ft_strlen(const char *string);
