@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 11:06:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:10:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,15 @@ void	main_init_before_loop(t_data *data, char **envp,
 }
 
 void	execution(t_data *data, t_shell *parse, t_node *node,
-	int (*builtins[5])(t_data *, t_node *))
+	int (*builtins[5])(t_data *, t_node *), int *gstatus)
 {
 	data->check_main = 0;
 	if (parse->cmd && *parse->cmd)
 		add_history (parse->cmd);
 	parsing(data->envp, parse);
 	node = main_init_check(data, parse, node);
-	data->check_main = builtins_loop(data->builtins_name, builtins, node, data);
+	data->check_main = builtins_loop(data->builtins_name, builtins,
+			node, data, gstatus);
 	data->check_main = export_and_unset(data, node, data->check_main);
 	if (data->check_main == 0)
 		cmd_exec(data, data->envp, parse);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:52:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 12:20:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,6 @@ void	eof_handler(char *input, t_shell *minishell)
 		exit(0);
 	}
 	return ;
-}
-
-void	sigint_handler_main_loop(int signum)
-{
-	if (signum == 2)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
 }
 
 void	sigint_handler_in_process(int signum)

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 16:35:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:07:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	write_and_check_signs(int i, t_data *data)
 	{
 		if (data->str[i] == '$' && data->str[i + 1] == '?')
 		{
-			tmp = ft_itoa(data->p_status);
+			if (*data->test == 1)
+				tmp = ft_itoa(*data->test);
+			else
+				tmp = ft_itoa(data->p_status);
 			write(1, tmp, ft_strlen(tmp));
 			i += 2;
 		}
