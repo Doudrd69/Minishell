@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:30:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:48:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 		if (data->check_main == 0)
 			cmd_exec(data, data->envp, parse);
 	}
-	data->p_status = parse->error;
+	if (parse->synt_err == 1)
+		data->p_status = parse->error;
 	return ;
 }

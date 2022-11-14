@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:45:31 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:49:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ int	parsing(char **env, t_shell *minishell)
 	first_parse(minishell, minishell->cmd);
 	count_ope(minishell);
 	if (tokenizers_arg(minishell) == 0)
+	{
+		minishell->synt_err = 1;
 		return (1);
+	}
+	minishell->synt_err = 0;
 	return (0);
 }
 
@@ -36,8 +40,8 @@ int	tokenizers_arg(t_shell *minishell)
 		if (parse_pipe(minishell, 0, -1) == 0)
 			return (0);
 	}
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
+	//print_dlist(&minishell->head, &minishell->tab_infile,
+	//	&minishell->tab_outfile, minishell);
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
 	if (minishell->nbr_infile != 0 || minishell->nbr_appendin != 0

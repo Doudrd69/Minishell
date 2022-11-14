@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:19:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:50:49 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,9 @@ void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
 	{
 		if (node && node->type == 'P')
 			node = node->next;
-		printf("%s << \n", node->content);
 		first_command(data->envp, data, node, parse);
 		if (data->cmd_nb > 1)
 		{
-			printf("mais mdr\n");
 			node = node_rotation(node);
 			node = commands(data, node, parse, envp);
 			last_command(envp, data, node, parse);
