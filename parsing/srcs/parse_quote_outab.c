@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_quote_outab.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/14 13:49:04 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/14 14:29:06 by wmonacho         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static void	ft_prev(t_node *list_cpy, t_node *tmp, t_shell *minishell, int tab)
@@ -35,80 +47,19 @@ static void	ft_next(t_node **list_cpy, t_node *tmp, t_shell *minishell, int tab)
 	free(tmp);
 }
 
-static void	list_nospace_tab(t_shell *minishell, t_node **list, char *tmp, int j)
+void	replace_list_quote_outab(t_node *tmp, t_node **list_cpy,
+	t_shell *minishell, int i)
 {
-	t_node	*tmp_list;
-	t_node	*new_node;
-	t_node	*list_cpy;
-
-	tmp_list = (*list);
-	minishell += 0;
-	while (j > 0)
+	if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
 	{
-		tmp_list = tmp_list->next;
-		j--;
+		ft_mid(*list_cpy, tmp);
 	}
-	if (tmp_list && tmp_list->next == NULL)
+	else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
 	{
-		add_back_file_list(list, ft_dlstnew(tmp));
-		tmp_list = (*list);
+		ft_prev(*list_cpy, tmp, minishell, i);
 	}
-	else
+	else if (tmp)
 	{
-		list_cpy = tmp_list;
-		new_node = ft_dlstnew((void *)(tmp));
-		tmp_list = new_node;
-		tmp_list->next = list_cpy->next;
-		tmp_list->prev = list_cpy;
-		tmp_list->next->prev = new_node;
-		tmp_list->prev->next = new_node;
-		list_cpy->next = tmp_list;
-	}
-}
-
-void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile)
-{
-	t_node	**intab;
-	t_node	*list_cpy;
-	t_node	*tmp;
-	int		i;
-	char	**tab;
-	char	*str;
-	int		j;
-
-	if (minishell->tab_outfile != NULL)
-	{
-		i = 0;
-		intab = *tab_outfile;
-		while (intab && intab[i] && intab[i] != NULL)
-		{
-			list_cpy = (intab)[i];
-			while (list_cpy && list_cpy != NULL)
-			{
-				str = (char *)(list_cpy->content);
-				tab = ft_split_minishell(minishell, str, ' ');
-				j = -1;
-				while (tab && tab[++j] != NULL)
-					list_nospace_tab(minishell, &list_cpy, tab[j], j);
-				tmp = list_cpy;
-				if (tmp)
-					list_cpy = list_cpy->next;
-				if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
-				{
-					ft_mid(list_cpy, tmp);
-				}
-				else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
-				{
-					ft_prev(list_cpy, tmp, minishell, i);
-				}
-				else if (tmp)
-				{
-					ft_next(&list_cpy, tmp, minishell, i);
-				}
-				while (j-- > 0 && list_cpy && list_cpy != NULL)
-					list_cpy = list_cpy->next;
-			}
-			i++;
-		}
+		ft_next(list_cpy, tmp, minishell, i);
 	}
 }

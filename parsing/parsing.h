@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 12:21:06 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:15:21 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ typedef struct s_shell
 	int				nbr_dquote;
 	int				nbr_squote;
 	int				mod;
+	int				i;
+	int				j;
+	char			*strp;
+	char			*tmpp;
+	int				pipe;
 	int				error;
 	char			**envp;
 	char			*var_search;
@@ -77,6 +82,8 @@ char	*cmd_cpy(char *dest, char *src, int size);
 void	delist(t_node **list);
 void	ft_incr_var_pipe(int *j, int *i);
 int		check_syntax(t_shell *minishell, char *str, int i);
+void	add_last_list_pipe(char *str, int i, int j, t_shell *minishell);
+char	*ft_prev_for_pipe(char *tmp, char *str, int j, int i);
 
 /*BUILTINS*/
 void	parse_builtins(char *str, t_shell *minishell);
@@ -86,15 +93,21 @@ int		check_quote(t_shell *minishell, char *str, int i, char c);
 void	parse_quote(char *str, t_shell *minishell);
 char	*ft_copy_string_without_quote(char *str, char quote);
 void	list_nospace_quote(t_shell *minishell, t_node **list, char *tmp, int j);
-char	**ft_split_minishell(t_shell *minishell, char const *str, char c);
+char	**ft_split_minishell(t_shell *minishell, char *str, char c);
 int		ft_nbr_words_split_minishell(t_shell *minishell,
 			char const	*str, char charset);
 void	parse_space_quote(t_shell *minishell);
-int		ft_split_minishell_malloc_ws(char const	*str, char charset, char **tab);
-char	**ft_split_minishell_get_filling(char const *str, char **tab);
+int		ft_split_minishell_malloc_ws(char const *str, char charset, char **tab);
+char	**ft_split_minishell_get_filling(char *str, char **tab, t_shell *minishell);
 void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile,
 			t_node ***tab_outfile);
 void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile);
+void	include_parse_quote_outab(t_shell *minishell, t_node *list_cpy);
+void	replace_list_quote_outab(t_node *tmp, t_node **list_cpy,
+			t_shell *minishell, int i);
+void	replace_list_quote_intab(t_node *tmp, t_node **list_cpy,
+			t_shell *minishell, int i);
+void	include_parse_quote_intab(t_shell *minishell, t_node *list_cpy);
 
 /*REDIRECTIONS*/
 int		parse_redirections(t_shell *minishell);
@@ -153,7 +166,13 @@ int		check_heredoc_dollar_mod_1(char *str, int i);
 int		check_heredoc_dollar_mod_2_3(char *str, int i);
 void	change_value_mod2_and_3(char *str, int i,
 			t_shell *minishell, t_node **list);
-
+int		interpret_dollars(char *str, int i,
+			t_shell *minishell, t_node **list);
+void	change_value_mod1(char *str, int i,
+			t_shell *minishell, t_node **list);
+int		check_quote_mod(char *str, int i);
+int		check_dquote_mod(char *str, int i);
+void	value_quote_mod_1(t_shell *minishell, char *str, int i);
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);

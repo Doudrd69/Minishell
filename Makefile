@@ -82,6 +82,12 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/free_exit.c								\
 		parsing/srcs/dollars_bis.c								\
 		parsing/srcs/dollars_mod.c								\
+		parsing/srcs/change_value_dquote.c						\
+		parsing/srcs/dollars_mod_check.c						\
+		parsing/srcs/parse_quote_outab_utils.c					\
+		parsing/srcs/parse_quote_intab_utils.c					\
+		parsing/srcs/parse_space_quote_utils.c					\
+		parsing/srcs/split_minishell_get_filling.c				\
 		main_loop_utils.c										\
 		main_function.c											\
 		main_utils.c											\
