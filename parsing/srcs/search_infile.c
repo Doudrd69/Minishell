@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_infile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:41:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:16:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	i++;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\"' && str[i] != '\0')
-				i++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		i++;
-	}
+	i = dl_fl_search_infile(str, i);
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0')
@@ -110,23 +95,7 @@ int	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ' && (str[i] != '<' && str[i] != '>'))
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\"' && str[i] != '\0')
-				file++;
-			if (str[i] == '\"')
-				file++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\'')
-				file++;
-		}
-		file++;
-		i++;
-	}
+	file = main_loop_search_infile(str, i, file);
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
@@ -135,10 +104,3 @@ int	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	minishell->mod = -1;
 	return (1);
 }
-
-/*
-commence par le parse des redirections, ne prend pas de << < > >>, si un < dans le parse
-du infile avant une lettre, syntax error a part si entre "" et '' tout peut rentrer
-pareil pour les outfiles
-et si 0 he bien syntax error
-*/

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 16:06:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:20:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,8 +300,8 @@ int			update_pwd(t_data *data);
 int			check_remains(char *str);
 int			no_path(t_data *data);
 int			no_args(t_node *node);
+int			test_free(void *tmp);
 
-static int	test_free(void *tmp);
 
 /* GNL FUNCTIONS */
 size_t		ft_strlen_gnl(char *s);

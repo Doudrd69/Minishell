@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:22:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_old(char **tab, int size)
 	i = size;
 	while (i >= 0)
 	{
-		printf("free [%d] >> %s\n", i, tab[i]);
 		free(tab[i]);
 		i--;
 	}
@@ -46,7 +45,7 @@ int	envp_size_for_tmp(char **tab)
 	return (i);
 }
 
-static int	test_free(void *tmp)
+int	test_free(void *tmp)
 {
 	if (tmp == NULL)
 		return (0);
