@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:38:46 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 13:43:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ static void	ft_prev(t_shell *minishell, t_node *new_node
 	}
 }
 
+static void	replace_list(t_node **list, t_shell *minishell, t_node *tmp_list)
+{
+	if ((*list)->prev != NULL)
+		ft_next(minishell, tmp_list, list);
+	else
+	{
+		(*list) = (*list)->next;
+		(*list)->prev = NULL;
+		free(tmp_list);
+		minishell->head = (*list);
+		minishell->list_size -= 1;
+	}
+}
+
 void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 {
 	t_node	*tmp_list;
@@ -58,16 +72,7 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	{
 		ft_dlstadd_back(&minishell, ft_dlstnew((void *)(tmp)));
 		tmp_list = (*list);
-		if ((*list)->prev != NULL)
-			ft_next(minishell, tmp_list, list);
-		else
-		{
-			(*list) = (*list)->next;
-			(*list)->prev = NULL;
-			free(tmp_list);
-			minishell->head = (*list);
-			minishell->list_size -= 1;
-		}
+		replace_list(list, minishell, tmp_list);
 	}
 	else
 	{

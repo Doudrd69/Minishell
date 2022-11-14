@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:27 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:34:27 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:25:35 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	count_ope(t_shell *minishell)
 
 static void	count_pipe(int i, int *pipe, t_shell *minishell, char *str)
 {
-	if (str[i] == '\"' && minishell->dquote != 1 && str[i - 1] != '\\')
+	if (str[i] == '\"' && minishell->dquote != 1)
 		minishell->dquote = 1;
-	else if (str[i] == '\"' && minishell->dquote != 0 && str[i - 1] != '\\')
+	else if (str[i] == '\"' && minishell->dquote != 0)
 		minishell->dquote = 0;
-	if (str[i] == '\'' && minishell->quote != 1 && str[i - 1] != '\\')
+	if (str[i] == '\'' && minishell->quote != 1)
 		minishell->quote = 1;
-	else if (str[i] == '\'' && minishell->quote != 0 && str[i - 1] != '\\')
+	else if (str[i] == '\'' && minishell->quote != 0)
 		minishell->quote = 0;
 	if (str[i] == '|' && (minishell->quote == 1 || minishell->dquote == 1))
 		;

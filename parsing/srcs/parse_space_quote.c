@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:40:05 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 16:24:35 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,70 +46,42 @@ static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	minishell->list_size -= 1;
 }
 
+static void	include_parse_quote(t_node **list_cpy, t_shell *minishell, int j)
+{
+	char	**tab;
+	char	*str;
+	t_node	*tmp;
+
+	str = (char *)((*list_cpy)->content);
+	tab = ft_split_minishell(minishell, str, ' ');
+	if (tab == NULL)
+	{
+		minishell->head = NULL;
+		(*list_cpy) = minishell->head;
+	}
+	j = -1;
+	while (tab && tab[++j] != NULL)
+		list_nospace(minishell, list_cpy, tab[j], j);
+	tmp = (*list_cpy);
+	if (tmp)
+		(*list_cpy) = (*list_cpy)->next;
+	if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
+		ft_mid((*list_cpy), tmp, minishell);
+	else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
+		ft_prev((*list_cpy), minishell, tmp);
+	else if (tmp)
+		ft_next((*list_cpy), minishell, tmp);
+	while (j-- >= 0 && (*list_cpy) && (*list_cpy) != NULL)
+		(*list_cpy) = (*list_cpy)->next;
+}
+
 void	parse_space_quote(t_shell *minishell)
 {
 	t_node	*list_cpy;
-	t_node	*tmp;
-	char	*str;
-	char	**tab;
 	int		j;
 
 	list_cpy = minishell->head;
+	j = -1;
 	while (list_cpy && list_cpy != NULL)
-	{
-		str = (char *)(list_cpy->content);
-		tab = ft_split_minishell(minishell, str, ' ');
-		if (tab == NULL)
-		{
-			minishell->head = NULL;
-			list_cpy = minishell->head;
-		}
-		j = -1;
-		while (tab && tab[++j] != NULL)
-		{
-			list_nospace(minishell, &list_cpy, tab[j], j);
-		}
-		tmp = list_cpy;
-		if (tmp)
-			list_cpy = list_cpy->next;
-		if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
-			ft_mid(list_cpy, tmp, minishell);
-		else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
-			ft_prev(list_cpy, minishell, tmp);
-		else if (tmp)
-			ft_next(list_cpy, minishell, tmp);
-		while (j-- >= 0 && list_cpy && list_cpy != NULL)
-			list_cpy = list_cpy->next;
-	}
-}
-
-void	list_nospace_quote(t_shell *minishell, t_node **list, char *tmp, int j)
-{
-	t_node	*tmp_list;
-	t_node	*new_node;
-	t_node	*list_cpy;
-
-	tmp_list = (*list);
-	while (j > 0)
-	{
-		tmp_list = tmp_list->next;
-		j--;
-	}
-	if (tmp_list && tmp_list->next == NULL)
-	{
-		ft_dlstadd_back(&minishell, ft_dlstnew((void *)(tmp)));
-		tmp_list = (*list);
-	}
-	else
-	{
-		list_cpy = tmp_list;
-		new_node = ft_dlstnew((void *)(tmp));
-		tmp_list = new_node;
-		tmp_list->next = list_cpy->next;
-		tmp_list->prev = list_cpy;
-		tmp_list->next->prev = new_node;
-		tmp_list->prev->next = new_node;
-		list_cpy->next = tmp_list;
-		minishell->list_size += 1;
-	}
+		include_parse_quote(&list_cpy, minishell, j);
 }

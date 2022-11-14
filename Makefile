@@ -83,6 +83,13 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/free_exit.c								\
 		parsing/srcs/dollars_bis.c								\
 		parsing/srcs/dollars_mod.c								\
+		parsing/srcs/change_value_dquote.c						\
+		parsing/srcs/dollars_mod_check.c						\
+		parsing/srcs/parse_quote_outab_utils.c					\
+		parsing/srcs/parse_quote_intab_utils.c					\
+		parsing/srcs/parse_space_quote_utils.c					\
+		parsing/srcs/split_minishell_get_filling.c				\
+		parsing/srcs/check_syntax_pipe.c						\
 		parsing/srcs/space_utils.c								\
 		parsing/srcs/search_outfile_utils.c						\
 		parsing/srcs/search_infile_utils.c						\
