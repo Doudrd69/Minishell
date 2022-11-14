@@ -116,7 +116,7 @@ NAME = minishell
 all : ft_printf libft $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -o $(NAME) $(OBJS) -lftprintf -lft -lreadline
 
 ft_printf :
 	make -C $(PRINTF_PATH)
