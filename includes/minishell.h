@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 18:00:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:02:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ int		var_exists_hd(t_data *data);
 /* COMMAND UTILS */
 t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node);
 
+void	execution(t_data *data, t_shell *parse, t_node *node,
+	int (*builtins[5])(t_data *, t_node *));
 void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse);
 void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[]);
@@ -194,7 +196,7 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data);
 void	first_cmd_execution(t_data *data, char *envp[]);
 void	close_pipe_child_processes(t_data *data, int i);
 void	main_init_before_loop(t_data *data, char **envp,
-	int (*builtins[5])(t_data *data, t_node *node));
+	int (*builtins[5])(t_data *data, t_node *node), int argc , char **argv);
 void	last_cmd_execution(t_data *data, char *envp[]);
 void	eof_handler(char *input, t_shell *minishell);
 void	envp_check(t_data *data, char **envp);
@@ -215,6 +217,10 @@ char	**join_arg(char **tab, char **args);
 char	**ft_split(const char *s, char c);
 char	**free_tab(char **tab, int i);
 
+int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
+	t_node *node, t_data *data);
+int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
+int		export_and_unset(t_data *data, t_node *node, int check);
 int		check_inputfile_last_cmd(t_data *data, t_shell *parse);
 int		check_outfile_last_cmd(t_data *data, t_shell *parse);
 int		multi_cmd_dup_to_pipe(t_data *data, int index);
@@ -222,6 +228,8 @@ int		check_inputfile(t_data *data, t_shell *parse);
 int		pipe_creation(t_data *data, int nbr_of_pipe);
 int		start_heredoc(t_data *data, t_shell *parse);
 int		check_outfile(t_data *data, t_shell *parse);
+int		export_exec(t_data *data, t_node *node);
+int		unset_exec(t_data *data, t_node *node);
 int		set_p_status(int status, t_node *node);
 int		ft_printf(const char *flags, ...);
 int		**free_inttab(int **tab, int i);

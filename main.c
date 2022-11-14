@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 18:00:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:39:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int		heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
-int		export_exec(t_data *data, t_node *node);
-int		unset_exec(t_data *data, t_node *node);
-
-int		p_status;
+int		g_status;
 
 int	export_and_unset(t_data *data, t_node *node, int check)
 {
@@ -76,10 +72,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_node				*node;
 	int					(*builtins[5])(t_data *data, t_node *node);
 
-	(void)argv;
-	(void)argc;
 	sa.sa_handler = SIG_IGN;
-	main_init_before_loop(&data, envp, builtins);
+	main_init_before_loop(&data, envp, builtins, argc, argv);
 	while (1)
 	{
 		sigaction(SIGQUIT, &sa, NULL);
@@ -88,17 +82,9 @@ int	main(int argc, char *argv[], char *envp[])
 		init_variable(minishell, data.envp_size, data.envp);
 		minishell->cmd = readline("minishell$ ");
 		eof_handler(minishell->cmd, minishell);
+		node = NULL;
 		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
-		{
-			if (minishell->cmd && *minishell->cmd)
-				add_history (minishell->cmd);
-			parsing(data.envp, minishell);
-			node = main_init_check(&data, minishell, node);
-			data.check_main = builtins_loop(data.builtins_name, builtins, node, &data);
-			data.check_main = export_and_unset(&data, node, data.check_main);
-			if (data.check_main == 0)
-				cmd_exec(&data, data.envp, minishell);
-		}
+			execution(&data, minishell, node, builtins);
 		free(minishell->cmd);
 		free_all(minishell);
 	}

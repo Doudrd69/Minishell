@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:58:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:38:56 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,27 @@ void	envp_check(t_data *data, char **envp)
 }
 
 void	main_init_before_loop(t_data *data, char **envp,
-	int (*builtins[5])(t_data *data, t_node *node))
+	int (*builtins[5])(t_data *data, t_node *node), int argc, char *argv[])
 {
+	(void)argv;
+	(void)argc;
 	init_builtins_tab(data->builtins_name, builtins);
 	init_main(data, envp);
 	envp_check(data, envp);
+	return ;
+}
+
+void	execution(t_data *data, t_shell *parse, t_node *node,
+	int (*builtins[5])(t_data *, t_node *))
+{
+	data->check_main = 0;
+	if (parse->cmd && *parse->cmd)
+		add_history (parse->cmd);
+	parsing(data->envp, parse);
+	node = main_init_check(data, parse, node);
+	data->check_main = builtins_loop(data->builtins_name, builtins, node, data);
+	data->check_main = export_and_unset(data, node, data->check_main);
+	if (data->check_main == 0)
+		cmd_exec(data, data->envp, parse);
 	return ;
 }

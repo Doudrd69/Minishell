@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:25:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 07:19:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	no_path(t_data *data)
 
 	i = 0;
 	data->home_path = mini_getenv(data->envp, data, "HOME");
-	if (data->home_path)
+	if (data->home_path != NULL)
 	{
 		while (data->home_path[i])
 		{
@@ -30,6 +30,7 @@ int	no_path(t_data *data)
 		chdir(&data->home_path[i]);
 		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 		data->p_status = 0;
+		printf("RETURN 0\n");
 		return (0);
 	}
 	return (1);
@@ -57,7 +58,7 @@ int	find_position(t_data *data, char *var)
 	{
 		if (ft_strnstr(data->envp[i], var, ft_strlen(var)))
 		{
-			if (check_var(data->envp[i], var))
+			if (check_var(data->envp[i], var) == 0)
 				return (i);
 		}
 		i++;
