@@ -1,4 +1,0 @@
-      40
-      40
-norminette > norminette.txt | grep "25 lines" | wc -l >> nbr_25lines.txt
-      38
