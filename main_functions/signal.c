@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:41:00 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:17:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:52:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	signal_tmp(int tmp)
 {
@@ -41,11 +41,8 @@ void	eof_handler(char *input, t_shell *minishell)
 
 void	sigint_handler_main_loop(int signum)
 {
-	t_data	data;
-
 	if (signum == 2)
 	{
-		data.p_status = 1;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

@@ -6,11 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:11:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:52:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 {

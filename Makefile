@@ -75,12 +75,12 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/check_syntax_outfile.c						\
 		parsing/srcs/check_syntax_append.c						\
 		parsing/srcs/check_syntax_heredoc.c						\
-		main_loop_utils.c										\
-		main_function.c											\
-		main_utils.c											\
-		no_env.c												\
-		signal.c												\
-		main.c
+		main_functions/main_loop_utils.c						\
+		main_functions/main_function.c							\
+		main_functions/main_utils.c								\
+		main_functions/no_env.c									\
+		main_functions/signal.c									\
+		main_functions/main.c
 
 INCS =	includes/minishell.h									\
 		parsing/parsing.h

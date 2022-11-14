@@ -6,16 +6,16 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:19:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:52:22 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "parsing/parsing.h"
+#include "../includes/minishell.h"
+#include "../parsing/parsing.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int		g_status;
+int		g_pstatus;
 
 int	export_and_unset(t_data *data, t_node *node, int check)
 {

@@ -6,12 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:52:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 10:52:17 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-#include "parsing/parsing.h"
+#include "../includes/minishell.h"
+#include "../parsing/parsing.h"
 
 void	free_all(t_shell *minishell)
 {
