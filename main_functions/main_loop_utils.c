@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 20:38:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:54:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int	export_exec(t_data *data, t_node *node)
 				return (1);
 			data->envp = data->new_env;
 			if ((data->check_loop_export == 1 && node->next == NULL))
-			{
-				printf("Go free --> %d\n", tmp_size);
 				free_old(tmp, tmp_size);
-			}
 			if (node->next == NULL)
 				break ;
 			data->check_loop_export = 1;
