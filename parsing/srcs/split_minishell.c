@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:41:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 11:58:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static int	fill_with_quotes(char const *str, int *i, int *k, char ***tab)
 				}
 			}
 		}
-		if (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\'')
+		if (str[*i] != '\0' && str[*i] != ' '
+			&& str[*i] != '\"' && str[*i] != '\'')
 		{
 			(*tab)[*k][x++] = str[*i];
 			(*i) += 1;

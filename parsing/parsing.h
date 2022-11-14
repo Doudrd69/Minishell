@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 20:57:41 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 12:21:06 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,14 @@ char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name,
 			t_shell *minishell);
 char	*check_and_return_var_parsing(char *home_path, char **envp,
 			char *var, int i);
+int		check_dollars_mod(char *str);
+int		check_dollar_export(char *str, int i);
+int		check_heredoc_dollar_mod(char *str, int i);
+int		check_heredoc_dollar_mod_1(char *str, int i);
+int		check_heredoc_dollar_mod_2_3(char *str, int i);
+void	change_value_mod2_and_3(char *str, int i,
+			t_shell *minishell, t_node **list);
+
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);
