@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:52:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 11:06:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 		node = minishell->head;
 	else
 		node = NULL;
-	if (minishell->tab_infile!= NULL)
+	if (minishell->tab_infile != NULL)
 		data->infile_check = 1;
 	else
 		data->infile_check = 0;
@@ -63,9 +63,8 @@ void	envp_check(t_data *data, char **envp)
 	{
 		if (export_no_env(data) == 1)
 			exit(1);
-		data->envp = envp;
+		data->envp = data->no_env;
 		envpsize = 3;
-		data->envp_size = envpsize;
 		data->envp_size = envpsize;
 	}
 	return ;
