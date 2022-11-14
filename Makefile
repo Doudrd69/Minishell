@@ -87,6 +87,8 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/search_outfile_utils.c						\
 		parsing/srcs/search_infile_utils.c						\
 		parsing/srcs/search_heredoc_utils.c						\
+		parsing/srcs/search_append_utils.c						\
+		parsing/srcs/redirections_utils.c						\
 		main_functions/main_loop_utils.c						\
 		main_functions/main_function.c							\
 		main_functions/main_utils.c								\

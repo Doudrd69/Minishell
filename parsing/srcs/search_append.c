@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_append.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:52 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:41:52 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:28:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	i += 2;
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\"' && str[i] != '\0')
-				i++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
-		i++;
-	}
+	i = dl_fl_search_append(str, i);
 	while (str[i] != '\0' && str[i] == ' ')
 		i++;
 	while (str[i] != '\0')
@@ -131,23 +116,7 @@ int	search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 		return (0);
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
-	while (str[i] != '\0' && str[i] != ' ' && str[i] != '<' && str[i] != '>')
-	{
-		if (str[i] == '\"' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\"' && str[i] != '\0')
-				file++;
-			if (str[i] == '\"')
-				file++;
-		}
-		if (str[i] == '\'' && str[i + 1] != '\0')
-		{
-			while (str[++i] != '\'')
-				file++;
-		}
-		file++;
-		i++;
-	}
+	file = main_loop_search_append(str, i, file);
 	tmp = malloc(sizeof(char) * (file + 2));
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
 	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1 + space, file + 1);

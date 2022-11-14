@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:21:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:21:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile,
 			t_shell *minishell);
 
 /*----*PARSING*----*/
-void	parsing(char **env, t_shell *minishell);
+int		parsing(char **env, t_shell *minishell);
 void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
@@ -171,8 +171,11 @@ int		check_and_print_var_parsing(t_shell *minishell, char *str);
 int		main_loop_search_outfile(t_shell *s, char *str, int i);
 int		main_loop_search_infile(char *str, int i, int file);
 int		dl_fl_search_infile(char *str, int i);
-int		dl_fl_search_heredoc(char *str, int i);
 int		main_loop_search_heredoc(char *str, int i, int file);
+int		dl_fl_search_heredoc(char *str, int i);
+int		main_loop_search_append(char *str, int i, int file);
+int		dl_fl_search_append(char *str, int i);
+int		sorting_loop(t_shell *minishell, char *str, t_node *list_cpy, int j);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);
