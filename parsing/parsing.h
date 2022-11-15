@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:43:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 14:06:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_shell
 	int				mod;
 	int				i;
 	int				j;
+	int				tab;
 	char			*strp;
 	char			*tmpp;
 	int				pipe;
@@ -108,7 +109,7 @@ void	replace_list_quote_outab(t_node *tmp, t_node **list_cpy,
 			t_shell *minishell, int i);
 void	replace_list_quote_intab(t_node *tmp, t_node **list_cpy,
 			t_shell *minishell, int i);
-void	include_parse_quote_intab(t_shell *minishell, t_node *list_cpy);
+void	include_parse_quote_intab(t_shell *minishell, t_node **list_cpy, int i);
 
 /*REDIRECTIONS*/
 int		parse_redirections(t_shell *minishell);

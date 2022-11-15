@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 13:43:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 17:15:14 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	if (tmp)
 	{
 		if (ft_strlen(tmp) == 0)
+		{
+			free(tmp);
 			tmp = NULL;
+		}
 	}
 	if ((*list) && (*list)->next == NULL)
 	{

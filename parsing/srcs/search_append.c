@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_append.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:52 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:28:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 17:29:37 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	add_back_file_list(t_node **tab_list, t_node *new)
 				list_cpy = list_cpy->next;
 			list_cpy->next = new;
 			new->prev = list_cpy;
-			list_cpy = new;
 		}
 	}
 }

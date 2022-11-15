@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:43:39 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:43:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 15:02:50 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 static char	*ft_prev(char *tmp, char *str, int j, int i)
 {
+	char	*buff;
+
 	tmp = malloc(sizeof(char) * (ft_strlen(str) - (j + i - 1)));
-	tmp = cmd_cpy(tmp, str + j + i, ft_strlen(str) - (j + i - 1));
-	(tmp)[ft_strlen(str) - (j + i)] = '\0';
-	return (tmp);
+	buff = cmd_cpy(tmp, str + j + i, ft_strlen(str) - (j + i - 1));
+	buff[ft_strlen(str) - (j + i)] = '\0';
+	return (buff);
 }
 
 static void	ft_add_pipe(t_shell *minishell, char *tmp
 	, int *i, t_node **list_cpy)
 {
+	t_node *buff;
+	(void) list_cpy;
 	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)tmp));
-	*list_cpy = (*list_cpy)->next;
-	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)"|\0"));
-	*list_cpy = (*list_cpy)->next;
-	(*list_cpy)->type = 'P';
+	// *list_cpy = (*list_cpy)->next;
+  	buff = ft_dlstnew((void *)ft_strdup("|"));
+	if (buff)
+		buff->type = 'P';
+	ft_dlstadd_back((&(minishell)), buff );\
+	// *list_cpy = (*list_cpy)->next;
 	(*i)++;
 }
 

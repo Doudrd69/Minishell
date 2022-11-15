@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:46:51 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:17:52 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,48 @@ int	parsing(char **env, t_shell *minishell)
 	return (0);
 }
 
+static void	init_tab(t_shell *minishell)
+{
+	if ((minishell->nbr_appendin + minishell->nbr_infile) > 0)
+	{
+		minishell->tab_infile = malloc(sizeof(t_node *)
+				* (minishell->nbr_pipe + 2));
+		minishell->tab_infile[minishell->nbr_pipe + 1] = NULL;
+	}
+	if ((minishell->nbr_appendout + minishell->nbr_outfile) > 0)
+	{
+		minishell->tab_outfile = malloc(sizeof(t_node *)
+				* (minishell->nbr_pipe + 2));
+		minishell->tab_outfile[minishell->nbr_pipe + 1] = NULL;
+	}
+	dprintf(2, "init=%p\n", minishell->tab_outfile);
+}
+
 int	tokenizers_arg(t_shell *minishell)
 {
 	if (minishell->nbr_pipe > 0)
 	{
+		minishell->strp = (char *)(minishell->head->content);
 		if (parse_pipe(minishell, 0, -1) == 0)
 			return (0);
 	}
+	
 	if (minishell->nbr_dollars > 0)
 		parse_dollars(minishell);
+	init_tab(minishell);
 	if (minishell->nbr_infile != 0 || minishell->nbr_appendin != 0
 		|| minishell->nbr_outfile != 0 || minishell->nbr_appendout != 0)
 	{
 		if (parse_redirections(minishell) == 0)
 			return (0);
 	}
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
 	if (minishell->head && minishell->head != NULL)
 		parse_space_quote(minishell);
-	if ((minishell->tab_infile != NULL || minishell->tab_outfile != NULL))
-		parse_quote_tab(minishell, &minishell->tab_infile,
-			&minishell->tab_outfile);
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
+	if (minishell->error != 0)
+		return (0);
+	parse_quote_tab(minishell, &minishell->tab_infile,
+		&minishell->tab_outfile);
+
 	printf("END PARSING\n");
 	return (1);
 }

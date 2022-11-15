@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:51:14 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:55:17 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 10:59:07 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	fill_with_quotes(t_shell *minishell, int *i, int *k, char ***tab)
 	if (x != 0)
 	{
 		(*tab)[*k][x] = '\0';
-		printf("tab==%s\n", (*tab)[*k]);
 	}
 	return (x);
 }

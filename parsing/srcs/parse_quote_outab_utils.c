@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:09:27 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 14:32:33 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:01:43 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,34 @@ void	include_parse_quote_outab(t_shell *minishell, t_node *list_cpy)
 		tab = ft_split_minishell(minishell, str, ' ');
 		minishell->j = -1;
 		while (tab && tab[++minishell->j] != NULL)
+		{
 			list_nospace_tab(minishell, &list_cpy,
 				tab[minishell->j], minishell->j);
+		}
 		tmp = list_cpy;
 		if (tmp)
 			list_cpy = list_cpy->next;
-		replace_list_quote_outab(tmp, &list_cpy, minishell, minishell->i);
+		replace_list_quote_outab(tmp, &list_cpy, minishell, minishell->tab);
 		while (minishell->j-- > 0 && list_cpy && list_cpy != NULL)
 			list_cpy = list_cpy->next;
+		free(tab);
 	}
 }
 
 void	ft_parse_quote_outab(t_shell *minishell, t_node ***tab_outfile)
 {
-	t_node	**intab;
+	t_node	**outab;
 	t_node	*list_cpy;
 
-	if (minishell->tab_outfile != NULL)
+	if ((*tab_outfile) && (*tab_outfile)[0] != NULL)
 	{
-		minishell->i = 0;
-		intab = *tab_outfile;
-		while (intab && intab[minishell->i] && intab[minishell->i] != NULL)
+		minishell->tab = 0;
+		outab = *tab_outfile;
+		while (outab && outab[minishell->tab] && outab[minishell->tab] != NULL)
 		{
-			list_cpy = (intab)[minishell->i];
+			list_cpy = (outab)[minishell->tab];
 			include_parse_quote_outab(minishell, list_cpy);
-			minishell->i++;
+			minishell->tab++;
 		}
 	}
 }

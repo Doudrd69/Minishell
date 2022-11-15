@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 14:52:48 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:05:11 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_prev(t_node *list_cpy, t_node *tmp, t_shell *minishell, int tab)
 	list_cpy->prev = NULL;
 	(list_cpy)->type = tmp->type;
 	minishell->tab_infile[tab] = list_cpy;
+	free(tmp->content);
 	free(tmp);
 }
 
@@ -27,6 +28,7 @@ static void	ft_mid(t_node *list_cpy, t_node *tmp)
 	list_cpy->prev = tmp->prev;
 	list_cpy->prev->next = list_cpy;
 	(list_cpy)->type = tmp->type;
+	free(tmp->content);
 	free(tmp);
 }
 
@@ -42,8 +44,9 @@ static void	ft_next(t_node **list_cpy, t_node *tmp, t_shell *minishell, int tab)
 	{
 		(*list_cpy)->prev = NULL;
 		(*list_cpy)->type = tmp->type;
-		minishell->tab_infile[tab] = *list_cpy;
+		minishell->tab_infile[tab] = (*list_cpy);
 	}
+	free(tmp->content);
 	free(tmp);
 }
 

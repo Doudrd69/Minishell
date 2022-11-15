@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:43 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:36:28 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 16:41:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,18 @@ static void	ft_next(t_shell *minishell)
 
 static char	*ft_tmp(char *tmp, char *str, int j, int i)
 {
+	char	*buff;
+
+	// if (tmp)
+	// 	free(tmp);
 	(tmp) = malloc(sizeof(char) * (i + 1));
-	(tmp) = cmd_cpy((tmp), str + j, i + 1);
-	(tmp)[i] = '\0';
-	return (tmp);
+	if (tmp == NULL)
+		return (NULL);
+	buff = cmd_cpy((tmp), str + j, i + 1);
+	buff[i] = '\0';
+	//TODO
+	// free(tmp);
+	return (buff);
 }
 
 int	parse_pipe(t_shell *minishell, int j, int i)
@@ -37,7 +45,6 @@ int	parse_pipe(t_shell *minishell, int j, int i)
 
 	minishell->last_pipe = 0;
 	minishell->pipe = minishell->nbr_pipe;
-	minishell->strp = (char *)(minishell->head->content);
 	list_cpy = minishell->head;
 	while (minishell->strp[++i + j] != '\0')
 	{
@@ -47,14 +54,16 @@ int	parse_pipe(t_shell *minishell, int j, int i)
 		{
 			if (check_syntax(minishell, minishell->strp, i + j) == 0)
 			{
-				printf("ha\n");
 				return (0);
 			}
 			minishell->last_pipe = i + j + 1;
 			minishell->tmpp = ft_tmp(minishell->tmpp, minishell->strp, j, i);
+			if (minishell->tmpp == NULL)
+				return (0);
 			add_last_arg(minishell, &list_cpy, &i, j);
 			ft_incr_var_pipe(&j, &i);
 		}
+		
 	}
 	ft_next(minishell);
 	return (1);

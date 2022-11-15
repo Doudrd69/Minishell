@@ -1,0 +1,106 @@
+==56691== Memcheck, a memory error detector
+==56691== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==56691== Using Valgrind-3.21.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==56691== Command: ./minishell
+==56691== 
+--56691-- run: /usr/bin/dsymutil "./minishell"
+==56691== 
+==56691== Process terminating with default action of signal 2 (SIGINT)
+==56691==    at 0x1000344CA: ImageLoaderMachO::findExportedSymbol(char const*, bool, char const*, ImageLoader const**) const (in /usr/lib/dyld)
+==56691==    by 0x10003450F: ImageLoaderMachO::findExportedSymbol(char const*, bool, char const*, ImageLoader const**) const (in /usr/lib/dyld)
+==56691==    by 0x10002EEF9: ImageLoader::findExportedSymbolAddress(ImageLoader::LinkContext const&, char const*, ImageLoader const*, int, bool, ImageLoader const**, unsigned long*) const (in /usr/lib/dyld)
+==56691==    by 0x10003AD15: ImageLoaderMachOCompressed::resolveTwolevel(ImageLoader::LinkContext const&, char const*, ImageLoader const*, ImageLoader const*, unsigned int, bool, bool, ImageLoader const**) (in /usr/lib/dyld)
+==56691==    by 0x10003AF86: ImageLoaderMachOCompressed::resolve(ImageLoader::LinkContext const&, char const*, unsigned char, long, ImageLoader const**, ImageLoaderMachOCompressed::LastLookup*, bool) (in /usr/lib/dyld)
+==56691==    by 0x10003D387: ImageLoaderMachOCompressed::doBindFastLazySymbol(unsigned int, ImageLoader::LinkContext const&, void (*)(), void (*)()) (in /usr/lib/dyld)
+==56691==    by 0x100021B75: dyld::fastBindLazySymbol(ImageLoader**, unsigned long) (in /usr/lib/dyld)
+==56691==    by 0x1009B632D: dyld_stub_binder (in /usr/lib/system/libdyld.dylib)
+==56691==    by 0x1014DF007: ??? (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5EEBD: flushCaches(objc_class*) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C3E7: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691== 
+==56691== HEAP SUMMARY:
+==56691==     in use at exit: 52,136 bytes in 142 blocks
+==56691==   total heap usage: 160 allocs, 18 frees, 86,744 bytes allocated
+==56691== 
+==56691== 24 bytes in 1 blocks are possibly lost in loss record 11 of 34
+==56691==    at 0x1000F11B1: malloc_zone_calloc (in /Users/wmonacho/.brew/Cellar/valgrind/HEAD-59136a1/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==56691==    by 0x100D5CDE3: freeBuckets(NXHashTable*, int) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5CAFE: NXHashInsert (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C9BF: hashPrototype(void const*, void const*) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5BAB4: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D6D55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10002247A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==56691==    by 0x10002262D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==56691==    by 0x1009B5A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==56691==    by 0x100D5A233: environ_init (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10094CE35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==56691== 
+==56691== 528 bytes in 1 blocks are possibly lost in loss record 28 of 34
+==56691==    at 0x1000F0C0A: malloc_zone_malloc (in /Users/wmonacho/.brew/Cellar/valgrind/HEAD-59136a1/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==56691==    by 0x100D5C968: NXHashGet (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C846: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5E417: NXMapRemove (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D72067: _unload_image (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D71A8C: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D71A6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D71A6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D71A6B: _objc_flush_caches (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C266: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D6D55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==56691== 
+==56691== 2,064 bytes in 1 blocks are possibly lost in loss record 30 of 34
+==56691==    at 0x1000F0C0A: malloc_zone_malloc (in /Users/wmonacho/.brew/Cellar/valgrind/HEAD-59136a1/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==56691==    by 0x100D5D845: objc_class::setHasCustomRR(bool) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5D70F: addSubclass(objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C021: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D6D55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10002247A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==56691==    by 0x10002262D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==56691==    by 0x1009B5A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==56691==    by 0x100D5A233: environ_init (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10094CE35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==56691==    by 0x100958AD1: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==56691== 
+==56691== 8,208 bytes in 1 blocks are possibly lost in loss record 33 of 34
+==56691==    at 0x1000F0C0A: malloc_zone_malloc (in /Users/wmonacho/.brew/Cellar/valgrind/HEAD-59136a1/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==56691==    by 0x100D5C968: NXHashGet (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5C846: NXCreateHashTableFromZone (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5BA91: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D6D55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10002247A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==56691==    by 0x10002262D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==56691==    by 0x1009B5A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==56691==    by 0x100D5A233: environ_init (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10094CE35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==56691==    by 0x100958AD1: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==56691== 
+==56691== 32,784 bytes in 1 blocks are possibly lost in loss record 34 of 34
+==56691==    at 0x1000F0C0A: malloc_zone_malloc (in /Users/wmonacho/.brew/Cellar/valgrind/HEAD-59136a1/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==56691==    by 0x100D5D845: objc_class::setHasCustomRR(bool) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5D70F: addSubclass(objc_class*, objc_class*) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D786A8: std::__1::__hash_table<std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, std::__1::__unordered_map_hasher<unsigned long, std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, objc_references_support::DisguisedPointerHash, true>, std::__1::__unordered_map_equal<unsigned long, std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*>, objc_references_support::DisguisedPointerEqual, true>, objc_references_support::ObjcAllocator<std::__1::__hash_value_type<unsigned long, objc_references_support::ObjectAssociationMap*> > >::__rehash(unsigned long) (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5BD35: _read_images (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D5AA4F: _hasObjcContents (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x100D6D55F: __objc_personality_v0 (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10002247A: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==56691==    by 0x10002262D: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==56691==    by 0x1009B5A26: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==56691==    by 0x100D5A233: environ_init (in /usr/lib/libobjc.A.dylib)
+==56691==    by 0x10094CE35: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==56691== 
+==56691== LEAK SUMMARY:
+==56691==    definitely lost: 0 bytes in 0 blocks
+==56691==    indirectly lost: 0 bytes in 0 blocks
+==56691==      possibly lost: 43,608 bytes in 5 blocks
+==56691==    still reachable: 8,528 bytes in 137 blocks
+==56691==         suppressed: 0 bytes in 0 blocks
+==56691== Reachable blocks (those to which a pointer was found) are not shown.
+==56691== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==56691== 
+==56691== For lists of detected and suppressed errors, rerun with: -s
+==56691== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 415 from 7)

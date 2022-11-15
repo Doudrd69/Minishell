@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:39:16 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 12:33:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 
 void	init_dlist_var(t_shell *minishell)
 {
+	minishell->tmpp = NULL;
+	minishell->strp = NULL;
 	minishell->head = NULL;
 	minishell->tab_infile = NULL;
 	minishell->tab_outfile = NULL;

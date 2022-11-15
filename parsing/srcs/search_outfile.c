@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_outfile.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:37 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:08:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 17:40:00 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	include_outfile_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
-	list_cpy = *tab_list;
+	// list_cpy = *tab_list;
 	add_back_file_list(tab_list, ft_dlstnew(tmp));
 	list_cpy = *tab_list;
-	while (list_cpy && list_cpy->next != NULL && list_cpy != NULL)
+	while (list_cpy->next != NULL)
 				list_cpy = list_cpy->next;
 	list_cpy->type = 'C';
 }

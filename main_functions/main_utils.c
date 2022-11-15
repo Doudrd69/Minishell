@@ -3,33 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:25 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 14:30:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../parsing/parsing.h"
-
-void	free_all(t_shell *minishell)
-{
-	t_node	*tmp;
-
-	while (minishell->head && minishell->head != NULL)
-	{
-		tmp = minishell->head;
-		minishell->head = minishell->head->next;
-		if (ft_strncmp(tmp->content, "|", 1) != 0)
-			test_free((void *)(tmp->content));
-		test_free((void *)(tmp));
-	}
-	test_free((void *)(minishell->value));
-	test_free((void *)(minishell->var_search));
-	test_free((void *)(minishell->home_path));
-	free(minishell);
-}
 
 void	init_main(t_data *data, char **envp)
 {

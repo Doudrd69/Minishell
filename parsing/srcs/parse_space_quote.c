@@ -6,17 +6,20 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:51:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 16:37:17 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
+#include "../../includes/minishell.h"
 
 static void	ft_prev(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 {
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = NULL;
 	minishell->head = list_cpy;
+	if (tmp->content)
+		free(tmp->content);
 	free(tmp);
 	minishell->list_size -= 1;
 }
@@ -26,6 +29,8 @@ static void	ft_mid(t_node *list_cpy, t_node *tmp, t_shell *minishell)
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = tmp->prev;
 	list_cpy->prev->next = list_cpy;
+	if (tmp->content)
+		free(tmp->content);
 	free(tmp);
 	minishell->list_size -= 1;
 }
@@ -42,6 +47,8 @@ static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 		list_cpy->prev = NULL;
 		minishell->head = list_cpy;
 	}
+	if (tmp->content)
+		free(tmp->content);
 	free(tmp);
 	minishell->list_size -= 1;
 }
@@ -73,6 +80,8 @@ static void	include_parse_quote(t_node **list_cpy, t_shell *minishell, int j)
 		ft_next((*list_cpy), minishell, tmp);
 	while (j-- >= 0 && (*list_cpy) && (*list_cpy) != NULL)
 		(*list_cpy) = (*list_cpy)->next;
+	free(tab);
+	printf("after_test\n");
 }
 
 void	parse_space_quote(t_shell *minishell)
@@ -83,5 +92,7 @@ void	parse_space_quote(t_shell *minishell)
 	list_cpy = minishell->head;
 	j = -1;
 	while (list_cpy && list_cpy != NULL)
+	{
 		include_parse_quote(&list_cpy, minishell, j);
+	}
 }

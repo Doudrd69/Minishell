@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:46:02 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 16:40:35 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	main(int argc, char *argv[], char *envp[])
 	int					(*builtins[5])(t_data *data, t_node *node);
 
 	sa.sa_handler = SIG_IGN;
+	sa.sa_flags = 0;
+	sa.sa_mask = 0;
 	main_init_before_loop(&data, envp, builtins, argc, argv);
 	while (1)
 	{
@@ -97,7 +99,7 @@ int	main(int argc, char *argv[], char *envp[])
 		node = NULL;
 		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
 			execution(&data, minishell, node, builtins, &g_pstatus);
-		free(minishell->cmd);
+		// free(minishell->cmd);
 		free_all(minishell);
 	}
 }
