@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 10:13:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:34:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	init_main(t_data *data, char **envp)
 	data->outfile_check = 0;
 	data->echo_sq_check = 0;
 	data->infile_check = 0;
-	data->check_main = 0;
+	data->check_main = 3;
 	data->oldpwd_if = 0;
 	data->echo_arg = 0;
 	data->p_status = 0;
@@ -93,8 +93,8 @@ void	init_builtins_tab(char *builtins_name[5],
 
 void	free_param_tab(t_data *data)
 {
-	if (data->env.param_tab1 != NULL)
-		free_tab(data->env.param_tab1, data->size_ptab1 - 1);
+	printf("Free param\n");
+		free_tab(data->env.param_tab1, data->size_ptab1);
 	if (data->env.param_tab2 != NULL)
 		free_tab(data->env.param_tab2, data->size_ptab2 - 1);
 	if (data->env.param_tab3 != NULL)

@@ -6,13 +6,14 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 11:02:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:29:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
+void	first_command(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *), int g)
 {
 	signal(SIGQUIT, &sigtest);
 	signal(SIGINT, &sigint_handler_in_process);
@@ -23,7 +24,7 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 			exit(errno);
 		if (node != NULL)
 		{
-			data->env.tab1 = get_path(envp, data, data->env.tab1);
+			data->env.tab1 = get_path(data->envp, data, data->env.tab1);
 			data->env.param_tab1 = fill_param_tab(node, data,
 					data->env.param_tab1);
 			while (data->env.param_tab1[data->size_ptab1])
@@ -31,11 +32,13 @@ void	first_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 		}
 		if (check_outfile(data, parse) != 0)
 			exit(errno);
-		first_cmd_execution(data, envp);
+		printf("First >> %s\n", node->content);
+		first_cmd_execution(data, node, builtins, g);
 	}
 }
 
-void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
+void	last_command(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *), int g)
 {
 	signal(SIGQUIT, &sigtest);
 	signal(SIGINT, &sigint_handler_in_process);
@@ -46,15 +49,17 @@ void	last_command(char *envp[], t_data *data, t_node *node, t_shell *parse)
 			exit(errno);
 		if (check_outfile_last_cmd(data, parse) != 0)
 			exit(errno);
-		data->env.tab2 = get_path(envp, data, data->env.tab2);
+		data->env.tab2 = get_path(data->envp, data, data->env.tab2);
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		while (data->env.param_tab2[data->size_ptab2])
 			data->size_ptab2++;
-		last_cmd_execution(data, envp);
+		printf("Last >> %s\n", node->content);
+		last_cmd_execution(data, node, builtins, g);
 	}
 }
 
-void	*commands(t_data *data, t_node *node, t_shell *parse, char *envp[])
+void	*commands(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *), int g)
 {
 	int	i;
 	int	*pid;
@@ -73,7 +78,7 @@ void	*commands(t_data *data, t_node *node, t_shell *parse, char *envp[])
 			return (0);
 		}
 		if (pid[i] == 0)
-			command_exec(data, node, parse, envp);
+			command_exec(data, node, parse, builtins, g);
 		node = node_rotation(node);
 		data->pipe_id++;
 	}

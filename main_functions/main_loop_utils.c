@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 09:35:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 19:55:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,19 @@ void	*node_rotation(t_node *node)
 	return (node);
 }
 
-void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
+void	exec_main(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *), int g)
 {
 	if (data->cmd_nb > 0)
 	{
 		if (node && node->type == 'P')
 			node = node->next;
-		first_command(data->envp, data, node, parse);
+		first_command(data, node, parse, builtins, g);
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
-			node = commands(data, node, parse, envp);
-			last_command(envp, data, node, parse);
+			node = commands(data, node, parse, builtins, g);
+			last_command(data, node, parse, builtins, g);
 		}
 	}
 	return ;

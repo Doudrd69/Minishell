@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 19:48:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:35:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,22 @@ void	main_init_before_loop(t_data *data, char **envp,
 void	execution(t_data *data, t_shell *parse, t_node *node,
 	int (*builtins[5])(t_data *, t_node *), int *gstatus)
 {
-	data->check_main = 0;
+	data->check_main = 3;
 	if (parse->cmd && *parse->cmd)
 		add_history (parse->cmd);
 	if (parsing(data->envp, parse) == 0)
 	{
 		node = main_init_check(data, parse, node);
-		data->check_main = builtins_loop(data->builtins_name, builtins,
-				node, data, gstatus);
+		if (parse->nbr_pipe == 0)
+		{
+			printf("Only BUILTIN --> no PIPE\n");
+			data->check_main = builtins_loop(data->builtins_name, builtins,
+					node, data, gstatus);
+		}
 		data->check_main = export_and_unset(data, node, data->check_main);
-		if (data->check_main == 0)
-			cmd_exec(data, data->envp, parse);
+		printf("loool : %d\n", data->check_main);
+		if (data->check_main == 3)
+			cmd_exec(data, parse, builtins);
 	}
 	if (parse->synt_err == 1)
 		data->p_status = parse->error;

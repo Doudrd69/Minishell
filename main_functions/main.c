@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 10:23:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:38:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	sigint_handler_main_loop(int signum)
 
 int	export_and_unset(t_data *data, t_node *node, int check)
 {
+	(void)check;
 	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
 		if (node->next == NULL || node->next->type == 'P')
@@ -44,17 +45,15 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 		data->p_status = unset_exec(data, node);
 		return (1);
 	}
-	return (check);
+	return (3);
 }
 
 int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 	t_node *node, t_data *data, int *gstatus)
 {
 	int	i;
-	int	status;
 
 	i = 0;
-	status = 0;
 	data->test = gstatus;
 	while (node && i < data->builtin_cmd_nb)
 	{
@@ -72,7 +71,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 		}
 		i++;
 	}
-	return (data->check_main);
+	return (3);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -102,7 +101,8 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 }
 
-void	cmd_exec(t_data *data, char **envp, t_shell *parse)
+void	cmd_exec(t_data *data, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *))
 {
 	t_node	*node;
 	int		status;
@@ -114,7 +114,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	if (node == NULL && parse->tab_outfile == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);
-	exec_main(data, envp, node, parse);
+	exec_main(data, node, parse, builtins, g_pstatus);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
@@ -122,7 +122,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	while (wait(&status) != -1)
 		;
 	data->p_status = set_p_status(status, node);
-	free_param_tab(data);
 	if (parse->nbr_pipe > 0)
 		free_inttab(data->pipefd, parse->nbr_pipe - 1);
 	if (data->check_hd > 0)
