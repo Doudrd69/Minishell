@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:30:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 10:23:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,18 @@ int	mini_echo(t_data *data, t_node *node)
 int	mini_exit(t_data *data, t_node *node)
 {
 	int	tmp;
+	int	size;
 
-	tmp = ft_atoi(node->content);
+	size = 0;
+	size = check_nb_of_args(node, size);
+	if (size > 1)
+	{
+		ft_printf("minishell: exit: too many arguments\n");
+		return (2);
+	}
 	if (data->pipe_check == 0)
 	{
+		tmp = ft_atoi(node->content);
 		data->p_status = tmp;
 		exit((unsigned char)tmp);
 	}

@@ -6,39 +6,38 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 08:17:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 09:35:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	export_exec(t_data *data, t_node *node)
+int	export_exec(t_data *data, t_node *n)
 {
 	char	**tmp;
 	int		tmp_size;
 
-	if (node->next != NULL)
+	if (n->next != NULL)
 	{
-		node = node->next;
-		while (node != NULL)
+		n = n->next;
+		while (n != NULL)
 		{
 			tmp_size = 0;
 			tmp = data->envp;
 			tmp_size = envp_size_for_tmp(tmp);
-			if (mini_export(data, node->content) == 1)
+			if (mini_export(data, n->content) == 1)
 				return (1);
 			data->envp = data->new_env;
-			if ((data->check_loop_export == 1 && node->next == NULL))
+			if ((data->check_loop_export == 1 && n->next == NULL))
 				free_old(tmp, tmp_size);
-			if (node->next == NULL)
+			if (n->next == NULL)
 				break ;
 			data->check_loop_export = 1;
-			node = node->next;
+			n = n->next;
 		}
 		return (0);
 	}
-	ft_printf("minishell: export: '%s': not a valid identifier\n",
-		node->content);
+	ft_printf("minishell: export: '%s': not a valid identifier\n", n->content);
 	return (1);
 }
 

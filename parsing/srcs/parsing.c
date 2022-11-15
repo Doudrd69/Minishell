@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 19:49:51 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 09:09:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	tokenizers_arg(t_shell *minishell)
 	if ((minishell->tab_infile != NULL || minishell->tab_outfile != NULL))
 		parse_quote_tab(minishell, &minishell->tab_infile,
 			&minishell->tab_outfile);
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
+	// print_dlist(&minishell->head, &minishell->tab_infile,
+	// 	&minishell->tab_outfile, minishell);
 	printf("END PARSING\n");
 	return (1);
 }

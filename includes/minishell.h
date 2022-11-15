@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 19:47:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 10:16:37 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct data
 	int			new_env_size;
 	int			unset_env_size;
 	int			check_loop_export;
+	int			index_arg;
 	int			*test;
 	char		*builtins_name[5];
 	char		buff[BUF_SIZE];
@@ -143,6 +144,7 @@ typedef struct data
 	char		**envp;
 	char		*home_path;
 	char		*echo_file;
+	char		*tmp_fill_tab;
 	t_heredoc	hd;
 	t_env		env;
 	t_exec		exec;
@@ -187,6 +189,7 @@ int			var_exists_hd(t_data *data);
 
 /* COMMAND UTILS */
 t_node		*main_init_check(t_data *data, t_shell *minishell, t_node *node);
+t_node		*loop_to_first_arg(t_node *node, int i, int index);
 
 void		execution(t_data *data, t_shell *parse, t_node *node,
 				int (*builtins[5])(t_data *, t_node *), int *gstatus);
@@ -242,6 +245,7 @@ int			check_outfile(t_data *data, t_shell *parse);
 int			export_exec(t_data *data, t_node *node);
 int			unset_exec(t_data *data, t_node *node);
 int			set_p_status(int status, t_node *node);
+int			check_loop_exec(char *str, int i);
 int			ft_printf(const char *flags, ...);
 int			**free_inttab(int **tab, int i);
 int			check_loop(char *str, int j);
@@ -283,6 +287,7 @@ int			specific_cases_with_special_char(t_data *data, int i);
 int			var_search_copy(t_data *data, int size, int i, int j);
 int			unset_var(int index, t_data *data, char *var_unset);
 int			malloc_and_cpy(t_data *data, int i, int index);
+int			check_nb_of_args(t_node *node, int size);
 int			write_and_check_signs(int i, t_data *data);
 int			check_var_hd(char *str, char *var_name);
 int			path_exists(t_data *data, t_node *node);
