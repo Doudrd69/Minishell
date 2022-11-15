@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 20:54:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 08:17:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	export_exec(t_data *data, t_node *node)
 		node = node->next;
 		while (node != NULL)
 		{
-			printf("Loop\n");
 			tmp_size = 0;
 			tmp = data->envp;
 			tmp_size = envp_size_for_tmp(tmp);
