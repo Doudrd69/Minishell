@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:31:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:25:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,5 @@ void	init_builtins_tab(char *builtins_name[7],
 	builtins[4] = &mini_exit;
 	builtins[5] = &export_exec;
 	builtins[6] = &unset_exec;
-	return ;
-}
-
-void	free_param_tab(t_data *data)
-{
-	free_tab(data->env.param_tab1, data->size_ptab1);
-	if (data->env.param_tab2 != NULL)
-		free_tab(data->env.param_tab2, data->size_ptab2 - 1);
-	if (data->env.param_tab3 != NULL)
-		free_tab(data->env.param_tab3, data->size_ptab3 - 1);
 	return ;
 }

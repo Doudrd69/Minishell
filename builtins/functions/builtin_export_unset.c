@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:44:22 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:25:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	mini_export(t_data *data, char	*var)
 	if (check_var_exists_export(data, var))
 	{
 		data->envp = new_tab_with_existing_var(data, var);
+		data->envp_size = data->new_size;
 		data->p_status = 0;
 		return (0);
 	}
@@ -55,4 +56,27 @@ int	mini_unset(t_data *data, char *var_unset)
 		index++;
 	}
 	return (1);
+}
+
+int	export_loop(t_node *n, t_data *data)
+{
+	int	tmp_size;
+	char **tmp;
+
+	while (n != NULL)
+	{
+		tmp_size = 0;
+		tmp = data->envp;
+		tmp_size = data->envp_size;
+		if (mini_export(data, n->content) == 1)
+			return (1);
+		data->envp = data->new_env;
+		if (data->check_loop_export == 1)
+			free_old(tmp, tmp_size);
+		if (n->next == NULL)
+			break ;
+		data->check_loop_export = 1;
+		n = n->next;
+	}
+	return (0);
 }

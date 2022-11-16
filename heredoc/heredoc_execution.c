@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:41:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:13:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,21 @@ int	hd_pipe_creation(t_data *data)
 	int	i;
 
 	i = 0;
-			dprintf(2, "iiii=%d\n", data->check_hd);
 	if (data->check_hd == 1)
 	{
 		data->hd_pipefd = malloc(sizeof(int *) * data->heredoc_nb);
 		if (!data->hd_pipefd)
-		{
-			dprintf(2, "RETURN 1\n");
 			return (1);
-		}
 		while (i < data->heredoc_nb)
 		{
 			data->hd_pipefd[i] = malloc(sizeof(int) * 2);
 			if (!data->hd_pipefd[i])
 			{
-				dprintf(2, "RETURN 2\n");
 				free_inttab(data->hd_pipefd, i);
 				return (1);
 			}
 			if (pipe(data->hd_pipefd[i]) == -1)
 			{
-				dprintf(2, "RETURN 3\n");
 				perror("pipe");
 				return (1);
 			}

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:10:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:12:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_pipe_and_exec(t_data *data)
 	{
 		if (dup2(data->pipefd[0][WRITE], STDOUT_FILENO) == -1)
 		{
-			perror("dup2 TEST 1");
+			perror("dup2");
 			return (1);
 		}
 	}
@@ -52,12 +52,7 @@ int	check_inputfile(t_data *data, t_shell *parse)
 		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
 		{
 			if (parse->nbr_appendin > 1)
-			{
-				close(	data->hd_pipefd[0][0]);
-				close(	data->hd_pipefd[0][1]);
-				data->hd_pipefd[0][0] = dup(data->hd_pipefd[parse->nbr_appendin - 1][0]);
-				data->hd_pipefd[0][1] = dup(data->hd_pipefd[parse->nbr_appendin - 1][1]);
-			}
+				close_pipe_hd_before_dup(data, parse);
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
 				STDIN_FILENO) == -1)
 			{

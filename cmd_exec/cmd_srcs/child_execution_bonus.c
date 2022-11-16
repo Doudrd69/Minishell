@@ -6,22 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:58:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:07:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_and_exit_builtin(char **arg_tab, char **param, int p_size)
-{
-	int size = 0;
-
-	free_tab(param, p_size);
-	while (arg_tab[size])
-		size++;
-	free_tab(arg_tab, size - 1);
-	exit (0);
-}
 
 void	exec_cmd(char **tab, char **param, t_data *data,
 	int (*builtins[7])(t_data *, t_node *))
@@ -100,7 +89,8 @@ void	last_cmd_execution(t_data *data, t_node *node,
 		close_pipe(data, (data->cmd_nb - 2));
 		check_file(data->env.param_tab2[0]);
 		close(data->output_fd);
-		if (execve(data->env.param_tab2[0], data->env.param_tab2, data->envp) == -1)
+		if (execve(data->env.param_tab2[0], data->env.param_tab2,
+				data->envp) == -1)
 			perror("execve");
 	}
 	else
@@ -123,12 +113,7 @@ void	cmd_execution(t_data *data, int pipe_id, t_node *node,
 	int (*builtins[7])(t_data *, t_node *), int g)
 {
 	if (access(data->env.param_tab3[0], X_OK) == 0)
-	{
-		close_pipe(data, pipe_id);
-		check_file(data->env.param_tab3[0]);
-		if (execve(data->env.param_tab3[0], data->env.param_tab3, data->envp) == -1)
-			perror("execve");
-	}
+		cmd_exec_path(data, pipe_id);
 	else
 	{
 		if (data->env.tab3 != NULL)

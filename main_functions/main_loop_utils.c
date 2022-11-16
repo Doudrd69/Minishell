@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 16:38:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:24:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	export_exec(t_data *data, t_node *n)
 {
-	char	**tmp;
-	int		tmp_size;
 	int		i;
 
 	i = 0;
@@ -29,21 +27,8 @@ int	export_exec(t_data *data, t_node *n)
 		return (display_export(data));
 	while (--i > 0)
 		n = n->prev;
-	while (n != NULL)
-	{
-		tmp_size = 0;
-		tmp = data->envp;
-		tmp_size = envp_size_for_tmp(tmp);
-		if (mini_export(data, n->content) == 1)
-			return (1);
-		data->envp = data->new_env;
-		if (data->check_loop_export == 1)
-			free_old(tmp, tmp_size - 1);
-		if (n->next == NULL)
-			break ;
-		data->check_loop_export = 1;
-		n = n->next;
-	}
+	if (export_loop(n, data) == 1)
+		return (1);
 	return (0);
 }
 
@@ -54,8 +39,9 @@ int	unset_exec(t_data *data, t_node *node)
 
 	while (node != NULL)
 	{
+		tmp_size = 0;
 		tmp = data->envp;
-		tmp_size = envp_size_for_tmp(tmp);
+		tmp_size = data->envp_size;
 		if (mini_unset(data, node->content) == 1)
 			return (1);
 		data->envp = data->unset_env;

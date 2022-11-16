@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:40:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:03:17 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ t_node	*node_rotation_exec(t_node *node, t_shell *parse)
 
 int	start_heredoc(t_data *data, t_shell *parse, t_node *node)
 {
-	//t_node	*node;
-
-	//node = parse->head;
-	(void)node;
 	if (parse->nbr_appendin > 0)
 		data->check_hd = 1;
 	else
