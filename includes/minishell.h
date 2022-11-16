@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 07:25:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:30:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct data
 	int			check_loop_export;
 	int			index_arg;
 	int			*test;
-	char		*builtins_name[5];
+	char		*builtins_name[7];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
 	char		**new_env;

@@ -120,13 +120,13 @@ NAME = minishell
 all : ft_printf libft $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -framework CoreFoundation -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -o $(NAME) $(OBJS)
 
 ft_printf :
-	make -j -C $(PRINTF_PATH)
+	make -C $(PRINTF_PATH)
 
 libft :
-	make -j FLAGS="$(FLAGS)" -C $(LIBFT_PATH)
+	make -C $(LIBFT_PATH)
 
 $(PRINTF_PATH)$(PRINTF_NAME) : ft_printf
 

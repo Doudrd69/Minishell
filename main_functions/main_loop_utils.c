@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:17:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 11:02:11 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	*node_rotation(t_node *node)
 {
 	if (node != NULL)
 	{
-		while (node->next->type != 'P')
+		while (node && node->next->type != 'P')
 			node = node->next;
 		if (node && node->next->type == 'P')
 			node = node->next->next;

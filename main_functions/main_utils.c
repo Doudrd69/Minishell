@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:17:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:27:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	return ;
 }
 
-void	init_builtins_tab(char *builtins_name[5],
+void	init_builtins_tab(char *builtins_name[7],
 	int (*builtins[7])(t_data *, t_node *))
 {
 	builtins_name[0] = "cd";

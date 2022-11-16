@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:32:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:39:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:26:35 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*get_var_name(char *var)
 {
 	int		i;
 	char	*str;
+	char	*tmp;
 
 	i = 0;
 	while (var[i])
@@ -82,8 +83,10 @@ char	*get_var_name(char *var)
 		i++;
 	}
 	str = malloc(sizeof(char) * i + 1);
+	tmp = str;
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, var, i, 1);
+	free(tmp);
 	return (str);
 }

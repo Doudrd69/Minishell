@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:16:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:30:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 	return (check);
 }
 
-int	builtins_loop(char *tab_name[5], int (*builtins[7])(t_data *, t_node *),
+int	builtins_loop(char *tab_name[7], int (*builtins[7])(t_data *, t_node *),
 	t_node *node, t_data *data, int *gstatus)
 {
 	int	i;
@@ -114,6 +114,7 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	cmd_exec_init(data, parse);
 	if (start_heredoc(data, parse) == 1)
 		return ;
+	printf("--> %s [%c]\n", node->content, node->type);
 	if (node == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);
@@ -131,9 +132,3 @@ void	cmd_exec(t_data *data, t_shell *parse,
 		free(data->hd_pid);
 	return ;
 }
-
-//test builtins seul
-//test builtins avec commandes
-//test builtins seul avec redirection
-//test builtins avec commandes et redirection
-//peut pas tester les redir avec juste une commande ca pete mdr
