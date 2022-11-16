@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 20:19:31 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:44:27 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 	i = 1;
 	minishell->var_search = malloc(sizeof(char) * size);
 	if (!(minishell->var_search))
-		return (1);
+		free_all_exit(minishell);
 	while (i < size)
 	{
 		if (str[i] == '$' && i != 0)

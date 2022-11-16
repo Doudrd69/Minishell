@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 16:28:27 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:45:48 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ char	**ft_split_minishell(t_shell *minishell, char *str, char c)
 	{
 		if (strlen(str) == 2)
 		{
-			printf("minishell: : command not found\n");
+			write(2, "minishell: : command not found\n", 31);
 			minishell->error = 127;
 		}
 		return (NULL);
 	}
 	tab = (char **)malloc(sizeof(char *) * (nbrw + 1));
 	if (tab == NULL)
-		return (NULL);
+		free_all_exit(minishell);
 	tab[nbrw] = 0;
 	if (ft_split_minishell_malloc_ws(str, c, tab))
 		return (ft_free(ft_split_minishell_malloc_ws(str, c, tab), tab));

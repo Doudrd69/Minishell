@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:22:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:38:57 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

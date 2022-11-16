@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:40:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:15:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:36:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	classic_infile(char *str, int tab, t_shell *minishell,
 		return (1);
 	if (str[i] == '<' && str[i + 1] == '\0')
 	{
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}
@@ -46,7 +47,8 @@ static int	append_infile(char *str, int tab, t_shell *minishell, t_node **list)
 		return (1);
 	if (str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0')
 	{
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}
@@ -72,7 +74,8 @@ static int	classic_outfile(char *str, int tab, t_shell *minishell,
 		return (1);
 	if (str[i] == '>' && str[i + 1] == '\0')
 	{
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}
@@ -97,7 +100,8 @@ static int	append_outfile(char *str, int tab, t_shell *minishell,
 		return (1);
 	if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '\0')
 	{
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}

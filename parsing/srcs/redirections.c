@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:31 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 10:15:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:40:21 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_redirections(t_shell *minishell)
 
 	j = 0;
 	size = minishell->nbr_pipe + 1;
-	init_var_redirection(minishell, size);
+	init_var_redirection(minishell);
 	list_cpy = minishell->head;
 	while (list_cpy && list_cpy != NULL)
 	{
@@ -34,6 +34,5 @@ int	parse_redirections(t_shell *minishell)
 		if (list_cpy != NULL)
 			list_cpy = list_cpy->next;
 	}
-	dprintf(2, "bb|%p\n", minishell->head);
 	return (1);
 }

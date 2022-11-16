@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:05 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 08:35:58 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:12:02 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	{
 		free(cpy);
 		cpy = NULL;
+		unstack_list(minishell, list);
+		return ;
 	}
 	include_dollar_list(minishell, list, cpy);
 }
@@ -99,7 +101,10 @@ int	search_heredoc(t_shell *minishell, char *str, t_node **tab_infile,
 		space++;
 	file = main_loop_search_heredoc(str, i, file);
 	tmp = malloc(sizeof(char) * (file + 2));
+	if (!tmp)
+		free_all_exit(minishell);
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
+	search_return_exit(minishell, cpy, &tmp);
 	tmp = cmd_cpy(tmp, str + (minishell->mod + 1) + 1 + space, file + 1);
 	include_heredoc_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);

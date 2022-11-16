@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 20:55:15 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:53:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	ft_prev(t_shell *minishell, t_node *new_node
 {
 	if ((*list)->prev != NULL)
 	{
-
 		tmp_list->next = (*list)->next;
 		tmp_list->prev = (*list)->prev;
 		tmp_list->next->prev = new_node;
@@ -74,7 +73,6 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	t_node	*tmp_list;
 	t_node	*new_node;
 
-	
 	if (tmp)
 	{
 		if (ft_strlen(tmp) == 0)
@@ -85,7 +83,6 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	}
 	if ((*list) && (*list)->next == NULL)
 	{
-
 		new_node = ft_dlstnew((void *)(tmp));
 		ft_dlstadd_back(&minishell, new_node);
 		tmp_list = (*list);

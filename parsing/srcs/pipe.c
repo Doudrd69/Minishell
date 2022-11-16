@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:43 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 16:41:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:41:00 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,11 @@ static char	*ft_tmp(char *tmp, char *str, int j, int i)
 {
 	char	*buff;
 
-	// if (tmp)
-	// 	free(tmp);
 	(tmp) = malloc(sizeof(char) * (i + 1));
 	if (tmp == NULL)
 		return (NULL);
 	buff = cmd_cpy((tmp), str + j, i + 1);
 	buff[i] = '\0';
-	//TODO
-	// free(tmp);
 	return (buff);
 }
 
@@ -59,11 +55,10 @@ int	parse_pipe(t_shell *minishell, int j, int i)
 			minishell->last_pipe = i + j + 1;
 			minishell->tmpp = ft_tmp(minishell->tmpp, minishell->strp, j, i);
 			if (minishell->tmpp == NULL)
-				return (0);
+				free_all_exit(minishell);
 			add_last_arg(minishell, &list_cpy, &i, j);
 			ft_incr_var_pipe(&j, &i);
 		}
-		
 	}
 	ft_next(minishell);
 	return (1);

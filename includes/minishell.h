@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 13:32:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:39:03 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,6 @@ int			update_pwd(t_data *data);
 int			check_remains(char *str);
 int			no_path(t_data *data);
 int			no_args(t_node *node);
-int			test_free(void *tmp);
 
 /* GNL FUNCTIONS */
 size_t		ft_strlen_gnl(char *s);

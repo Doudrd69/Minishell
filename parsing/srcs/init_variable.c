@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 18:29:20 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:27:44 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,8 @@ void	init_dlist_var(t_shell *minishell)
 	minishell->list_size = 0;
 }
 
-void	init_var_redirection(t_shell *minishell, int size)
+void	init_var_redirection(t_shell *minishell)
 {
-	int	i;
-
-	i = 0;
-	// minishell->tab_infile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
-	// // minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
-	// while (i <= size)
-	// {
-	// 	minishell->tab_infile[i] = NULL;
-	// 	minishell->tab_outfile[i] = NULL;
-	// 	i++;
-	// }
-	(void) size;
 	minishell->infile_size = 0;
 	minishell->outfile_size = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 10:16:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:40:05 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	add_last_arg(t_shell *minishell, t_node **list_cpy, int *i, int j);
 /*QUOTE*/
 int		check_quote(t_shell *minishell, char *str, int i, char c);
 void	parse_quote(char *str, t_shell *minishell);
-char	*ft_copy_string_without_quote(char *str, char quote);
+char	*ft_copy_string_without_quote(t_shell *minishell,
+			char *str, char quote);
 void	list_nospace_quote(t_shell *minishell, t_node **list, char *tmp, int j);
 char	**ft_split_minishell(t_shell *minishell, char *str, char c);
 int		ft_nbr_words_split_minishell(t_shell *minishell,
@@ -122,7 +123,7 @@ int		search_outfile(t_shell *minishell, char *str, t_node **tab_outfile,
 			t_node **list);
 int		search_append(t_shell *minishell, char *str, t_node **tab_outfile,
 			t_node **list);
-void	init_var_redirection(t_shell *minishell, int size);
+void	init_var_redirection(t_shell *minishell);
 int		check_quote_infile(t_shell *minishell, char *str, int len);
 int		check_quote_append(t_shell *minishell, char *str, int len);
 int		check_quote_heredoc(t_shell *minishell, char *str, int len);
@@ -141,6 +142,14 @@ int		new_value5(t_shell *minishell, char *str, int i);
 int		new_value4(t_shell *minishell, char *str);
 int		if_only_space(char *str);
 void	unstack_list(t_shell *minishell, t_node **list);
+void	search_outfile_malloc(t_shell *minishell,
+			char *str, char **tmp, char **cpy);
+void	search_return_exit(t_shell *minishell,
+			char *cpy, char **tmp);
+int		tab_null_parse_quote(t_shell *minishell,
+			t_node **list_cpy, char **tab);
+void	return_malloc_change_var(t_shell *minishell,
+			char *tmp, char *cpy);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
@@ -182,7 +191,8 @@ void	value_quote_mod_1(t_shell *minishell, char *str, int i);
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);
 void	parse_quote(char *str, t_shell *minishell);
-char	*ft_copy_string_without_quote(char *str, char quote);
+char	*ft_copy_string_without_quote(t_shell *minishell,
+			char *str, char quote);
 void	parse_space(t_shell *minishell);
 void	list_nospace(t_shell *minishell, t_node **list, char *tmp, int j);
 void	list_no_space_else(t_shell *minishell, t_node *list_cpy,
@@ -202,6 +212,7 @@ int		sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j);
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);
 void	ft_free_list(t_shell *minishell);
+int		test_free(void *tmp);
 
 int		tokenizers_arg(t_shell *minishell);
 
@@ -220,4 +231,8 @@ t_node	*ft_dlstnew(void *content);
 int		ft_dlstadd_back(t_shell **alst, t_node *new);
 int		ft_dlstadd_front(t_shell **alst, t_node *new);
 t_node	*ft_dlstlast(t_shell *alst);
+void	free_all_exit(t_shell *minishell);
+void	free_tab_parse_exit(t_shell *minishell);
+void	free_outab_exit(t_shell *minishell);
+int		test_free_exit(void *tmp);
 #endif

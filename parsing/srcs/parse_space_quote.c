@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_space_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 10:58:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:39:55 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_prev(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = NULL;
 	minishell->head = list_cpy;
-	list_cpy->type = tmp->type;
+	minishell->head->type = tmp->type;
 	if (tmp->content && tmp->content != minishell->cmd)
 		free(tmp->content);
 	free(tmp);
@@ -65,14 +65,8 @@ static void	include_parse_quote(t_node **list_cpy, t_shell *minishell, int j)
 
 	str = (char *)((*list_cpy)->content);
 	tab = ft_split_minishell(minishell, str, ' ');
-	if (tab == NULL)
-	{
-		unstack_list(minishell, list_cpy);
+	if (tab_null_parse_quote(minishell, list_cpy, tab) == 0)
 		return ;
-		// free((minishell->head));
-		// minishell->head = NULL;
-		// (*list_cpy) = minishell->head;
-	}
 	j = -1;
 	while (tab && tab[++j] != NULL)
 		list_nospace(minishell, list_cpy, tab[j], j);
@@ -100,6 +94,5 @@ void	parse_space_quote(t_shell *minishell)
 	while (list_cpy && list_cpy != NULL)
 	{
 		include_parse_quote(&list_cpy, minishell, j);
-		dprintf(2, "bb|%p, %p\n", minishell->head, list_cpy);
 	}
 }

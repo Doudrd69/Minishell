@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:33:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 20:29:44 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 13:01:03 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	check_syntax_begin(t_shell *minishell, char *str, int i)
 	j = ft_strlen(str);
 	if (j == i)
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}
@@ -27,7 +28,8 @@ static int	check_syntax_begin(t_shell *minishell, char *str, int i)
 	{
 		if (str[i + 1] == '<' && str[i + 2] == '<' && str[i + 3] == '<')
 		{
-			printf("minishell: syntax error near unexpected token `<<<'\n");
+			write(2,
+				"minishell: syntax error near unexpected token `<<<'\n", 52);
 			minishell->error = 258;
 			return (0);
 		}
@@ -39,19 +41,19 @@ static int	check_syntax_mid(t_shell *minishell, char *str, int i)
 {
 	if (str[i + 1] == '|' && str[i + 2] == '|')
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
+		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 		minishell->error = 258;
 		return (0);
 	}
 	else if (str[i + 1] == '<' && str[i + 2] == '<')
 	{
-		printf("minishell: syntax error near unexpected token `<<'\n");
+		write(2, "minishell: syntax error near unexpected token `<<'\n", 51);
 		minishell->error = 258;
 		return (0);
 	}
 	if (str[i + 1] == '<' && str[i + 2] == '>')
 	{
-		printf("minishell: syntax error near unexpected token `<>'\n");
+		write(2, "minishell: syntax error near unexpected token `<>'\n", 51);
 		minishell->error = 258;
 		return (0);
 	}
@@ -62,13 +64,14 @@ static int	check_syntax_end(t_shell *minishell, char *str, int i)
 {
 	if (str[i + 1] == '|')
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 56);
 		minishell->error = 258;
 		return (0);
 	}
 	if (str[i + 1] == '<')
 	{
-		printf("minishell: syntax error near unexpected token `<'\n");
+		write(2, "minishell: syntax error near unexpected token `<'\n", 50);
 		minishell->error = 258;
 		return (0);
 	}

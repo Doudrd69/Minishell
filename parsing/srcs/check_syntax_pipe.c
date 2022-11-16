@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:43:39 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 15:02:50 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:33:15 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*ft_prev(char *tmp, char *str, int j, int i)
 	char	*buff;
 
 	tmp = malloc(sizeof(char) * (ft_strlen(str) - (j + i - 1)));
+	if (!tmp)
+		return (NULL);
 	buff = cmd_cpy(tmp, str + j + i, ft_strlen(str) - (j + i - 1));
 	buff[ft_strlen(str) - (j + i)] = '\0';
 	return (buff);
@@ -25,15 +27,14 @@ static char	*ft_prev(char *tmp, char *str, int j, int i)
 static void	ft_add_pipe(t_shell *minishell, char *tmp
 	, int *i, t_node **list_cpy)
 {
-	t_node *buff;
+	t_node	*buff;
+
 	(void) list_cpy;
 	ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)tmp));
-	// *list_cpy = (*list_cpy)->next;
-  	buff = ft_dlstnew((void *)ft_strdup("|"));
+	buff = ft_dlstnew((void *)ft_strdup("|"));
 	if (buff)
 		buff->type = 'P';
-	ft_dlstadd_back((&(minishell)), buff );\
-	// *list_cpy = (*list_cpy)->next;
+	ft_dlstadd_back((&(minishell)), buff);
 	(*i)++;
 }
 
@@ -44,6 +45,8 @@ void	add_last_arg(t_shell *minishell, t_node **list_cpy, int *i, int j)
 	{
 		minishell->tmpp = ft_prev(minishell->tmpp, minishell->strp, j, (*i));
 		ft_dlstadd_back((&(minishell)), ft_dlstnew((void *)minishell->tmpp));
+		if (!minishell->tmpp)
+			return (free_all_exit(minishell));
 	}
 }
 
@@ -53,7 +56,7 @@ static int	check_syntax_utils(t_shell *minishell, int j, int i, char *str)
 	{
 		if (j == 0)
 		{
-			printf("minishell: syntax error near unexpected token `|'\n");
+			write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 			minishell->error = 258;
 			return (0);
 		}
@@ -63,9 +66,11 @@ static int	check_syntax_utils(t_shell *minishell, int j, int i, char *str)
 		if (str[i] == '|')
 		{
 			if (str[i + 1] == '|')
-				printf("minishell: syntax error near unexpected token `||'\n");
+				write(2,
+					"minishell: syntax error near unexpected token `||'\n", 51);
 			else
-				printf("minishell: syntax error near unexpected token `|'\n");
+				write(2,
+					"minishell: syntax error near unexpected token `|'\n", 50);
 			minishell->error = 258;
 			return (0);
 		}
@@ -80,13 +85,13 @@ int	check_syntax(t_shell *minishell, char *str, int i)
 	j = i;
 	if (i == 0 || str[i + 1] == '\0')
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
+		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 		minishell->error = 258;
 		return (0);
 	}
 	if (str[i + 1] == '|')
 	{
-		printf("minishell: syntax error near unexpected token `||'\n");
+		write(2, "minishell: syntax error near unexpected token `||'\n", 51);
 		minishell->error = 258;
 		return (0);
 	}

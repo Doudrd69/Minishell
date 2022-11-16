@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:37 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 08:35:24 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:59:02 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	include_outfile_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
-	// list_cpy = *tab_list;
-	// dprintf(2, "1=%p, 2=%p", tab_list, *tab_list);
 	add_back_file_list(tab_list, ft_dlstnew(tmp));
 	list_cpy = *tab_list;
 	while (list_cpy->next != NULL)
@@ -69,6 +67,8 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	{
 		free(cpy);
 		cpy = NULL;
+		unstack_list(minishell, list);
+		return ;
 	}
 	include_dollar_list(minishell, list, cpy);
 }
@@ -118,9 +118,7 @@ int	search_outfile(t_shell *minishell, char *str,
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	main_loop_search_outfile(minishell, str, i);
-	tmp = malloc(sizeof(char) * (minishell->file_search + 2));
-	cpy = malloc(sizeof(char) * ((ft_strlen(str)
-					- (minishell->file_search) + 1)));
+	search_outfile_malloc(minishell, str, &tmp, &cpy);
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space,
 			minishell->file_search + 1);
 	include_outfile_list(tab_outfile, tmp);

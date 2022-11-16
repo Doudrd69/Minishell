@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_exec_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:39:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:38:19 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,4 @@ int	envp_size_for_tmp(char **tab)
 	while (tab[i] != NULL)
 		i++;
 	return (i);
-}
-
-int	test_free(void *tmp)
-{
-	if (tmp == NULL)
-		return (0);
-	else
-		free(tmp);
-	return (1);
 }

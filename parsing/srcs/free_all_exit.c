@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_parse.c                                       :+:      :+:    :+:   */
+/*   free_all_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 12:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:39:20 by wmonacho         ###   ########lyon.fr   */
+/*   Created: 2022/11/16 13:30:28 by wmonacho          #+#    #+#             */
+/*   Updated: 2022/11/16 13:36:40 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../parsing/parsing.h"
+#include "../parsing.h"
 
-int	test_free(void *tmp)
-{
-	if (tmp == NULL)
-		return (0);
-	else
-	{
-		free(tmp);
-		tmp = NULL;
-	}
-	return (1);
-}
-
-void	free_outab(t_shell *minishell)
+void	free_outab_exit(t_shell *minishell)
 {
 	int		i;
 	t_node	**tmp_outab;
@@ -50,7 +37,7 @@ void	free_outab(t_shell *minishell)
 	test_free((void *)(minishell->tab_outfile));
 }
 
-void	free_tab_parse(t_shell *minishell)
+void	free_tab_parse_exit(t_shell *minishell)
 {
 	t_node	**tmp_intab;
 	t_node	*tmp;
@@ -73,10 +60,10 @@ void	free_tab_parse(t_shell *minishell)
 		i++;
 	}
 	test_free((void *)(minishell->tab_infile));
-	free_outab(minishell);
+	free_outab_exit(minishell);
 }
 
-void	free_all(t_shell *minishell)
+void	free_all_exit(t_shell *minishell)
 {
 	t_node	*tmp;
 
@@ -88,7 +75,7 @@ void	free_all(t_shell *minishell)
 			test_free((void *)(tmp->content));
 		test_free((void *)(tmp));
 	}
-	free_tab_parse(minishell);
+	free_tab_parse_exit(minishell);
 	test_free((void *)(minishell->value));
 	test_free((void *)(minishell->var_search));
 	test_free((void *)(minishell->home_path));
