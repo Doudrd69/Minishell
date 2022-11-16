@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:49:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/13 17:06:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	check_inputfile_cmd(t_data *data, t_shell *parse)
 	return (multi_cmd_dup_to_pipe(data, index));
 }
 
-void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[])
+void	command_exec(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[5])(t_data *, t_node *), int g)
 {
 	signal(SIGQUIT, &sigtest);
 	signal(SIGINT, &sigint_handler_in_process);
@@ -117,9 +118,9 @@ void	command_exec(t_data *data, t_node *node, t_shell *parse, char *envp[])
 		exit(errno);
 	if (check_outfile_cmd(data, parse) != 0)
 		exit(errno);
-	data->env.tab3 = get_path(envp, data, data->env.tab3);
+	data->env.tab3 = get_path(data->envp, data, data->env.tab3);
 	data->env.param_tab3 = fill_param_tab(node, data, data->env.param_tab3);
 	while (data->env.param_tab3[data->size_ptab3])
 		data->size_ptab3++;
-	cmd_execution(data, envp, data->pipe_id);
+	cmd_execution(data, data->pipe_id, node, builtins, g);
 }

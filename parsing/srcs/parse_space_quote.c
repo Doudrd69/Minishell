@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:18:36 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:39:55 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	{
 		list_cpy->prev = tmp->prev;
 		list_cpy->prev->next = list_cpy;
+		list_cpy->type = tmp->type;
 	}
 	else
 	{

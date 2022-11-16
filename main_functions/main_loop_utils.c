@@ -3,43 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:11:01 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	export_exec(t_data *data, t_node *node)
+int	export_exec(t_data *data, t_node *n)
 {
 	char	**tmp;
 	int		tmp_size;
 
-	if (node->next != NULL)
+	int i = 0;
+	n = n->prev;
+	while (n && n->next != NULL && n->next->type != 'P')
 	{
-		node = node->next;
-		while (node != NULL)
-		{
-			tmp_size = 0;
-			tmp = data->envp;
-			tmp_size = envp_size_for_tmp(tmp);
-			if (mini_export(data, node->content) == 1)
-				return (1);
-			data->envp = data->new_env;
-			if ((data->check_loop_export == 1 && node->next == NULL))
-				free_old(tmp, tmp_size);
-			if (node->next == NULL)
-				break ;
-			data->check_loop_export = 1;
-			node = node->next;
-		}
-		return (0);
+		i++;
+		n = n->next;
 	}
-	ft_printf("minishell: export: '%s': not a valid identifier\n",
-		node->content);
-	return (1);
+	if (i == 0)
+		return (display_export(data));
+	while (--i > 0)
+		n = n->prev;
+	while (n != NULL)
+	{
+		tmp_size = 0;
+		tmp = data->envp;
+		tmp_size = envp_size_for_tmp(tmp);
+		if (mini_export(data, n->content) == 1)
+			return (1);
+		data->envp = data->new_env;
+		if (data->check_loop_export == 1)
+			free_old(tmp, tmp_size - 1);
+		if (n->next == NULL)
+			break ;
+		data->check_loop_export = 1;
+		n = n->next;
+	}
+	return (0);
 }
 
 int	unset_exec(t_data *data, t_node *node)
@@ -47,23 +51,20 @@ int	unset_exec(t_data *data, t_node *node)
 	char	**tmp;
 	int		tmp_size;
 
-	if (node->next != NULL)
-		node = node->next;
 	while (node != NULL)
 	{
 		tmp = data->envp;
 		tmp_size = envp_size_for_tmp(tmp);
 		if (mini_unset(data, node->content) == 1)
-			return (0);
+			return (1);
 		data->envp = data->unset_env;
-		if ((data->check_loop_export == 1 && node->next == NULL)
-			|| node->next != NULL)
+		if (data->check_loop_export == 1)
 			free_old(tmp, tmp_size);
 		if (node->next == NULL)
 			break ;
+		data->check_loop_export = 1;
 		node = node->next;
 	}
-	data->envp = data->unset_env;
 	return (0);
 }
 
@@ -94,7 +95,7 @@ void	*node_rotation(t_node *node)
 {
 	if (node != NULL)
 	{
-		while (node->next->type != 'P')
+		while (node && node->next->type != 'P')
 			node = node->next;
 		if (node && node->next->type == 'P')
 			node = node->next->next;
@@ -108,18 +109,19 @@ void	*node_rotation(t_node *node)
 	return (node);
 }
 
-void	exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse)
+void	exec_main(t_data *data, t_node *node, t_shell *parse,
+	int (*builtins[7])(t_data *, t_node *), int g)
 {
 	if (data->cmd_nb > 0)
 	{
 		if (node && node->type == 'P')
 			node = node->next;
-		first_command(data->envp, data, node, parse);
+		first_command(data, node, parse, builtins, g);
 		if (data->cmd_nb > 1)
 		{
 			node = node_rotation(node);
-			node = commands(data, node, parse, envp);
-			last_command(envp, data, node, parse);
+			node = commands(data, node, parse, builtins, g);
+			last_command(data, node, parse, builtins, g);
 		}
 	}
 	return ;

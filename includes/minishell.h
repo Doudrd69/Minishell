@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 11:11:12 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:39:03 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,9 @@ typedef struct data
 	int			new_env_size;
 	int			unset_env_size;
 	int			check_loop_export;
+	int			index_arg;
 	int			*test;
-	char		*builtins_name[5];
+	char		*builtins_name[7];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
 	char		**new_env;
@@ -143,6 +144,7 @@ typedef struct data
 	char		**envp;
 	char		*home_path;
 	char		*echo_file;
+	char		*tmp_fill_tab;
 	t_heredoc	hd;
 	t_env		env;
 	t_exec		exec;
@@ -187,27 +189,35 @@ int			var_exists_hd(t_data *data);
 
 /* COMMAND UTILS */
 t_node		*main_init_check(t_data *data, t_shell *minishell, t_node *node);
+t_node		*loop_to_first_arg(t_node *node, int i, int index);
 
 void		execution(t_data *data, t_shell *parse, t_node *node,
-				int (*builtins[5])(t_data *, t_node *), int *gstatus);
-void		first_command(char *envp[], t_data *data, t_node *node,
-				t_shell *parse);
-void		last_command(char *envp[], t_data *data, t_node *node,
-				t_shell *parse);
+				int (*builtins[7])(t_data *, t_node *), int *gstatus);
+void		first_command(t_data *data, t_node *node, t_shell *parse,
+				int (*builtins[7])(t_data *, t_node *), int g);
+void		last_command(t_data *data, t_node *node, t_shell *parse,
+				int (*builtins[7])(t_data *, t_node *), int g);
 void		command_exec(t_data *data, t_node *node, t_shell *parse,
-				char *envp[]);
-void		*commands(t_data *data, t_node *node, t_shell *parse, char *envp[]);
-void		exec_main(t_data *data, char *envp[], t_node *node, t_shell *parse);
-void		exec_cmd(char **tab, char **param, char *env[], t_data *data);
-void		cmd_exec(t_data *data, char **envp, t_shell *minishell);
-void		cmd_execution(t_data *data, char *envp[], int pipe_id);
+				int (*builtins[7])(t_data *, t_node *), int g);
+void		*commands(t_data *data, t_node *node, t_shell *parse,
+				int (*builtins[7])(t_data *, t_node *), int g);
+void		exec_main(t_data *data, t_node *node, t_shell *parse,
+				int (*builtins[7])(t_data *, t_node *), int g);
+void		exec_cmd(char **tab, char **param, t_data *data,
+				int (*builtins[7])(t_data *, t_node *));
+void		cmd_exec(t_data *data, t_shell *minishell,
+				int (*builtins[7])(t_data *, t_node *));
+void		cmd_execution(t_data *data, int pipe_id, t_node *node,
+				int (*builtins[7])(t_data *, t_node *), int g);
 void		cmd_exec_init(t_data *data, t_shell *parse_data);
-void		first_cmd_execution(t_data *data, char *envp[]);
+void		first_cmd_execution(t_data *data, t_node *node,
+				int (*builtins[7])(t_data *, t_node *), int g);
 void		close_pipe_child_processes(t_data *data, int i);
 void		main_init_before_loop(t_data *data, char **envp,
 				int (*builtins[5])(t_data *data, t_node *node), int argc,
 				char **argv);
-void		last_cmd_execution(t_data *data, char *envp[]);
+void		last_cmd_execution(t_data *data, t_node *node,
+				int (*builtins[5])(t_data *, t_node *), int g);
 void		eof_handler(char *input, t_shell *minishell);
 void		envp_check(t_data *data, char **envp);
 void		sigint_handler_in_process(int signum);
@@ -237,11 +247,12 @@ int			check_outfile_last_cmd(t_data *data, t_shell *parse);
 int			multi_cmd_dup_to_pipe(t_data *data, int index);
 int			check_inputfile(t_data *data, t_shell *parse);
 int			pipe_creation(t_data *data, int nbr_of_pipe);
-int			start_heredoc(t_data *data, t_shell *parse);
+int			start_heredoc(t_data *data, t_shell *parse, t_node *node);
 int			check_outfile(t_data *data, t_shell *parse);
 int			export_exec(t_data *data, t_node *node);
 int			unset_exec(t_data *data, t_node *node);
 int			set_p_status(int status, t_node *node);
+int			check_loop_exec(char *str, int i);
 int			ft_printf(const char *flags, ...);
 int			**free_inttab(int **tab, int i);
 int			check_loop(char *str, int j);
@@ -250,8 +261,8 @@ int			fork_creation(int pid);
 int			check_pipe(char *str);
 
 /* BUILTIN FUNCTIONS */
-int			mini_export(t_data *data, char *var_export);
-int			mini_unset(t_data *data, char *var_unset);
+int			mini_export(t_data *data, char *var);
+int			mini_unset(t_data *data, char *var);
 int			mini_echo(t_data *data, t_node *node);
 int			mini_exit(t_data *data, t_node *node);
 int			mini_env(t_data *data, t_node *node);
@@ -283,6 +294,7 @@ int			specific_cases_with_special_char(t_data *data, int i);
 int			var_search_copy(t_data *data, int size, int i, int j);
 int			unset_var(int index, t_data *data, char *var_unset);
 int			malloc_and_cpy(t_data *data, int i, int index);
+int			check_nb_of_args(t_node *node, int size);
 int			write_and_check_signs(int i, t_data *data);
 int			check_var_hd(char *str, char *var_name);
 int			path_exists(t_data *data, t_node *node);
@@ -309,7 +321,7 @@ size_t		ft_strnlen(char *s);
 t_node		*node_rotation_exec(t_node *node, t_shell *parse);
 
 void		init_builtins_tab(char *builtins_name[5],
-				int (*builtins[5])(t_data *, t_node *));
+				int (*builtins[7])(t_data *, t_node *));
 void		free_all(t_shell *minishell);
 
 int			export_no_env(t_data *data);

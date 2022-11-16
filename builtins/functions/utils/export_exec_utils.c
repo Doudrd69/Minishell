@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 11:09:24 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:38:19 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	envp_size_for_tmp(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab[i] != NULL)
 		i++;
 	return (i);
 }

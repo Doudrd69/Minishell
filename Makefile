@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -15,6 +15,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		cmd_exec/cmd_srcs/utils/last_command_utils.c			\
 		cmd_exec/cmd_srcs/utils/single_quote_exec.c				\
 		cmd_exec/cmd_srcs/utils/multi_commands_utils.c			\
+		cmd_exec/cmd_srcs/utils/fill_param_tab_utils.c			\
 		cmd_exec/cmd_srcs/child_execution_bonus.c				\
 		cmd_exec/cmd_srcs/main_pipe_creation.c					\
 		cmd_exec/cmd_srcs/main_utils_bonus.c					\
@@ -31,6 +32,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		builtins/functions/utils/export_exec_utils.c			\
 		builtins/functions/utils/mini_unset_utils.c				\
 		builtins/functions/utils/mini_echo_utils.c				\
+		builtins/functions/utils/mini_exit_utils.c				\
 		builtins/functions/builtin_export_unset.c				\
 		builtins/functions/utils/mini_cd_utils.c				\
 		builtins/functions/builtin_functions.c					\
@@ -123,10 +125,10 @@ $(NAME) : $(OBJS)
 		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -framework CoreFoundation -o $(NAME) $(OBJS)
 
 ft_printf :
-	make -j -C $(PRINTF_PATH)
+	make -C $(PRINTF_PATH)
 
 libft :
-	make -j FLAGS="$(FLAGS)" -C $(LIBFT_PATH)
+	make -C $(LIBFT_PATH)
 
 $(PRINTF_PATH)$(PRINTF_NAME) : ft_printf
 

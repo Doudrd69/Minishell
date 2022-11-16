@@ -6,13 +6,13 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 15:10:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 09:15:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	mini_export(t_data *data, char *var)
+int	mini_export(t_data *data, char	*var)
 {
 	data->new_env_size = 0;
 	if (check_var_exists_export(data, var))
@@ -36,7 +36,7 @@ int	mini_export(t_data *data, char *var)
 
 int	mini_unset(t_data *data, char *var_unset)
 {
-	int	index;
+	int		index;
 
 	index = 0;
 	data->unset_env_size = 0;
