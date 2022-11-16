@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 20:38:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:00:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	sigint_handler_main_loop(int signum)
 
 int	export_and_unset(t_data *data, t_node *node, int check)
 {
-	(void)check;
 	if (node && ft_strncmp(node->content, "export", 6) == 0)
 	{
 		if (node->next == NULL || node->next->type == 'P')
@@ -45,10 +44,10 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 		data->p_status = unset_exec(data, node);
 		return (1);
 	}
-	return (3);
+	return (check);
 }
 
-int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
+int	builtins_loop(char *tab_name[5], int (*builtins[7])(t_data *, t_node *),
 	t_node *node, t_data *data, int *gstatus)
 {
 	int	i;
@@ -60,9 +59,11 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 		if (ft_strncmp(tab_name[i], node->content,
 				ft_strlen(node->content)) == 0)
 		{
-			if (node->next != NULL)
+			if (node->next != NULL && node->next->type != 'P')
 				node = node->next;
 			data->p_status = (*builtins[i])(data, node);
+			if (data->p_status == 0)
+				return (0);
 			if (data->p_status == 1)
 				return (1);
 			if (data->p_status == 2)
@@ -80,7 +81,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data				data;
 	t_shell				*minishell;
 	t_node				*node;
-	int					(*builtins[5])(t_data *data, t_node *node);
+	int					(*builtins[7])(t_data *data, t_node *node);
 
 	sa.sa_handler = SIG_IGN;
 	main_init_before_loop(&data, envp, builtins, argc, argv);
@@ -102,7 +103,7 @@ int	main(int argc, char *argv[], char *envp[])
 }
 
 void	cmd_exec(t_data *data, t_shell *parse,
-	int (*builtins[5])(t_data *, t_node *))
+	int (*builtins[7])(t_data *, t_node *))
 {
 	t_node	*node;
 	int		status;
@@ -128,3 +129,9 @@ void	cmd_exec(t_data *data, t_shell *parse,
 		free(data->hd_pid);
 	return ;
 }
+
+//test builtins seul
+//test builtins avec commandes
+//test builtins seul avec redirection
+//test builtins avec commandes et redirection
+//peut pas tester les redir avec juste une commande ca pete mdr

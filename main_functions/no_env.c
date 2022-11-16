@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:03:56 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 10:58:30 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:56:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	create_oldpwd(t_data *data)
 		return (1);
 	ft_strlcpy(str, "OLDPWD=", 7, 0);
 	ft_strlcpy(&str[7], data->oldpwd, ft_strlen(data->oldpwd), 1);
-	mini_export(data, str);
+	//mini_export(data, str);
 	data->envp = data->new_env;
 	data->first_cd_check = 1;
 	free(str);

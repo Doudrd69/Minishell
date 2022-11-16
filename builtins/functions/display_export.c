@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 20:39:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 07:16:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ int	display_export(t_data *data)
 	char	**tmp_tab;
 
 	i = 0;
-	if (data->pipe_check == 1)
-		output_fd = data->pipefd[0][WRITE];
-	else
-		output_fd = 1;
+
+	output_fd = 1;
 	tmp_tab = malloc(sizeof(char *) * data->envp_size + 1);
 	if (!tmp_tab)
 		free(tmp_tab);

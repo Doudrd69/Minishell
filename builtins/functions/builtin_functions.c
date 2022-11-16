@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 20:07:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:02:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	mini_cd(t_data *data, t_node *node)
 {
-	dprintf(2, "CHECK\n");
 	data->oldpwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 	if (node->next == NULL && ft_strncmp(node->content, "cd", 2) == 0)
 	{
@@ -36,7 +35,6 @@ int	mini_cd(t_data *data, t_node *node)
 int	mini_pwd(t_data *data, t_node *node)
 {
 	(void)node;
-	dprintf(2, "CHECK\n");
 	if (getcwd(data->buff, BUF_SIZE) == NULL)
 	{
 		data->p_status = 1;
@@ -54,7 +52,6 @@ int	mini_env(t_data *data, t_node *node)
 
 	i = -1;
 	(void)node;
-	dprintf(2, "CHECK\n");
 	if (data->envp[0] == NULL)
 		return (1);
 	while (++i < data->envp_size)
@@ -80,9 +77,9 @@ int	mini_echo(t_data *data, t_node *node)
 
 	loop = 0;
 	data->echo_arg = 0;
+	printf("My echo\n");
 	if (no_args(node) == 0)
 		return (0);
-	dprintf(2, "CHECK\n");
 	while (node != NULL && node->type != 'P')
 	{
 		check = 0;
@@ -106,17 +103,13 @@ int	mini_exit(t_data *data, t_node *node)
 
 	size = 0;
 	size = check_nb_of_args(node, size);
-	dprintf(2, "CHECK\n");
 	if (size > 1)
 	{
-		ft_printf("minishell: exit: too many arguments\n");
-		return (2);
+		write(2, "minishell: exit: too many arguments\n", 36);
+		exit(1);
 	}
-	if (data->pipe_check == 0)
-	{
-		tmp = ft_atoi(node->content);
-		data->p_status = tmp;
-		exit((unsigned char)tmp);
-	}
-	return (2);
+	tmp = ft_atoi(node->content);
+	printf("test ==> %d\n", tmp);
+	data->p_status = tmp;
+	exit((unsigned char)tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 20:35:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 09:44:25 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	envp_check(t_data *data, char **envp)
 }
 
 void	main_init_before_loop(t_data *data, char **envp,
-	int (*builtins[5])(t_data *data, t_node *node), int argc, char *argv[])
+	int (*builtins[7])(t_data *data, t_node *node), int argc, char *argv[])
 {
 	(void)argv;
 	(void)argc;
@@ -82,7 +82,7 @@ void	main_init_before_loop(t_data *data, char **envp,
 }
 
 void	execution(t_data *data, t_shell *parse, t_node *node,
-	int (*builtins[5])(t_data *, t_node *), int *gstatus)
+	int (*builtins[7])(t_data *, t_node *), int *gstatus)
 {
 	data->check_main = 3;
 	if (parse->cmd && *parse->cmd)
@@ -90,14 +90,13 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 	if (parsing(data->envp, parse) == 0)
 	{
 		node = main_init_check(data, parse, node);
-		if (parse->nbr_pipe == 0)
+		if (parse->nbr_pipe == 0 && parse->tab_outfile == NULL)//outfile_szie pas init a 0 donc pete
 		{
-			printf("Only BUILTIN --> no PIPE\n");
+			printf("Builtin\n");
 			data->check_main = builtins_loop(data->builtins_name, builtins,
 					node, data, gstatus);
 		}
-		data->check_main = export_and_unset(data, node, data->check_main);
-		printf("loool : %d\n", data->check_main);
+		printf("\n ===> Check main : %d\n", data->check_main);
 		if (data->check_main == 3)
 			cmd_exec(data, parse, builtins);
 	}

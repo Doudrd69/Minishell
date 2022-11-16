@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 19:55:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 09:24:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,35 @@ int	export_exec(t_data *data, t_node *n)
 	char	**tmp;
 	int		tmp_size;
 
-	if (n->next != NULL)
+	int i = 0;
+	n = n->prev;
+	while (n && n->next != NULL && n->next->type != 'P')
 	{
+		i++;
 		n = n->next;
-		while (n != NULL)
-		{
-			tmp_size = 0;
-			tmp = data->envp;
-			tmp_size = envp_size_for_tmp(tmp);
-			if (mini_export(data, n->content) == 1)
-				return (1);
-			data->envp = data->new_env;
-			if ((data->check_loop_export == 1 && n->next == NULL))
-				free_old(tmp, tmp_size);
-			if (n->next == NULL)
-				break ;
-			data->check_loop_export = 1;
-			n = n->next;
-		}
-		return (0);
 	}
-	ft_printf("minishell: export: '%s': not a valid identifier\n", n->content);
-	return (1);
+	if (i == 0)
+		return (display_export(data));
+	while (--i > 0)
+		n = n->prev;
+	printf("Node before export loop ==> %s\n", n->content);
+	while (n != NULL)
+	{
+		printf("VAR to export ==> %s\n", n->content);
+		tmp_size = 0;
+		tmp = data->envp;
+		tmp_size = envp_size_for_tmp(tmp);
+		if (mini_export(data, n->content) == 1)
+			return (1);
+		data->envp = data->new_env;
+		if (data->check_loop_export == 1)
+			free_old(tmp, tmp_size - 1);
+		if (n->next == NULL)
+			break ;
+		data->check_loop_export = 1;
+		n = n->next;
+	}
+	return (0);
 }
 
 int	unset_exec(t_data *data, t_node *node)
@@ -46,23 +53,22 @@ int	unset_exec(t_data *data, t_node *node)
 	char	**tmp;
 	int		tmp_size;
 
-	if (node->next != NULL)
-		node = node->next;
+	printf("Node before unset loop ==> %s\n", node->content);
 	while (node != NULL)
 	{
+		printf("Var to unset ==> %s\n", node->content);
 		tmp = data->envp;
 		tmp_size = envp_size_for_tmp(tmp);
 		if (mini_unset(data, node->content) == 1)
-			return (0);
+			return (1);
 		data->envp = data->unset_env;
-		if ((data->check_loop_export == 1 && node->next == NULL)
-			|| node->next != NULL)
+		if (data->check_loop_export == 1)
 			free_old(tmp, tmp_size);
 		if (node->next == NULL)
 			break ;
+		data->check_loop_export = 1;
 		node = node->next;
 	}
-	data->envp = data->unset_env;
 	return (0);
 }
 
@@ -108,7 +114,7 @@ void	*node_rotation(t_node *node)
 }
 
 void	exec_main(t_data *data, t_node *node, t_shell *parse,
-	int (*builtins[5])(t_data *, t_node *), int g)
+	int (*builtins[7])(t_data *, t_node *), int g)
 {
 	if (data->cmd_nb > 0)
 	{
