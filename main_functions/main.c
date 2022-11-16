@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:51:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:39:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	node = node_rotation_exec(node, parse);
 	exec_main(data, node, parse, builtins, g_pstatus);
 	if (data->check_hd == 1)
-	{
-		dprintf(2, "CLOSE 3\n");
 		close_hd_pipe(data, parse->nbr_appendin - 1);
-	}
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (data->pipe_nb - 1));
 	while (wait(&status) != -1)

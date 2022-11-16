@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:39:03 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 16:20:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct data
 	int			check_loop_export;
 	int			index_arg;
 	int			*test;
+	int			consecutive_pipes;
 	char		*builtins_name[7];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
@@ -219,13 +220,13 @@ void		main_init_before_loop(t_data *data, char **envp,
 void		last_cmd_execution(t_data *data, t_node *node,
 				int (*builtins[5])(t_data *, t_node *), int g);
 void		eof_handler(char *input, t_shell *minishell);
+void		*node_rotation(t_node *node, t_data *data);
 void		envp_check(t_data *data, char **envp);
 void		sigint_handler_in_process(int signum);
 void		sigint_handler_main_loop(int signum);
 void		init_main(t_data *data, char **envp);
 void		exit_cmd_not_found(char **param);
 void		close_pipe(t_data *data, int i);
-void		*node_rotation(t_node *node);
 void		free_param_tab(t_data *data);
 void		check_file(char *file);
 void		sigtest(int signum);

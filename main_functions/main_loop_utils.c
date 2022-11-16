@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:39:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 16:38:05 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	export_exec(t_data *data, t_node *n)
 {
 	char	**tmp;
 	int		tmp_size;
+	int		i;
 
-	int i = 0;
+	i = 0;
 	n = n->prev;
 	while (n && n->next != NULL && n->next->type != 'P')
 	{
@@ -91,14 +92,25 @@ int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 	return (0);
 }
 
-void	*node_rotation(t_node *node)
+void	*node_rotation(t_node *node, t_data *data)
 {
 	if (node != NULL)
 	{
 		while (node && node->next->type != 'P')
 			node = node->next;
+		printf("1 : %s\n", node->content);
 		if (node && node->next->type == 'P')
-			node = node->next->next;
+		{
+			node = node->next;
+			printf("2 : %s\n", node->content);
+			if (node && node->next->type == 'P')
+			{
+				data->consecutive_pipes = 1;
+				return (node);
+			}
+			node = node->next;
+			printf("3 : %s\n", node->content);
+		}
 		else if (node && node->next->type == 'N')
 			node = node->next->next->next;
 		else
@@ -112,6 +124,7 @@ void	*node_rotation(t_node *node)
 void	exec_main(t_data *data, t_node *node, t_shell *parse,
 	int (*builtins[7])(t_data *, t_node *), int g)
 {
+	data->consecutive_pipes = 0;
 	if (data->cmd_nb > 0)
 	{
 		if (node && node->type == 'P')
@@ -119,7 +132,9 @@ void	exec_main(t_data *data, t_node *node, t_shell *parse,
 		first_command(data, node, parse, builtins, g);
 		if (data->cmd_nb > 1)
 		{
-			node = node_rotation(node);
+			node = node_rotation(node, data);
+			if (data->consecutive_pipes == 1)
+				return ;
 			node = commands(data, node, parse, builtins, g);
 			last_command(data, node, parse, builtins, g);
 		}

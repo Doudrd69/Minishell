@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:04:20 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:22:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:41:03 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,8 @@ int	heredoc_exec(t_data *data, t_node **infile_tmp, t_shell *parse)
 		return (1);
 	data->hd_pid = malloc(sizeof(int) * data->heredoc_nb);
 	if (!data->hd_pid)
-	{
-		dprintf(2, "RETURN 4\n");
 		return (1);
-	}
 	if (heredoc_loop(data, infile_tmp, parse, ptr) == 1)
-	{
-		dprintf(2, "RETURN 5\n");
 		return (1);
-	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:02:25 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:58:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	exec_cmd(char **tab, char **param, t_data *data,
 	int	i;
 
 	(void)builtins;
-	(void)data;
 	i = -1;
 	if (tab == NULL)
 	{
@@ -80,10 +79,6 @@ void	first_cmd_execution(t_data *data, t_node *node,
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		// if (data->exec.infile_check == 1)
-		// 	close(data->input_fd);
-		// if (data->exec.outfile_check == 1)
-		// 	close(data->output_fd);
 		if (data->hd_pipefd)
 		{
 			dprintf(2, "CLOSE 1\n");
@@ -114,10 +109,6 @@ void	last_cmd_execution(t_data *data, t_node *node,
 			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->exec.outfile_check == 1)
-			close(data->output_fd);
-		if (data->exec.infile_check == 1)
-			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		check_file(data->env.param_tab2[0]);
