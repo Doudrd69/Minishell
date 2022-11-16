@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:07:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:53:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ void	first_cmd_execution(t_data *data, t_node *node,
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
 		if (data->hd_pipefd)
-		{
-			dprintf(2, "CLOSE 1\n");
 			close_hd_pipe(data, data->heredoc_nb - 1);
-		}
 		check_file(data->env.param_tab1[0]);
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
 			free_and_exit_builtin(data->env.tab1, data->env.param_tab1,
