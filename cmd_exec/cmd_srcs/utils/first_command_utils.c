@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:30:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:12:33 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_pipe_and_exec(t_data *data)
 	{
 		if (dup2(data->pipefd[0][WRITE], STDOUT_FILENO) == -1)
 		{
-			perror("dup2 TEST 1");
+			perror("dup2");
 			return (1);
 		}
 	}
@@ -47,18 +47,12 @@ int	check_inputfile(t_data *data, t_shell *parse)
 {
 	if (parse->nbr_infile > 0 || parse->nbr_appendin > 0)
 	{
-		while (parse->tab_infile[0]->next != NULL)
+		while (parse->tab_infile[0] && parse->tab_infile[0]->next != NULL)
 			parse->tab_infile[0] = parse->tab_infile[0]->next;
 		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
 		{
 			if (parse->nbr_appendin > 1)
-			{
-				close(	data->hd_pipefd[0][0]);
-				close(	data->hd_pipefd[0][1]);
-				data->hd_pipefd[0][0] = dup(data->hd_pipefd[parse->nbr_appendin - 1][0]);
-				data->hd_pipefd[0][1] = dup(data->hd_pipefd[parse->nbr_appendin - 1][1]);
-			}
-			dprintf(2, "===> %d\n", data->hd_pipe_id);
+				close_pipe_hd_before_dup(data, parse);
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
 				STDIN_FILENO) == -1)
 			{
@@ -67,7 +61,7 @@ int	check_inputfile(t_data *data, t_shell *parse)
 			}
 			return (0);
 		}
-		if (parse->tab_infile[0]->type == 'C')
+		if (parse->tab_infile[0] && parse->tab_infile[0]->type == 'C')
 			return (input_file_opening(data, parse));
 	}
 	data->input_fd = STDIN_FILENO;

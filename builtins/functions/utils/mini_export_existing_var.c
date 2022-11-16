@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:26:30 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:47:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:00:04 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	check_var_exists_export(t_data *data, char *var_export)
 		}
 		i++;
 	}
+	free(str);
 	return (0);
 }
 
@@ -106,5 +107,6 @@ char	**new_tab_with_existing_var(t_data *data, char *var)
 			data->new_env = copy_value(data, i);
 		i++;
 	}
+	data->new_size = i;
 	return (data->new_env);
 }

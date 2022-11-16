@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:44:07 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:17:35 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:12:53 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,35 @@ void	check_file(char *file)
 		}
 		close(fd);
 	}
+	return ;
+}
+
+void	free_and_exit_builtin(char **arg_tab, char **param, int p_size)
+{
+	int	size;
+
+	size = 0;
+	free_tab(param, p_size);
+	while (arg_tab[size])
+		size++;
+	free_tab(arg_tab, size - 1);
+	exit (0);
+}
+
+void	cmd_exec_path(t_data *data, int pipe_id)
+{
+	close_pipe(data, pipe_id);
+	check_file(data->env.param_tab3[0]);
+	if (execve(data->env.param_tab3[0], data->env.param_tab3,
+			data->envp) == -1)
+		perror("execve");
+}
+
+void	close_pipe_hd_before_dup(t_data *data, t_shell *parse)
+{
+	close(data->hd_pipefd[0][0]);
+	close(data->hd_pipefd[0][1]);
+	data->hd_pipefd[0][0] = dup(data->hd_pipefd[parse->nbr_appendin - 1][0]);
+	data->hd_pipefd[0][1] = dup(data->hd_pipefd[parse->nbr_appendin - 1][1]);
 	return ;
 }

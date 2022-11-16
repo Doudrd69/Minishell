@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:39:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 16:27:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*commands(t_data *data, t_node *node, t_shell *parse,
 		}
 		if (pid[i] == 0)
 			command_exec(data, node, parse, builtins, g);
-		node = node_rotation(node);
+		node = node_rotation(node, data);
 		data->pipe_id++;
 	}
 	free(pid);

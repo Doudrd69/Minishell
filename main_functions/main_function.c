@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:18:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:19:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ void	main_init_before_loop(t_data *data, char **envp,
 void	execution(t_data *data, t_shell *parse, t_node *node,
 	int (*builtins[7])(t_data *, t_node *), int *gstatus)
 {
+	int	i;
+
+	i = 0;
 	data->check_main = 3;
 	if (parse->cmd && *parse->cmd)
 		add_history (parse->cmd);
@@ -92,10 +95,9 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 		node = main_init_check(data, parse, node);
 		if (start_heredoc(data, parse, node) == 1)
 			return ;
-		int i = 0;
 		while (i < data->heredoc_nb)
 			close(data->hd_pipefd[i++][WRITE]);
-		if (parse->nbr_pipe == 0 && parse->tab_outfile == NULL)//outfile_szie pas init a 0 donc pete
+		if (parse->nbr_pipe == 0 && parse->tab_outfile == NULL)
 		{
 			data->check_main = builtins_loop(data->builtins_name, builtins,
 					node, data, gstatus);

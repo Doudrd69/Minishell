@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_exec_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:38:19 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 17:50:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_old(char **tab, int size)
 {
 	int	i;
 
-	i = size;
+	i = size - 1;
 	while (i >= 0)
 	{
 		free(tab[i]);
@@ -40,7 +40,10 @@ int	envp_size_for_tmp(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i] != NULL)
+	while (tab[i])
+	{
+		printf("TMP [%d] ==> %s\n", i, tab[i]);
 		i++;
+	}
 	return (i);
 }
