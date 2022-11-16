@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 18:46:40 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:11:27 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 		;
 	data->p_status = set_p_status(status, node);
 	free_param_tab(data);
+	if (parse->nbr_pipe > 0)
+		free_inttab(data->pipefd, parse->nbr_pipe - 1);
 	if (data->check_hd > 0)
 		free(data->hd_pid);
 	return ;
