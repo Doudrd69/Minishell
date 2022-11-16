@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:46:22 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:14:09 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 19:49:48 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int	check_quote_mod(char *str, int i)
 	return (1);
 }
 
-int	interpret_dollars(char *str, int i,
+char	*interpret_dollars(char *str, int i,
 		t_shell *minishell, t_node **list)
 {
 	int	check;
 
 	if (check_dquote_mod(str, i) == 0)
-		return (0);
+		return (NULL);
 	check_and_print_var_parsing(minishell, str + i);
 	if (minishell->value)
 		change_var_to_value(str, i, minishell, list);
@@ -58,6 +58,7 @@ int	interpret_dollars(char *str, int i,
 		if ((minishell->mod == 2 || minishell->mod == 3)
 			&& str[i + 1] == ' ')
 		{
+			 return str + 1;
 			check = 6;
 			write_newvalue(minishell, str, check, i);
 			change_value_mod2_and_3(str, i, minishell, list);
@@ -69,18 +70,19 @@ int	interpret_dollars(char *str, int i,
 			change_var_to_value(str, i, minishell, list);
 		}
 	}
-	return (1);
+	return (str);
 }
 
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 {
 	int	check;
 
+	if (minishell->mod == 8)
+		return (str);
 	if (minishell->mod == 0 || minishell->mod == 2
 		|| minishell->mod == 4 || minishell->mod == 3)
 	{
-		if (interpret_dollars(str, i, minishell, list) == 0)
-			return (str);
+		str = interpret_dollars(str, i, minishell, list);
 	}
 	else
 	{

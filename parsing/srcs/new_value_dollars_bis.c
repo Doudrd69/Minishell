@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 20:35:10 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:35:07 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:57:23 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	new_value5(t_shell *minishell, char *str, int i)
 	size = 1;
 	while (str[++i] != '\0' && str[i] != '\'')
 		size++;
-	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
+	minishell->value = (char *)malloc(sizeof(char) * (size + 2));
 	if (minishell->value == NULL)
 		return (0);
 	j = 0;

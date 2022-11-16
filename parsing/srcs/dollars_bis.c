@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:23:42 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:27:13 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,33 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	size = 0;
 	j = 0;
 	cpy = &str[i];
+	if (minishell->mod == 6)
+		return;
+	if (i > 0 && str[i - 1] == '\"' && minishell->mod == 2)
+		j++;
 	while (cpy[++size] != '\0' && cpy[size] != ' ' && cpy[size] != '$')
+	{
+		if (minishell->mod == 2 && cpy[size] == '\"')
+			break ;
 		if (cpy[size] == '\"' || cpy[size] == '\'')
 			j++;
+	}
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	dprintf(2, "j=%d|val=%s|str=%s|size=%d|cpy=%s|cpy+size=%s\n", j, minishell->value, str, size, cpy, cpy + size);
+	dprintf(2, "len_malloc=%lu=\n", (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
 	return_malloc_change_var(minishell, tmp, cpy);
 	j = -1;
 	k = 0;
 	while (++j < i)
 		tmp[j] = str[k++];
 	size += k;
+	if (i > 0 && str[i - 1] == '\"' && str[size - 1] == '\"'  && minishell->mod == 2)
+		size --;
 	replace_value_and_after(minishell, &j, &tmp);
 	while (str[size] && str[size] != '\0')
 		tmp[j++] = str[size++];
+	printf("j=%d=\n", j);
 	tmp = replace_quote_dollars(minishell, tmp, j);
 	include_dollar_list(minishell, list, tmp);
 }

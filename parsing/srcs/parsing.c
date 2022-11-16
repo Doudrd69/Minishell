@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:40:00 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:49:06 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	tokenizers_arg(t_shell *minishell)
 		return (0);
 	parse_quote_tab(minishell, &minishell->tab_infile,
 		&minishell->tab_outfile);
+	print_dlist(&minishell->head, &minishell->tab_infile,
+		&minishell->tab_outfile, minishell);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:33:55 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:25:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,19 @@ void	parse_dollars(t_shell *minishell)
 	{
 		i = 0;
 		str = (char *)(list_cpy->content);
-		while (str && str[i] != '\0')
+		while (dprintf(2, "i=%d\n", i) && str && str[i] != '\0')
 		{
 			if (str[i] == '$')
 			{
 				dollars--;
-				minishell->mod = check_quote_dollars(str);
-				dollars_mod(str, i, minishell, &list_cpy);
+				minishell->mod = check_quote_dollars(str, i);
+				dprintf(2, "strbef=%s=|s=%s\n", str, str + i);
+				str = dollars_mod(str, i, minishell, &list_cpy);
+				// dprintf(2, "strmid=%s=|cont=%s=\n", str, list_cpy->content);
+				if (str && list_cpy->content && ft_strncmp(str, list_cpy->content, ft_strlen(str)))
+					i = 0;
 				str = (char *)(list_cpy->content);
+				// dprintf(2, "straft=%s=\n", str);
 			}
 			i++;
 		}
@@ -75,6 +80,8 @@ void	change_value_mod1(char *str, int i,
 
 	size = 0;
 	j = 0;
+	// if (str)
+	return ;
 	while (i + size > 0 && str[i + size] != '\'')
 		size--;
 	cpy = &str[i + size];

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:36:54 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:36:54 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:27:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	check_quote_in_quote_dollars(char *str)
 
 static int	check_quote_dollars_bis(char *str, int i, int dquote, int quote)
 {
+	if (i == 0)
+		return -1;
 	if (str[i] == '$' && str[i - 1] == '"'
 		&& str[i + 1] == '"' && quote != 1)
 		return (6);
@@ -57,7 +59,7 @@ static int	check_quote_dollars_bis(char *str, int i, int dquote, int quote)
 	return (0);
 }
 
-int	check_quote_dollars(char *str)
+int	check_quote_dollars(char *str, int max)
 {
 	int	i;
 	int	quote;
@@ -68,20 +70,26 @@ int	check_quote_dollars(char *str)
 	quote = 0;
 	dquote = 0;
 	j = 0;
-	while (str[++i] != '\0')
+	int mod = -1;
+	while (++i <= max)
 	{
 		check_dquote_dollars(str, &dquote, i, &quote);
 		j = check_quote_dollars_bis(str, i, dquote, quote);
 		if (j == 6 || j == 7)
-			return (j);
-		if (str[i] == '$' && str[i - 1] == '"' && dquote == 1 && quote != 1)
-			return (2);
-		if (str[i] == '$' && dquote == 1 && quote != 1)
-			return (3);
-		if (str[i] == '$' && quote == 1 && dquote != 1)
-			return (1);
-		if (str[i] == '$' && dquote != 1 && quote != 1)
-			return (0);
+			mod = j;
+		else if (str[i] == '$' && str[i + 1] == '"' && dquote == 1 && quote != 1)
+			mod =  8;
+		else if (j != -1 && str[i] == '$' && str[i - 1] == '"' && dquote == 1 && quote != 1)
+			mod = 2;
+		else if (str[i] == '$' && dquote == 1 && quote != 1)
+			mod  = 3;
+		else if (str[i] == '$' && quote == 1 && dquote != 1)
+			mod = 1;
+		else if (str[i] == '$' && dquote != 1 && quote != 1)
+			mod = 0;
 	}
+	dprintf(2, "MOD=%d\n", mod);
+	if (mod != -1)
+		return mod;
 	return (check_quote_in_quote_dollars(str));
 }
