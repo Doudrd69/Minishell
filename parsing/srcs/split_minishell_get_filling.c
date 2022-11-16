@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:51:14 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:22:09 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 10:59:07 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ static int	fill_with_quotes(t_shell *minishell, int *i, int *k, char ***tab)
 			(*tab)[*k][x++] = minishell->strp[(*i)++];
 	}
 	if (x != 0)
+	{
 		(*tab)[*k][x] = '\0';
+	}
 	return (x);
 }
 
@@ -81,14 +83,16 @@ char	**ft_split_minishell_get_filling(char *str,
 	i = 0;
 	k = 0;
 	minishell->strp = str;
-	while (str[i])
+	while (str[i] && str[i] != '\0')
 	{
 		while (str[i] == ' ' && str[i])
 			i++;
 		x = fill_with_quotes(minishell, &i, &k, &tab);
 		if ((str[i] == ' ' || str[i - x] != '\0') && x != 0)
+		{
 			k++;
-		while (str[i] == ' ' && str[i])
+		}
+		while (str[i] && str[i] != '\0' && str[i] == ' ')
 			i++;
 	}
 	return (tab);

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:46:22 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 13:37:37 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:14:09 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	value_check_with_mod(char *str, int i)
 
 	check = check_dollars_mod(str + i);
 	if (check == 2)
+	{
 		check = check_dollar_export(str, i);
+	}
 	return (check);
 }
 
@@ -62,6 +64,7 @@ int	interpret_dollars(char *str, int i,
 		}
 		else
 		{
+			minishell->tmpp = str;
 			write_newvalue(minishell, str + i, check, i);
 			change_var_to_value(str, i, minishell, list);
 		}

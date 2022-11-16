@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:43:20 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 20:57:17 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:06:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ static int	new_value2(t_shell *minishell, char *str)
 static void	new_value3_bis(int *cpy, char *str, int *i, int *size)
 {
 	*cpy = *i;
-	(*i) += 1;
-	while (str[*i] != '\0' && str[*i++] != ' ')
+	while (str[*i] != '\0' && str[(*i)++] != ' ')
 		(*size) += 1;
 	*i = 0;
 }
@@ -62,21 +61,19 @@ static void	new_value3_bis(int *cpy, char *str, int *i, int *size)
 static int	new_value3(t_shell *minishell, char *str, int mod)
 {
 	int	size;
-	int	i;
 	int	cpy;
+	int	i;
 
-	size = 1;
 	i = 0;
+	size = 0;
 	if (mod != 2)
 	{
-		while (str[i] != '\0' && str[i] != '=')
-			i++;
-		if (str[i] == '\0')
+		new_value3_bis(&cpy, str, &i, &size);
+		if (size == 0)
 		{
 			minishell->value = NULL;
 			return (1);
 		}
-		new_value3_bis(&cpy, str, &i, &size);
 		minishell->value = malloc(sizeof(char) * (size + 1));
 		if (minishell->value == NULL)
 			return (free_exit(minishell));

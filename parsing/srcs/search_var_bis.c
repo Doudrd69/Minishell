@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_var_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 16:57:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:19:31 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	check_var_parsing(char *str, char *var_name)
 
 void	copy_value_parsing(t_shell *minishell, int j, int i, char *var)
 {
+	i = 0;
 	while (var[j] != ' ' && var[j] != '\0')
 	{
 		minishell->value[i] = var[j];

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/12 19:39:16 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:29:20 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_variable(t_shell *minishell, int env_size, char **envp)
 
 void	init_dlist_var(t_shell *minishell)
 {
+	minishell->tmpp = NULL;
+	minishell->strp = NULL;
 	minishell->head = NULL;
 	minishell->tab_infile = NULL;
 	minishell->tab_outfile = NULL;
@@ -49,14 +51,15 @@ void	init_var_redirection(t_shell *minishell, int size)
 	int	i;
 
 	i = 0;
-	minishell->tab_infile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
-	minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
-	while (i <= size)
-	{
-		minishell->tab_infile[i] = NULL;
-		minishell->tab_outfile[i] = NULL;
-		i++;
-	}
+	// minishell->tab_infile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
+	// // minishell->tab_outfile = (t_node **)malloc(sizeof(t_node *) * (size + 1));
+	// while (i <= size)
+	// {
+	// 	minishell->tab_infile[i] = NULL;
+	// 	minishell->tab_outfile[i] = NULL;
+	// 	i++;
+	// }
+	(void) size;
 	minishell->infile_size = 0;
 	minishell->outfile_size = 0;
 }

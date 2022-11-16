@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_append.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:52 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:28:37 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 08:35:50 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	add_back_file_list(t_node **tab_list, t_node *new)
 				list_cpy = list_cpy->next;
 			list_cpy->next = new;
 			new->prev = list_cpy;
-			list_cpy = new;
 		}
 	}
 }
@@ -65,8 +64,11 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	while (str[i] != '\0')
 		cpy[j++] = str[i++];
 	cpy[j] = '\0';
-	if (j == 0)
+	if (j == 0 || if_only_space(cpy) == 1)
+	{
+		free(cpy);
 		cpy = NULL;
+	}
 	include_dollar_list(minishell, list, cpy);
 }
 
