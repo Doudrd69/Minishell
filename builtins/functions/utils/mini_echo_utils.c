@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:38:57 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:54:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,8 @@ int	write_and_check_signs(int i, t_data *data)
 			i += 2;
 		}
 		data->check_print_var = 0;
-		if (data->str[i] == '\0')
-			return (i);
-		if (data->str[i] == ' ' && data->str[i + 1] == ' ')
-			i++;
-		else
-		{
-			write(data->output_fd, &data->str[i], 1);
-			i++;
-		}
+		write(data->output_fd, &data->str[i], 1);
+		i++;
 	}
 	return (i);
 }
