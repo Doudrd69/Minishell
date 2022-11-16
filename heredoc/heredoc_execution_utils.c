@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:40:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:17:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,8 @@ int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 	{
 		data->hd_pid[i] = fork();
 		if (data->hd_pid[i] == -1)
-		{
-			dprintf(2, "RETURN 6\n");
 			return (1);
-		}
-		if (data->hd_pid[i] == 0)
-			heredoc(data, tmp);
-		waitpid(data->hd_pid[i], &ptr, 0);
-		if (ptr != 0)
+		if (heredoc_process(tmp, data, i, ptr) == 1)
 			return (1);
 		if (tmp == NULL && (data->hd.index < parse->infile_size))
 		{

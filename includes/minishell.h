@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:39:03 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:25:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,9 @@ typedef struct data
 	int			unset_env_size;
 	int			check_loop_export;
 	int			index_arg;
+	int			new_size;
 	int			*test;
+	int			consecutive_pipes;
 	char		*builtins_name[7];
 	char		buff[BUF_SIZE];
 	char		buff_oldpwd[BUF_SIZE];
@@ -191,6 +193,7 @@ int			var_exists_hd(t_data *data);
 t_node		*main_init_check(t_data *data, t_shell *minishell, t_node *node);
 t_node		*loop_to_first_arg(t_node *node, int i, int index);
 
+void		free_and_exit_builtin(char **arg_tab, char **param, int p_size);
 void		execution(t_data *data, t_shell *parse, t_node *node,
 				int (*builtins[7])(t_data *, t_node *), int *gstatus);
 void		first_command(t_data *data, t_node *node, t_shell *parse,
@@ -218,14 +221,16 @@ void		main_init_before_loop(t_data *data, char **envp,
 				char **argv);
 void		last_cmd_execution(t_data *data, t_node *node,
 				int (*builtins[5])(t_data *, t_node *), int g);
+void		close_pipe_hd_before_dup(t_data *data, t_shell *parse);
 void		eof_handler(char *input, t_shell *minishell);
+void		*node_rotation(t_node *node, t_data *data);
+void		cmd_exec_path(t_data *data, int pipe_id);
 void		envp_check(t_data *data, char **envp);
 void		sigint_handler_in_process(int signum);
 void		sigint_handler_main_loop(int signum);
 void		init_main(t_data *data, char **envp);
 void		exit_cmd_not_found(char **param);
 void		close_pipe(t_data *data, int i);
-void		*node_rotation(t_node *node);
 void		free_param_tab(t_data *data);
 void		check_file(char *file);
 void		sigtest(int signum);
@@ -292,6 +297,7 @@ int			check_length(t_data *data, size_t size, int position, char *str);
 int			check_var_exists_export(t_data *data, char *var_export);
 int			specific_cases_with_special_char(t_data *data, int i);
 int			var_search_copy(t_data *data, int size, int i, int j);
+int			export_loop(t_node *n, t_data *data);
 int			unset_var(int index, t_data *data, char *var_unset);
 int			malloc_and_cpy(t_data *data, int i, int index);
 int			check_nb_of_args(t_node *node, int size);

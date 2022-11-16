@@ -6,22 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 09:43:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 15:02:25 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:53:52 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_and_exit_builtin(char **arg_tab, char **param, int p_size)
-{
-	int size = 0;
-
-	free_tab(param, p_size);
-	while (arg_tab[size])
-		size++;
-	free_tab(arg_tab, size - 1);
-	exit (0);
-}
 
 void	exec_cmd(char **tab, char **param, t_data *data,
 	int (*builtins[7])(t_data *, t_node *))
@@ -29,7 +18,6 @@ void	exec_cmd(char **tab, char **param, t_data *data,
 	int	i;
 
 	(void)builtins;
-	(void)data;
 	i = -1;
 	if (tab == NULL)
 	{
@@ -80,15 +68,8 @@ void	first_cmd_execution(t_data *data, t_node *node,
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		// if (data->exec.infile_check == 1)
-		// 	close(data->input_fd);
-		// if (data->exec.outfile_check == 1)
-		// 	close(data->output_fd);
 		if (data->hd_pipefd)
-		{
-			dprintf(2, "CLOSE 1\n");
 			close_hd_pipe(data, data->heredoc_nb - 1);
-		}
 		check_file(data->env.param_tab1[0]);
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
 			free_and_exit_builtin(data->env.tab1, data->env.param_tab1,
@@ -105,7 +86,8 @@ void	last_cmd_execution(t_data *data, t_node *node,
 		close_pipe(data, (data->cmd_nb - 2));
 		check_file(data->env.param_tab2[0]);
 		close(data->output_fd);
-		if (execve(data->env.param_tab2[0], data->env.param_tab2, data->envp) == -1)
+		if (execve(data->env.param_tab2[0], data->env.param_tab2,
+				data->envp) == -1)
 			perror("execve");
 	}
 	else
@@ -114,10 +96,6 @@ void	last_cmd_execution(t_data *data, t_node *node,
 			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->exec.outfile_check == 1)
-			close(data->output_fd);
-		if (data->exec.infile_check == 1)
-			close(data->input_fd);
 		if (data->hd_pipefd)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		check_file(data->env.param_tab2[0]);
@@ -132,12 +110,7 @@ void	cmd_execution(t_data *data, int pipe_id, t_node *node,
 	int (*builtins[7])(t_data *, t_node *), int g)
 {
 	if (access(data->env.param_tab3[0], X_OK) == 0)
-	{
-		close_pipe(data, pipe_id);
-		check_file(data->env.param_tab3[0]);
-		if (execve(data->env.param_tab3[0], data->env.param_tab3, data->envp) == -1)
-			perror("execve");
-	}
+		cmd_exec_path(data, pipe_id);
 	else
 	{
 		if (data->env.tab3 != NULL)

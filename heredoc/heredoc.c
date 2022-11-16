@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:50:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:40:42 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	heredoc_exit(char *str, char *limiter, int output_fd, t_data *data)
 		if (check_delimiter(str, limiter) == 0)
 		{
 			free(str);
-			dprintf(2, "CLOSE 2\n");
 			close(output_fd);
 			close(data->hd_pipefd[data->hd_pipe_id][READ]);
 			data->p_status = 0;

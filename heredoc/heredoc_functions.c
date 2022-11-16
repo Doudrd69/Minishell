@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 14:12:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 18:18:00 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ int	check_var_hd(char *str, char *var_name)
 	return (0);
 }
 
-// int	heredoc_process(t_node *tmp, t_data *data, int i, int ptr)
-// {
-// 	if (data->hd_pid[i] == 0)
-// 		heredoc(data, tmp);
-// 	waitpid(data->hd_pid[i], &ptr, 0);
-// 	if (ptr != 0)
-// 		return (1);
-// 	return (0);
-// }
-
 t_node	*search_first_hd(t_data *data, t_node *tmp, t_shell *parse, t_node **in)
 {
 	if (data->heredoc_nb == 1)
@@ -66,4 +56,14 @@ t_node	*search_first_hd(t_data *data, t_node *tmp, t_shell *parse, t_node **in)
 		tmp = in[data->hd.index];
 	}
 	return (tmp);
+}
+
+int	heredoc_process(t_node *tmp, t_data *data, int i, int ptr)
+{
+	if (data->hd_pid[i] == 0)
+		heredoc(data, tmp);
+	waitpid(data->hd_pid[i], &ptr, 0);
+	if (ptr != 0)
+		return (1);
+	return (0);
 }
