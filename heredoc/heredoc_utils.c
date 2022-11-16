@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:59 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:28:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 13:12:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	copy_var_hd(t_data *data, char *var, int j)
 
 int	print_var_hd(t_data *data, int var_size, char *var, int output_fd)
 {
-	int	j;
+	int		j;
 
 	j = 1;
 	while (var[var_size] != ' ' && var[var_size] != '\0')

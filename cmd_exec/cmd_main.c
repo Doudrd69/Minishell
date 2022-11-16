@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:17:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	first_command(t_data *data, t_node *node, t_shell *parse,
 		}
 		if (check_outfile(data, parse) != 0)
 			exit(errno);
-		printf("First >> %s\n", node->content);
 		first_cmd_execution(data, node, builtins, g);
 	}
 }
@@ -53,7 +52,6 @@ void	last_command(t_data *data, t_node *node, t_shell *parse,
 		data->env.param_tab2 = fill_param_tab(node, data, data->env.param_tab2);
 		while (data->env.param_tab2[data->size_ptab2])
 			data->size_ptab2++;
-		printf("Last >> %s\n", node->content);
 		last_cmd_execution(data, node, builtins, g);
 	}
 }

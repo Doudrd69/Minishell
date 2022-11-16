@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:27:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:40:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	init_builtins_tab(char *builtins_name[7],
 
 void	free_param_tab(t_data *data)
 {
-	printf("Free param\n");
 		free_tab(data->env.param_tab1, data->size_ptab1);
 	if (data->env.param_tab2 != NULL)
 		free_tab(data->env.param_tab2, data->size_ptab2 - 1);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:40:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 13:07:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	heredoc(t_data *data, t_node *tmp)
 
 	str = NULL;
 	sa_hd.sa_handler = SIG_IGN;
+	sa_hd.sa_flags = 0;
+	sa_hd.sa_mask = 0;
 	output_fd = data->hd_pipefd[data->hd_pipe_id][WRITE];
 	data->hd.limiter = tmp->content;
 	sigaction(SIGQUIT, &sa_hd, NULL);

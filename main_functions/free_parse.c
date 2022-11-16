@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 10:19:38 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,10 @@ void	free_all(t_shell *minishell)
 {
 	t_node	*tmp;
 
-	//dprintf(2, "fin|%p\n", minishell->head);
 	while (minishell->head && minishell->head != NULL)
 	{
 		tmp = minishell->head;
 		minishell->head = minishell->head->next;
-		//printf("free:=%p=, =%p=, =%s=\n", tmp->content, tmp, tmp->content);
 		test_free((void *)(tmp->content));
 		test_free((void *)(tmp));
 	}

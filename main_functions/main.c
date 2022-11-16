@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:30:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 13:05:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	cmd_exec_init(data, parse);
 	if (start_heredoc(data, parse) == 1)
 		return ;
-	printf("--> %s [%c]\n", node->content, node->type);
 	if (node == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 11:02:11 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	export_exec(t_data *data, t_node *n)
 		return (display_export(data));
 	while (--i > 0)
 		n = n->prev;
-	printf("Node before export loop ==> %s\n", n->content);
 	while (n != NULL)
 	{
-		printf("VAR to export ==> %s\n", n->content);
 		tmp_size = 0;
 		tmp = data->envp;
 		tmp_size = envp_size_for_tmp(tmp);
@@ -53,10 +51,8 @@ int	unset_exec(t_data *data, t_node *node)
 	char	**tmp;
 	int		tmp_size;
 
-	printf("Node before unset loop ==> %s\n", node->content);
 	while (node != NULL)
 	{
-		printf("Var to unset ==> %s\n", node->content);
 		tmp = data->envp;
 		tmp_size = envp_size_for_tmp(tmp);
 		if (mini_unset(data, node->content) == 1)

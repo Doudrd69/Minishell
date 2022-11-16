@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 11:10:14 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	mini_echo(t_data *data, t_node *node)
 
 	loop = 0;
 	data->echo_arg = 0;
-	printf("My echo\n");
 	if (no_args(node) == 0)
 		return (0);
 	while (node != NULL && node->type != 'P')
@@ -109,7 +108,6 @@ int	mini_exit(t_data *data, t_node *node)
 		exit(1);
 	}
 	tmp = ft_atoi(node->content);
-	printf("test ==> %d\n", tmp);
 	data->p_status = tmp;
 	exit((unsigned char)tmp);
 }

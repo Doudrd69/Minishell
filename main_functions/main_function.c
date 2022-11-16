@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:17:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:39:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,9 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 		node = main_init_check(data, parse, node);
 		if (parse->nbr_pipe == 0 && parse->tab_outfile == NULL)//outfile_szie pas init a 0 donc pete
 		{
-			printf("Builtin\n");
 			data->check_main = builtins_loop(data->builtins_name, builtins,
 					node, data, gstatus);
 		}
-		printf("\n ===> Check main : %d\n", data->check_main);
 		if (data->check_main == 3)
 			cmd_exec(data, parse, builtins);
 	}

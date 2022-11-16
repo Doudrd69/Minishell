@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -120,7 +120,7 @@ NAME = minishell
 all : ft_printf libft $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -framework CoreFoundation -o $(NAME) $(OBJS)
 
 ft_printf :
 	make -C $(PRINTF_PATH)
