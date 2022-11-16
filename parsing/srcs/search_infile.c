@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_infile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 17:16:32 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:01:11 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	include_infile_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
-	list_cpy = *tab_list;
+	// list_cpy = *tab_list;
 	add_back_file_list(tab_list, ft_dlstnew(tmp));
 	list_cpy = *tab_list;
-	while (list_cpy && list_cpy->next != NULL && list_cpy != NULL)
+	while (list_cpy->next != NULL)
 				list_cpy = list_cpy->next;
 	list_cpy->type = 'C';
 }
@@ -32,7 +32,6 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 
 	i = minishell->mod;
 	j = -1;
-	printf("str + j==%s\n", str + i);
 	while (++j < i)
 		cpy[j] = str[j];
 	i++;
@@ -44,10 +43,28 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	while (str[i] != '\0')
 		cpy[j++] = str[i++];
 	cpy[j] = '\0';
-	if (j == 0)
+	if (j == 0 || if_only_space(cpy) == 1)
+	{
+		free(cpy);
 		cpy = NULL;
-	printf("cpy==%s\n", cpy);
+		unstack_list(minishell, list);
+		return ;
+	}
 	include_dollar_list(minishell, list, cpy);
+}
+
+int	if_only_space(char *str)
+{
+	int	j;
+	int	i;
+
+	i = 0;
+	j = ft_strlen(str);
+	while (str[i] != '\0' && str[i] == ' ')
+		i++;
+	if (i == j)
+		return (1);
+	return (0);
 }
 
 int	check_quote_infile(t_shell *minishell, char *str, int len)

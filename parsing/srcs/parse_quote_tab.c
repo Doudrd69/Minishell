@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:33 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 18:05:11 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 19:35:53 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@ void	replace_list_quote_intab(t_node *tmp, t_node **list_cpy,
 {
 	if (tmp && tmp->prev != NULL && tmp->next->next != NULL)
 	{
+			dprintf(2, "b=%p\n", minishell->tab_infile[0]->content);
 		ft_mid(*list_cpy, tmp);
 	}
 	else if (tmp && tmp->prev == NULL && tmp->next->next != NULL)
 	{
+			dprintf(2, "c=%p\n", minishell->tab_infile[0]->content);
 		ft_prev(*list_cpy, tmp, minishell, i);
 	}
 	else if (tmp)
 	{
 		ft_next(list_cpy, tmp, minishell, i);
 	}
+
 }

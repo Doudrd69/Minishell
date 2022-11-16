@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 14:06:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 09:51:00 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ int		check_syntax_after_outfile(t_shell *minishell, char *str, int i);
 int		new_value_mod2_and3(t_shell *minishell, char *str, int i);
 int		new_value5(t_shell *minishell, char *str, int i);
 int		new_value4(t_shell *minishell, char *str);
+int		if_only_space(char *str);
+void	unstack_list(t_shell *minishell, t_node **list);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);

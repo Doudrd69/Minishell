@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:37 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 17:40:00 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 08:35:24 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	include_outfile_list(t_node **tab_list, char *tmp)
 	t_node	*list_cpy;
 
 	// list_cpy = *tab_list;
+	// dprintf(2, "1=%p, 2=%p", tab_list, *tab_list);
 	add_back_file_list(tab_list, ft_dlstnew(tmp));
 	list_cpy = *tab_list;
 	while (list_cpy->next != NULL)
@@ -64,8 +65,11 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 	while (str[i] != '\0')
 		cpy[j++] = str[i++];
 	cpy[j] = '\0';
-	if (j == 0)
+	if (j == 0 || if_only_space(cpy) == 1)
+	{
+		free(cpy);
 		cpy = NULL;
+	}
 	include_dollar_list(minishell, list, cpy);
 }
 

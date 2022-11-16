@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 18:17:52 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 08:49:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,24 @@ int	parsing(char **env, t_shell *minishell)
 
 static void	init_tab(t_shell *minishell)
 {
+	int	i;
 	if ((minishell->nbr_appendin + minishell->nbr_infile) > 0)
 	{
 		minishell->tab_infile = malloc(sizeof(t_node *)
 				* (minishell->nbr_pipe + 2));
-		minishell->tab_infile[minishell->nbr_pipe + 1] = NULL;
+		i = 0;
+		while (i < minishell->nbr_pipe + 2)
+			minishell->tab_infile[i++] = NULL;
 	}
 	if ((minishell->nbr_appendout + minishell->nbr_outfile) > 0)
 	{
 		minishell->tab_outfile = malloc(sizeof(t_node *)
 				* (minishell->nbr_pipe + 2));
-		minishell->tab_outfile[minishell->nbr_pipe + 1] = NULL;
+		i = 0;
+		while (i < minishell->nbr_pipe + 2)
+			minishell->tab_outfile[i++] = NULL;
+		// minishell->tab_outfile[minishell->nbr_pipe + 1] = NULL;
 	}
-	dprintf(2, "init=%p\n", minishell->tab_outfile);
 }
 
 int	tokenizers_arg(t_shell *minishell)
@@ -72,6 +77,7 @@ int	tokenizers_arg(t_shell *minishell)
 		&minishell->tab_outfile);
 
 	printf("END PARSING\n");
+
 	return (1);
 }
 

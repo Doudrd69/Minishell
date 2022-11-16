@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:09:27 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 18:01:43 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:26:05 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	include_parse_quote_outab(t_shell *minishell, t_node *list_cpy)
 	char	**tab;
 	char	*str;
 	t_node	*tmp;
-
+	
 	while (list_cpy && list_cpy != NULL)
 	{
 		str = (char *)(list_cpy->content);

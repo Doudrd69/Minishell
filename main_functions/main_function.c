@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 18:30:47 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 19:16:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 		add_history (parse->cmd);
 	if (parsing(data->envp, parse) == 0)
 	{
+		
 		node = main_init_check(data, parse, node);
 		data->check_main = builtins_loop(data->builtins_name, builtins,
 				node, data, gstatus);

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 17:15:14 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 20:55:15 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	ft_next(t_shell *minishell, t_node *tmp_list, t_node **list)
 	(*list)->prev->next = (*list)->next;
 	(*list) = (*list)->next;
 	(*list)->prev = (*list)->prev->prev;
+	free(tmp_list->content);
 	free(tmp_list);
 	minishell->list_size -= 1;
 }
@@ -26,10 +27,12 @@ static void	ft_prev(t_shell *minishell, t_node *new_node
 {
 	if ((*list)->prev != NULL)
 	{
+
 		tmp_list->next = (*list)->next;
 		tmp_list->prev = (*list)->prev;
 		tmp_list->next->prev = new_node;
 		tmp_list->prev->next = new_node;
+		free((*list)->content);
 		free(*list);
 		(*list) = tmp_list;
 	}
@@ -38,6 +41,7 @@ static void	ft_prev(t_shell *minishell, t_node *new_node
 		tmp_list->next = (*list)->next;
 		tmp_list->prev = NULL;
 		tmp_list->next->prev = new_node;
+		free((*list)->content);
 		free(*list);
 		(*list) = tmp_list;
 		minishell->head = (*list);
@@ -50,8 +54,15 @@ static void	replace_list(t_node **list, t_shell *minishell, t_node *tmp_list)
 		ft_next(minishell, tmp_list, list);
 	else
 	{
-		(*list) = (*list)->next;
-		(*list)->prev = NULL;
+		if ((*list)->next)
+		{
+			(*list) = (*list)->next;
+			(*list)->prev = NULL;
+		}
+		else
+			(*list) = NULL;
+		if (tmp_list->content && tmp_list->content != minishell->cmd)
+			free(tmp_list->content);
 		free(tmp_list);
 		minishell->head = (*list);
 		minishell->list_size -= 1;
@@ -63,6 +74,7 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	t_node	*tmp_list;
 	t_node	*new_node;
 
+	
 	if (tmp)
 	{
 		if (ft_strlen(tmp) == 0)
@@ -73,7 +85,9 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 	}
 	if ((*list) && (*list)->next == NULL)
 	{
-		ft_dlstadd_back(&minishell, ft_dlstnew((void *)(tmp)));
+
+		new_node = ft_dlstnew((void *)(tmp));
+		ft_dlstadd_back(&minishell, new_node);
 		tmp_list = (*list);
 		replace_list(list, minishell, tmp_list);
 	}

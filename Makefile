@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -96,6 +96,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/search_heredoc_utils.c						\
 		parsing/srcs/search_append_utils.c						\
 		parsing/srcs/redirections_utils.c						\
+		parsing/srcs/unstack_list.c								\
 		main_functions/main_loop_utils.c						\
 		main_functions/main_function.c							\
 		main_functions/main_utils.c								\
@@ -120,10 +121,10 @@ $(NAME) : $(OBJS)
 		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -framework CoreFoundation -o $(NAME) $(OBJS)
 
 ft_printf :
-	make -C $(PRINTF_PATH)
+	make -j -C $(PRINTF_PATH)
 
 libft :
-	make FLAGS="$(FLAGS)" -C $(LIBFT_PATH)
+	make -j FLAGS="$(FLAGS)" -C $(LIBFT_PATH)
 
 $(PRINTF_PATH)$(PRINTF_NAME) : ft_printf
 

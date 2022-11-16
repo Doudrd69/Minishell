@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:40:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 20:43:37 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:03:47 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,9 @@ int	sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j)
 			return (0);
 		if (append_outfile(str, j, minishell, list_cpy) == 0)
 			return (0);
-		str = (char *)((*list_cpy)->content);
+		str = NULL;
+		if ((*list_cpy) != NULL)
+			str = (char *)((*list_cpy)->content);
 	}
 	return (1);
 }

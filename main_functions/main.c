@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 16:40:35 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 18:46:40 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char *argv[], char *envp[])
 		node = NULL;
 		if (ft_strncmp(rl_line_buffer, "\0", 1) != 0)
 			execution(&data, minishell, node, builtins, &g_pstatus);
-		// free(minishell->cmd);
+		free(minishell->cmd);
 		free_all(minishell);
 	}
 }
@@ -113,7 +113,7 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	cmd_exec_init(data, parse);
 	if (start_heredoc(data, parse) == 1)
 		return ;
-	if (node == NULL && parse->tab_outfile == NULL)
+	if (node == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);
 	exec_main(data, envp, node, parse);

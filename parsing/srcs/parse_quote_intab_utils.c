@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:35:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 18:04:44 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 19:29:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	parse_quote_tab(t_shell *minishell, t_node ***tab_infile,
 	{
 		minishell->tab = 0;
 		intab = *tab_infile;
+		
 		while (intab && intab[minishell->tab] && intab[minishell->tab] != NULL)
 		{
 			list_cpy = (intab)[minishell->tab];
