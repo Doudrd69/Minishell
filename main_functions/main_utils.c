@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:40:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:25:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->lst_size = parse_data->list_size;
 	data->hd_pipe_id = 0;
 	data->hd_id = 0;
-	if (parse_data->nbr_appendin > 0)
-		data->check_hd = 1;
-	else
-		data->check_hd = 0;
 	data->cmd_nb = parse_data->nbr_pipe + 1;
 	data->size_ptab1 = 0;
 	data->size_ptab2 = 0;

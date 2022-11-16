@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 12:30:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 13:32:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ int			check_outfile_last_cmd(t_data *data, t_shell *parse);
 int			multi_cmd_dup_to_pipe(t_data *data, int index);
 int			check_inputfile(t_data *data, t_shell *parse);
 int			pipe_creation(t_data *data, int nbr_of_pipe);
-int			start_heredoc(t_data *data, t_shell *parse);
+int			start_heredoc(t_data *data, t_shell *parse, t_node *node);
 int			check_outfile(t_data *data, t_shell *parse);
 int			export_exec(t_data *data, t_node *node);
 int			unset_exec(t_data *data, t_node *node);

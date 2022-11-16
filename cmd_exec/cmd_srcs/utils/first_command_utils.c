@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 09:46:24 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:30:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,14 @@ int	check_inputfile(t_data *data, t_shell *parse)
 			parse->tab_infile[0] = parse->tab_infile[0]->next;
 		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
 		{
-			if (parse->infile_size > 0)
-				data->hd_pipe_id = data->hd_pipe_id - parse->nbr_appendin;
-			else
-				data->hd_pipe_id -= 1;
+			if (parse->nbr_appendin > 1)
+			{
+				close(	data->hd_pipefd[0][0]);
+				close(	data->hd_pipefd[0][1]);
+				data->hd_pipefd[0][0] = dup(data->hd_pipefd[parse->nbr_appendin - 1][0]);
+				data->hd_pipefd[0][1] = dup(data->hd_pipefd[parse->nbr_appendin - 1][1]);
+			}
+			dprintf(2, "===> %d\n", data->hd_pipe_id);
 			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
 				STDIN_FILENO) == -1)
 			{

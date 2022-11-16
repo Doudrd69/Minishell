@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 13:06:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:36:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,30 @@ t_node	*node_rotation_exec(t_node *node, t_shell *parse)
 	return (node);
 }
 
-int	start_heredoc(t_data *data, t_shell *parse)
+int	start_heredoc(t_data *data, t_shell *parse, t_node *node)
 {
-	t_node	*node;
+	//t_node	*node;
 
-	node = parse->head;
+	//node = parse->head;
+	(void)node;
+	if (parse->nbr_appendin > 0)
+		data->check_hd = 1;
+	else
+		data->check_hd = 0;
 	if (heredoc_main(data, &parse->tab_infile, parse) == 1)
 	{
+		dprintf(2, "\n\n HD BREAK \n\n");
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
 		free(data->hd_pid);
 		return (1);
 	}
-	if (parse->nbr_appendin == 1 && parse->outfile_size == 0 && node == NULL)
-	{
-		close_hd_pipe(data, data->heredoc_nb - 1);
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
-		free(data->hd_pid);
-		return (1);
-	}
+	// if (parse->nbr_appendin == 1 && parse->outfile_size == 0 && node == NULL)
+	// {
+	// 	close_hd_pipe(data, data->heredoc_nb - 1);
+	// 	free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+	// 	free(data->hd_pid);
+	// 	return (1);
+	// }
 	return (0);
 }
