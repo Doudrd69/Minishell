@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:25:58 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 19:23:55 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	mini_unset(t_data *data, char *var_unset)
 
 int	export_loop(t_node *n, t_data *data)
 {
-	int	tmp_size;
-	char **tmp;
+	int		tmp_size;
+	char	**tmp;
 
 	while (n != NULL)
 	{
