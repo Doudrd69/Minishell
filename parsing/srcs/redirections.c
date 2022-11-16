@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:31 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 09:57:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:15:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	parse_redirections(t_shell *minishell)
 			j++;
 		str = (char *)(list_cpy->content);
 		minishell->mod = -1;
-		if (sorting_loop(minishell, str, list_cpy, j) == 0)
+		if (sorting_loop(minishell, str, &list_cpy, j) == 0)
 			return (0);
-		list_cpy = list_cpy->next;
+		if (list_cpy != NULL)
+			list_cpy = list_cpy->next;
 	}
+	dprintf(2, "bb|%p\n", minishell->head);
 	return (1);
 }

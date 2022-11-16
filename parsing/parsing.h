@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 09:57:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:16:34 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_shell
 	int				mod;
 	int				i;
 	int				j;
+	int				tab;
 	char			*strp;
 	char			*tmpp;
 	int				pipe;
@@ -109,7 +110,7 @@ void	replace_list_quote_outab(t_node *tmp, t_node **list_cpy,
 			t_shell *minishell, int i);
 void	replace_list_quote_intab(t_node *tmp, t_node **list_cpy,
 			t_shell *minishell, int i);
-void	include_parse_quote_intab(t_shell *minishell, t_node *list_cpy);
+void	include_parse_quote_intab(t_shell *minishell, t_node **list_cpy, int i);
 
 /*REDIRECTIONS*/
 int		parse_redirections(t_shell *minishell);
@@ -138,6 +139,8 @@ int		check_syntax_after_outfile(t_shell *minishell, char *str, int i);
 int		new_value_mod2_and3(t_shell *minishell, char *str, int i);
 int		new_value5(t_shell *minishell, char *str, int i);
 int		new_value4(t_shell *minishell, char *str);
+int		if_only_space(char *str);
+void	unstack_list(t_shell *minishell, t_node **list);
 
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
@@ -194,7 +197,7 @@ int		main_loop_search_heredoc(char *str, int i, int file);
 int		dl_fl_search_heredoc(char *str, int i);
 int		main_loop_search_append(char *str, int i, int file);
 int		dl_fl_search_append(char *str, int i);
-int		sorting_loop(t_shell *minishell, char *str, t_node *list_cpy, int j);
+int		sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);

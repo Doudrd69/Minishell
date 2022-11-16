@@ -6,28 +6,12 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 07:24:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:17:06 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../parsing/parsing.h"
-
-void	free_all(t_shell *minishell)
-{
-	t_node	*tmp;
-
-	while (minishell->head && minishell->head != NULL)
-	{
-		tmp = minishell->head;
-		minishell->head = minishell->head->next;
-		test_free((void *)(tmp));
-	}
-	test_free((void *)(minishell->value));
-	test_free((void *)(minishell->var_search));
-	test_free((void *)(minishell->home_path));
-	free(minishell);
-}
 
 void	init_main(t_data *data, char **envp)
 {

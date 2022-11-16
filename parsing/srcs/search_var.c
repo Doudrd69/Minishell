@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:34 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:57:39 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 20:18:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	print_var_parsing(t_shell *minishell)
 		j = 0;
 		while (var[j] && var[j] != '=')
 			j++;
+		printf("var=%s\n", var + j);
 		ft_find_dollars(minishell, var, &size, &i);
 		minishell->value = malloc(sizeof(char) * (i + 1));
 		if (!(minishell->value))

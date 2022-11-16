@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_minishell_malloc_ws.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:25:34 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 16:29:03 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	last_conditions(char const *str, int *wlen, int *i)
 	if (str[*i] == '\"')
 	{
 		(*i) += 1;
-		if (str[*i] != '\"')
-			(*wlen) += 1;
 		while (str[*i] != '\0' && str[*i] != '\"')
 		{
 			(*i) += 1;
@@ -43,8 +41,6 @@ static void	count_lenght_ws(char const *str, int *wlen, int *i)
 		if (str[*i] == '\'')
 		{
 			(*i) += 1;
-			if (str[*i] != '\'')
-				(*wlen) += 1;
 			while (str[*i] != '\0' && str[*i] != '\'')
 			{
 				(*i) += 1;

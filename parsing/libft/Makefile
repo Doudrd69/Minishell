@@ -1,6 +1,6 @@
 NAME = libft.a
 
-CFLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g
 
 CC = gcc
 
@@ -62,7 +62,7 @@ libft.a : 	${OBJ} ${OBJ_B}
 			ar rc ${NAME} ${OBJ_B} ${OBJ}
 
 %.o:		%.c libft.h
-			${CC} $(CFLAGS) -c $< -o $@
+			${CC} $(FLAGS) -c $< -o $@
 
 bonus :		${OBJ} ${OBJ_B}
 			ar rc ${NAME} ${OBJ_B} ${OBJ}

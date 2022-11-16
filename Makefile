@@ -98,9 +98,11 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/search_heredoc_utils.c						\
 		parsing/srcs/search_append_utils.c						\
 		parsing/srcs/redirections_utils.c						\
+		parsing/srcs/unstack_list.c								\
 		main_functions/main_loop_utils.c						\
 		main_functions/main_function.c							\
 		main_functions/main_utils.c								\
+		main_functions/free_parse.c								\
 		main_functions/no_env.c									\
 		main_functions/signal.c									\
 		main_functions/main.c
@@ -111,20 +113,20 @@ INCS =	includes/minishell.h									\
 OBJS = $(SRCS:.c=.o)
 
 %.o : %.c $(PRINTF_PATH)$(PRINTF_NAME) $(LIBFT_PATH)$(LIBFT_NAME) $(INCS) Makefile
-		$(CC) $(FLAGS) $(RL_INC_DIR) -c $< -o $@
+		$(CC) $(FLAGS)  $(RL_INC_DIR) -c $< -o $@
 
 NAME = minishell
 
 all : ft_printf libft $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -o $(NAME) $(OBJS)
+		$(CC) $(RL_LIB_DIR) $(FLAGS) -L $(PRINTF_PATH) -L $(LIBFT_PATH) -lftprintf -lft -lreadline -framework CoreFoundation -o $(NAME) $(OBJS)
 
 ft_printf :
-	make -C $(PRINTF_PATH)
+	make -j -C $(PRINTF_PATH)
 
 libft :
-	make -C $(LIBFT_PATH)
+	make -j FLAGS="$(FLAGS)" -C $(LIBFT_PATH)
 
 $(PRINTF_PATH)$(PRINTF_NAME) : ft_printf
 

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:00:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:16:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	main(int argc, char *argv[], char *envp[])
 	int					(*builtins[7])(t_data *data, t_node *node);
 
 	sa.sa_handler = SIG_IGN;
+	sa.sa_flags = 0;
+	sa.sa_mask = 0;
 	main_init_before_loop(&data, envp, builtins, argc, argv);
 	while (1)
 	{
@@ -112,7 +114,7 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	cmd_exec_init(data, parse);
 	if (start_heredoc(data, parse) == 1)
 		return ;
-	if (node == NULL && parse->tab_outfile == NULL)
+	if (node == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);
 	exec_main(data, node, parse, builtins, g_pstatus);
