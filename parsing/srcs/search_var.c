@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:34 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:18:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:48:02 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*mini_getenv_parsing(char *envp[], int env_size,
 	{
 		if (i == env_size)
 		{
-			printf("\nCannot find %s\n", var_name);
 			return (NULL);
 		}
 		if (ft_strnstr(envp[i], var_name, ft_strlen(var_name)))
@@ -89,7 +88,6 @@ char	*mini_getenv_parsing(char *envp[], int env_size,
 			return (str);
 		i++;
 	}
-	printf("Cannot find %s\n", var_name);
 	return (NULL);
 }
 
@@ -109,11 +107,10 @@ void	print_var_parsing(t_shell *minishell)
 		j = 0;
 		while (var[j] && var[j] != '=')
 			j++;
-		printf("var=%s\n", var + j);
 		ft_find_dollars(minishell, var, &size, &i);
 		minishell->value = malloc(sizeof(char) * (i + 1));
 		if (!(minishell->value))
-			return ;
+			return (free_all_exit(minishell));
 		j++;
 		copy_value_parsing(minishell, j, i, var);
 		free(var);

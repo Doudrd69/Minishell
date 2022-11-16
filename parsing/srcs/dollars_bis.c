@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 20:12:55 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 15:23:42 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 			j++;
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	return_malloc_change_var(minishell, tmp, cpy);
 	j = -1;
 	k = 0;
 	while (++j < i)

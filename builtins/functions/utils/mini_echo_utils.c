@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_echo_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 19:50:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:21:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	write_and_check_signs(int i, t_data *data)
 			else
 				tmp = ft_itoa(data->p_status);
 			write(1, tmp, ft_strlen(tmp));
+			free(tmp);
 			i += 2;
 		}
 		data->check_print_var = 0;

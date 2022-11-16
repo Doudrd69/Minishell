@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:53:31 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 13:20:42 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:31:30 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	change_value_mod2_and_3(char *str, int i,
 	size = change_value_mod2_and_3_bis(minishell, cpy, size, &j);
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	if (!tmp)
+		return (free_all_exit(minishell));
 	j = -1;
 	k = 0;
 	while (++j < i)

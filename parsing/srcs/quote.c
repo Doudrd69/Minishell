@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:45:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 17:45:10 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:42:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	parse_quote(char *str, t_shell *minishell)
 	{
 		if (str[i] == '\"')
 		{
-			printf("double quote\n");
-			str = ft_copy_string_without_quote(str, '"');
+			str = ft_copy_string_without_quote(minishell, str, '"');
 			ft_dlstadd_back((&(minishell)),
 				ft_dlstnew((void *)str));
 		}
@@ -30,7 +29,7 @@ void	parse_quote(char *str, t_shell *minishell)
 	}
 }
 
-char	*ft_copy_string_without_quote(char *str, char quote)
+char	*ft_copy_string_without_quote(t_shell *minishell, char *str, char quote)
 {
 	int		i;
 	int		j;
@@ -45,6 +44,8 @@ char	*ft_copy_string_without_quote(char *str, char quote)
 		i++;
 	}
 	newstr = malloc(sizeof(char) * (i - j + 1));
+	if (!newstr)
+		free_all_exit(minishell);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -54,6 +55,5 @@ char	*ft_copy_string_without_quote(char *str, char quote)
 		i++;
 	}
 	newstr[j] = '\0';
-	printf("newstr = %s\n", newstr);
 	return (newstr);
 }

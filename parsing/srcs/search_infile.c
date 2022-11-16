@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 10:01:11 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 14:46:38 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	include_infile_list(t_node **tab_list, char *tmp)
 {
 	t_node	*list_cpy;
 
-	// list_cpy = *tab_list;
 	add_back_file_list(tab_list, ft_dlstnew(tmp));
 	list_cpy = *tab_list;
 	while (list_cpy->next != NULL)
@@ -48,6 +47,7 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 		free(cpy);
 		cpy = NULL;
 		unstack_list(minishell, list);
+		print_dlist(&minishell->head, NULL, NULL, minishell);
 		return ;
 	}
 	include_dollar_list(minishell, list, cpy);
@@ -114,7 +114,11 @@ int	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 		space++;
 	file = main_loop_search_infile(str, i, file);
 	tmp = malloc(sizeof(char) * (file + 2));
+	if (!tmp)
+		free_all_exit(minishell);
 	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
+	if (!cpy)
+		free_all_exit(minishell);
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
