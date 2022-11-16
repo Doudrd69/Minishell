@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_space_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 09:59:46 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 10:58:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_prev(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = NULL;
 	minishell->head = list_cpy;
+	list_cpy->type = tmp->type;
 	if (tmp->content && tmp->content != minishell->cmd)
 		free(tmp->content);
 	free(tmp);
@@ -29,6 +30,7 @@ static void	ft_mid(t_node *list_cpy, t_node *tmp, t_shell *minishell)
 	list_cpy->next->prev = list_cpy;
 	list_cpy->prev = tmp->prev;
 	list_cpy->prev->next = list_cpy;
+	list_cpy->type = tmp->type;
 	if (tmp->content)
 		free(tmp->content);
 	free(tmp);
@@ -41,13 +43,15 @@ static void	ft_next(t_node *list_cpy, t_shell *minishell, t_node *tmp)
 	{
 		list_cpy->prev = tmp->prev;
 		list_cpy->prev->next = list_cpy;
+		list_cpy->type = tmp->type;
 	}
 	else
 	{
 		list_cpy->prev = NULL;
 		minishell->head = list_cpy;
+		minishell->head->type = tmp->type;
 	}
-	if (tmp->content)
+	if (tmp->content && tmp->content != minishell->cmd)
 		free(tmp->content);
 	free(tmp);
 	minishell->list_size -= 1;

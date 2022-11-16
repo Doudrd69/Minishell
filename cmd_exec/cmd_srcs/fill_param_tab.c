@@ -6,23 +6,11 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:01:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 13:39:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 09:33:43 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	check_loop_exec(char *str, int i)
-{
-	if (str[i] != '-')
-		return (1);
-	while (str[++i])
-	{
-		if (str[i] != 'n')
-			return (1);
-	}
-	return (0);
-}
 
 void	*count_nb_of_args(t_node *node, t_data *data, int i)
 {
@@ -30,13 +18,17 @@ void	*count_nb_of_args(t_node *node, t_data *data, int i)
 	char	*tmp;
 
 	check = 0;
+	data->index_arg = 0;
 	data->nb_of_args = 0;
 	node = node->next;
 	while (i < data->lst_size)
 	{
 		tmp = node->content;
 		if (check == 0)
+		{
 			check = check_loop_exec(tmp, 0);
+			data->index_arg = i;
+		}
 		if (check == 1)
 			data->nb_of_args++;
 		i++;
@@ -45,12 +37,11 @@ void	*count_nb_of_args(t_node *node, t_data *data, int i)
 			break ;
 		node = node->next;
 	}
-	while (--i >= 0)
-		node = node->prev;
+	node = loop_to_first_arg(node, i, data->index_arg);
 	return (node);
 }
 
-int	mallo_loop_fill_param(t_node *node, char **tab, int j)
+int	malloc_loop_fill_param(t_node *node, char **tab, int j)
 {
 	tab[j] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
 	if (!tab[j])
@@ -78,7 +69,7 @@ int	copy_args_in_param_tab(t_node *node, t_data *data, char **tab, int j)
 			check = check_loop_exec(tmp, 0);
 		if (check == 1)
 		{
-			mallo_loop_fill_param(node, tab, j);
+			malloc_loop_fill_param(node, tab, j);
 			ft_strlcpy(tab[j], node->content, ft_strlen(node->content), 1);
 			j++;
 		}
@@ -94,6 +85,7 @@ char	**fill_param_tab(t_node *node, t_data *data, char **tab)
 
 	i = 0;
 	j = 1;
+	data->tmp_fill_tab = node->content;
 	if (node->next == NULL)
 		data->nb_of_args = 0;
 	else if (ft_strncmp(node->next->content, "|", 1) == 0 && node->next != NULL)
@@ -102,14 +94,14 @@ char	**fill_param_tab(t_node *node, t_data *data, char **tab)
 		|| node->next != NULL)
 		node = count_nb_of_args(node, data, i);
 	else
-		ft_printf("Error : impossible to create PARAM TAB\n");
+		return (NULL);
 	tab = malloc(sizeof(char *) * (data->nb_of_args + 2));
 	if (!tab)
 		return (NULL);
-	tab[0] = malloc(sizeof(char) * ft_strlen(node->content) + 1);
+	tab[0] = malloc(sizeof(char) * ft_strlen(data->tmp_fill_tab) + 1);
 	if (!tab[0])
 		return (free_tab(tab, 0));
-	ft_strlcpy(tab[0], node->content, ft_strlen(node->content), 1);
+	ft_strlcpy(tab[0], data->tmp_fill_tab, ft_strlen(data->tmp_fill_tab), 1);
 	j = copy_args_in_param_tab(node, data, tab, j);
 	tab[j] = NULL;
 	return (tab);

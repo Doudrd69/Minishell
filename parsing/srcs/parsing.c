@@ -6,11 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/16 08:49:59 by wmonacho         ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/11/14 19:49:51 by ebrodeur         ###   ########lyon.fr   */
->>>>>>> 64bfe48f402a30bdea54df9ea7daaca2aac37725
+/*   Updated: 2022/11/16 10:16:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

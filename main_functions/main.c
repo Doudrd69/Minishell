@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 10:11:27 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:30:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ int	export_and_unset(t_data *data, t_node *node, int check)
 	return (check);
 }
 
-int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
+int	builtins_loop(char *tab_name[7], int (*builtins[7])(t_data *, t_node *),
 	t_node *node, t_data *data, int *gstatus)
 {
 	int	i;
-	int	status;
 
 	i = 0;
-	status = 0;
 	data->test = gstatus;
 	while (node && i < data->builtin_cmd_nb)
 	{
 		if (ft_strncmp(tab_name[i], node->content,
 				ft_strlen(node->content)) == 0)
 		{
-			if (node->next != NULL)
+			if (node->next != NULL && node->next->type != 'P')
 				node = node->next;
 			data->p_status = (*builtins[i])(data, node);
+			if (data->p_status == 0)
+				return (0);
 			if (data->p_status == 1)
 				return (1);
 			if (data->p_status == 2)
@@ -72,7 +72,7 @@ int	builtins_loop(char *tab_name[5], int (*builtins[5])(t_data *, t_node *),
 		}
 		i++;
 	}
-	return (data->check_main);
+	return (3);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -81,7 +81,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data				data;
 	t_shell				*minishell;
 	t_node				*node;
-	int					(*builtins[5])(t_data *data, t_node *node);
+	int					(*builtins[7])(t_data *data, t_node *node);
 
 	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = 0;
@@ -104,7 +104,8 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 }
 
-void	cmd_exec(t_data *data, char **envp, t_shell *parse)
+void	cmd_exec(t_data *data, t_shell *parse,
+	int (*builtins[7])(t_data *, t_node *))
 {
 	t_node	*node;
 	int		status;
@@ -113,10 +114,11 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	cmd_exec_init(data, parse);
 	if (start_heredoc(data, parse) == 1)
 		return ;
+	printf("--> %s [%c]\n", node->content, node->type);
 	if (node == NULL)
 		return ;
 	node = node_rotation_exec(node, parse);
-	exec_main(data, envp, node, parse);
+	exec_main(data, node, parse, builtins, g_pstatus);
 	if (data->check_hd == 1)
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
@@ -124,7 +126,6 @@ void	cmd_exec(t_data *data, char **envp, t_shell *parse)
 	while (wait(&status) != -1)
 		;
 	data->p_status = set_p_status(status, node);
-	free_param_tab(data);
 	if (parse->nbr_pipe > 0)
 		free_inttab(data->pipefd, parse->nbr_pipe - 1);
 	if (data->check_hd > 0)

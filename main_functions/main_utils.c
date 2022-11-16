@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 14:30:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:27:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	init_main(t_data *data, char **envp)
 	data->var_export = NULL;
 	data->str = NULL;
 	data->unset_env_check = 0;
-	data->builtin_cmd_nb = 5;
+	data->builtin_cmd_nb = 7;
 	data->first_cd_check = 0;
 	data->new_env_check = 0;
 	data->outfile_check = 0;
 	data->echo_sq_check = 0;
 	data->infile_check = 0;
-	data->check_main = 0;
+	data->check_main = 3;
 	data->oldpwd_if = 0;
 	data->echo_arg = 0;
 	data->p_status = 0;
@@ -59,26 +59,30 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	return ;
 }
 
-void	init_builtins_tab(char *builtins_name[5],
-	int (*builtins[5])(t_data *, t_node *))
+void	init_builtins_tab(char *builtins_name[7],
+	int (*builtins[7])(t_data *, t_node *))
 {
 	builtins_name[0] = "cd";
 	builtins_name[1] = "echo";
 	builtins_name[2] = "env";
 	builtins_name[3] = "pwd";
 	builtins_name[4] = "exit";
+	builtins_name[5] = "export";
+	builtins_name[6] = "unset";
 	builtins[0] = &mini_cd;
 	builtins[1] = &mini_echo;
 	builtins[2] = &mini_env;
 	builtins[3] = &mini_pwd;
 	builtins[4] = &mini_exit;
+	builtins[5] = &export_exec;
+	builtins[6] = &unset_exec;
 	return ;
 }
 
 void	free_param_tab(t_data *data)
 {
-	if (data->env.param_tab1 != NULL)
-		free_tab(data->env.param_tab1, data->size_ptab1 - 1);
+	printf("Free param\n");
+		free_tab(data->env.param_tab1, data->size_ptab1);
 	if (data->env.param_tab2 != NULL)
 		free_tab(data->env.param_tab2, data->size_ptab2 - 1);
 	if (data->env.param_tab3 != NULL)

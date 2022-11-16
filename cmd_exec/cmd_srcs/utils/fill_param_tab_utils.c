@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_echo_newline_arg.c                            :+:      :+:    :+:   */
+/*   fill_param_tab_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 19:36:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 20:07:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Created: 2022/11/15 08:56:50 by ebrodeur          #+#    #+#             */
+/*   Updated: 2022/11/15 08:57:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	no_args(t_node *node)
+int	check_loop_exec(char *str, int i)
 {
-	if ((ft_strncmp(node->content, "echo", 4) == 0))
+	if (str[i] != '-')
+		return (1);
+	while (str[++i])
 	{
-		write(1, "\n", 1);
-		return (0);
+		if (str[i] != 'n')
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
-int	newline_arg(t_data *data)
+t_node	*loop_to_first_arg(t_node *node, int i, int index)
 {
-	if (data->echo_arg == 0)
-		write(data->output_fd, "\n", 1);
-	return (0);
+	if (index > 0)
+	{
+		while (--i >= index)
+			node = node->prev;
+	}
+	else
+	{
+		while (--i >= 0)
+			node = node->prev;
+	}
+	return (node);
 }

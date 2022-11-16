@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 07:30:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 11:10:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,14 @@ int	mini_cd(t_data *data, t_node *node)
 int	mini_pwd(t_data *data, t_node *node)
 {
 	(void)node;
-	if (data->pipe_check == 0)
+	if (getcwd(data->buff, BUF_SIZE) == NULL)
 	{
-		if (getcwd(data->buff, BUF_SIZE) == NULL)
-		{
-			data->p_status = 1;
-			return (1);
-		}
-		ft_printf("%s\n", data->buff);
-		data->p_status = 0;
-		return (0);
+		data->p_status = 1;
+		return (1);
 	}
-	return (2);
+	ft_printf("%s\n", data->buff);
+	data->p_status = 0;
+	return (0);
 }
 
 int	mini_env(t_data *data, t_node *node)
@@ -56,26 +52,22 @@ int	mini_env(t_data *data, t_node *node)
 
 	i = -1;
 	(void)node;
-	if (data->pipe_check == 0)
+	if (data->envp[0] == NULL)
+		return (1);
+	while (++i < data->envp_size)
 	{
-		if (data->envp[0] == NULL)
-			return (1);
-		while (++i < data->envp_size)
+		j = 0;
+		while (data->envp[i][j])
 		{
-			j = 0;
-			while (data->envp[i][j])
+			if (data->envp[i][j] == '=')
 			{
-				if (data->envp[i][j] == '=')
-				{
-					ft_printf("%s\n", data->envp[i]);
-					break ;
-				}
-				j++;
+				ft_printf("%s\n", data->envp[i]);
+				break ;
 			}
+			j++;
 		}
-		return (0);
 	}
-	return (2);
+	return (0);
 }
 
 int	mini_echo(t_data *data, t_node *node)
@@ -85,37 +77,39 @@ int	mini_echo(t_data *data, t_node *node)
 
 	loop = 0;
 	data->echo_arg = 0;
+	printf("My echo\n");
 	if (no_args(node) == 0)
 		return (0);
-	if (data->pipe_check == 0 && data->outfile_check == 0)
+	while (node != NULL && node->type != 'P')
 	{
-		while (node != NULL && node->type != 'P')
-		{
-			check = 0;
-			data->str = node->content;
-			node = echo_arg_newline_check(data, node, check, loop);
-			if (node == NULL)
-				return (0);
-			loop = 1;
-			write_and_check_signs(0, data);
-			if (node->next != NULL && node->next->type != 'P')
-				write(1, " ", 1);
-			node = node->next;
-		}
-		return (newline_arg(data));
+		check = 0;
+		data->str = node->content;
+		node = echo_arg_newline_check(data, node, check, loop);
+		if (node == NULL)
+			return (0);
+		loop = 1;
+		write_and_check_signs(0, data);
+		if (node->next != NULL && node->next->type != 'P')
+			write(data->output_fd, " ", 1);
+		node = node->next;
 	}
-	return (2);
+	return (newline_arg(data));
 }
 
 int	mini_exit(t_data *data, t_node *node)
 {
 	int	tmp;
+	int	size;
 
-	tmp = ft_atoi(node->content);
-	if (data->pipe_check == 0)
+	size = 0;
+	size = check_nb_of_args(node, size);
+	if (size > 1)
 	{
-		data->p_status = tmp;
-		exit((unsigned char)tmp);
+		write(2, "minishell: exit: too many arguments\n", 36);
+		exit(1);
 	}
-	return (2);
+	tmp = ft_atoi(node->content);
+	printf("test ==> %d\n", tmp);
+	data->p_status = tmp;
+	exit((unsigned char)tmp);
 }

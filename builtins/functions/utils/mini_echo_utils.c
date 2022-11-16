@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:47:24 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/14 19:50:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 12:22:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	write_and_check_signs(int i, t_data *data)
 				tmp = ft_itoa(*data->test);
 			else
 				tmp = ft_itoa(data->p_status);
-			write(1, tmp, ft_strlen(tmp));
+			write(data->output_fd, tmp, ft_strlen(tmp));
 			i += 2;
 		}
 		data->check_print_var = 0;
@@ -84,7 +84,7 @@ int	write_and_check_signs(int i, t_data *data)
 			i++;
 		else
 		{
-			write(1, &data->str[i], 1);
+			write(data->output_fd, &data->str[i], 1);
 			i++;
 		}
 	}
