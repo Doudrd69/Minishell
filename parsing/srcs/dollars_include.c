@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:53:04 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 17:47:33 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ char	*replace_quote_dollars(t_shell *minishell, char *tmp, int j)
 {
 	if (minishell->mod == 2 || minishell->mod == 3)
 	{
-		tmp[j] = '\"';
-		j++;
+		// tmp[j] = '\"';
+		// j++;
 		tmp[j] = '\0';
 	}
 	else if (minishell->mod == 4)

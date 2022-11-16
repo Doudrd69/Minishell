@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:40:05 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 20:06:29 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	return_malloc_change_var(t_shell *minishell,
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
 int		dollars_specific(t_shell *minishell);
-int		check_quote_dollars(char *str);
+int		check_quote_dollars(char *str, int max);
 int		check_and_print_var_parsing(t_shell *minishell, char *str);
 void	print_var_parsing(t_shell *minishell);
 int		var_exists_parsing(t_shell *minishell);
@@ -180,7 +180,7 @@ int		check_heredoc_dollar_mod_1(char *str, int i);
 int		check_heredoc_dollar_mod_2_3(char *str, int i);
 void	change_value_mod2_and_3(char *str, int i,
 			t_shell *minishell, t_node **list);
-int		interpret_dollars(char *str, int i,
+char		*interpret_dollars(char *str, int i,
 			t_shell *minishell, t_node **list);
 void	change_value_mod1(char *str, int i,
 			t_shell *minishell, t_node **list);
