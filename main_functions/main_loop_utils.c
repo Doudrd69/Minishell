@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:24:42 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 15:14:21 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,15 @@ void	*node_rotation(t_node *node, t_data *data)
 	{
 		while (node && node->next->type != 'P')
 			node = node->next;
-		printf("1 : %s\n", node->content);
 		if (node && node->next->type == 'P')
 		{
 			node = node->next;
-			printf("2 : %s\n", node->content);
 			if (node && node->next->type == 'P')
 			{
 				data->consecutive_pipes = 1;
 				return (node);
 			}
 			node = node->next;
-			printf("3 : %s\n", node->content);
 		}
 		else if (node && node->next->type == 'N')
 			node = node->next->next->next;
@@ -118,6 +115,8 @@ void	exec_main(t_data *data, t_node *node, t_shell *parse,
 		first_command(data, node, parse, builtins, g);
 		if (data->cmd_nb > 1)
 		{
+			if (node->next == NULL)
+				return ;
 			node = node_rotation(node, data);
 			if (data->consecutive_pipes == 1)
 				return ;

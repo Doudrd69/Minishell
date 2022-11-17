@@ -6,7 +6,7 @@
 #    By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 09:37:34 by ebrodeur          #+#    #+#              #
-#    Updated: 2021/11/30 12:56:58 by ebrodeur         ###   ########lyon.fr    #
+#    Updated: 2022/11/17 08:40:21 by ebrodeur         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS =	srcs/ft_printf.c \
 
 OBJECTS = ${SRCS:.c=.o}
 
-%.o : %.c includes/ft_printf.h includes/ft_sort_params.h
+%.o : %.c includes/ft_printf.h includes/ft_sort_params.h Makefile
 		gcc ${FLAGS} -c $< -o $@
 
 $(NAME) : ${OBJECTS}

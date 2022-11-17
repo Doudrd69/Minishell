@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:39:48 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 14:54:21 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 15:50:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ static void	include_parse_quote(t_node **list_cpy, t_shell *minishell, int j)
 	else if (tmp)
 		ft_next((*list_cpy), minishell, tmp);
 	while (j-- > 0 && (*list_cpy) && (*list_cpy) != NULL)
-	{
 		(*list_cpy) = (*list_cpy)->next;
-	}
 	free(tab);
 }
 

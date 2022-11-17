@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:25:54 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 13:47:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	cmd_exec_init(t_data *data, t_shell *parse_data)
 	data->env.param_tab2 = NULL;
 	data->env.param_tab3 = NULL;
 	data->lst_size = parse_data->list_size;
-	data->hd_pipe_id = 0;
 	data->hd_id = 0;
 	data->cmd_nb = parse_data->nbr_pipe + 1;
 	data->size_ptab1 = 0;
