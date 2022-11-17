@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:12:33 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 13:52:01 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_inputfile(t_data *data, t_shell *parse)
 		{
 			if (parse->nbr_appendin > 1)
 				close_pipe_hd_before_dup(data, parse);
-			if (dup2(data->hd_pipefd[data->hd_pipe_id][READ],
+			if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ],
 				STDIN_FILENO) == -1)
 			{
 				perror("dup2");

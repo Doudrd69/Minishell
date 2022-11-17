@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 17:50:52 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 14:47:20 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ int	envp_size_for_tmp(char **tab)
 
 	i = 0;
 	while (tab[i])
-	{
-		printf("TMP [%d] ==> %s\n", i, tab[i]);
 		i++;
-	}
 	return (i);
 }
