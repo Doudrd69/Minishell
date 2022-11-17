@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 12:59:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:03:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	parse_dollars(t_shell *minishell)
 			{
 				dollars--;
 				minishell->mod = check_quote_dollars(str, i);
-				dprintf(2, "MOD=%d\n", minishell->mod);
 				str = dollars_mod(str, i, minishell, &list_cpy);
 				if (str && list_cpy->content && ft_strncmp(str, list_cpy->content, ft_strlen(str)))
 					i = 0;

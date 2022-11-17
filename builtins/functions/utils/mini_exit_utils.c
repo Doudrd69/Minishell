@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:14:25 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 10:03:25 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:01:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	check_arg_exit(char *str)
 int	check_nb_of_args(t_node *node, int size)
 {
 	if (check_arg_exit(node->content) == 1)
+	{
+		if (node->next == NULL && ft_strncmp(node->content, "exit", 4) == 0)
+			return (0);
 		return (-1);
+	}
 	size = 0;
 	while (node != NULL)
 	{

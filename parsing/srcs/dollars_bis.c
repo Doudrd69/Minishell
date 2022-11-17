@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars_bis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 13:29:33 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:03:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	}
 	if (minishell->mod == 4)
 		j++;
-	printf("str + size==%s=\n", cpy + size);
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
-	dprintf(2, "j=%d|val=%s|str=%s|size=%d|cpy=%s|cpy+size=%s\n", j, minishell->value, str, size, cpy, cpy + size);
-	dprintf(2, "len_malloc=%lu=\n", (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
 	return_malloc_change_var(minishell, tmp, cpy);
 	j = -1;
 	k = 0;

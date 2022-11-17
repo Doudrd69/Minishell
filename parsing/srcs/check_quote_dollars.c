@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_quote_dollars.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:36:54 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 11:12:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:03:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	check_quote_dollars(char *str, int max)
 		else if (str[i] == '$' && dquote != 1 && quote != 1)
 			mod = 0;
 	}
-	dprintf(2, "MOD=%d\n", mod);
 	if (mod != -1)
 		return (mod);
 	return (check_quote_in_quote_dollars(str));
