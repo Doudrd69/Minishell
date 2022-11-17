@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:26:32 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:31:07 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 19:19:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	in_the_middle(t_shell *minishell, t_node **list)
 		if (cpy->content != minishell->cmd)
 			free(cpy->content);
 		free(cpy);
-		*list = NULL;
+		cpy = NULL;
 		minishell->list_size -= 1;
 		return (1);
 	}

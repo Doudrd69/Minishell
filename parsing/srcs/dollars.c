@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 12:59:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 18:05:52 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,24 @@ void	parse_dollars(t_shell *minishell)
 	int		i;
 	t_node	*list_cpy;
 	char	*str;
-	int		dollars;
 
-	dollars = minishell->nbr_dollars;
 	list_cpy = minishell->head;
 	while (list_cpy && list_cpy != NULL)
 	{
-		i = 0;
+		i = -1;
 		str = (char *)(list_cpy->content);
-		while (str && str[i] != '\0')
+		while (str && str[++i] != '\0')
 		{
 			if (str[i] == '$')
 			{
-				dollars--;
-				minishell->mod = check_quote_dollars(str, i);
-				dprintf(2, "MOD=%d\n", minishell->mod);
+				(minishell->dollars)--;
+				minishell->mod = check_quote_dollars(minishell, str, i);
 				str = dollars_mod(str, i, minishell, &list_cpy);
-				if (str && list_cpy->content && ft_strncmp(str, list_cpy->content, ft_strlen(str)))
+				if (str && list_cpy->content
+					&& ft_strncmp(str, list_cpy->content, ft_strlen(str)))
 					i = 0;
 				str = (char *)(list_cpy->content);
 			}
-			i++;
 		}
 		if (list_cpy != NULL)
 			list_cpy = list_cpy->next;
@@ -78,7 +75,6 @@ void	change_value_mod1(char *str, int i,
 
 	size = 0;
 	j = 0;
-	// if (str)
 	return ;
 	while (i + size > 0 && str[i + size] != '\'')
 		size--;
@@ -89,7 +85,6 @@ void	change_value_mod1(char *str, int i,
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
 	if (!tmp)
 		return (free_all_exit(minishell));
-	j = -1;
 	k = 0;
 	while (++j < i)
 		tmp[j] = str[k++];

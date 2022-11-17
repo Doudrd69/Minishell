@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:34:27 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 16:25:35 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 18:04:22 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ void	nbr_ope(t_shell *minishell, char *str, int *i)
 		minishell->nbr_dquote++;
 	if (str[*i] == '\'')
 		minishell->nbr_squote++;
+	minishell->dollars = minishell->nbr_dollars;
 }

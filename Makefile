@@ -101,6 +101,7 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/unstack_list.c								\
 		parsing/srcs/free_all_exit.c							\
 		parsing/srcs/search_redir_malloc.c						\
+		parsing/srcs/check_heredoc_dollars.c					\
 		main_functions/main_loop_utils.c						\
 		main_functions/main_function.c							\
 		main_functions/main_utils.c								\
