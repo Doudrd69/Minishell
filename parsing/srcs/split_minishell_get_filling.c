@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:51:14 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 10:59:07 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 14:56:03 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ static void	test1(t_shell *minishell, char ***tab, int *k, int *x)
 	if (minishell->strp[minishell->i] == '\'')
 	{
 		if (minishell->strp[minishell->i + 1] == '\0')
-			(*tab)[*k][(*x)++] = minishell->strp[minishell->i];
+		{
+			(minishell->i) += 1;
+			return ;
+		}
 		(minishell->i) += 1;
 		while (minishell->strp[minishell->i] != '\0'
 			&& minishell->strp[minishell->i] != '\'')
@@ -34,8 +37,8 @@ static void	test2(t_shell *minishell, char ***tab, int *k, int *x)
 	{
 		if (minishell->strp[minishell->i + 1] == '\0')
 		{
-			(*tab)[*k][(*x)] = minishell->strp[minishell->i];
-			(*x) += 1;
+			(minishell->i) += 1;
+			return ;
 		}
 		(minishell->i) += 1;
 		while (minishell->strp[minishell->i] != '\0'

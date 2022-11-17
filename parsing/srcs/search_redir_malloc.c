@@ -6,11 +6,26 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:55:14 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:23:16 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 11:02:15 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
+
+void	search_infile_malloc(t_shell *minishell,
+	char *str, char **tmp, char **cpy)
+{
+	(*tmp) = malloc(sizeof(char) * (minishell->file_search + 2));
+	if (!(*tmp))
+		free_all_exit(minishell);
+	(*cpy) = malloc(sizeof(char) * ((ft_strlen(str)
+					- (minishell->file_search) + 1)));
+	if (!(*cpy))
+	{
+		free((*tmp));
+		free_all_exit(minishell);
+	}
+}
 
 void	search_outfile_malloc(t_shell *minishell,
 	char *str, char **tmp, char **cpy)
@@ -22,7 +37,7 @@ void	search_outfile_malloc(t_shell *minishell,
 					- (minishell->file_search) + 1)));
 	if (!(*cpy))
 	{
-		free(tmp);
+		free((*tmp));
 		free_all_exit(minishell);
 	}
 }

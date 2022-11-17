@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:06:10 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 12:33:10 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 12:13:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ int	check_dollars_mod(char *str)
 	if (str[i + 1] != '\0' && ((str[i + 1] == 34 && str[i - 1] != 34)
 			|| (str[i + 1] == 39 && str[i - 1] != 39)))
 		mod = 3;
-	if (str[i + 1] != '\0' && (str[i + 1] == 36
-			|| (str[i + 1] >= 48 && str[i + 1] <= 57) || str[i + 1] == 42
-			|| str[i + 1] == 64 || str[i + 1] == 92))
+	if (str[i + 1] != '\0' && ((str[i + 1] >= 48 && str[i + 1] <= 57)
+			|| str[i + 1] == 42 || str[i + 1] == 64 || str[i + 1] == 92))
 	{
 		mod = 1;
 	}
