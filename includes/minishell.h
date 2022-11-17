@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:50:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:19:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct data
 	int			check_loop_export;
 	int			index_arg;
 	int			new_size;
+	int			i;
 	int			*test;
 	int			consecutive_pipes;
 	char		*builtins_name[7];
@@ -246,6 +247,7 @@ int			builtins_loop(char *tab_name[5],
 				int (*builtins[5])(t_data *, t_node *),
 				t_node *node, t_data *data, int *g);
 int			heredoc_main(t_data *data, t_node ***intab, t_shell *parse);
+int			start_heredoc(t_data *data, t_shell *parse, t_node *node);
 int			export_and_unset(t_data *data, t_node *node, int check);
 int			check_inputfile_last_cmd(t_data *data, t_shell *parse);
 int			check_outfile_last_cmd(t_data *data, t_shell *parse);
@@ -253,11 +255,12 @@ int			iterate_outfile_cmd(t_data *data, t_shell *parse);
 int			multi_cmd_dup_to_pipe(t_data *data, int index);
 int			check_inputfile(t_data *data, t_shell *parse);
 int			pipe_creation(t_data *data, int nbr_of_pipe);
-int			start_heredoc(t_data *data, t_shell *parse, t_node *node);
 int			check_outfile(t_data *data, t_shell *parse);
+void		iterate_outfile_hd(t_shell *parse, int i);
 int			export_exec(t_data *data, t_node *node);
 int			unset_exec(t_data *data, t_node *node);
 int			set_p_status(int status, t_node *node);
+int			append_check(t_shell *p, int size);
 int			check_loop_exec(char *str, int i);
 int			ft_printf(const char *flags, ...);
 int			**free_inttab(int **tab, int i);

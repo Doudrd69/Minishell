@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 12:39:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 15:13:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:19:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,53 +107,20 @@ t_node	*rotation_after_exec(t_node *tmp, t_data *data, t_node **in, t_shell *s)
 	return (tmp);
 }
 
-void	iterate_outfile_hd(t_shell *parse)
-{
-	int	i;
-
-	i = 0;
-	while (parse->tab_outfile && parse->tab_outfile[i] != NULL)
-	{
-		if (parse->tab_outfile[i]->next == NULL)
-		{
-			if (parse->tab_outfile[i]->type == 'C')
-				(open(parse->tab_outfile[i]->content,
-						O_WRONLY | O_TRUNC | O_CREAT, 0666));
-			else
-				(open(parse->tab_outfile[i]->content,
-						O_WRONLY | O_APPEND | O_CREAT, 0666));
-		}
-		if (parse->tab_outfile[i]->type == 'C')
-			open(parse->tab_outfile[i]->content, O_WRONLY
-				| O_TRUNC | O_CREAT, 0666);
-		else
-			open(parse->tab_outfile[i]->content, O_WRONLY
-				| O_APPEND | O_CREAT, 0666);
-		if (parse->tab_outfile[i]->next == NULL)
-			i++;
-		else
-			parse->tab_outfile[i] = parse->tab_outfile[i]->next;
-		
-	}
-	return ;
-}
-
 int	heredoc_loop(t_data *data, t_node **infile_tmp, t_shell *parse, int ptr)
 {
-	int		i;
 	t_node	*tmp;
 
-	i = -1;
 	tmp = infile_tmp[data->hd.index];
 	tmp = search_first_hd(data, tmp, parse, infile_tmp);
 	if (parse->head == NULL)
-		iterate_outfile_hd(parse);
-	while (++i < data->heredoc_nb)
+		iterate_outfile_hd(parse, 0);
+	while (++data->i < data->heredoc_nb)
 	{
-		data->hd_pid[i] = fork();
-		if (data->hd_pid[i] == -1)
+		data->hd_pid[data->i] = fork();
+		if (data->hd_pid[data->i] == -1)
 			return (1);
-		if (heredoc_process(tmp, data, i, ptr) == 1)
+		if (heredoc_process(tmp, data, data->i, ptr) == 1)
 			return (1);
 		if (tmp == NULL && (data->hd.index < parse->infile_size))
 		{

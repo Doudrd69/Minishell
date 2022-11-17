@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:28:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:09:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 {
 	data->hd_id = 0;
-	data->hd_pipe_id = 0;
 	if (minishell->nbr_pipe > 0)
 		data->pipe_check = 1;
 	else
@@ -94,10 +93,11 @@ void	execution(t_data *data, t_shell *parse, t_node *node,
 		add_history (parse->cmd);
 	if (parsing(data->envp, parse) == 0)
 	{
+		data->hd_pipe_id = 0;
 		node = main_init_check(data, parse, node);
 		if (start_heredoc(data, parse, node) == 1)
 			return ;
-		while (i < data->heredoc_nb)
+		while (i < data->heredoc_nb - 1)
 			close(data->hd_pipefd[i++][WRITE]);
 		if (parse->nbr_pipe == 0 && parse->tab_outfile == NULL)
 		{

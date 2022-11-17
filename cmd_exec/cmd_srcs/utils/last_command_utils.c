@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:05:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:03:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	dup_to_pipe(t_data *data)
 int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 {
 	int	size;
+	int	check;
 
 	size = parse->infile_size;
-	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0) && size > 0)
+	check = append_check(parse, size);
+	if (check != 0)
 	{
-		while (parse->tab_infile[size]->next != NULL)
-			parse->tab_infile[size] = parse->tab_infile[size]->next;
-		if (data->check_hd == 1 && (parse->tab_infile[size]->type == 'A'))
+		if (check == 1)
 		{
 			if (dup2(data->hd_pipefd[data->hd_pipe_id - 1][READ],
 				STDIN_FILENO) == -1)
@@ -111,7 +111,7 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 			}
 			return (0);
 		}
-		if (parse->tab_infile[size]->type == 'C')
+		if (check == 2)
 			return (input_file_opening_lastcmd(data, parse, size));
 	}
 	return (dup_to_pipe(data));

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:44:21 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:44:45 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:04:44 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,13 @@ int	input_file_opening_cmd(t_data *data, t_shell *parse)
 int	check_inputfile_cmd(t_data *data, t_shell *parse)
 {
 	int	index;
+	int	check;
 
 	index = data->pipe_id;
-	if ((parse->nbr_infile > 0 || parse->nbr_appendin > 0)
-		&& parse->infile_size > 0)
+	check = append_check(parse, index);
+	if (check != 0)
 	{
-		while (parse->tab_infile[index]->next != NULL)
-			parse->tab_infile[index] = parse->tab_infile[index]->next;
-		if (data->check_hd == 1 && (parse->tab_infile[index]->type == 'A'))
+		if (check == 1)
 		{
 			if (dup2(data->hd_pipefd[data->hd_pipe_id - 2][READ],
 				STDIN_FILENO) == -1)
@@ -103,7 +102,7 @@ int	check_inputfile_cmd(t_data *data, t_shell *parse)
 			}
 			return (0);
 		}
-		if (parse->tab_infile[index]->type == 'C')
+		if (check == 2)
 			return (input_file_opening_cmd(data, parse));
 	}
 	return (multi_cmd_dup_to_pipe(data, index));
