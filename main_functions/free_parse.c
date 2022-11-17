@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 10:50:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 16:02:09 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	free_all(t_shell *minishell)
 {
 	t_node	*tmp;
 
+	dprintf(2, "Free ALL\n");
 	while (minishell->head && minishell->head != NULL)
 	{
 		tmp = minishell->head;

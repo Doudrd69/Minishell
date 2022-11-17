@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 15:06:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 16:30:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	while (wait(&status) != -1)
 		;
 	data->p_status = set_p_status(status, node);
+	if (parse->nbr_appendin > 0)
+	{
+		dprintf(2, "Free HD_pipe tab at the end of main exec ==> %d\n", data->heredoc_nb - 1);
+		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
+	}
 	if (parse->nbr_pipe > 0)
 		free_inttab(data->pipefd, parse->nbr_pipe - 1);
 	if (data->check_hd > 0)

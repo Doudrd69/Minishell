@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:45:19 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 15:15:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 16:30:58 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	first_cmd_execution(t_data *data, t_node *node,
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->hd_pipefd)
+		if (data->heredoc_nb > 0)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		check_file(data->env.param_tab1[0]);
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
@@ -96,7 +96,7 @@ void	last_cmd_execution(t_data *data, t_node *node,
 			data->env.tab2 = join_arg(data->env.param_tab2, data->env.tab2);
 		if (data->exec.pipe_check == 1)
 			close_pipe(data, (data->cmd_nb - 2));
-		if (data->hd_pipefd)
+		if (data->heredoc_nb > 0)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		check_file(data->env.param_tab2[0]);
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
@@ -121,7 +121,7 @@ void	cmd_execution(t_data *data, int pipe_id, t_node *node,
 			close_pipe(data, pipe_id);
 		if (data->input_fd > 0)
 			close(data->input_fd);
-		if (data->hd_pipefd)
+		if (data->heredoc_nb > 0)
 			close_hd_pipe(data, data->heredoc_nb - 1);
 		check_file(data->env.param_tab3[0]);
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
