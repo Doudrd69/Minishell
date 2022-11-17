@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars_bis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 19:46:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 19:51:19 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,8 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	cpy = &str[i];
 	minishell->strd = str;
 	if (minishell->mod == 6)
-<<<<<<< HEAD
 		return ;
 	count_malloc_new_tmp(minishell, &i, &j, &size);
-=======
-		return;
-	if (i > 0 && str[i - 1] == '\"' && minishell->mod == 2)
-		j++;
-	while (cpy[++size] != '\0' && cpy[size] != '$' && cpy[size] != '/' && cpy[size] != '=')
-	{
-		printf("MDR\n");
-		if (cpy[size] == ' ' && minishell->mod != 4)
-			break ;
-		if ((minishell->mod == 2 && cpy[size] == '\"') || (minishell->mod == 4 && cpy[size] == '\"'))
-			break ;
-		if (cpy[size] == '\"' || cpy[size] == '\'')
-			j++;
-	}
-	if (minishell->mod == 4)
-		j++;
->>>>>>> 02737633c8ad3c7c022162948177bef7be8005c4
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
 	return_malloc_change_var(minishell, tmp, cpy);

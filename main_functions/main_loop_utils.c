@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 15:14:21 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:08:18 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,29 @@ int	heredoc_main(t_data *data, t_node ***intab, t_shell *parse)
 
 void	*node_rotation(t_node *node, t_data *data)
 {
-	if (node != NULL)
+	if (node == NULL || node->next == NULL)
+		return (node);
+	while (node && node->next->type != 'P')
+		node = node->next;
+	if (node && node->next->type == 'P')
 	{
-		while (node && node->next->type != 'P')
-			node = node->next;
-		if (node && node->next->type == 'P')
+		node = node->next;
+		if (node && node->next != NULL && node->next->type == 'P')
 		{
-			node = node->next;
-			if (node && node->next->type == 'P')
-			{
-				data->consecutive_pipes = 1;
-				return (node);
-			}
-			node = node->next;
+			data->consecutive_pipes = 1;
+			return (node);
 		}
-		else if (node && node->next->type == 'N')
-			node = node->next->next->next;
+		if (node->next != NULL)
+			node = node->next;
 		else
-			node = node->next;
-		if (node && node->type == 'P')
-			node = node->next;
+			return (node);
 	}
+	else if (node && node->next->type == 'N')
+		node = node->next->next->next;
+	else
+		node = node->next;
+	if (node && node->type == 'P')
+		node = node->next;
 	return (node);
 }
 
@@ -118,6 +120,8 @@ void	exec_main(t_data *data, t_node *node, t_shell *parse,
 			if (node->next == NULL)
 				return ;
 			node = node_rotation(node, data);
+			if (node->type == 'P' && node->next == NULL)
+				return ;
 			if (data->consecutive_pipes == 1)
 				return ;
 			node = commands(data, node, parse, builtins, g);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 13:52:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:02:14 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ int	input_file_opening(t_data *data, t_shell *parse)
 
 int	check_inputfile(t_data *data, t_shell *parse)
 {
-	if (parse->nbr_infile > 0 || parse->nbr_appendin > 0)
+	int	check;
+
+	check = 0;
+	check = append_check(parse, 0);
+	if (check != 0)
 	{
-		while (parse->tab_infile[0] && parse->tab_infile[0]->next != NULL)
-			parse->tab_infile[0] = parse->tab_infile[0]->next;
-		if (data->check_hd == 1 && (parse->tab_infile[0]->type == 'A'))
+		if (check == 1)
 		{
 			if (parse->nbr_appendin > 1)
 				close_pipe_hd_before_dup(data, parse);
@@ -61,7 +63,7 @@ int	check_inputfile(t_data *data, t_shell *parse)
 			}
 			return (0);
 		}
-		if (parse->tab_infile[0] && parse->tab_infile[0]->type == 'C')
+		if (check == 2)
 			return (input_file_opening(data, parse));
 	}
 	data->input_fd = STDIN_FILENO;
