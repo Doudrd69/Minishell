@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 13:46:48 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 16:36:49 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_split_minishell(t_shell *minishell, char *str, char c)
 
 	if (!str)
 		return (NULL);
-	nbrw = ft_nbr_words_split_minishell(minishell, str, c);
+	nbrw = ft_nbr_words_split_minishell(str, c);
 	printf("nbrw=%d\n", nbrw);
 	if (nbrw == 0)
 	{

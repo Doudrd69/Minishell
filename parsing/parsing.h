@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 13:04:57 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 16:36:33 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ char	*ft_copy_string_without_quote(t_shell *minishell,
 			char *str, char quote);
 void	list_nospace_quote(t_shell *minishell, t_node **list, char *tmp, int j);
 char	**ft_split_minishell(t_shell *minishell, char *str, char c);
-int		ft_nbr_words_split_minishell(t_shell *minishell,
-			char const	*str, char charset);
+int		ft_nbr_words_split_minishell(char const	*str, char charset);
 void	parse_space_quote(t_shell *minishell);
 int		ft_split_minishell_malloc_ws(char const *str, char charset, char **tab);
 char	**ft_split_minishell_get_filling(char *str,
