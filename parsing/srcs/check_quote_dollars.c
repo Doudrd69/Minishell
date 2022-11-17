@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_quote_dollars.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:36:54 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 17:03:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 19:47:45 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,37 +59,45 @@ static int	check_quote_dollars_bis(char *str, int i, int dquote, int quote)
 	return (0);
 }
 
-int	check_quote_dollars(char *str, int max)
+static void	check_mod(t_shell *minishell, int i, int dquote, int quote)
+{
+	if (minishell->strp[i] == '$' && minishell->strp[i + 1] == '"'
+		&& dquote == 1 && quote != 1)
+		minishell->mod = 8;
+	else if (i > 0 && minishell->strp[i] == '$' && minishell->strp[i - 1] == '"'
+		&& dquote == 1 && quote != 1)
+		minishell->mod = 2;
+	else if (minishell->strp[i] == '$' && dquote == 1 && quote != 1)
+		minishell->mod = 3;
+	else if (minishell->strp[i] == '$' && quote == 1 && dquote != 1)
+		minishell->mod = 1;
+	else if (minishell->strp[i] == '$' && dquote != 1 && quote != 1)
+		minishell->mod = 0;
+}
+
+int	check_quote_dollars(t_shell *minishell, char *str, int max)
 {
 	int	i;
 	int	quote;
 	int	dquote;
 	int	j;
-	int mod;
 
 	i = -1;
 	quote = 0;
+	minishell->strp = str;
+	minishell->mod = -1;
 	dquote = 0;
 	j = 0;
-	mod = -1;
 	while (++i <= max)
 	{
 		check_dquote_dollars(str, &dquote, i, &quote);
 		j = check_quote_dollars_bis(str, i, dquote, quote);
 		if (j == 6 || j == 7)
-			mod = j;
-		else if (str[i] == '$' && str[i + 1] == '"' && dquote == 1 && quote != 1)
-			mod =  8;
-		else if (j != -1 && str[i] == '$' && str[i - 1] == '"' && dquote == 1 && quote != 1)
-			mod = 2;
-		else if (str[i] == '$' && dquote == 1 && quote != 1)
-			mod  = 3;
-		else if (str[i] == '$' && quote == 1 && dquote != 1)
-			mod = 1;
-		else if (str[i] == '$' && dquote != 1 && quote != 1)
-			mod = 0;
+			minishell->mod = j;
+		else
+			check_mod(minishell, i, dquote, quote);
 	}
-	if (mod != -1)
-		return (mod);
+	if (minishell->mod != -1)
+		return (minishell->mod);
 	return (check_quote_in_quote_dollars(str));
 }

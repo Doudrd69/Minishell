@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:35 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 12:32:49 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 19:01:26 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 	while (tmp && tmp != NULL)
 	{
 		printf("haha\n");
-		printf("list[%d] =%s*\ntype = %c\n\n", i, (char *)(tmp->content), tmp->type);
+		printf("list[%d] =%s*\ntype = %c, addr ==%p\n\n", i, (char *)(tmp->content), tmp->type, (tmp->content));
 		tmp = tmp->next;
 		i++;
 	}

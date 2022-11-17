@@ -6,11 +6,19 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:06:10 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 12:13:04 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:53:26 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
+
+void	value_quote_mod_1(t_shell *minishell, char *str, int i)
+{
+	int	check;
+
+	check = 4;
+	write_newvalue(minishell, str, check, i);
+}
 
 int	check_heredoc_dollar_mod_1(char *str, int i)
 {

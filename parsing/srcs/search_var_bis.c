@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 13:30:08 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 17:06:02 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 		free_all_exit(minishell);
 	while (i < size)
 	{
-		if ((str[i] == '$' && i != 0) || str[i] == '"' || str[i] == '/' || str[i] == '=')
+		if ((str[i] == '$' && i != 0) || str[i] == '"'
+			|| str[i] == '/' || str[i] == '=')
 			break ;
-		minishell->var_search[j] = str[i];
-		i++;
+		minishell->var_search[j] = str[i++];
 		j++;
 	}
 	minishell->var_search[j] = '\0';

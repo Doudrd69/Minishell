@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 16:36:33 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 18:35:39 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,16 @@ typedef struct s_shell
 	int				j;
 	int				tab;
 	char			*strp;
+	char			*strd;
 	char			*tmpp;
 	int				pipe;
+	int				dollars;
+	char			*stro;
 	int				error;
 	char			**envp;
 	char			*var_search;
 	char			*value;
+	char			*stra;
 	int				last_pipe;
 	unsigned int	list_size;
 	char			**env_search;
@@ -155,7 +159,7 @@ void	return_malloc_change_var(t_shell *minishell,
 /*DOLLARS*/
 void	parse_dollars(t_shell *minishell);
 int		dollars_specific(t_shell *minishell);
-int		check_quote_dollars(char *str, int max);
+int		check_quote_dollars(t_shell *minishell, char *str, int max);
 int		check_and_print_var_parsing(t_shell *minishell, char *str);
 void	print_var_parsing(t_shell *minishell);
 int		var_exists_parsing(t_shell *minishell);
@@ -209,6 +213,7 @@ int		dl_fl_search_heredoc(char *str, int i);
 int		main_loop_search_append(char *str, int i, int file);
 int		dl_fl_search_append(char *str, int i);
 int		sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j);
+int		value_check_with_mod(char *str, int i);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);
