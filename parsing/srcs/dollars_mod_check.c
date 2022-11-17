@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:46:22 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 18:36:23 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:04:28 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	test(t_shell *minishell, int check, t_node **list, int i)
 {
+	printf("minishell->mod ==%d\n", minishell->mod);
 	write_newvalue(minishell, minishell->stra + i, check, i);
 	change_var_to_value(minishell->stra, i, minishell, list);
 }
