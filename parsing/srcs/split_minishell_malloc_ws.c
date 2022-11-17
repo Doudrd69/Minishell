@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/15 16:29:03 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 13:46:34 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	ft_split_minishell_malloc_ws(char const	*str, char charset, char **tab)
 		count_lenght_ws(str, &wlen, &i);
 		if (wlen != 0)
 		{
+			printf("wlen==%d\n", wlen);
 			tab[j] = (char *)malloc(sizeof(char) * (wlen + 1));
 			if (tab[j] == NULL)
 				return (j);

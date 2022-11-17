@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 20:25:22 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 12:59:59 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,17 @@ void	parse_dollars(t_shell *minishell)
 	{
 		i = 0;
 		str = (char *)(list_cpy->content);
-		while (dprintf(2, "i=%d\n", i) && str && str[i] != '\0')
+		while (str && str[i] != '\0')
 		{
 			if (str[i] == '$')
 			{
 				dollars--;
 				minishell->mod = check_quote_dollars(str, i);
-				dprintf(2, "strbef=%s=|s=%s\n", str, str + i);
+				dprintf(2, "MOD=%d\n", minishell->mod);
 				str = dollars_mod(str, i, minishell, &list_cpy);
-				// dprintf(2, "strmid=%s=|cont=%s=\n", str, list_cpy->content);
 				if (str && list_cpy->content && ft_strncmp(str, list_cpy->content, ft_strlen(str)))
 					i = 0;
 				str = (char *)(list_cpy->content);
-				// dprintf(2, "straft=%s=\n", str);
 			}
 			i++;
 		}

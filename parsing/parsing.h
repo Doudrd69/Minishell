@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 20:06:29 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 13:04:57 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,9 @@ int		new_value5(t_shell *minishell, char *str, int i);
 int		new_value4(t_shell *minishell, char *str);
 int		if_only_space(char *str);
 void	unstack_list(t_shell *minishell, t_node **list);
-void	search_outfile_malloc(t_shell *minishell,
+void	search_outfile_malloc(t_shell *minishell, char *str,
+			char **tmp, char **cpy);
+void	search_infile_malloc(t_shell *minishell,
 			char *str, char **tmp, char **cpy);
 void	search_return_exit(t_shell *minishell,
 			char *cpy, char **tmp);
@@ -162,7 +164,7 @@ int		check_var_parsing(char *str, char *var_name);
 char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list);
 void	change_var_to_value(char *str, int i,
 			t_shell *minishell, t_node **list);
-char	*replace_quote_dollars(t_shell *minishell, char *tmp, int j);
+char	*replace_quote_dollars(t_shell *minishell, char *tmp, int *j);
 void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp);
 void	find_position_of_dollars(char *position, int i, int *size);
 void	replace_value_and_after(t_shell *minishell, int *j, char **tmp);
@@ -180,7 +182,7 @@ int		check_heredoc_dollar_mod_1(char *str, int i);
 int		check_heredoc_dollar_mod_2_3(char *str, int i);
 void	change_value_mod2_and_3(char *str, int i,
 			t_shell *minishell, t_node **list);
-char		*interpret_dollars(char *str, int i,
+char	*interpret_dollars(char *str, int i,
 			t_shell *minishell, t_node **list);
 void	change_value_mod1(char *str, int i,
 			t_shell *minishell, t_node **list);

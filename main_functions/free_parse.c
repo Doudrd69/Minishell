@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 15:39:20 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 10:50:39 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	free_outab(t_shell *minishell)
 
 	i = 0;
 	tmp_outab = minishell->tab_outfile;
-	while (tmp_outab && tmp_outab[i])
+	while (tmp_outab && i <= minishell->outfile_size)
 	{
+		printf("free tab\n");
 		tmp = (tmp_outab)[i];
 		while (tmp && tmp != NULL)
 		{
@@ -59,7 +60,7 @@ void	free_tab_parse(t_shell *minishell)
 
 	i = 0;
 	tmp_intab = minishell->tab_infile;
-	while (tmp_intab && tmp_intab[i])
+	while (tmp_intab && i <= minishell->infile_size)
 	{
 		tmp = (tmp_intab)[i];
 		while (tmp && tmp != NULL)

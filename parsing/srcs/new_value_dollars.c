@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:43:20 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:36:58 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 12:06:55 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 static int	new_value1(t_shell *minishell, char *str)
 {
 	int		size;
+	int		i;
 
-	size = 0;
-	while (str[size] != '\0' && str[size] != ' ')
+	size = 1;
+	while (str && str[size] != '\0' && str[size] != ' ' && str[size] != '$')
 		size++;
-	minishell->value = (char *)malloc(sizeof(char) * (size + 1));
+	minishell->value = (char *)malloc(sizeof(char) * (size + 2));
 	if (minishell->value == NULL)
 		return (0);
-	size = -1;
-	while (str[++size] != '\0' && str[size] != ' ')
-		minishell->value[size] = str[size];
+	size = 0;
+	i = 0;
+	minishell->value[i++] = '$';
+	while (str[++size] != '\0' && str[size] != ' ' && str[size] != '$')
+		minishell->value[i++] = str[size];
 	minishell->value[size] = '\0';
 	return (1);
 }

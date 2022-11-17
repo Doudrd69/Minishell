@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:46:38 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 11:01:52 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,8 @@ int	search_infile(t_shell *minishell, char *str, t_node **tab_infile,
 	while (str[++i] != '\0' && str[i] == ' ')
 		space++;
 	file = main_loop_search_infile(str, i, file);
-	tmp = malloc(sizeof(char) * (file + 2));
-	if (!tmp)
-		free_all_exit(minishell);
-	cpy = malloc(sizeof(char) * ((ft_strlen(str) - (file) + 1)));
-	if (!cpy)
-		free_all_exit(minishell);
+	minishell->file_search = file;
+	search_infile_malloc(minishell, str, &tmp, &cpy);
 	tmp = cmd_cpy(tmp, str + (minishell->mod) + 1 + space, file + 1);
 	include_infile_list(tab_infile, tmp);
 	delete_file_list(minishell, list, cpy, str);
