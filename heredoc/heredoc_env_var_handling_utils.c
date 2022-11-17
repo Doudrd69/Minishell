@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:39:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/12 15:28:23 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:05:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,31 @@ int	cpvhd_specific_cases(t_data *data, char *str, int i, int output_fd)
 		i = print_var_util(data, str, i, output_fd);
 	}
 	return (i);
+}
+
+void	iterate_outfile_hd(t_shell *parse, int i)
+{
+	while (parse->tab_outfile && parse->tab_outfile[i] != NULL)
+	{
+		if (parse->tab_outfile[i]->next == NULL)
+		{
+			if (parse->tab_outfile[i]->type == 'C')
+				(open(parse->tab_outfile[i]->content,
+						O_WRONLY | O_TRUNC | O_CREAT, 0666));
+			else
+				(open(parse->tab_outfile[i]->content,
+						O_WRONLY | O_APPEND | O_CREAT, 0666));
+		}
+		if (parse->tab_outfile[i]->type == 'C')
+			open(parse->tab_outfile[i]->content, O_WRONLY
+				| O_TRUNC | O_CREAT, 0666);
+		else
+			open(parse->tab_outfile[i]->content, O_WRONLY
+				| O_APPEND | O_CREAT, 0666);
+		if (parse->tab_outfile[i]->next == NULL)
+			i++;
+		else
+			parse->tab_outfile[i] = parse->tab_outfile[i]->next;
+	}
+	return ;
 }

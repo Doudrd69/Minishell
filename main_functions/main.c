@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 17:03:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:10:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	cmd_exec(t_data *data, t_shell *parse,
 
 	node = parse->head;
 	cmd_exec_init(data, parse);
-	if (node == NULL)
+	if (node == NULL || node->type == 'P')
 		return ;
 	node = node_rotation_exec(node, parse);
 	exec_main(data, node, parse, builtins, g_pstatus);
