@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:03:17 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 09:31:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	set_p_status(int status, t_node *node)
 		tmp = ft_atoi(node->content);
 	if (status == 768 || status == 13)
 		return (tmp);
+	else if (status == 65280)
+		return (255);
 	else if (status == 3)
 		return (131);
 	else if (status == 5376)
@@ -49,7 +51,7 @@ int	set_p_status(int status, t_node *node)
 		return (130);
 	else if (status == 32512)
 		return (127);
-	else if (status == 1 || status == 3328)
+	else if (status == 1 || status == 3328 || status == 256)
 		return (1);
 	else
 		return (0);
