@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 19:46:59 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:25:52 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,37 +71,32 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 	cpy = &str[i];
 	minishell->strd = str;
 	if (minishell->mod == 6)
-<<<<<<< HEAD
-		return ;
-	count_malloc_new_tmp(minishell, &i, &j, &size);
-=======
-		return;
-	if (i > 0 && str[i - 1] == '\"' && minishell->mod == 2)
-		j++;
-	while (cpy[++size] != '\0' && cpy[size] != '$' && cpy[size] != '/' && cpy[size] != '=')
 	{
-		printf("MDR\n");
-		if (cpy[size] == ' ' && minishell->mod != 4)
-			break ;
-		if ((minishell->mod == 2 && cpy[size] == '\"') || (minishell->mod == 4 && cpy[size] == '\"'))
-			break ;
-		if (cpy[size] == '\"' || cpy[size] == '\'')
-			j++;
+		free(minishell->value);
+		minishell->value = NULL;
+		return ;
 	}
-	if (minishell->mod == 4)
-		j++;
->>>>>>> 02737633c8ad3c7c022162948177bef7be8005c4
+	count_malloc_new_tmp(minishell, &i, &j, &size);
 	tmp = (char *)malloc(sizeof(char)
 			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
 	return_malloc_change_var(minishell, tmp, cpy);
 	minishell->i = i;
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
 	fill_before_value_tmp(minishell, &j, &tmp, &size);
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
 	replace_value_and_after(minishell, &j, &tmp);
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
 	tmp = replace_quote_dollars(minishell, tmp, &j);
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
 	while (str[size] && str[size] != '\0')
 		tmp[j++] = str[size++];
 	tmp[j] = '\0';
 	include_dollar_list(minishell, list, tmp);
+	printf("FREE_VALUEtmp==%s=, ==%p=\n", tmp, tmp);
+	printf("addr value==%p=\n", minishell->value);
+	free(minishell->value);
+	minishell->value = NULL;
 }
 
 int	check_heredoc_dollar_mod_2_3(char *str, int i)

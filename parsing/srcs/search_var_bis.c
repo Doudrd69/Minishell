@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 17:06:02 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 20:34:41 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 	}
 	minishell->var_search[j] = '\0';
 	print_var_parsing(minishell);
+	free(minishell->var_search);
+	minishell->var_search = NULL;
 	return (0);
 }
