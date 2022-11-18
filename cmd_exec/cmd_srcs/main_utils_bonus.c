@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 12:51:45 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/15 12:11:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 10:44:48 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int	**free_inttab(int **tab, int i)
 		free(tab[i]);
 		i--;
 	}
-	free(tab);
+	if (tab == NULL)
+		printf("tab==%p=\n", tab);
+	if (tab != NULL)
+		free(tab);
+	tab = NULL;
 	return (0);
 }
 

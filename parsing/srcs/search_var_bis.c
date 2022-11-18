@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:47 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:18:21 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_var_parsing(char *str, char *var_name)
 void	copy_value_parsing(t_shell *minishell, int j, int i, char *var)
 {
 	i = 0;
-	while (var[j] != ' ' && var[j] != '\0')
+	while (var[j] != '\0')
 	{
 		minishell->value[i] = var[j];
 		j++;
@@ -72,7 +72,7 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 		free_all_exit(minishell);
 	while (i < size)
 	{
-		if ((str[i] == '$' && i != 0) || str[i] == '"'
+		if ((str[i] == '$' && i != 0) || str[i] == '"' || str[i] == '\''
 			|| str[i] == '/' || str[i] == '=')
 			break ;
 		minishell->var_search[j++] = str[i++];

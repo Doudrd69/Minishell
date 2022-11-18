@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:28:44 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:03:01 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,22 @@ void	change_value_mod1(char *str, int i,
 	int		j;
 	int		k;
 
-	size = 0;
-	j = 0;
+	free(minishell->value);
+	minishell->value = NULL;
 	return ;
 	while (i + size > 0 && str[i + size] != '\'')
 		size--;
 	cpy = &str[i + size];
 	i += size;
 	size = change_value_mod1_bis(minishell, cpy, size, &j);
-	tmp = (char *)malloc(sizeof(char)
-			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
-	if (!tmp)
-		return (free_all_exit(minishell));
-	k = 0;
 	while (++j < i)
 		tmp[j] = str[k++];
 	size += k;
 	replace_value_and_after(minishell, &j, &tmp);
 	tmp = count_after_value(j, tmp, str, size);
 	include_dollar_list(minishell, list, tmp);
+	free(minishell->value);
+	minishell->value = NULL;
 }
 
 int	new_value_for_global_error(t_shell *minishell, char *str)
