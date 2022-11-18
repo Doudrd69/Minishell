@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/
@@ -53,7 +53,6 @@ SRCS =	cmd_exec/cmd_main.c										\
 		parsing/srcs/redirections.c								\
 		parsing/srcs/search_var.c								\
 		parsing/srcs/ft_dlstnew.c 								\
-		parsing/debug/print_all.c								\
 		parsing/srcs/pipe_bis.c									\
 		parsing/srcs/counter.c									\
 		parsing/srcs/parsing.c									\

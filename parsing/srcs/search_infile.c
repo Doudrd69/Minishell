@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_infile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:41:59 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 11:01:52 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:50:31 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	delete_file_list(t_shell *minishell, t_node **list,
 		free(cpy);
 		cpy = NULL;
 		unstack_list(minishell, list);
-		print_dlist(&minishell->head, NULL, NULL, minishell);
 		return ;
 	}
 	include_dollar_list(minishell, list, cpy);

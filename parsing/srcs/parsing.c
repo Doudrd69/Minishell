@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 17:08:29 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:49:32 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,6 @@ int	tokenizers_arg(t_shell *minishell)
 		return (0);
 	parse_quote_tab(minishell, &minishell->tab_infile,
 		&minishell->tab_outfile);
-	print_dlist(&minishell->head, &minishell->tab_infile,
-		&minishell->tab_outfile, minishell);
-	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
-	printf("END_PARSING\n");
 	return (1);
 }
 

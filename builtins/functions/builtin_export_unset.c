@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:58:35 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 15:01:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:40:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	export_loop(t_node *n, t_data *data)
 		data->envp = data->new_env;
 		if (data->check_loop_export == 1)
 			free_old(tmp, tmp_size);
-		if (n->next == NULL)
+		if (n->next == NULL && data->check_loop_export)
 			break ;
 		data->check_loop_export = 1;
 		n = n->next;
