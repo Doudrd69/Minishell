@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:59:18 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:06:08 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_node	*main_init_check(t_data *data, t_shell *minishell, t_node *node)
 	if (minishell->nbr_pipe > 0)
 	{
 		data->cmd_nb = minishell->nbr_pipe + 1;
-		dprintf(2, "==> %d\n", minishell->nbr_pipe);
 		data->pipe_nb = pipe_creation(data, minishell->nbr_pipe);
 	}
 	else

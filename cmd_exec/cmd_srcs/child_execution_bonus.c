@@ -6,18 +6,16 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:45:19 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 07:14:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:05:28 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_cmd(char **tab, char **param, t_data *data,
-	int (*builtins[7])(t_data *, t_node *))
+void	exec_cmd(char **tab, char **param, t_data *data)
 {
 	int	i;
 
-	(void)builtins;
 	i = -1;
 	if (tab == NULL)
 	{
@@ -30,7 +28,6 @@ void	exec_cmd(char **tab, char **param, t_data *data,
 	{
 		if (access(tab[i], X_OK) == 0)
 		{
-			dprintf(2, "Execute ==> %s\n", tab[i]);
 			if (execve(tab[i], param, data->envp) == -1)
 			{
 				perror("execve");
@@ -75,7 +72,7 @@ void	first_cmd_execution(t_data *data, t_node *node,
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
 			free_and_exit_builtin(data->env.tab1, data->env.param_tab1,
 				data->size_ptab1 - 1);
-		exec_cmd(data->env.tab1, data->env.param_tab1, data, builtins);
+		exec_cmd(data->env.tab1, data->env.param_tab1, data);
 	}
 }
 
@@ -103,7 +100,7 @@ void	last_cmd_execution(t_data *data, t_node *node,
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
 			free_and_exit_builtin(data->env.tab2, data->env.param_tab2,
 				data->size_ptab2 - 1);
-		exec_cmd(data->env.tab2, data->env.param_tab2, data, builtins);
+		exec_cmd(data->env.tab2, data->env.param_tab2, data);
 	}
 }
 
@@ -128,6 +125,6 @@ void	cmd_execution(t_data *data, int pipe_id, t_node *node,
 		if (builtins_loop(data->builtins_name, builtins, node, data, &g) == 0)
 			free_and_exit_builtin(data->env.tab3, data->env.param_tab3,
 				data->size_ptab3 - 1);
-		exec_cmd(data->env.tab3, data->env.param_tab3, data, builtins);
+		exec_cmd(data->env.tab3, data->env.param_tab3, data);
 	}
 }

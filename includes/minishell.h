@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:19:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:06:41 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,7 @@ void		*commands(t_data *data, t_node *node, t_shell *parse,
 				int (*builtins[7])(t_data *, t_node *), int g);
 void		exec_main(t_data *data, t_node *node, t_shell *parse,
 				int (*builtins[7])(t_data *, t_node *), int g);
-void		exec_cmd(char **tab, char **param, t_data *data,
-				int (*builtins[7])(t_data *, t_node *));
+void		exec_cmd(char **tab, char **param, t_data *data);
 void		cmd_exec(t_data *data, t_shell *minishell,
 				int (*builtins[7])(t_data *, t_node *));
 void		cmd_execution(t_data *data, int pipe_id, t_node *node,
