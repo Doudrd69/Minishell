@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:57:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct data
 	int			index_arg;
 	int			new_size;
 	int			i;
+	int			cd_check;
 	int			*test;
 	int			consecutive_pipes;
 	char		*builtins_name[7];
@@ -222,13 +223,18 @@ void		main_init_before_loop(t_data *data, char **envp,
 void		last_cmd_execution(t_data *data, t_node *node,
 				int (*builtins[5])(t_data *, t_node *), int g);
 void		close_pipe_hd_before_dup(t_data *data, t_shell *parse);
+void		free_if_no_list(t_data *data, t_shell *parse);
 void		eof_handler(char *input, t_shell *minishell);
+void		free_tab_exec(t_data *data, t_shell *parse);
 void		*node_rotation(t_node *node, t_data *data);
+void		exec_cmd_path(t_data *data, char *envp[]);
+void		cmd_exec_path(t_data *data, int pipe_id);
 void		cmd_exec_path(t_data *data, int pipe_id);
 void		envp_check(t_data *data, char **envp);
 void		sigint_handler_in_process(int signum);
 void		sigint_handler_main_loop(int signum);
 void		init_main(t_data *data, char **envp);
+void		exec_cmd_path_last(t_data *data);
 void		exit_cmd_not_found(char **param);
 void		close_pipe(t_data *data, int i);
 void		free_param_tab(t_data *data);
@@ -312,8 +318,8 @@ int			check_special_char(char c, int size);
 int			pid_display(t_data *data, int i);
 int			check_signs(int i, t_data *data);
 int			envp_size_for_tmp(char **tab);
-int			update_old_pwd(t_data *data);
 int			display_export(t_data *data);
+int			update_old_pwd(t_data *data);
 int			check_if_empty(t_data *data);
 int			check_oldpwd(t_data *data);
 int			newline_arg(t_data *data);

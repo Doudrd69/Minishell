@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:44:04 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:07:05 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:01:12 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_main(t_data *data, char **envp)
 {
 	data->var_export = NULL;
 	data->str = NULL;
+	data->check_loop_export = 0;
 	data->unset_env_check = 0;
 	data->builtin_cmd_nb = 7;
 	data->first_cd_check = 0;

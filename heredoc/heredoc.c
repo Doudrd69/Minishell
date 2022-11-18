@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:41:48 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:03:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 12:32:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_var_exists(int j, t_data *data, int output_fd)
 
 void	heredoc_exit(char *str, char *limiter, int output_fd, t_data *data)
 {
-	if ((ft_strncmp(str, limiter, 4) == 0))
+	if ((ft_strncmp(str, limiter, ft_strlen(limiter)) == 0))
 	{
 		if (check_delimiter(str, limiter) == 0)
 		{

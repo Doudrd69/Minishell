@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:03:29 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 17:03:03 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:26:04 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	free_outab(t_shell *minishell)
 	tmp_outab = minishell->tab_outfile;
 	while (tmp_outab && i <= minishell->outfile_size)
 	{
-		printf("free tab\n");
 		tmp = (tmp_outab)[i];
 		while (tmp && tmp != NULL)
 		{

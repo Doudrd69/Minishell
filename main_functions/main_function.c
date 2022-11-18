@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:44:13 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:57:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	main_init_before_loop(t_data *data, char **envp,
 {
 	(void)argv;
 	(void)argc;
+	data->cd_check = 0;
 	init_builtins_tab(data->builtins_name, builtins);
 	init_main(data, envp);
 	envp_check(data, envp);

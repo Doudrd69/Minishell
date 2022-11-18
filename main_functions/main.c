@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 14:33:51 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:07:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ void	sigint_handler_main_loop(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-}
-
-int	export_and_unset(t_data *data, t_node *node, int check)
-{
-	if (node && ft_strncmp(node->content, "export", 6) == 0)
-	{
-		if (node->next == NULL || node->next->type == 'P')
-			return (display_export(data));
-		data->p_status = export_exec(data, node);
-		data->check_loop_export = 1;
-		return (1);
-	}
-	if (node && ft_strncmp(node->content, "unset", 5) == 0)
-	{
-		data->p_status = unset_exec(data, node);
-		return (1);
-	}
-	return (check);
 }
 
 int	builtins_loop(char *tab_name[7], int (*builtins[7])(t_data *, t_node *),
@@ -113,7 +95,10 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	node = parse->head;
 	cmd_exec_init(data, parse);
 	if (node == NULL || node->type == 'P')
+	{
+		free_if_no_list(data, parse);
 		return ;
+	}
 	node = node_rotation_exec(node, parse);
 	exec_main(data, node, parse, builtins, g_pstatus);
 	if (data->check_hd == 1)
@@ -123,11 +108,6 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	while (wait(&status) != -1)
 		;
 	data->p_status = set_p_status(status, node);
-	if (parse->nbr_appendin > 0)
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
-	if (parse->nbr_pipe > 0)
-		free_inttab(data->pipefd, parse->nbr_pipe - 1);
-	if (data->check_hd > 0)
-		free(data->hd_pid);
+	free_tab_exec(data, parse);
 	return ;
 }

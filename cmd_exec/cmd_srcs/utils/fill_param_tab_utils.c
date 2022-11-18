@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 08:56:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 07:54:43 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:23:10 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,9 @@ int	append_check(t_shell *p, int size)
 		while (p->tab_infile[size]->next != NULL)
 			p->tab_infile[size] = p->tab_infile[size]->next;
 		if (p->tab_infile[size] && p->tab_infile[size]->type == 'A')
-		{
-			dprintf(2, "Returning Append\n");
 			return (1);
-		}
 		if (p->tab_infile[size] && p->tab_infile[size]->type == 'C')
-		{
-			dprintf(2, "Returning Classic\n");
 			return (2);
-		}
 	}
-	dprintf(2, "== No INFILE for this command ==\n");
 	return (0);
 }
