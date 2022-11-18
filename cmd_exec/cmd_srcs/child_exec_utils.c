@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:44:07 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:56:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:10:48 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	check_file(char *file)
 				close(fd);
 				exit(errno);
 			}
+			close(fd);
 		}
-		close(fd);
 	}
 	return ;
 }

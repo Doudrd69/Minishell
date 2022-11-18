@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 15:57:02 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:20:04 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ int			mini_cd(t_data *data, t_node *node);
 void		*echo_arg_newline_check(t_data *data, t_node *node, int check,
 				int loop);
 void		copy_loop(t_data *data, char *var_export, int new_size);
+void		free_and_cpy_str(t_data *data, int position, char *str);
 void		opendir_test(char *str, DIR *dir, struct dirent *pdir);
 void		print_var(int j, t_data *data);
 void		free_unset_tab(t_data *data);

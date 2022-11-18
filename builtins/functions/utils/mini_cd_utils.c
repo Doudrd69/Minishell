@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 15:57:57 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:20:27 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ int	update_pwd(t_data *data)
 	ft_strlcpy(&str[4], data->cwd, size, 1);
 	if (size > ft_strlen(data->envp[position]))
 	{
-		if (data->cd_check == 1)
-			free(data->envp[position]);
-		data->envp[position] = str;
-		data->cd_check = 1;
+		free_and_cpy_str(data, position, str);
 		return (0);
 	}
 	else
