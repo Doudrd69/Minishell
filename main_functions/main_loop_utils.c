@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:12:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:36:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	export_exec(t_data *data, t_node *n)
 		n = n->next;
 	}
 	if (i == 0)
-		return (display_export(data, &data->envp));
+		return (display_export(data));
 	while (--i > 0)
 		n = n->prev;
 	if (export_loop(n, data) == 1)

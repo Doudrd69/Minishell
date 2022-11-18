@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:12:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:41:13 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:37:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,6 @@ int			unset_var(int index, t_data *data, char *var_unset);
 int			malloc_and_cpy(t_data *data, int i, int index);
 int			check_nb_of_args(t_node *node, int size);
 int			write_and_check_signs(int i, t_data *data);
-int			display_export(t_data *data, char ***tab);
 int			check_var_hd(char *str, char *var_name);
 int			path_exists(t_data *data, t_node *node);
 int			check_var(char *str, char *var_name);
@@ -313,6 +312,7 @@ int			check_special_char(char c, int size);
 int			pid_display(t_data *data, int i);
 int			check_signs(int i, t_data *data);
 int			envp_size_for_tmp(char **tab);
+int			display_export(t_data *data);
 int			update_old_pwd(t_data *data);
 int			check_if_empty(t_data *data);
 int			check_oldpwd(t_data *data);

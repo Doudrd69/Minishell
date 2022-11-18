@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 12:41:29 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:42:13 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	display_env(char **tmp_tab, int size, int output_fd)
 	return ;
 }
 
-int	display_export(t_data *data, char ***tab)
+int	display_export(t_data *data)
 {
 	int		i;
 	int		output_fd;
@@ -70,9 +70,24 @@ int	display_export(t_data *data, char ***tab)
 
 	i = 0;
 	output_fd = 1;
-	tmp_tab = *tab;
+	tmp_tab = malloc(sizeof(char *) * data->envp_size + 1);
+	if (!tmp_tab)
+		return (1);
+	while (i < data->envp_size - 1)
+	{
+		tmp_tab[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]) + 1);
+		if (!tmp_tab[i])
+		{
+			free_tab(tmp_tab, i - 1);
+			return (1);
+		}
+		ft_strlcpy(tmp_tab[i], data->envp[i], ft_strlen(data->envp[i]), 1);
+		i++;
+	}
+	tmp_tab[i] = NULL;
 	sorting(tmp_tab, data->envp_size);
 	display_env(tmp_tab, data->envp_size, output_fd);
+	free_tab(tmp_tab, i - 1);
 	if (data->pipe_check == 1)
 		return (3);
 	return (1);
