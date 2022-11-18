@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 17:02:59 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:04:40 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	set_p_status(int status, t_node *node)
 
 t_node	*node_rotation_exec(t_node *node, t_shell *parse)
 {
-	while (node && node->next != NULL)
-		node = node->next;
 	if (parse->head != NULL)
 		node = parse->head;
 	else

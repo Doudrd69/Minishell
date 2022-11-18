@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:55:58 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:18:00 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:03:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ t_node	*search_first_hd(t_data *data, t_node *tmp, t_shell *parse, t_node **in)
 	{
 		data->hd.index = search_hd(tmp, parse, in);
 		tmp = in[data->hd.index];
+	}
+	if (tmp->type != 'A' && tmp->next != NULL)
+	{
+		while (tmp != NULL && tmp->type != 'A')
+			tmp = tmp->next;
 	}
 	return (tmp);
 }
