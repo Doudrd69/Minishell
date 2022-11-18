@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:45:19 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 14:17:07 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:51:59 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	first_cmd_execution(t_data *data, t_node *node,
 		exec_cmd_path(data, data->envp);
 	else
 	{
+		dprintf(2, "ISSOU\n");
 		if (data->env.tab1 != NULL)
 			data->env.tab1 = join_arg(data->env.param_tab1, data->env.tab1);
 		if (data->exec.pipe_check == 1)
