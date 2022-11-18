@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:53:02 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:34:41 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:06:47 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 
 	j = 0;
 	size = 0;
-	i = 0;
 	position = &str[0];
-	find_position_of_dollars(position, i, &size);
+	find_position_of_dollars(position, &size);
 	i = 1;
 	minishell->var_search = malloc(sizeof(char) * size);
 	if (!(minishell->var_search))
@@ -76,8 +75,7 @@ int	check_and_print_var_parsing(t_shell *minishell, char *str)
 		if ((str[i] == '$' && i != 0) || str[i] == '"'
 			|| str[i] == '/' || str[i] == '=')
 			break ;
-		minishell->var_search[j] = str[i++];
-		j++;
+		minishell->var_search[j++] = str[i++];
 	}
 	minishell->var_search[j] = '\0';
 	print_var_parsing(minishell);
