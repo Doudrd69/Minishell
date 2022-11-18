@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 16:03:04 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:48:40 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	count_malloc_new_tmp(t_shell *minishell, int *i, int *j, int *size)
 	}
 	if (minishell->mod == 4)
 		(*j)++;
+	if (minishell->mod == 2 || minishell->mod == 4)
+		(*j)--;
 }
 
 static void	fill_before_value_tmp(t_shell *minishell,
@@ -85,7 +87,7 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 		return ;
 	count_malloc_new_tmp(minishell, &i, &j, &size);
 	tmp = (char *)malloc(sizeof(char)
-			* (ft_strlen(minishell->value) + j - size + ft_strlen(str)));
+			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
 	return_malloc_change_var(minishell, tmp, cpy);
 	minishell->i = i;
 	fill_before_value_tmp(minishell, &j, &tmp, &size);

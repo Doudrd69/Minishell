@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 12:41:47 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:17:57 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	first_parse(t_shell *minishell, char *str);
 
 /*PIPE*/
 int		parse_pipe(t_shell *minishell, int j, int i);
-int		check_quote_pipe(t_shell *minishell, char *str, int len);
+int		check_quote_pipe(t_shell *minishell, char *str, int pipe);
 char	*cmd_cpy(char *dest, char *src, int size);
 void	delist(t_node **list);
 void	ft_incr_var_pipe(int *j, int *i);

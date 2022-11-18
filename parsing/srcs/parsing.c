@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:16 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 19:22:06 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:08:29 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	tokenizers_arg(t_shell *minishell)
 		&minishell->tab_outfile);
 	print_dlist(&minishell->head, &minishell->tab_infile,
 		&minishell->tab_outfile, minishell);
+	print_dlist(&minishell->head, &minishell->tab_infile, &minishell->tab_outfile, minishell);
+	printf("END_PARSING\n");
 	return (1);
 }
 

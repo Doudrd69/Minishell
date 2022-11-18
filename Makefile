@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
+FLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 
 PRINTF_NAME = libftprintf.a
 PRINTF_PATH = ft_printf/

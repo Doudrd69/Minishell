@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:57 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/14 18:27:03 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:17:37 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,25 @@ static void	check_quote_utils(t_shell *minishell, char *str, int i)
 		minishell->quote = 0;
 }
 
-int	check_quote_pipe(t_shell *minishell, char *str, int len)
+int	check_quote_pipe(t_shell *minishell, char *str, int pipe)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	if (len == -1)
-		len = 0;
 	tmp = str;
+	pipe = pipe - minishell->last_pipe;
 	str = str + minishell->last_pipe;
 	minishell->dquote = 0;
 	minishell->quote = 0;
 	while (str[i] != '\0')
 	{
 		check_quote_utils(minishell, str, i);
-		if (str[i] == '|' && (minishell->dquote == 1 || minishell->quote == 1))
+		if (str[i] == '|' && i == pipe
+			&& (minishell->dquote == 1 || minishell->quote == 1))
 			return (1);
-		if (str[i] == '|' && minishell->dquote == 0 && minishell->quote == 0)
+		if (str[i] == '|' && i == pipe
+			&& minishell->dquote == 0 && minishell->quote == 0)
 		{
 			minishell->pipe--;
 			return (0);

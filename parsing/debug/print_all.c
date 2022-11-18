@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:35 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:55:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:24:46 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 	t_node	*tmp;
 	t_node	**tmp_intab;
 	t_node	**tmp_outab;
-		(void)minishell;
+
 	int		i;
 	int		j;
 
@@ -26,7 +26,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 	while (tmp && tmp != NULL)
 	{
 		// printf("haha\n");
-		// printf("list[%d] =%s*\ntype = %c, addr ==%p\n\n", i, (char *)(tmp->content), tmp->type, (tmp->content));
+		printf("list[%d] =%s*\ntype = %c, addr ==%p\n\n", i, (char *)(tmp->content), tmp->type, (tmp->content));
 		tmp = tmp->next;
 		i++;
 	}
@@ -38,7 +38,7 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 		tmp = (tmp_intab)[i];
 		while (tmp && tmp != NULL)
 		{
-			//printf("infile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
+			printf("infile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
 			j++;
 			tmp = tmp->next;
 		}
@@ -52,11 +52,11 @@ void	print_dlist(t_node **list, t_node ***tab_infile, t_node ***tab_outfile, t_s
 		tmp = (tmp_outab)[i];
 		while (tmp && tmp != NULL)
 		{
-			//printf("outfile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
+			printf("outfile_list[%d][%d] =%s, type = %c, addr = %p\n", i, j, (char *)tmp->content, (char)(tmp->type), tmp);
 			j++;
 			tmp = tmp->next;
 		}
 		i++;
 	}
-	//printf("list_size = %d\n\n", minishell->list_size);
+	printf("list_size = %d\n\n", minishell->list_size);
 }
