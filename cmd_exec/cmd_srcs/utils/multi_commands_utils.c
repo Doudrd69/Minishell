@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:44:21 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:04:44 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:23:02 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	iterate_outfile_cmd(t_data *data, t_shell *parse)
 
 int	check_outfile_cmd(t_data *data, t_shell *parse)
 {
-	if ((parse->nbr_outfile > 0 || parse->nbr_outfile > 0)
+	if ((parse->nbr_outfile > 0 || parse->nbr_appendout > 0)
 		&& parse->tab_outfile[data->pipe_id])
 	{
 		data->output_fd = iterate_outfile_cmd(data, parse);

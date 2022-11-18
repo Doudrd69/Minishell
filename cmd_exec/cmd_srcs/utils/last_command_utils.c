@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:05:48 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:16:54 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	int	check;
 
 	size = 0;
-	size = parse->infile_size;
+	while (parse->tab_infile && parse->tab_infile[size])
+		size++;
 	check = append_check(parse, size);
 	if (check != 0)
 	{
