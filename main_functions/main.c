@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:10:41 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 07:15:49 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,10 @@ void	cmd_exec(t_data *data, t_shell *parse,
 		close_hd_pipe(data, parse->nbr_appendin - 1);
 	if (data->exec.pipe_check > 0)
 		close_pipe(data, (data->pipe_nb - 1));
+	dprintf(2, "Parent process is waiting\n");
 	while (wait(&status) != -1)
 		;
+	dprintf(2, "Parent process continues [status = %d]\n", status);
 	data->p_status = set_p_status(status, node);
 	if (parse->nbr_appendin > 0)
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);

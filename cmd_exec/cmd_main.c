@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:14:50 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 20:27:19 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 07:18:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ void	first_command(t_data *data, t_node *node, t_shell *parse,
 	data->first_cmd_pid = fork_creation(data->first_cmd_pid);
 	if (data->first_cmd_pid == 0)
 	{
+		dprintf(2, "(begin) First ==> %s\n", node->content);
 		if (check_inputfile(data, parse) != 0)
+		{
+			dprintf(2, "debug exit errno\n");
 			exit(errno);
+		}
+		dprintf(2, "debug 1\n");
 		if (node != NULL)
 		{
 			data->env.tab1 = get_path(data->envp, data, data->env.tab1);
@@ -30,6 +35,7 @@ void	first_command(t_data *data, t_node *node, t_shell *parse,
 			while (data->env.param_tab1[data->size_ptab1])
 				data->size_ptab1++;
 		}
+		dprintf(2, "debug 2\n");
 		if (check_outfile(data, parse) != 0)
 			exit(errno);
 		first_cmd_execution(data, node, builtins, g);
