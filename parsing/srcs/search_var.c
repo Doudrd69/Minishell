@@ -6,14 +6,17 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:34 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:48:02 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:05:58 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
 
-void	find_position_of_dollars(char *position, int i, int *size)
+void	find_position_of_dollars(char *position, int *size)
 {
+	int	i;
+
+	i = 0;
 	while (position[*size] != '\0' && position[*size] != ' ')
 	{
 		if (position[*size] == '$' && *size != 0)

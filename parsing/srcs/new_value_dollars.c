@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:43:20 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 12:06:55 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:03:27 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,8 @@ void	write_newvalue(t_shell *minishell, char *str, int mod, int i)
 			return (free_all_exit(minishell));
 	if (mod == 6)
 		if (new_value_mod2_and3(minishell, str, i) == 0)
+			return (free_all_exit(minishell));
+	if (mod == 8)
+		if (new_value_for_global_error(minishell, str) == 0)
 			return (free_all_exit(minishell));
 }

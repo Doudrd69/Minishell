@@ -6,11 +6,13 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 19:47:15 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:03:47 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
+
+extern int	g_pstatus;
 
 void	parse_dollars(t_shell *minishell)
 {
@@ -92,4 +94,32 @@ void	change_value_mod1(char *str, int i,
 	replace_value_and_after(minishell, &j, &tmp);
 	tmp = count_after_value(j, tmp, str, size);
 	include_dollar_list(minishell, list, tmp);
+}
+
+int	new_value_for_global_error(t_shell *minishell, char *str)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != ' ' && str[i] != '$')
+		i++;
+	minishell->value = malloc(sizeof(char)
+			* (ft_strlen(ft_itoa(g_pstatus)) + i + 1));
+	if (minishell->value == NULL)
+		return (0);
+	i = 0;
+	j = 0;
+	tmp = ft_itoa(g_pstatus);
+	if (tmp == NULL)
+		return (0);
+	while (tmp && tmp[j] != '\0')
+		minishell->value[i++] = tmp[j++];
+	j = 2;
+	while (str[j] != '\0' && str[j] != ' ' && str[j] != '$')
+		minishell->value[i++] = str[j++];
+	minishell->value[i] = '\0';
+	free(tmp);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:06:10 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 17:53:26 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 08:44:10 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int	check_dollars_mod(char *str)
 	{
 		mod = 2;
 	}
+	if (str[i + 1] != '\0' && str[i + 1] == 63)
+		mod = 8;
 	return (mod);
 }

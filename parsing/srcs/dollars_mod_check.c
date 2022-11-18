@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:46:22 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 20:04:28 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:10:30 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	test(t_shell *minishell, int check, t_node **list, int i)
 {
-	printf("minishell->mod ==%d\n", minishell->mod);
+	printf("minishell->check ==%d\n", check);
 	write_newvalue(minishell, minishell->stra + i, check, i);
 	change_var_to_value(minishell->stra, i, minishell, list);
 }
@@ -82,4 +82,31 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 		other_dollars_mod(minishell, i, list, check);
 	}
 	return (str);
+}
+
+int	check_heredoc_dollar_mod_2_3(char *str, int i)
+{
+	int	j;
+	int	tpm;
+
+	tpm = i;
+	while (str[tpm] != '\0' && str[tpm] != '\"')
+		tpm++;
+	if (str[tpm] == '\0')
+		return (1);
+	j = tpm;
+	if (i == 0)
+		return (1);
+	i--;
+	while (i > 0 && str[i] == ' ')
+		i--;
+	while (i > 0 && str[i] == '\"')
+		i--;
+	while (i > 0 && str[i] == ' ')
+		i--;
+	if (i < 1)
+		return (1);
+	if (str[i] == '<' && str[i - 1] == '<')
+		return (0);
+	return (1);
 }

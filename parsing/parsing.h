@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 18:35:39 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:07:12 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	change_var_to_value(char *str, int i,
 			t_shell *minishell, t_node **list);
 char	*replace_quote_dollars(t_shell *minishell, char *tmp, int *j);
 void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp);
-void	find_position_of_dollars(char *position, int i, int *size);
+void	find_position_of_dollars(char *position, int *size);
 void	replace_value_and_after(t_shell *minishell, int *j, char **tmp);
 void	check_dquote_dollars(char *str, int *dquote, int i, int *quote);
 int		check_quote_in_quote_dollars(char *str);
@@ -192,6 +192,7 @@ void	change_value_mod1(char *str, int i,
 int		check_quote_mod(char *str, int i);
 int		check_dquote_mod(char *str, int i);
 void	value_quote_mod_1(t_shell *minishell, char *str, int i);
+int		new_value_for_global_error(t_shell *minishell, char *str);
 
 /*MINISHELL*/
 void	init_variable(t_shell *minishell, int envp_size, char **env);
