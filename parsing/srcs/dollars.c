@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:36 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:03:47 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:28:44 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,21 @@ int	new_value_for_global_error(t_shell *minishell, char *str)
 	int		j;
 	char	*tmp;
 
-	i = 0;
+	i = 1;
 	while (str[i] != '\0' && str[i] != ' ' && str[i] != '$')
 		i++;
-	minishell->value = malloc(sizeof(char)
-			* (ft_strlen(ft_itoa(g_pstatus)) + i + 1));
-	if (minishell->value == NULL)
-		return (0);
-	i = 0;
-	j = 0;
 	tmp = ft_itoa(g_pstatus);
 	if (tmp == NULL)
 		return (0);
-	while (tmp && tmp[j] != '\0')
-		minishell->value[i++] = tmp[j++];
+	minishell->value = malloc(sizeof(char) * (ft_strlen(tmp) + i + 1 - 2));
+	if (minishell->value == NULL)
+	{
+		free(tmp);
+		return (0);
+	}
+	i = -1;
+	while (tmp && tmp[++i] != '\0')
+		minishell->value[i] = tmp[i];
 	j = 2;
 	while (str[j] != '\0' && str[j] != ' ' && str[j] != '$')
 		minishell->value[i++] = str[j++];
