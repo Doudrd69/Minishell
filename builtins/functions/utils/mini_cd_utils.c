@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:22:44 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 15:29:08 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:57:57 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	no_path(t_data *data)
 			i++;
 		}
 		i++;
-		dprintf(2, "debug NO path 2\n");
 		chdir(&data->home_path[i]);
 		data->cwd = getcwd(data->buff_oldpwd, BUF_SIZE);
 		data->p_status = 0;
@@ -84,11 +83,15 @@ int	update_pwd(t_data *data)
 	ft_strlcpy(&str[4], data->cwd, size, 1);
 	if (size > ft_strlen(data->envp[position]))
 	{
+		if (data->cd_check == 1)
+			free(data->envp[position]);
 		data->envp[position] = str;
+		data->cd_check = 1;
 		return (0);
 	}
 	else
 		ft_strlcpy(data->envp[position], str, ft_strlen(str), 1);
+	data->cd_check = 1;
 	free(str);
 	return (0);
 }

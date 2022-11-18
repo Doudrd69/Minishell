@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 08:48:10 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 15:32:15 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:47:24 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	mini_cd(t_data *data, t_node *node)
 	if (data->oldpwd == NULL)
 	{
 		ft_printf("minishell: %s\n", strerror(errno));
+		chdir("..");
+		chdir(data->buff_oldpwd);
 		return (errno);
 	}
 	if (node->next == NULL && ft_strncmp(node->content, "cd", 2) == 0)
