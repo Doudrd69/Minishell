@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 16:28:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:19:51 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,13 @@ int	envp_size_for_tmp(char **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+
+void	free_and_cpy_str(t_data *data, int position, char *str)
+{
+	if (data->cd_check == 1)
+		free(data->envp[position]);
+	data->envp[position] = str;
+	data->cd_check = 1;
+	return ;
 }
