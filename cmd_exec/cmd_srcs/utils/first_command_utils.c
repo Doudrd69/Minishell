@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:56:41 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 07:19:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 07:58:39 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ int	check_inputfile(t_data *data, t_shell *parse)
 	int	check;
 
 	check = 0;
-	dprintf(2, "Enter check_inputfile for first\n");
 	check = append_check(parse, 0);
-	dprintf(2, "Debug inputfile 1\n");
 	if (check != 0)
 	{
 		if (check == 1)

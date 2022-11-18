@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 07:15:49 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 08:53:16 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char *argv[], char *envp[])
 	main_init_before_loop(&data, envp, builtins, argc, argv);
 	while (1)
 	{
-		g_pstatus = 0;
+		g_pstatus = data.p_status;
 		sigaction(SIGQUIT, &sa, NULL);
 		signal(SIGINT, &sigint_handler_main_loop);
 		minishell = malloc(sizeof(t_shell));

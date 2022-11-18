@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:28:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 07:36:46 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 07:57:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ int	check_inputfile_last_cmd(t_data *data, t_shell *parse)
 	int	check;
 
 	size = 0;
-	while (parse->tab_infile[size] != NULL)
-		size++;
-	dprintf(2, "Last command size : %d **\n", size);
+	dprintf(2, "Last command size (parsing) : %d **\n", parse->infile_size);
+	// while (parse->tab_infile[size] != NULL)
+	// 	size++;
+	//dprintf(2, "Last command size (calculated) : %d **\n", size);
+	size = parse->infile_size;
 	check = append_check(parse, size);
 	if (check != 0)
 	{
