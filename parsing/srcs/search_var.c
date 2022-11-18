@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:40:34 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:05:58 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:50:06 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	ft_find_dollars(t_shell *minishell, char *var, int *size, int *i)
 			break ;
 		(*size)++;
 	}
-	while (var[*i] != ' ' && var[*i] != '\0')
+	while (var[*i] != '\0')
 		(*i)++;
 }
 
@@ -111,7 +111,7 @@ void	print_var_parsing(t_shell *minishell)
 		while (var[j] && var[j] != '=')
 			j++;
 		ft_find_dollars(minishell, var, &size, &i);
-		minishell->value = malloc(sizeof(char) * (i + 1));
+		minishell->value = malloc(sizeof(char) * (i - j));
 		if (!(minishell->value))
 			return (free_all_exit(minishell));
 		j++;

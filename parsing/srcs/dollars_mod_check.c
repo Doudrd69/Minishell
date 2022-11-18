@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:46:22 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:10:30 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:34:02 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	test(t_shell *minishell, int check, t_node **list, int i)
 {
-	printf("minishell->check ==%d\n", check);
 	write_newvalue(minishell, minishell->stra + i, check, i);
 	change_var_to_value(minishell->stra, i, minishell, list);
 }
@@ -32,7 +31,7 @@ char	*interpret_dollars(char *str, int i,
 		change_var_to_value(str, i, minishell, list);
 	else
 	{
-		check = value_check_with_mod(str, i);
+		check = value_check_with_mod(minishell, str, i);
 		if ((minishell->mod == 2 || minishell->mod == 3)
 			&& str[i + 1] == ' ')
 		{
@@ -78,7 +77,7 @@ char	*dollars_mod(char *str, int i, t_shell *minishell, t_node **list)
 	{
 		if (check_quote_mod(str, i) == 0)
 			return (str);
-		check = check_dollars_mod(str + i);
+		check = check_dollars_mod(minishell, str + i);
 		other_dollars_mod(minishell, i, list, check);
 	}
 	return (str);

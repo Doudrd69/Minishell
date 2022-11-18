@@ -6,17 +6,17 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:17:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 18:37:49 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 12:41:09 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
 
-int	value_check_with_mod(char *str, int i)
+int	value_check_with_mod(t_shell *minishell, char *str, int i)
 {
 	int	check;
 
-	check = check_dollars_mod(str + i);
+	check = check_dollars_mod(minishell, str + i);
 	if (check == 2)
 	{
 		check = check_dollar_export(str, i);

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:17:01 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:10:57 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:03:04 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static void	count_malloc_new_tmp(t_shell *minishell, int *i, int *j, int *size)
 	while (cpy[++(*size)] != '\0' && cpy[*size] != '$'
 		&& cpy[*size] != '/' && cpy[*size] != '=')
 	{
-		if (cpy[*size] == ' ' && minishell->mod != 4)
+		if (cpy[*size] == ' ')
 			break ;
-		if ((minishell->mod == 2 && cpy[*size] == '\"')
-			|| (minishell->mod == 4 && cpy[*size] == '\"'))
+		if ((cpy[*size] == '\"')
+			|| (cpy[*size] == '\''))
 			break ;
 		if (cpy[*size] == '\"' || cpy[*size] == '\'')
 			(*j)++;
@@ -85,12 +85,11 @@ void	change_var_to_value(char *str, int i, t_shell *minishell, t_node **list)
 		return ;
 	count_malloc_new_tmp(minishell, &i, &j, &size);
 	tmp = (char *)malloc(sizeof(char)
-			* (ft_strlen(minishell->value) + j - size + ft_strlen(str) + 1));
+			* (ft_strlen(minishell->value) + j - size + ft_strlen(str)));
 	return_malloc_change_var(minishell, tmp, cpy);
 	minishell->i = i;
 	fill_before_value_tmp(minishell, &j, &tmp, &size);
 	replace_value_and_after(minishell, &j, &tmp);
-	tmp = replace_quote_dollars(minishell, tmp, &j);
 	while (str[size] && str[size] != '\0')
 		tmp[j++] = str[size++];
 	tmp[j] = '\0';

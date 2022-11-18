@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:06:10 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 08:44:10 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:04:00 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,13 @@ int	check_dollar_export(char *str, int i)
 	return (5);
 }
 
-int	check_dollars_mod(char *str)
+int	check_dollars_mod(t_shell *minishell, char *str)
 {
 	int	mod;
 	int	i;
 
 	i = 0;
 	mod = 0;
-	if (str[i + 1] != '\0' && ((str[i + 1] == 34 && str[i - 1] != 34)
-			|| (str[i + 1] == 39 && str[i - 1] != 39)))
-		mod = 3;
 	if (str[i + 1] != '\0' && ((str[i + 1] >= 48 && str[i + 1] <= 57)
 			|| str[i + 1] == 42 || str[i + 1] == 64 || str[i + 1] == 92))
 	{
@@ -94,7 +91,8 @@ int	check_dollars_mod(char *str)
 	}
 	if (str[i + 1] != '\0' && ((str[i + 1] >= 65 && str[i + 1] <= 90)
 			|| str[i + 1] == 95 || (str[i + 1] >= 97 && str[i + 1] <= 122)
-			|| str[i + 1] == 32))
+			|| str[i + 1] == 32 || (str[i + 1] == 39)
+			|| (str[i + 1] == 34 && minishell->mod != 2)))
 	{
 		mod = 2;
 	}

@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:35:53 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/18 09:07:12 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 12:41:47 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ char	*mini_getenv_parsing(char *envp[], int env_size, char *var_name,
 			t_shell *minishell);
 char	*check_and_return_var_parsing(char *home_path, char **envp,
 			char *var, int i);
-int		check_dollars_mod(char *str);
+int		check_dollars_mod(t_shell *minishell, char *str);
 int		check_dollar_export(char *str, int i);
 int		check_heredoc_dollar_mod(char *str, int i);
 int		check_heredoc_dollar_mod_1(char *str, int i);
@@ -214,7 +214,7 @@ int		dl_fl_search_heredoc(char *str, int i);
 int		main_loop_search_append(char *str, int i, int file);
 int		dl_fl_search_append(char *str, int i);
 int		sorting_loop(t_shell *minishell, char *str, t_node **list_cpy, int j);
-int		value_check_with_mod(char *str, int i);
+int		value_check_with_mod(t_shell *minishell, char *str, int i);
 
 /*LIST*/
 t_shell	*set_dlist(t_shell *minishell, int size, char **env);

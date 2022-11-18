@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:38:46 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/17 17:07:15 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 16:02:12 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,4 @@ void	include_dollar_list(t_shell *minishell, t_node **list, char *tmp)
 		tmp_list = new_node;
 		ft_prev(minishell, new_node, list, tmp_list);
 	}
-}
-
-char	*replace_quote_dollars(t_shell *minishell, char *tmp, int *j)
-{
-	if (minishell->mod == 4)
-	{
-		tmp[*j] = '\'';
-		(*j)++;
-	}
-	return (tmp);
 }
