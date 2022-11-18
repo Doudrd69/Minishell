@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:11:11 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:26:12 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:27:26 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,7 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	cmd_exec_init(data, parse);
 	if (node == NULL || node->type == 'P')
 	{
-		if (data->exec.pipe_check > 0)
-			close_pipe(data, (data->pipe_nb - 1));
-		close_hd_pipe(data, parse->nbr_appendin - 1);
+		free_if_no_list(data, parse);
 		return ;
 	}
 	node = node_rotation_exec(node, parse);
@@ -110,11 +108,6 @@ void	cmd_exec(t_data *data, t_shell *parse,
 	while (wait(&status) != -1)
 		;
 	data->p_status = set_p_status(status, node);
-	if (parse->nbr_appendin > 0)
-		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);
-	if (parse->nbr_pipe > 0)
-		free_inttab(data->pipefd, parse->nbr_pipe - 1);
-	if (data->check_hd > 0)
-		free(data->hd_pid);
+	free_tab_exec(data, parse);
 	return ;
 }
