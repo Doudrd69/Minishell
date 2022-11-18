@@ -6,7 +6,7 @@
 /*   By: wmonacho <wmonacho@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:42:43 by wmonacho          #+#    #+#             */
-/*   Updated: 2022/11/16 14:41:00 by wmonacho         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 17:17:44 by wmonacho         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	parse_pipe(t_shell *minishell, int j, int i)
 	{
 		if (minishell->strp[i + j] == '|' && minishell->pipe != 0
 			&& check_quote_pipe(minishell,
-				minishell->strp, i + j - 1) != 1)
+				minishell->strp, i + j) != 1)
 		{
 			if (check_syntax(minishell, minishell->strp, i + j) == 0)
 			{
