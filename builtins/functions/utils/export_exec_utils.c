@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:26:28 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/17 14:47:20 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:57:23 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	free_old(char **tab, int size)
 {
 	int	i;
 
+	printf("SIZE ==> %d\n", size);
 	i = size - 1;
 	while (i >= 0)
 	{
+		printf(">> coucou\n");
 		free(tab[i]);
 		i--;
 	}

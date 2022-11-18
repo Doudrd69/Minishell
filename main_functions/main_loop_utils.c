@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:37:37 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:36:50 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:04:47 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	unset_exec(t_data *data, t_node *node)
 			return (1);
 		data->envp = data->unset_env;
 		if (data->check_loop_export == 1)
+		{
 			free_old(tmp, tmp_size);
-		if (node->next == NULL)
+		}
+		if (node->next == NULL && data->check_loop_export)
 			break ;
 		data->check_loop_export = 1;
 		node = node->next;

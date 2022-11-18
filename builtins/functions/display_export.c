@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 13:50:06 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:53:15 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ int	loop_copy_export(t_data *data, char **tmp_tab)
 	i = 0;
 	while (i < data->envp_size - 1)
 	{
-		tmp_tab[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]) + 1);
+		tmp_tab[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i]) + 1));
 		if (!tmp_tab[i])
 		{
+			printf("RETURN 1\n");
 			free_tab(tmp_tab, i - 1);
 			return (1);
 		}
@@ -84,20 +85,23 @@ int	loop_copy_export(t_data *data, char **tmp_tab)
 
 int	display_export(t_data *data)
 {
-	int		i;
 	int		output_fd;
 	char	**tmp_tab;
 
-	i = 0;
 	output_fd = 1;
-	tmp_tab = malloc(sizeof(char *) * data->envp_size + 1);
+	tmp_tab = malloc(sizeof(char *) * (data->envp_size + 1));
 	if (!tmp_tab)
 		return (1);
 	if (loop_copy_export(data, tmp_tab) == 1)
+	{
+		printf("RETURN\n");
 		return (1);
+	}
 	sorting(tmp_tab, data->envp_size);
 	display_env(tmp_tab, data->envp_size, output_fd);
-	free_tab(tmp_tab, i - 1);
+	printf("YOUPI\n");
+	free_tab(tmp_tab, data->envp_size - 1);
+	printf("Sort de free tab\n");
 	if (data->pipe_check == 1)
 		return (3);
 	return (1);
