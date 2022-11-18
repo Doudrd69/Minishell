@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:02:01 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 09:41:36 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,9 @@ int	display_export(t_data *data)
 
 	i = 0;
 	output_fd = 1;
-	tmp_tab = malloc(sizeof(char *) * data->envp_size + 1);
-	if (!tmp_tab)
-		free(tmp_tab);
-	while (i < data->envp_size - 1)
-	{
-		tmp_tab[i] = ft_strdup(data->envp[i]);
-		i++;
-	}
-	tmp_tab[i] = NULL;
+	tmp_tab = data->envp;
 	sorting(tmp_tab, data->envp_size);
 	display_env(tmp_tab, data->envp_size, output_fd);
-	free_tab(tmp_tab, data->envp_size - 1);
 	if (data->pipe_check == 1)
 		return (3);
 	return (1);
