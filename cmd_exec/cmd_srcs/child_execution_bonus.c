@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:45:19 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:05:28 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:25:50 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	exec_cmd_path(t_data *data, char *envp[])
 		close_hd_pipe(data, data->heredoc_nb - 1);
 	check_file(data->env.param_tab1[0]);
 	if (execve(data->env.param_tab1[0], data->env.param_tab1, envp) == -1)
-		perror("execve");
+		{
+			perror("execve");
+			exit(errno);
+		}
 }
 
 void	first_cmd_execution(t_data *data, t_node *node,
@@ -86,7 +89,10 @@ void	last_cmd_execution(t_data *data, t_node *node,
 		close(data->output_fd);
 		if (execve(data->env.param_tab2[0], data->env.param_tab2,
 				data->envp) == -1)
+		{
 			perror("execve");
+			exit(errno);
+		}
 	}
 	else
 	{

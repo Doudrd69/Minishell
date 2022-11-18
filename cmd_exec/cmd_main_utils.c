@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:09 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:04:40 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 12:29:07 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	start_heredoc(t_data *data, t_shell *parse, t_node *node)
 		free(data->hd_pid);
 		return (1);
 	}
-	if (parse->outfile_size == 0 && node == NULL)
+	if (parse->outfile_size == 0 && parse->tab_infile == NULL && node == NULL)
 	{
 		close_hd_pipe(data, data->heredoc_nb - 1);
 		free_inttab(data->hd_pipefd, data->heredoc_nb - 1);

@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:54 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/18 09:41:36 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 12:41:29 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	display_env(char **tmp_tab, int size, int output_fd)
 	return ;
 }
 
-int	display_export(t_data *data)
+int	display_export(t_data *data, char ***tab)
 {
 	int		i;
 	int		output_fd;
@@ -70,7 +70,7 @@ int	display_export(t_data *data)
 
 	i = 0;
 	output_fd = 1;
-	tmp_tab = data->envp;
+	tmp_tab = *tab;
 	sorting(tmp_tab, data->envp_size);
 	display_env(tmp_tab, data->envp_size, output_fd);
 	if (data->pipe_check == 1)

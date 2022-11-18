@@ -6,7 +6,7 @@
 /*   By: ebrodeur <ebrodeur@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:44:07 by ebrodeur          #+#    #+#             */
-/*   Updated: 2022/11/16 18:12:53 by ebrodeur         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:09:45 by ebrodeur         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	cmd_exec_path(t_data *data, int pipe_id)
 	check_file(data->env.param_tab3[0]);
 	if (execve(data->env.param_tab3[0], data->env.param_tab3,
 			data->envp) == -1)
-		perror("execve");
+		{
+			perror("execve");
+			exit(errno);
+		}
 }
 
 void	close_pipe_hd_before_dup(t_data *data, t_shell *parse)
